@@ -1,13 +1,12 @@
 package me.taylan.mooncore.commands;
 
+import me.taylan.mooncore.MoonCore;
+import me.taylan.mooncore.utils.GuiHandler;
+import me.taylan.mooncore.utils.ItemHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import me.taylan.mooncore.MoonCore;
-import me.taylan.mooncore.utils.GuiHandler;
-import me.taylan.mooncore.utils.ItemHandler;
 
 public class SkillCommand implements CommandExecutor {
 
@@ -30,10 +29,9 @@ public class SkillCommand implements CommandExecutor {
 
 		Player p = (Player) sender;
 
-		if (p.hasPermission("mooncore.skill")) {
+
 			p.openInventory(guiHandler.skillGui(p));
-			p.getInventory().addItem(itemHandler.cicekkolye());
-		}
+
 
 		return false;
 	}

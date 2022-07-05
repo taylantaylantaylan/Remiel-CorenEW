@@ -1,15 +1,12 @@
 package me.taylan.mooncore.listeners;
 
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
+import fr.mrmicky.fastboard.FastBoard;
+import me.taylan.mooncore.MoonCore;
+import me.taylan.mooncore.utils.Painter;
+import me.taylan.mooncore.utils.StatsManager;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,11 +15,12 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
-import fr.mrmicky.fastboard.FastBoard;
-import me.taylan.mooncore.MoonCore;
-import me.taylan.mooncore.utils.Painter;
-import me.taylan.mooncore.utils.StatsManager;
-import net.md_5.bungee.api.ChatColor;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 public class ItemDropListener implements Listener {
 

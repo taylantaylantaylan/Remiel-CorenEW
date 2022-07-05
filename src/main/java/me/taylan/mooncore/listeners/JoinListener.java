@@ -1,16 +1,20 @@
 package me.taylan.mooncore.listeners;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-
+import fr.mrmicky.fastboard.FastBoard;
+import me.taylan.mooncore.MoonCore;
+import me.taylan.mooncore.utils.BukkitSerialization;
+import me.taylan.mooncore.utils.Painter;
+import me.taylan.mooncore.utils.StatsManager;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,20 +28,18 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import fr.mrmicky.fastboard.FastBoard;
-import me.taylan.mooncore.MoonCore;
-import me.taylan.mooncore.utils.BukkitSerialization;
-import me.taylan.mooncore.utils.Painter;
-import me.taylan.mooncore.utils.StatsManager;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.md_5.bungee.api.ChatColor;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class JoinListener implements Listener {
 
 	private MoonCore plugin;
 	private StatsManager stats;
 	private static HashMap<UUID, Inventory> menu = new HashMap<UUID, Inventory>();
-
+	private static HashMap<UUID, Inventory> ocakmenu = new HashMap<UUID, Inventory>();
+	private static HashMap<UUID, Inventory> furnacemenu = new HashMap<UUID, Inventory>();
+	private static HashMap<UUID, Inventory> elsanatmenu = new HashMap<UUID, Inventory>();
 	public JoinListener(MoonCore plugin) {
 		this.plugin = plugin;
 		this.stats = plugin.getStatsManager();
@@ -47,9 +49,17 @@ public class JoinListener implements Listener {
 	public static HashMap<UUID, Inventory> getMenu() {
 		return menu;
 	}
-
+	public static HashMap<UUID, Inventory> getOcakMenu() {
+		return ocakmenu;
+	}
+	public static HashMap<UUID, Inventory> getFurnacemenu() {
+		return furnacemenu;
+	}
+	public static HashMap<UUID, Inventory> getElsanatmenu() {
+		return elsanatmenu;
+	}
 	@SuppressWarnings("deprecation")
-	@EventHandler(priority = EventPriority.LOWEST,ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onPlayerJoin(PlayerJoinEvent e) {
 
 		Player player = e.getPlayer();
@@ -76,7 +86,6 @@ public class JoinListener implements Listener {
 			scoreboard.registerNewTeam(player.getName());
 		}
 		Team isim = scoreboard.getTeam(player.getName());
-		
 		if (isim.hasEntry(player.getName())) {
 			isim.setPrefix(Painter.paint("&7[&fSvy. " + stats.getLevel(player.getUniqueId()) + "&7] &f"));
 			isim.setSuffix(Painter.paint(" &6[" + (int) player.getHealth() + "❤]"));
@@ -110,7 +119,7 @@ public class JoinListener implements Listener {
 		int agirlik = stats.getAgirlik(player.getUniqueId());
 		int maxagirlik = stats.getMaxAgirlik(player.getUniqueId());
 		board.updateTitle(ChatColor.AQUA + "Moon Network");
-
+		player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(1000);
 		board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "     Remiel", "    ",
 				ChatColor.GOLD + "Akçe ⛁" + ChatColor.WHITE + 0,
 				ChatColor.WHITE + "Ağırlık: " + ChatColor.GRAY + agirlik + "/" + ChatColor.RED + maxagirlik, "",
@@ -119,6 +128,11 @@ public class JoinListener implements Listener {
 
 		);
 		if (!(player.hasPlayedBefore())) {
+			BossBar bb = Bukkit.createBossBar(new NamespacedKey(plugin,"gorev1"), Painter.paint("&6Valadir ile konuş."), BarColor.YELLOW, BarStyle.SOLID);
+			bb.addPlayer(player);
+			player.giveExp(20000);
+			Location loc2 = new Location(Bukkit.getWorld("dungeonworld"),495,62,308);
+			player.teleport(loc2);
 			ItemStack star = new ItemStack(Material.KNOWLEDGE_BOOK);
 			NamespacedKey key = new NamespacedKey(plugin, "star");
 			List<String> lore = new ArrayList<>();
@@ -136,12 +150,45 @@ public class JoinListener implements Listener {
 			player.getInventory().setItem(8, star);
 		}
 
-		menu.put(player.getUniqueId(), Bukkit.createInventory(player, 9, MiniMessage.get().parse("<dark_gray>Depo")));
+		menu.put(player.getUniqueId(), Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize("<dark_gray>Depo")));
+		ocakmenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize("<dark_gray>Ocak Deposu")));
+		furnacemenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize("<dark_gray>Fırın Deposu")));
+		elsanatmenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize("<dark_gray>El Sanatları Deposu")));
 		if (!(stats.getStorage(player.getUniqueId()).equals("yok"))) {
 			String contents = stats.getStorage(player.getUniqueId());
 			try {
-				Inventory inv = BukkitSerialization.fromBase64(contents);
-				menu.get(player.getUniqueId()).setContents(inv.getContents());
+				ItemStack[] inv = BukkitSerialization.itemStackArrayFromBase64(contents);
+				menu.get(player.getUniqueId()).setContents(inv);
+			} catch (IOException ev) {
+				plugin.getLogger().warning("Broken");
+				ev.printStackTrace();
+			}
+		}
+		if (!(stats.getFurnaceStorage(player.getUniqueId()).equals("yok"))) {
+			String contents = stats.getFurnaceStorage(player.getUniqueId());
+			try {
+				ItemStack[] inv = BukkitSerialization.itemStackArrayFromBase64(contents);
+				furnacemenu.get(player.getUniqueId()).setContents(inv);
+			} catch (IOException ev) {
+				plugin.getLogger().warning("Broken");
+				ev.printStackTrace();
+			}
+		}
+		if (!(stats.getCookStorage(player.getUniqueId()).equals("yok"))) {
+			String contents = stats.getCookStorage(player.getUniqueId());
+			try {
+				ItemStack[] inv = BukkitSerialization.itemStackArrayFromBase64(contents);
+				ocakmenu.get(player.getUniqueId()).setContents(inv);
+			} catch (IOException ev) {
+				plugin.getLogger().warning("Broken");
+				ev.printStackTrace();
+			}
+		}
+		if (!(stats.getWorkStorage(player.getUniqueId()).equals("yok"))) {
+			String contents = stats.getWorkStorage(player.getUniqueId());
+			try {
+				ItemStack[] inv = BukkitSerialization.itemStackArrayFromBase64(contents);
+				elsanatmenu.get(player.getUniqueId()).setContents(inv);
 			} catch (IOException ev) {
 				plugin.getLogger().warning("Broken");
 				ev.printStackTrace();

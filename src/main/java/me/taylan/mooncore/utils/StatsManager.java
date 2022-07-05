@@ -1,12 +1,6 @@
 package me.taylan.mooncore.utils;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-
+import me.taylan.mooncore.MoonCore;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -14,7 +8,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import me.taylan.mooncore.MoonCore;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class StatsManager {
 	private FileConfiguration fc;
@@ -67,15 +66,22 @@ public class StatsManager {
 		fc.set("Levels." + "EnchLevel", 1);
 		fc.set("Levels." + "EnchExp", 0);
 		fc.set("Levels." + "EnchRequiredExp", 20);
+		fc.set("Levels." + "WorkLevel", 1);
+		fc.set("Levels." + "WorkExp", 0);
+		fc.set("Levels." + "WorkRequiredExp", 20);
 		fc.set("Levels." + "FarmingLevel", 1);
 		fc.set("Levels." + "FarmingExp", 0);
 		fc.set("Levels." + "FarmingRequiredExp", 20);
 		fc.set("Product." + "Production", 0);
 		fc.set("Product." + "Production1", 0);
+		fc.set("Product." + "FurnaceProduction", 0);
+		fc.set("Product." + "FurnaceAmount", 0);
 		fc.set("Product." + "CookProduction", 0);
+		fc.set("Product." + "CookAmount", 0);
+		fc.set("Product." + "WorkProduction", 0);
 		fc.set("Stats." + "Guc", 5);
 		fc.set("Stats." + "Can", (int) 20);
-		fc.set("Stats." + "Zirh", 0);
+		fc.set("Stats." + "Direnc", 4);
 		fc.set("Stats." + "Hiz", 2);
 		fc.set("Stats." + "HiclikDirenci", 0);
 		fc.set("Stats." + "SogukDirenci", 0);
@@ -83,14 +89,17 @@ public class StatsManager {
 		fc.set("Stats." + "SaldiriHizi", 0);
 		fc.set("Stats." + "KritikHasari", 12);
 		fc.set("Stats." + "KritikSansi", 0);
-		fc.set("Stats." + "Doygunluk", 0);
+		fc.set("Stats." + "Doygunluk", 2);
 		fc.set("Stats." + "CanYenileme", 5);
 		fc.set("Stats." + "Kesif", 0);
 		fc.set("Stats." + "Agirlik", 0);
 		fc.set("Stats." + "maxAgirlik", 100);
 		fc.set("Stats." + "NP", 0);
 		fc.set("Stats." + "harcananNP", 0);
-		fc.set("Storage." + "depo", "yok");
+		fc.set("Storage." + "Depo", "yok");
+		fc.set("Storage." + "FurnaceDepo", "yok");
+		fc.set("Storage." + "CookDepo", "yok");
+		fc.set("Storage." + "WorkDepo", "yok");
 		fc.set("Enchant." + "vayne", "yok");
 		fc.set("Aksesuar." + "KolyeIsim", "Yok..");
 		fc.set("Aksesuar." + "YuzukIsim", "Yok..");
@@ -104,6 +113,10 @@ public class StatsManager {
 		list.add(new ItemStack(Material.AIR));
 		list.add(new ItemStack(Material.AIR));
 		fc.set("Aksesuar." + "Hepsi", list);
+		fc.set("Ayarlar." + "KritikHasarAyar", true);
+		fc.set("Ayarlar." + "SaldiriHiziAyar", true);
+		fc.set("Ayarlar." + "YaprakAyar", true);
+		fc.set("Ayarlar." + "TabloAyar", true);
 		fc.save(f);
 		statfile.put(uuid, fc);
 	}
@@ -153,15 +166,44 @@ public class StatsManager {
 
 	public void setStorage(UUID uuid, String name) {
 		fc = statfile.get(uuid);
-		fc.set("Storage." + "depo", name);
+		fc.set("Storage." + "Depo", name);
 		s(uuid);
 	}
 
 	public String getStorage(UUID uuid) {
 		fc = statfile.get(uuid);
-		return fc.getString("Storage." + "depo");
+		return fc.getString("Storage." + "Depo");
+	}
+	public void setFurnaceStorage(UUID uuid, String name) {
+		fc = statfile.get(uuid);
+		fc.set("Storage." + "FurnaceDepo", name);
+		s(uuid);
 	}
 
+	public String getFurnaceStorage(UUID uuid) {
+		fc = statfile.get(uuid);
+		return fc.getString("Storage." + "FurnaceDepo");
+	}
+	public void setCookStorage(UUID uuid, String name) {
+		fc = statfile.get(uuid);
+		fc.set("Storage." + "CookDepo", name);
+		s(uuid);
+	}
+
+	public String getCookStorage(UUID uuid) {
+		fc = statfile.get(uuid);
+		return fc.getString("Storage." + "CookDepo");
+	}
+	public void setWorkStorage(UUID uuid, String name) {
+		fc = statfile.get(uuid);
+		fc.set("Storage." + "WorkDepo", name);
+		s(uuid);
+	}
+
+	public String getWorkStorage(UUID uuid) {
+		fc = statfile.get(uuid);
+		return fc.getString("Storage." + "WorkDepo");
+	}
 	public void setVayne(UUID uuid, List<ItemStack> list) {
 		fc = statfile.get(uuid);
 		fc.set("Enchant." + "vayne", list);
@@ -226,7 +268,11 @@ public class StatsManager {
 		fc.set("Levels." + "Exp", result);
 		s(uuid);
 	}
-
+	public void setExp0(UUID uuid, int size) {
+		fc = statfile.get(uuid);
+		fc.set("Levels." + "Exp", size);
+		s(uuid);
+	}
 	public int getExp(UUID uuid) {
 		fc = statfile.get(uuid);
 		return fc.getInt("Levels." + "Exp");
@@ -283,7 +329,44 @@ public class StatsManager {
 		fc = statfile.get(uuid);
 		return fc.getInt("Levels." + "OdunculukRequiredExp");
 	}
+	public void setWorkLevel(UUID uuid, int size) {
+		fc = statfile.get(uuid);
+		int level = getWorkLevel(uuid);
+		int result = level + size;
+		fc.set("Levels." + "WorkLevel", result);
+		s(uuid);
+	}
 
+	public int getWorkLevel(UUID uuid) {
+		fc = statfile.get(uuid);
+		return fc.getInt("Levels." + "WorkLevel");
+	}
+
+	public void setWorkExp(UUID uuid, int size) {
+		fc = statfile.get(uuid);
+		int level = getWorkExp(uuid);
+		int result = level + size;
+		fc.set("Levels." + "WorkExp", result);
+		s(uuid);
+	}
+
+	public int getWorkExp(UUID uuid) {
+		fc = statfile.get(uuid);
+		return fc.getInt("Levels." + "WorkExp");
+	}
+
+	public void setWorkRequiredExp(UUID uuid, int size) {
+		fc = statfile.get(uuid);
+		int level = getWorkRequiredExp(uuid);
+		int result = level + size;
+		fc.set("Levels." + "WorkRequiredExp", result);
+		s(uuid);
+	}
+
+	public int getWorkRequiredExp(UUID uuid) {
+		fc = statfile.get(uuid);
+		return fc.getInt("Levels." + "WorkRequiredExp");
+	}
 	public void setMadencilikLevel(UUID uuid, int size) {
 		fc = statfile.get(uuid);
 		int level = getMadencilikLevel(uuid);
@@ -595,6 +678,18 @@ public class StatsManager {
 		fc = statfile.get(uuid);
 		return fc.getInt("Levels." + "FarmingRequiredExp");
 	}
+	public void setWorkProduction(UUID uuid, int size) {
+		fc = statfile.get(uuid);
+		int level = getWorkProduction(uuid);
+		int result = level + size;
+		fc.set("Product." + "WorkProduction", result);
+		s(uuid);
+	}
+
+	public int getWorkProduction(UUID uuid) {
+		fc = statfile.get(uuid);
+		return fc.getInt("Product." + "WorkProduction");
+	}
 
 	public void setProduction(UUID uuid, int size) {
 		fc = statfile.get(uuid);
@@ -629,12 +724,44 @@ public class StatsManager {
 		fc.set("Product." + "CookProduction", result);
 		s(uuid);
 	}
+	public int getFurnaceAmount(UUID uuid) {
+		fc = statfile.get(uuid);
+		return fc.getInt("Product." + "FurnaceAmount");
+	}
+	public void setFurnaceAmount(UUID uuid, int size) {
+		fc = statfile.get(uuid);
+		int level = getFurnaceAmount(uuid);
+		int result = level + size;
+		fc.set("Product." + "FurnaceAmount", result);
+		s(uuid);
+	}
+	public int getFurnaceProduction(UUID uuid) {
+		fc = statfile.get(uuid);
+		return fc.getInt("Product." + "FurnaceProduction");
+	}
+	public void setFurnaceProduction(UUID uuid, int size) {
+		fc = statfile.get(uuid);
+		int level = getFurnaceProduction(uuid);
+		int result = level + size;
+		fc.set("Product." + "FurnaceProduction", result);
+		s(uuid);
+	}
+	public int getCookAmount(UUID uuid) {
+		fc = statfile.get(uuid);
+		return fc.getInt("Product." + "CookAmount");
+	}
+	public void setCookAmount(UUID uuid, int size) {
+		fc = statfile.get(uuid);
+		int level = getCookAmount(uuid);
+		int result = level + size;
+		fc.set("Product." + "CookAmount", result);
+		s(uuid);
+	}
 
 	public int getCookProduction(UUID uuid) {
 		fc = statfile.get(uuid);
 		return fc.getInt("Product." + "CookProduction");
 	}
-
 	public void setGuc(UUID uuid, int size) {
 		fc = statfile.get(uuid);
 		int level = getGuc(uuid);
@@ -690,19 +817,17 @@ public class StatsManager {
 		return fc.getInt("Stats." + "harcananNP");
 	}
 
-	public void setZirh(Player p, UUID uuid, int size) {
+	public void setDirenc(UUID uuid, int size) {
 		fc = statfile.get(uuid);
-		int level = getZirh(uuid);
+		int level = getDirenc(uuid);
 		int result = level + size;
-		p.getAttribute(Attribute.GENERIC_ARMOR)
-				.setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() + size);
-		fc.set("Stats." + "Zirh", result);
+		fc.set("Stats." + "Direnc", result);
 		s(uuid);
 	}
 
-	public int getZirh(UUID uuid) {
+	public int getDirenc(UUID uuid) {
 		fc = statfile.get(uuid);
-		return fc.getInt("Stats." + "Zirh");
+		return fc.getInt("Stats." + "Direnc");
 	}
 
 	public void setAgirlik(UUID uuid, int size) {
@@ -793,12 +918,16 @@ public class StatsManager {
 		fc.set("Stats." + "SaldiriHizi", result);
 		s(uuid);
 	}
-
+	public void setSaldiriHiziCap(UUID uuid) {
+		fc = statfile.get(uuid);
+		fc.set("Stats." + "SaldiriHizi", 100);
+		s(uuid);
+	}
 	public int getSaldiriHizi(UUID uuid) {
 		fc = statfile.get(uuid);
 		return fc.getInt("Stats." + "SaldiriHizi");
 	}
-
+	
 	public void setDoygunluk(Player p, UUID uuid, int size) {
 		fc = statfile.get(uuid);
 		int level = getDoygunluk(uuid);
@@ -835,11 +964,50 @@ public class StatsManager {
 		s(uuid);
 	}
 
+	
+	public boolean getKritikAyar(UUID uuid) {
+		fc = statfile.get(uuid);
+		return fc.getBoolean("Ayarlar." + "KritikHasarAyar");
+	}
+	public void setKritikAyar(UUID uuid, boolean s) {
+		fc = statfile.get(uuid);
+		fc.set("Ayarlar." + "KritikHasarAyar", s);
+		s(uuid);
+	}
+
+	public boolean getSaldiriHiziAyar(UUID uuid) {
+		fc = statfile.get(uuid);
+		return fc.getBoolean("Ayarlar." + "SaldiriHiziAyar");
+	}
+	public void setSaldiriHiziAyar(UUID uuid, boolean s) {
+		fc = statfile.get(uuid);
+		fc.set("Ayarlar." + "SaldiriHiziAyar", s);
+		s(uuid);
+	}
+	
+	public boolean getYaprakAyar(UUID uuid) {
+		fc = statfile.get(uuid);
+		return fc.getBoolean("Ayarlar." + "YaprakAyar");
+	}
+	public void setYaprakAyar(UUID uuid, boolean s) {
+		fc = statfile.get(uuid);
+		fc.set("Ayarlar." + "YaprakAyar", s);
+		s(uuid);
+	}
+	public boolean getSkorAyar(UUID uuid) {
+		fc = statfile.get(uuid);
+		return fc.getBoolean("Ayarlar." + "SkorAyar");
+	}
+	public void setSkorAyar(UUID uuid, boolean s) {
+		fc = statfile.get(uuid);
+		fc.set("Ayarlar." + "SkorAyar", s);
+		s(uuid);
+	}
+	
 	public int getKritikHasari(UUID uuid) {
 		fc = statfile.get(uuid);
 		return fc.getInt("Stats." + "KritikHasari");
 	}
-
 	public void setKritikSansi(UUID uuid, int size) {
 		fc = statfile.get(uuid);
 		int level = getKritikSansi(uuid);
@@ -847,7 +1015,11 @@ public class StatsManager {
 		fc.set("Stats." + "KritikSansi", result);
 		s(uuid);
 	}
-
+	public void setKritikSansiCap(UUID uuid) {
+		fc = statfile.get(uuid);
+		fc.set("Stats." + "KritikSansi", 100);
+		s(uuid);
+	}
 	public int getKritikSansi(UUID uuid) {
 		fc = statfile.get(uuid);
 		return fc.getInt("Stats." + "KritikSansi");

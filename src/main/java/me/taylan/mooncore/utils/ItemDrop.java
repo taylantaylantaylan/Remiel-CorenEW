@@ -29,8 +29,7 @@ public class ItemDrop {
 			armorStand.setSmall(false);
 			armorStand.setInvulnerable(true);
 			armorStand.setItem(equip, item);
-			armorStand.customName(MiniMessage.get()
-					.parse("<gradient:yellow:gold>Çelik Kaplamalı Zırh <dark_aqua>[<aqua>T3<dark_aqua>]"));
+			armorStand.customName(MiniMessage.miniMessage().deserialize("<gradient:yellow:gold>Çelik Kaplamalı Zırh <dark_aqua>[<aqua>T3<dark_aqua>]"));
 			armorStand.setCustomNameVisible(true);
 			new BukkitRunnable() {
 

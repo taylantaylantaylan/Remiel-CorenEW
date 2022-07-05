@@ -16,7 +16,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.3.0-SNAPSHOT</version>
+        <version>3.3.0</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -34,9 +34,33 @@
           </relocations>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>ca.bkaw</groupId>
+        <artifactId>paper-nms-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <executions>
+          <execution>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>remap</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>17</source>
+          <target>17</target>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <repositories>
+    <repository>
+      <id>playpro-repo</id>
+      <url>https://maven.playpro.com</url>
+    </repository>
     <repository>
       <id>placeholderapi</id>
       <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
@@ -55,12 +79,16 @@
       <url>https://repo.codemc.org/repository/maven-public/</url>
     </repository>
     <repository>
-      <id>papermc</id>
-      <url>https://papermc.io/repo/repository/maven-public/</url>
+      <id>dmulloy2-repo</id>
+      <url>https://repo.dmulloy2.net/repository/public/</url>
     </repository>
     <repository>
-      <id>sonatype-oss-snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+      <id>scripted-quests</id>
+      <url>https://raw.githubusercontent.com/TeamMonumenta/scripted-quests/master/mvn-repo/</url>
+    </repository>
+    <repository>
+      <id>papermc</id>
+      <url>https://papermc.io/repo/repository/maven-public/</url>
     </repository>
     <repository>
       <id>decalium-repository-releases</id>
@@ -73,12 +101,40 @@
       <id>apache.snapshots</id>
       <url>https://repository.apache.org/snapshots/</url>
     </pluginRepository>
+    <pluginRepository>
+      <id>bytecode.space</id>
+      <url>https://repo.bytecode.space/repository/maven-public/</url>
+    </pluginRepository>
   </pluginRepositories>
   <dependencies>
+    <dependency>
+      <groupId>com.fastasyncworldedit</groupId>
+      <artifactId>FastAsyncWorldEdit-Core</artifactId>
+      <version>2.1.1</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>me.clip</groupId>
       <artifactId>placeholderapi</artifactId>
       <version>2.10.10</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fastasyncworldedit</groupId>
+      <artifactId>FastAsyncWorldEdit-Bukkit</artifactId>
+      <version>2.1.1</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>FastAsyncWorldEdit-Core</artifactId>
+          <groupId>*</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>fr.xephi</groupId>
+      <artifactId>authme</artifactId>
+      <version>5.6.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -90,22 +146,33 @@
     <dependency>
       <groupId>io.papermc.paper</groupId>
       <artifactId>paper-api</artifactId>
-      <version>1.18.1-R0.1-SNAPSHOT</version>
+      <version>1.18.2-R0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.coreprotect</groupId>
+      <artifactId>coreprotect</artifactId>
+      <version>21.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>ca.bkaw</groupId>
+      <artifactId>paper-nms</artifactId>
+      <version>1.18.2-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.playmonumenta</groupId>
+      <artifactId>scripted-quests</artifactId>
+      <version>4.5</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>eu.endercentral.crazy_advancements</groupId>
       <artifactId>CrazyAdvancementsAPI</artifactId>
-      <version>2.1.4a</version>
+      <version>2.1.9</version>
       <scope>system</scope>
       <systemPath>C:/Users/HP/Downloads/CrazyAdvancementsAPI.jar</systemPath>
-    </dependency>
-    <dependency>
-      <groupId>net.coreprotect.CoreProtect</groupId>
-      <artifactId>CoreProtect</artifactId>
-      <version>20.4</version>
-      <scope>system</scope>
-      <systemPath>C:/Users/HP/Downloads/coreprotect-20.4.jar</systemPath>
     </dependency>
   </dependencies>
   <properties>

@@ -21,10 +21,10 @@ public class NitelikCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
-			if (p.hasPermission("mooncore.nitelik")) {
+
 				p.openInventory(guiHandler.nitelik(p));
 			
-			}
+
 		}
 		return false;
 	}

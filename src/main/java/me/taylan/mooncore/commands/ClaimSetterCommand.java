@@ -1,22 +1,16 @@
 package me.taylan.mooncore.commands;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.ChunkSnapshot;
+import me.taylan.mooncore.MoonCore;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.taylan.mooncore.MoonCore;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class ClaimSetterCommand implements CommandExecutor {
 
@@ -40,7 +34,8 @@ public class ClaimSetterCommand implements CommandExecutor {
 		Player p = (Player) sender;
 
 		if (p.hasPermission("claim")) {
-			if (args.length == 0) {
+			p.sendMessage("Bu komut calışmaz.");
+			/*if (args.length == 0) {
 				Chunk chunk = p.getChunk();
 				ChunkSnapshot bina = chunk.getChunkSnapshot();
 				for (int x = 0; x < 16; x++) {
@@ -79,7 +74,7 @@ public class ClaimSetterCommand implements CommandExecutor {
 						
 					}
 				}
-			}
+			}*/
 
 		}
 		return false;

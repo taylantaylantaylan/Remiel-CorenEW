@@ -1,230 +1,257 @@
 package me.taylan.mooncore;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
+import me.taylan.mooncore.animations.CookAnim;
+import me.taylan.mooncore.animations.FurnaceAnim;
+import me.taylan.mooncore.animations.SmithAnim;
+import me.taylan.mooncore.animations.WorkAnim;
+import me.taylan.mooncore.commands.*;
+import me.taylan.mooncore.enchanting.EnchantRunnable;
+import me.taylan.mooncore.enchanting.Enchants;
+import me.taylan.mooncore.level.ExpList;
+import me.taylan.mooncore.level.Levels;
+import me.taylan.mooncore.listeners.*;
+import me.taylan.mooncore.listeners.entitydamage.AttackDamage;
+import me.taylan.mooncore.listeners.entitydamage.AttackSpeed;
+import me.taylan.mooncore.listeners.entitydamage.Dodge;
+import me.taylan.mooncore.listeners.entitydamage.SpawnArmorStand;
+import me.taylan.mooncore.utils.*;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import me.taylan.mooncore.animations.CookAnim;
-import me.taylan.mooncore.animations.SmithAnim;
-import me.taylan.mooncore.commands.BackCommand;
-import me.taylan.mooncore.commands.ClaimSetterCommand;
-import me.taylan.mooncore.commands.DiscordCommand;
-import me.taylan.mooncore.commands.KnowledgeCommand;
-import me.taylan.mooncore.commands.NitelikCommand;
-import me.taylan.mooncore.commands.PlaytimeCommand;
-import me.taylan.mooncore.commands.ProfileCommand;
-import me.taylan.mooncore.commands.SeviyeCommand;
-import me.taylan.mooncore.commands.SkillCommand;
-import me.taylan.mooncore.commands.StatsCommand;
-import me.taylan.mooncore.enchanting.EnchantRunnable;
-import me.taylan.mooncore.enchanting.Enchants;
-import me.taylan.mooncore.level.ExpList;
-import me.taylan.mooncore.level.Levels;
-import me.taylan.mooncore.listeners.AccessoryListener;
-import me.taylan.mooncore.listeners.BlockRegenListener;
-import me.taylan.mooncore.listeners.BrewListener;
-import me.taylan.mooncore.listeners.ChunkLoadListener;
-import me.taylan.mooncore.listeners.EnchantListener;
-import me.taylan.mooncore.listeners.EntityHealthListener;
-import me.taylan.mooncore.listeners.EntityPotionListener;
-import me.taylan.mooncore.listeners.InventoryClickListener;
-import me.taylan.mooncore.listeners.ItemDropListener;
-import me.taylan.mooncore.listeners.ItemPickupListener;
-import me.taylan.mooncore.listeners.JoinListener;
-import me.taylan.mooncore.listeners.MobSpawnListener;
-import me.taylan.mooncore.listeners.PlayerAttackListener;
-import me.taylan.mooncore.listeners.PlayerDeathListener;
-import me.taylan.mooncore.listeners.ProjectileHitListener;
-import me.taylan.mooncore.listeners.QuitListener;
-import me.taylan.mooncore.listeners.SkillListener;
-import me.taylan.mooncore.listeners.entitydamage.AttackDamage;
-import me.taylan.mooncore.listeners.entitydamage.AttackSpeed;
-import me.taylan.mooncore.listeners.entitydamage.Dodge;
-import me.taylan.mooncore.listeners.entitydamage.SpawnArmorStand;
-import me.taylan.mooncore.utils.BukkitSerialization;
-import me.taylan.mooncore.utils.GuiHandler;
-import me.taylan.mooncore.utils.ItemHandler;
-import me.taylan.mooncore.utils.StatsManager;
-import net.md_5.bungee.api.ChatColor;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MoonCore extends JavaPlugin {
 
-	private StatsManager statsManager;
-	private Enchants enchants;
-	private GuiHandler guiHandler;
-	private SeviyeCommand seviyeCommand;
-	private ItemHandler itemHandler;
-	private EnchantListener enchantListener;
-	private ExpList exp;
-	private EnchantRunnable enchantRunnable;
-	private Levels levels;
-	private CookAnim cookAnim;
-	private SmithAnim smithAnim;
-	private PlayerDeathListener deathListener;
+    private StatsManager statsManager;
+    private Enchants enchants;
+    private GuiHandler guiHandler;
+    private SeviyeCommand seviyeCommand;
+    private ItemHandler itemHandler;
+    private EnchantListener enchantListener;
+    private ExpList exp;
+    private EnchantRunnable enchantRunnable;
+    private Levels levels;
+    private CookAnim cookAnim;
+    private WorkAnim workAnim;
+    private FurnaceAnim furnaceAnim;
+    private SmithAnim smithAnim;
+    private Loots loots;
+    private PlayerAttackListener attackListener;
+    private PlayerDeathListener deathListener;
+    private PlayerFishListener playerFishListener;
+    private InventoryClickListener inventoryClickListener;
 
-	private InventoryClickListener inventoryClickListener;
-	private Map<Entity, Integer> indicators = new HashMap<>();
+    private Configuration configuration;
 
-	public void onEnable() {
-		exp = new ExpList(this);
-		exp.expPut();
-		statsManager = new StatsManager(this);
-		seviyeCommand = new SeviyeCommand(this);
-		levels = new Levels(this);
-		cookAnim = new CookAnim(this);
-		smithAnim = new SmithAnim(this);
-		itemHandler = new ItemHandler(this);
-	
-	
-		enchants = new Enchants(this);
-		guiHandler = new GuiHandler(this);
+    public Configuration getConfiguration() {
+        return configuration;
+    }
 
-		inventoryClickListener = new InventoryClickListener(this);
-		enchantListener = new EnchantListener(this);
-		deathListener = new PlayerDeathListener(this);
-		enchantRunnable = new EnchantRunnable(this);
-		File playerData = new File(this.getDataFolder(), "playerdata");
-		if (!playerData.exists()) {
-			playerData.mkdirs();
-		}
-		new SpawnArmorStand(this);
-		new EntityHealthListener(this);
-		new AccessoryListener(this);
-		new BrewListener(this);
-		new ItemPickupListener(this);
-		new ChunkLoadListener(this);
-		new AttackDamage(this);
-		new AttackSpeed(this);
-		new Dodge(this);
 
-		new ItemDropListener(this);
-		new JoinListener(this);
-		new ProjectileHitListener(this);
-		new QuitListener(this);
-		new SkillListener(this);
-		new BlockRegenListener(this);
-		new PlayerAttackListener(this);
-		new MobSpawnListener(this);
-		new EntityPotionListener(this);
+    private Map<Entity, Integer> indicators = new HashMap<>();
 
-		new ClaimSetterCommand(this);
-		new DiscordCommand(this);
-		new KnowledgeCommand(this);
-		new NitelikCommand(this);
-		new ProfileCommand(this);
-		new SkillCommand(this);
-		new PlaytimeCommand(this);
-		new BackCommand(this);
-		new StatsCommand(this);
+    public void onEnable() {
+        saveDefaultConfig();
+        exp = new ExpList(this);
+        exp.expPut();
 
-		new EnchantRunnable(this).runTaskTimer(this, 0, 2L);
-		new BukkitRunnable() {
+        statsManager = new StatsManager(this);
+        seviyeCommand = new SeviyeCommand(this);
+        attackListener = new PlayerAttackListener(this);
+        levels = new Levels(this);
+        cookAnim = new CookAnim(this);
+        workAnim = new WorkAnim(this);
+        furnaceAnim = new FurnaceAnim(this);
+        smithAnim = new SmithAnim(this);
+        itemHandler = new ItemHandler(this);
+        itemHandler.init();
+        loots = new Loots(this);
 
-			@Override
-			public void run() {
 
-				for (Player player : Bukkit.getOnlinePlayers()) {
-					String name = player.getUniqueId().toString();
-					File f = new File("plugins/RemielCore/playerdata", name + ".yml");
-					if (statsManager.getStatfile().containsKey(player.getUniqueId())) {
-						if (f.exists()) {
-							try {
-								statsManager.getStatfile().get(player.getUniqueId()).save(f);
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
+        enchants = new Enchants(this);
+        guiHandler = new GuiHandler(this);
 
-						}
-					}
-				}
+        inventoryClickListener = new InventoryClickListener(this);
+        enchantListener = new EnchantListener(this);
+        deathListener = new PlayerDeathListener(this);
+        enchantRunnable = new EnchantRunnable(this);
+        playerFishListener = new PlayerFishListener(this);
+        File playerData = new File(this.getDataFolder(), "playerdata");
+        if (!playerData.exists()) {
+            playerData.mkdirs();
+        }
+        new SpawnArmorStand(this);
+        new EntityHealthListener(this);
+        new AccessoryListener(this);
+        new BrewListener(this);
+        new PlayerCraftListener(this);
+        new VehicleDamageListener(this);
+        new ItemPickupListener(this);
+        new AttackDamage(this);
+        new AttackSpeed(this);
+        new Dodge(this);
+        new LoreCommand(this);
+        new ItemDropListener(this);
+        new JoinListener(this);
+        new ProjectileHitListener(this);
+        new QuitListener(this);
+        new SkillListener(this);
+        new BlockRegenListener(this);
+        new PlayerAttackListener(this);
+        new MobSpawnListener(this);
+        new EntityPotionListener(this);
+        new LootListener(this);
+        new EntityDeathListener(this);
+        new ClaimSetterCommand(this);
+        new DiscordCommand(this);
+        new KnowledgeCommand(this);
+        new NitelikCommand(this);
+        new ProfileCommand(this);
+        new SkillCommand(this);
+        new PlaytimeCommand(this);
+        new BackCommand(this);
+        new StatsCommand(this);
+        new NpcCommand(this);
+        new RenameCommand(this);
+        new LootCrateCommand(this);
 
-			}
-		}.runTaskTimerAsynchronously(this, 0, 40L);
-		send("MoonCore Aktif");
+        new EnchantRunnable(this).runTaskTimer(this, 0, 2L);
+        new BukkitRunnable() {
 
-	}
+            @Override
+            public void run() {
 
-	public void onDisable() {
-		Bukkit.getServer().getScheduler().cancelTasks(this);
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			if (EnchantRunnable.getCreeper().get(player.getUniqueId()) != null) {
-				EnchantRunnable.getCreeper().get(player.getUniqueId()).remove();
-				EnchantRunnable.getCreeper().remove(player.getUniqueId());
-			}
-			String invToBase64 = BukkitSerialization
-					.itemStackArrayToBase64(JoinListener.getMenu().get(player.getUniqueId()).getContents());
-			String name = player.getUniqueId().toString();
-			File f = new File("plugins/RemielCore/playerdata", name + ".yml");
-			FileConfiguration fc = statsManager.getStatfile().get(player.getUniqueId());
-			statsManager.setStorage(player.getUniqueId(), invToBase64);
-			statsManager.setVayne(player.getUniqueId(), enchantListener.armorsave.get(player.getUniqueId()));
-			try {
-				fc.save(f);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    String name = player.getUniqueId().toString();
+                    File f = new File("plugins/RemielCore/playerdata", name + ".yml");
+                    if (statsManager.getStatfile().containsKey(player.getUniqueId())) {
+                        if (f.exists()) {
+                            try {
+                                statsManager.getStatfile().get(player.getUniqueId()).save(f);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
 
-		}
-		send("MoonCore Deaktif");
-	}
+                        }
+                    }
+                }
 
-	public void send(String s) {
-		getServer().getConsoleSender().sendMessage("[MoonCore] " + ChatColor.translateAlternateColorCodes('&', s));
-	}
+            }
+        }.runTaskTimerAsynchronously(this, 0, 40L);
 
-	public StatsManager getStatsManager() {
-		return statsManager;
-	}
+        send("MoonCore Aktif");
+    }
 
-	public EnchantListener getEnchantListener() {
-		return enchantListener;
-	}
+    public PlayerAttackListener getAttackListener() {
+        return attackListener;
+    }
 
-	public GuiHandler getGuiHandler() {
-		return guiHandler;
-	}
+    public void onDisable() {
+        Bukkit.getServer().getScheduler().cancelTasks(this);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (EnchantRunnable.getCreeper().get(player.getUniqueId()) != null) {
+                EnchantRunnable.getCreeper().get(player.getUniqueId()).remove();
+                EnchantRunnable.getCreeper().remove(player.getUniqueId());
+            }
+            String invToBase64 = BukkitSerialization
+                    .itemStackArrayToBase64(JoinListener.getMenu().get(player.getUniqueId()).getContents());
+            String invToBase64furnace = BukkitSerialization
+                    .itemStackArrayToBase64(JoinListener.getFurnacemenu().get(player.getUniqueId()).getContents());
+            String invToBase64smoker = BukkitSerialization
+                    .itemStackArrayToBase64(JoinListener.getOcakMenu().get(player.getUniqueId()).getContents());
+            String invToBase64work = BukkitSerialization
+                    .itemStackArrayToBase64(JoinListener.getElsanatmenu().get(player.getUniqueId()).getContents());
+            String name = player.getUniqueId().toString();
+            File f = new File("plugins/RemielCore/playerdata", name + ".yml");
+            FileConfiguration fc = statsManager.getStatfile().get(player.getUniqueId());
+            statsManager.setStorage(player.getUniqueId(), invToBase64);
+            statsManager.setFurnaceStorage(player.getUniqueId(), invToBase64furnace);
+            statsManager.setCookStorage(player.getUniqueId(), invToBase64smoker);
+            statsManager.setWorkStorage(player.getUniqueId(), invToBase64work);
 
-	public Map<Entity, Integer> getIndicators() {
-		return indicators;
-	}
+            statsManager.setVayne(player.getUniqueId(), enchantListener.armorsave.get(player.getUniqueId()));
+            try {
+                fc.save(f);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-	public ItemHandler getItemHandler() {
-		return itemHandler;
-	}
+        }
+        send("MoonCore Deaktif");
+    }
 
-	public Levels getLevels() {
-		return levels;
-	}
+    public void send(String s) {
+        getServer().getConsoleSender().sendMessage("[MoonCore] " + ChatColor.translateAlternateColorCodes('&', s));
+    }
 
-	public SeviyeCommand getSeviyeCommand() {
-		return seviyeCommand;
-	}
+    public StatsManager getStatsManager() {
+        return statsManager;
+    }
 
-	public CookAnim getCookAnim() {
-		return cookAnim;
-	}
+    public EnchantListener getEnchantListener() {
+        return enchantListener;
+    }
 
-	public Enchants getEnchants() {
-		return enchants;
-	}
+    public GuiHandler getGuiHandler() {
+        return guiHandler;
+    }
 
-	public InventoryClickListener getInventoryClickListener() {
-		return inventoryClickListener;
-	}
+    public Map<Entity, Integer> getIndicators() {
+        return indicators;
+    }
 
-	public SmithAnim getSmithAnim() {
-		return smithAnim;
-	}
+    public ItemHandler getItemHandler() {
+        return itemHandler;
+    }
 
-	public PlayerDeathListener getDeathListener() {
-		return deathListener;
-	}
+    public Levels getLevels() {
+        return levels;
+    }
+
+    public SeviyeCommand getSeviyeCommand() {
+        return seviyeCommand;
+    }
+
+    public WorkAnim getWorkAnim() {
+        return workAnim;
+    }
+
+    public CookAnim getCookAnim() {
+        return cookAnim;
+    }
+
+    public FurnaceAnim getFurnaceAnim() {
+        return furnaceAnim;
+    }
+
+    public Enchants getEnchants() {
+        return enchants;
+    }
+
+    public InventoryClickListener getInventoryClickListener() {
+        return inventoryClickListener;
+    }
+
+    public SmithAnim getSmithAnim() {
+        return smithAnim;
+    }
+
+    public PlayerDeathListener getDeathListener() {
+        return deathListener;
+    }
+
+    public Loots getLoots() {
+        return loots;
+    }
+
+
 }

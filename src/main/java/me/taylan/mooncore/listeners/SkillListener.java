@@ -1,11 +1,12 @@
 package me.taylan.mooncore.listeners;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-
+import com.manya.pdc.DataTypes;
+import me.taylan.mooncore.CoreProtectApi;
+import me.taylan.mooncore.MoonCore;
+import me.taylan.mooncore.level.Levels;
+import me.taylan.mooncore.utils.ItemHandler;
+import me.taylan.mooncore.utils.StatsManager;
+import net.coreprotect.CoreProtect;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -17,7 +18,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -26,14 +26,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import com.manya.pdc.DataTypes;
-
-import me.taylan.mooncore.CoreProtectApi;
-import me.taylan.mooncore.MoonCore;
-import me.taylan.mooncore.level.Levels;
-import me.taylan.mooncore.utils.ItemHandler;
-import me.taylan.mooncore.utils.StatsManager;
-import net.coreprotect.CoreProtect;
+import java.util.*;
 
 public class SkillListener implements Listener {
 	private final PersistentDataType<?, HashMap<String, Integer>> Enchants = DataTypes

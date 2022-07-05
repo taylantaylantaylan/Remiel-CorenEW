@@ -1,33 +1,22 @@
 package me.taylan.mooncore.listeners;
 
-import java.util.Random;
-
-import org.bukkit.Bukkit;
+import io.lumine.mythic.bukkit.events.MythicMobSpawnEvent;
+import me.taylan.mooncore.MoonCore;
+import me.taylan.mooncore.utils.Painter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.entity.AreaEffectCloud;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Cod;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Silverfish;
-import org.bukkit.entity.Squid;
-import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import io.lumine.mythic.bukkit.events.MythicMobSpawnEvent;
-import me.taylan.mooncore.MoonCore;
-import me.taylan.mooncore.utils.Painter;
-import net.kyori.adventure.text.minimessage.MiniMessage;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MobSpawnListener implements Listener {
 
@@ -38,50 +27,14 @@ public class MobSpawnListener implements Listener {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
-	@EventHandler
-	public void mobspawnevent(CreatureSpawnEvent event) {
-		LivingEntity entity = event.getEntity();
-		if (entity instanceof Player || entity instanceof ArmorStand || entity instanceof Villager
-				|| entity instanceof AreaEffectCloud || entity instanceof Cod || entity instanceof Squid) {
-			return;
-		}
-		
-		Location loc = entity.getLocation();
-		World world = Bukkit.getServer().getWorld("world");
-		world.spawn(loc, Silverfish.class, armorStand -> {
-			armorStand.setGravity(false);
-			armorStand.setInvisible(true);
-			armorStand.setAI(false);
-			armorStand.setCustomNameVisible(true);
-			String string = entity.getCustomName();
-			armorStand.customName(MiniMessage.get().parse(string));
-			entity.customName(
-					MiniMessage.get().parse("<dark_green>[<green>" + (int) entity.getHealth() + "❤<dark_green>]"));
-			new BukkitRunnable() {
-
-				@Override
-				public void run() {
-					entity.customName(
-							MiniMessage.get().parse("<dark_green>[<green>" + (int) entity.getHealth() + "❤<dark_green>]"));
-					if (entity.isDead()) {
-						armorStand.remove();
-						this.cancel();
-					}
-
-				}
-			}.runTaskTimer(plugin, 0, 1);
-
-		});
-	}
 
 	@EventHandler
 	public void mythicmobspawn(MythicMobSpawnEvent event) {
 		Entity entity = event.getEntity();
-		Random random = new Random();
-		int chance = random.nextInt(50);
+		int chance = ThreadLocalRandom.current().nextInt(50);
 		if (chance < 5) {
 			Random elit = new Random();
-			int elitchance = random.nextInt(6);
+			int elitchance = ThreadLocalRandom.current().nextInt(6);
 			switch (elitchance) {
 			case 0:
 
@@ -138,6 +91,10 @@ public class MobSpawnListener implements Listener {
 										0.6f);
 								player.getWorld().spawnParticle(Particle.BLOCK_CRACK, loc, 20, 2, 2, 2, 0,
 										Material.GREEN_TERRACOTTA.createBlockData());
+								Random r = ThreadLocalRandom.current();
+								int low = 100;
+								int high = 200;
+								int result = r.nextInt(high - low) + low;
 								new BukkitRunnable() {
 
 									@Override

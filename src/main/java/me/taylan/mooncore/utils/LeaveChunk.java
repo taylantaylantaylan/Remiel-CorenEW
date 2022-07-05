@@ -1,19 +1,12 @@
 package me.taylan.mooncore.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import org.bukkit.Bukkit;
+import me.taylan.mooncore.MoonCore;
 import org.bukkit.ChunkSnapshot;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Tag;
-import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import me.taylan.mooncore.MoonCore;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LeaveChunk extends BukkitRunnable {
 
@@ -25,7 +18,7 @@ public class LeaveChunk extends BukkitRunnable {
 		this.snapshot = snapshot;
 		this.plugin = plugin;
 	}
-
+/*
 	@Override
 	public void run() {
 		for (int x = 0; x < 16; x++) {
@@ -49,8 +42,7 @@ public class LeaveChunk extends BukkitRunnable {
 				World w = Bukkit.getWorld("world");
 				if (!(loclist.isEmpty())) {
 					for (Location loc : loclist) {
-						Random rand = new Random();
-						int chance = rand.nextInt(50);
+						int chance = ThreadLocalRandom.current().nextInt(50);
 						if (chance < 3) {
 							w.spawnParticle(Particle.FALLING_SPORE_BLOSSOM, loc, 1, 0, 0, 0, 0);
 						}
@@ -59,5 +51,11 @@ public class LeaveChunk extends BukkitRunnable {
 			}
 		}.runTaskTimerAsynchronously(this.plugin, 0, 80);
 	}
+*/
 
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
 }

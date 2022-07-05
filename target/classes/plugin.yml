@@ -3,7 +3,7 @@ main: me.taylan.mooncore.MoonCore
 version: 1.0.0
 api-version: 1.18
 author: Taylan
-depend: [CrazyAdvancementsAPI, CoreProtect]
+depend: [CrazyAdvancementsAPI, CoreProtect, ProtocolLib]
 
 commands:
    ustalık:
@@ -16,3 +16,7 @@ commands:
    claimset:
    back:
    oynanansure:
+   npcolustur:
+   lore:
+   isim:
+   lootolustur:

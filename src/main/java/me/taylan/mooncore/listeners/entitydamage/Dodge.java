@@ -3,6 +3,7 @@ package me.taylan.mooncore.listeners.entitydamage;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
@@ -70,8 +71,7 @@ public class Dodge implements Listener {
 								if (container.get(key, PersistentDataType.STRING).contains("desme")) {
 									String[] parts = container.get(key, PersistentDataType.STRING).split(" ");
 									int level = Integer.parseInt(parts[1]);
-									Random rand = new Random();
-									int chance = rand.nextInt(20 + level * 2);
+									int chance = ThreadLocalRandom.current().nextInt(20 + level * 2);
 
 									if (chance < 4) {
 										event.setCancelled(true);
@@ -80,8 +80,7 @@ public class Dodge implements Listener {
 								} else {
 									String[] parts2 = container2.get(key, PersistentDataType.STRING).split(" ");
 									int level2 = Integer.parseInt(parts2[1]);
-									Random rand = new Random();
-									int chance = rand.nextInt(20 - level2 * 2);
+									int chance = ThreadLocalRandom.current().nextInt(20 - level2 * 2);
 
 									if (chance < 4) {
 										event.setCancelled(true);
@@ -95,8 +94,7 @@ public class Dodge implements Listener {
 					} else {
 						String[] parts2 = container2.get(key, PersistentDataType.STRING).split(" ");
 						int level2 = Integer.parseInt(parts2[1]);
-						Random rand = new Random();
-						int chance = rand.nextInt(20 - level2 * 2);
+						int chance = ThreadLocalRandom.current().nextInt(20 - level2 * 2);
 
 						if (chance < 4) {
 							event.setCancelled(true);

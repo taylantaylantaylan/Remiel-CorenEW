@@ -43,10 +43,10 @@ public class StatsCommand implements CommandExecutor {
 					stats.setCan(p, p.getUniqueId(), can);
 					p.sendMessage(Painter.paint("&a+" + can + " Can"));
 					break;
-				case "zirh":
-					int zirh = Integer.valueOf(args[1]);
-					stats.setZirh(p, p.getUniqueId(), zirh);
-					p.sendMessage(Painter.paint("&a+" + zirh + " Zırh"));
+				case "direnc":
+					int direnc = Integer.valueOf(args[1]);
+					stats.setDirenc(p.getUniqueId(), direnc);
+					p.sendMessage(Painter.paint("&a+" + direnc + " Direnç"));
 					break;
 				case "saldirihizi":
 					int saldirihizi = Integer.valueOf(args[1]);

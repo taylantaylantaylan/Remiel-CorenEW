@@ -132,7 +132,7 @@ public class EnchantListener implements Listener {
 						armorStand.setSmall(true);
 						armorStand.setInvulnerable(true);
 						armorStand.setCustomNameVisible(true);
-						armorStand.customName(MiniMessage.get().parse("<green>☣"));
+						armorStand.customName(MiniMessage.miniMessage().deserialize("<green>☣"));
 						plugin.getIndicators().put(armorStand, 0);
 						new BukkitRunnable() {
 
@@ -230,7 +230,7 @@ public class EnchantListener implements Listener {
 						armorStand.setSmall(true);
 						armorStand.setInvulnerable(true);
 						armorStand.setCustomNameVisible(true);
-						armorStand.customName(MiniMessage.get().parse("<aqua>❆"));
+						armorStand.customName(MiniMessage.miniMessage().deserialize("<aqua>❆"));
 						plugin.getIndicators().put(armorStand, 0);
 						new BukkitRunnable() {
 
@@ -334,7 +334,7 @@ public class EnchantListener implements Listener {
 							armorStand.setSmall(true);
 							armorStand.setInvulnerable(true);
 							armorStand.setCustomNameVisible(true);
-							armorStand.customName(MiniMessage.get().parse("<#446A58>SABOTAJ"));
+							armorStand.customName(MiniMessage.miniMessage().deserialize("<#446A58>SABOTAJ"));
 							plugin.getIndicators().put(armorStand, 0);
 							new BukkitRunnable() {
 
@@ -980,7 +980,7 @@ public class EnchantListener implements Listener {
 						armorStand.setSmall(true);
 						armorStand.setInvulnerable(true);
 						armorStand.setCustomNameVisible(true);
-						armorStand.customName(MiniMessage.get().parse("<gray>✦"));
+						armorStand.customName(MiniMessage.miniMessage().deserialize("<gray>✦"));
 						plugin.getIndicators().put(armorStand, 0);
 						new BukkitRunnable() {
 
@@ -1080,7 +1080,7 @@ public class EnchantListener implements Listener {
 							armorStand.setSmall(true);
 							armorStand.setInvulnerable(true);
 							armorStand.setCustomNameVisible(true);
-							armorStand.customName(MiniMessage.get().parse("<red>✖"));
+							armorStand.customName(MiniMessage.miniMessage().deserialize("<red>✖"));
 							plugin.getIndicators().put(armorStand, 0);
 							new BukkitRunnable() {
 
@@ -1177,7 +1177,7 @@ public class EnchantListener implements Listener {
 						armorStand.setSmall(true);
 						armorStand.setInvulnerable(true);
 						armorStand.setCustomNameVisible(true);
-						armorStand.customName(MiniMessage.get().parse("<dark_aqua><bold>İNFAZ"));
+						armorStand.customName(MiniMessage.miniMessage().deserialize("<dark_aqua><bold>İNFAZ"));
 						plugin.getIndicators().put(armorStand, 0);
 						new BukkitRunnable() {
 
@@ -1283,7 +1283,7 @@ public class EnchantListener implements Listener {
 							armorStand.setSmall(true);
 							armorStand.setInvulnerable(true);
 							armorStand.setCustomNameVisible(true);
-							armorStand.customName(MiniMessage.get().parse("<red>⑊"));
+							armorStand.customName(MiniMessage.miniMessage().deserialize("<red>⑊"));
 							plugin.getIndicators().put(armorStand, 0);
 
 							new BukkitRunnable() {
@@ -1515,7 +1515,7 @@ public class EnchantListener implements Listener {
 						armorStand.setSmall(true);
 						armorStand.setInvulnerable(true);
 						armorStand.setCustomNameVisible(true);
-						armorStand.customName(MiniMessage.get().parse("<gold>❂"));
+						armorStand.customName(MiniMessage.miniMessage().deserialize("<gold>❂"));
 						plugin.getIndicators().put(armorStand, 0);
 						new BukkitRunnable() {
 
@@ -2056,71 +2056,7 @@ public class EnchantListener implements Listener {
 		}
 	}
 
-	@EventHandler
-	public void quick(PlayerInteractEvent e) {
-
-		Player player = e.getPlayer();
-
-		ItemStack item = player.getInventory().getItemInMainHand();
-		if (item == null) {
-			return;
-		}
-		ItemStack quiver = new ItemStack(Material.ARROW);
-		quiver.setAmount(1);
-		if (player.getInventory().containsAtLeast(quiver, 1)) {
-
-			if (e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_AIR) {
-				if (quick.get(player.getUniqueId()) != null) {
-					Integer fire = quick.get(player.getUniqueId());
-					if (fire == 0) {
-						if (player.getInventory().getItemInMainHand().getItemMeta() != null
-								&& player.getInventory().getItemInMainHand().getItemMeta().displayName() != null) {
-							ItemMeta meta = player.getInventory().getItemInMainHand().getItemMeta();
-							NamespacedKey key = new NamespacedKey(plugin, "Enchants");
-							if (meta.getPersistentDataContainer() == null)
-								return;
-							;
-							PersistentDataContainer container = meta.getPersistentDataContainer();
-							if (!container.has(key, Enchants))
-								return;
-							if (container.get(key, Enchants).containsKey("quick")) {
-								int level = container.get(key, Enchants).get("quick");
-								Vector playerDirection = player.getLocation().getDirection().normalize().multiply(2);
-								Arrow arrow = player.launchProjectile(Arrow.class, playerDirection);
-								player.playSound(player.getLocation(), Sound.ENTITY_ARROW_SHOOT, 100, 1.2f);
-								if (meta.hasEnchant(Enchantment.ARROW_FIRE)) {
-									arrow.setVisualFire(true);
-									arrow.setFireTicks(-1);
-									arrow.setBounce(false);
-								}
-								if (meta.hasEnchant(Enchantment.ARROW_DAMAGE)) {
-									int powerlevel = meta.getEnchantLevel(Enchantment.ARROW_DAMAGE);
-									arrow.setDamage(arrow.getDamage() + level + powerlevel * 2);
-								} else {
-									arrow.setDamage(arrow.getDamage() + level * 2);
-								}
-								player.getInventory().removeItem(quiver);
-								fire = 1;
-								quick.put(player.getUniqueId(), fire);
-								new BukkitRunnable() {
-
-									@Override
-									public void run() {
-
-										quick.put(player.getUniqueId(), 0);
-
-									}
-								}.runTaskLater(plugin, 40 / level - stats.getSaldiriHizi(player.getUniqueId()));
-
-							}
-						}
-					}
-				} else {
-					quick.put(player.getUniqueId(), 0);
-				}
-			}
-		}
-	}
+	
 
 	@EventHandler
 	public void quickShot(PlayerInteractEvent event) {

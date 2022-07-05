@@ -3,6 +3,7 @@ package me.taylan.mooncore.enchanting;
 import java.util.HashMap;
 import java.util.UUID;
 
+import me.taylan.mooncore.listeners.InventoryClickListener;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
@@ -64,6 +65,21 @@ public class EnchantRunnable extends BukkitRunnable {
 					creeper.get(player.getUniqueId()).remove();
 					creeper.remove(player.getUniqueId());
 				}
+			}//200
+			if(stats.getKritikSansi(player.getUniqueId()) >100) {
+				stats.setKritikSansiCap(player.getUniqueId());
+			}
+			/*if(stats.getFurnaceAmount(player.getUniqueId()) ==0) {
+				InventoryClickListener.getFurnaceBlock().remove(player.getUniqueId());
+			}
+			if(stats.getCookAmount(player.getUniqueId()) ==0) {
+				InventoryClickListener.getCookBlock().remove(player.getUniqueId());
+			}*/
+			if(stats.getKritikSansi(player.getUniqueId()) >100) {
+				stats.setKritikSansiCap(player.getUniqueId());
+			}
+			if(stats.getSaldiriHizi(player.getUniqueId()) >100) {
+				stats.setSaldiriHiziCap(player.getUniqueId());
 			}
 			if (player.getInventory().getLeggings() != null
 					&& player.getInventory().getLeggings().getItemMeta() != null) {

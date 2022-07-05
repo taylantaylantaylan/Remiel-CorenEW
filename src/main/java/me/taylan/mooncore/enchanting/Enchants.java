@@ -2,6 +2,7 @@ package me.taylan.mooncore.enchanting;
 
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -25,10 +26,10 @@ public class Enchants extends EnchantConstructor {
 	public void addEnchantBow(ItemStack item, Player p, int lvl) {
 
 		for (int ench = 0; ench < 1;) {
-			Random rand = new Random();
-			int chance = rand.nextInt(9);
-			Random rand2 = new Random();
-			int chance2 = rand2.nextInt(lvl - 2);
+			 
+			int chance = ThreadLocalRandom.current().nextInt(9);
+			 
+			int chance2 = ThreadLocalRandom.current().nextInt(lvl - 2);
 			if (chance2 == 0) {
 				chance2 = 1;
 			}
@@ -105,10 +106,10 @@ public class Enchants extends EnchantConstructor {
 	public void addEnchantToSword(ItemStack item, Player p, int lvl) {
 
 		for (int ench = 0; ench < 1;) {
-			Random rand = new Random();
-			int chance = rand.nextInt(16);
-			Random rand2 = new Random();
-			int chance2 = rand2.nextInt(lvl - 2);
+			 
+			int chance = ThreadLocalRandom.current().nextInt(16);
+			 
+			int chance2 = ThreadLocalRandom.current().nextInt(lvl - 2);
 			if (chance2 == 0) {
 				chance2 = 1;
 			}
@@ -233,10 +234,10 @@ public class Enchants extends EnchantConstructor {
 	public void addEnchantAxe(ItemStack item, Player p, int lvl) {
 
 		for (int ench = 0; ench < 1;) {
-			Random rand = new Random();
-			int chance = rand.nextInt(13);
-			Random rand2 = new Random();
-			int chance2 = rand2.nextInt(lvl - 2);
+			 
+			int chance = ThreadLocalRandom.current().nextInt(13);
+			 
+			int chance2 = ThreadLocalRandom.current().nextInt(lvl - 2);
 			if (chance2 == 0) {
 				chance2 = 1;
 			}
@@ -344,10 +345,10 @@ public class Enchants extends EnchantConstructor {
 	public void addEnchantCrossbow(ItemStack item, Player p, int lvl) {
 
 		for (int ench = 0; ench < 1;) {
-			Random rand = new Random();
-			int chance = rand.nextInt(6);
-			Random rand2 = new Random();
-			int chance2 = rand2.nextInt(lvl - 2);
+			 
+			int chance = ThreadLocalRandom.current().nextInt(6);
+			 
+			int chance2 = ThreadLocalRandom.current().nextInt(lvl - 2);
 			if (chance2 == 0) {
 				chance2 = 1;
 			}
@@ -403,10 +404,10 @@ public class Enchants extends EnchantConstructor {
 	public void addEnchantLeg(ItemStack item, Player p, int lvl) {
 
 		for (int ench = 0; ench < 1;) {
-			Random rand = new Random();
-			int chance = rand.nextInt(11);
-			Random rand2 = new Random();
-			int chance2 = rand2.nextInt(lvl - 2);
+			 
+			int chance = ThreadLocalRandom.current().nextInt(11);
+			 
+			int chance2 = ThreadLocalRandom.current().nextInt(lvl - 2);
 			if (chance2 == 0) {
 				chance2 = 1;
 			}
@@ -496,10 +497,10 @@ public class Enchants extends EnchantConstructor {
 	public void addEnchantChestplate(ItemStack item, Player p, int lvl) {
 
 		for (int ench = 0; ench < 1;) {
-			Random rand = new Random();
-			int chance = rand.nextInt(12);
-			Random rand2 = new Random();
-			int chance2 = rand2.nextInt(lvl - 2);
+			 
+			int chance = ThreadLocalRandom.current().nextInt(12);
+			 
+			int chance2 = ThreadLocalRandom.current().nextInt(lvl - 2);
 			if (chance2 == 0) {
 				chance2 = 1;
 			}
@@ -598,10 +599,10 @@ public class Enchants extends EnchantConstructor {
 	public void addEnchantHelmet(ItemStack item, Player p, int lvl) {
 
 		for (int ench = 0; ench < 1;) {
-			Random rand = new Random();
-			int chance = rand.nextInt(13);
-			Random rand2 = new Random();
-			int chance2 = rand2.nextInt(lvl - 2);
+			 
+			int chance = ThreadLocalRandom.current().nextInt(13);
+			 
+			int chance2 = ThreadLocalRandom.current().nextInt(lvl - 2);
 			if (chance2 == 0) {
 				chance2 = 1;
 			}
@@ -714,10 +715,10 @@ public class Enchants extends EnchantConstructor {
 	public void addEnchantBoots(ItemStack item, Player p, int lvl) {
 
 		for (int ench = 0; ench < 1;) {
-			Random rand = new Random();
-			int chance = rand.nextInt(15);
-			Random rand2 = new Random();
-			int chance2 = rand2.nextInt(lvl - 2);
+			 
+			int chance = ThreadLocalRandom.current().nextInt(15);
+			 
+			int chance2 = ThreadLocalRandom.current().nextInt(lvl - 2);
 			if (chance2 == 0) {
 				chance2 = 1;
 			}
@@ -847,10 +848,10 @@ public class Enchants extends EnchantConstructor {
 	public void addEnchantShovel(ItemStack item, Player p, int lvl) {
 
 		for (int ench = 0; ench < 1;) {
-			Random rand = new Random();
-			int chance = rand.nextInt(7);
-			Random rand2 = new Random();
-			int chance2 = rand2.nextInt(lvl - 2);
+			 
+			int chance = ThreadLocalRandom.current().nextInt(7);
+			 
+			int chance2 = ThreadLocalRandom.current().nextInt(lvl - 2);
 			if (chance2 == 0) {
 				chance2 = 1;
 			}
@@ -914,10 +915,10 @@ public class Enchants extends EnchantConstructor {
 	public void addEnchantPickaxe(ItemStack item, Player p, int lvl) {
 
 		for (int ench = 0; ench < 1;) {
-			Random rand = new Random();
-			int chance = rand.nextInt(7);
-			Random rand2 = new Random();
-			int chance2 = rand2.nextInt(lvl - 2);
+			 
+			int chance = ThreadLocalRandom.current().nextInt(7);
+			 
+			int chance2 = ThreadLocalRandom.current().nextInt(lvl - 2);
 			if (chance2 == 0) {
 				chance2 = 1;
 			}
@@ -980,10 +981,10 @@ public class Enchants extends EnchantConstructor {
 	public void addEnchantFishingRod(ItemStack item, Player p, int lvl) {
 
 		for (int ench = 0; ench < 1;) {
-			Random rand = new Random();
-			int chance = rand.nextInt(7);
-			Random rand2 = new Random();
-			int chance2 = rand2.nextInt(lvl - 2);
+			 
+			int chance = ThreadLocalRandom.current().nextInt(7);
+			 
+			int chance2 = ThreadLocalRandom.current().nextInt(lvl - 2);
 			if (chance2 == 0) {
 				chance2 = 1;
 			}

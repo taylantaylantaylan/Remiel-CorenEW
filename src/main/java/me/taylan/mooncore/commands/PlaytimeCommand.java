@@ -22,10 +22,10 @@ public class PlaytimeCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
-			if (p.hasPermission("mooncore.playtime")) {
+
 				int secondsPlayed = p.getStatistic(Statistic.PLAY_ONE_MINUTE) / 20;
-				p.sendMessage(Painter.paint("&bŞu ana kadar oyunda kaldığın süre: &f"+secondsPlayed));
-			}
+				p.sendMessage(Painter.paint("&bŞu ana kadar oyunda kaldığın süre: &f"+secondsPlayed/60));
+
 		}
 		return false;
 	}

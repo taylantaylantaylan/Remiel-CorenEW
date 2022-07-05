@@ -13,15 +13,11 @@ public class ExpList {
 	}
 
 	private static HashMap<String, Integer> expMap = new HashMap<>();
-	private static HashMap<String, String> ReforgeMap = new HashMap<>();
 
 	public static HashMap<String, Integer> getExpMap() {
 		return expMap;
 	}
 
-	public static HashMap<String, String> getReforgeMap() {
-		return ReforgeMap;
-	}
 
 	public void expPut() {
 		// MINING
@@ -101,56 +97,6 @@ public class ExpList {
 		expMap.put("PUMPKIN", 3);
 		expMap.put("MELON", 3);
 		expMap.put("SWEET_BERRIES", 3);
-
-		// REFORGEEEEEEEEEEEEEEEEEEEE
-		ReforgeMap.put("IRON_SWORD", "IRON_INGOT");
-		ReforgeMap.put("GOLDEN_SWORD", "GOLD_INGOT");
-		ReforgeMap.put("DIAMOND_SWORD", "DIAMOND");
-		ReforgeMap.put("NETHERITE_SWORD", "NETHERITE_INGOT");
-		ReforgeMap.put("STONE_SWORD", "COBBLESTONE");
-		ReforgeMap.put("WOODEN_SWORD", "COPPER_INGOT");
-
-		ReforgeMap.put("IRON_PICKAXE", "IRON_INGOT");
-		ReforgeMap.put("GOLDEN_PICKAXE", "GOLD_INGOT");
-		ReforgeMap.put("DIAMOND_PICKAXE", "DIAMOND");
-		ReforgeMap.put("NETHERITE_PICKAXE", "NETHERITE_INGOT");
-		ReforgeMap.put("STONE_PICKAXE", "COBBLESTONE");
-		ReforgeMap.put("WOODEN_PICKAXE", "COPPER_INGOT");
-
-		ReforgeMap.put("IRON_AXE", "IRON_INGOT");
-		ReforgeMap.put("GOLDEN_AXE", "GOLD_INGOT");
-		ReforgeMap.put("DIAMOND_AXE", "DIAMOND");
-		ReforgeMap.put("NETHERITE_AXE", "NETHERITE_INGOT");
-		ReforgeMap.put("STONE_AXE", "COBBLESTONE");
-		ReforgeMap.put("WOODEN_AXE", "COPPER_INGOT");
-
-		ReforgeMap.put("IRON_CHESTPLATE", "IRON_INGOT");
-		ReforgeMap.put("GOLDEN_CHESTPLATE", "GOLD_INGOT");
-		ReforgeMap.put("DIAMOND_CHESTPLATE", "DIAMOND");
-		ReforgeMap.put("NETHERITE_CHESTPLATE", "NETHERITE_INGOT");
-		ReforgeMap.put("LEATHER_CHESTPLATE", "COPPER_INGOT");
-		ReforgeMap.put("CHAINMAIL_CHESTPLATE", "CHAIN");
-
-		ReforgeMap.put("IRON_HELMET", "IRON_INGOT");
-		ReforgeMap.put("GOLDEN_HELMET", "GOLD_INGOT");
-		ReforgeMap.put("DIAMOND_HELMET", "DIAMOND");
-		ReforgeMap.put("NETHERITE_HELMET", "NETHERITE_INGOT");
-		ReforgeMap.put("LEATHER_HELMET", "COPPER_INGOT");
-		ReforgeMap.put("CHAINMAIL_HELMET", "CHAIN");
-
-		ReforgeMap.put("IRON_LEGGINGS", "IRON_INGOT");
-		ReforgeMap.put("GOLDEN_LEGGINGS", "GOLD_INGOT");
-		ReforgeMap.put("DIAMOND_LEGGINGS", "DIAMOND");
-		ReforgeMap.put("NETHERITE_LEGGINGS", "NETHERITE_INGOT");
-		ReforgeMap.put("LEATHER_LEGGINGS", "COPPER_INGOT");
-		ReforgeMap.put("CHAINMAIL_LEGGINGS", "CHAIN");
-
-		ReforgeMap.put("IRON_BOOTS", "IRON_INGOT");
-		ReforgeMap.put("GOLDEN_BOOTS", "GOLD_INGOT");
-		ReforgeMap.put("DIAMOND_BOOTS", "DIAMOND");
-		ReforgeMap.put("NETHERITE_BOOTS", "NETHERITE_INGOT");
-		ReforgeMap.put("LEATHER_BOOTS", "COPPER_INGOT");
-		ReforgeMap.put("CHAINMAIL_BOOTS", "CHAIN");
 
 	}
 

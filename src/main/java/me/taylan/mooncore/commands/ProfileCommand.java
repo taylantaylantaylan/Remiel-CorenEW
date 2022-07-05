@@ -1,7 +1,8 @@
 package me.taylan.mooncore.commands;
 
-import java.util.ArrayList;
-
+import me.taylan.mooncore.MoonCore;
+import me.taylan.mooncore.utils.GuiHandler;
+import me.taylan.mooncore.utils.StatsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,9 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import me.taylan.mooncore.MoonCore;
-import me.taylan.mooncore.utils.GuiHandler;
-import me.taylan.mooncore.utils.StatsManager;
+import java.util.ArrayList;
 
 public class ProfileCommand implements CommandExecutor {
 
@@ -30,7 +29,7 @@ public class ProfileCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
-			if (p.hasPermission("mooncore.profil")) {
+
 				if (args.length == 0) {
 					p.openInventory(gui.profil(p, p));
 					ArrayList<ItemStack> list = (ArrayList<ItemStack>) stats.getHepsi(p.getUniqueId());
@@ -98,7 +97,7 @@ public class ProfileCommand implements CommandExecutor {
 					if (!(stats.getYuzuk(target.getUniqueId()).equals("Yok.."))) {
 						p.getOpenInventory().getTopInventory().setItem(32, list.get(3));
 					}
-				}
+
 			}
 		}
 		return false;
