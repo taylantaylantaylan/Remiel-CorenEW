@@ -5,6 +5,8 @@ import me.taylan.mooncore.animations.FurnaceAnim;
 import me.taylan.mooncore.animations.SmithAnim;
 import me.taylan.mooncore.animations.WorkAnim;
 import me.taylan.mooncore.commands.*;
+import me.taylan.mooncore.eco.Ekonomi;
+import me.taylan.mooncore.eco.VaultHook;
 import me.taylan.mooncore.enchanting.EnchantRunnable;
 import me.taylan.mooncore.enchanting.Enchants;
 import me.taylan.mooncore.level.ExpList;
@@ -26,14 +28,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class MoonCore extends JavaPlugin {
 
     private StatsManager statsManager;
     private Enchants enchants;
     private GuiHandler guiHandler;
+
     private SeviyeCommand seviyeCommand;
     private ItemHandler itemHandler;
     private EnchantListener enchantListener;
@@ -50,6 +52,12 @@ public class MoonCore extends JavaPlugin {
     private PlayerFishListener playerFishListener;
     private InventoryClickListener inventoryClickListener;
 
+    public Ekonomi getEkonomi() {
+        return ekonomi;
+    }
+
+    private Ekonomi ekonomi;
+
     private Configuration configuration;
 
     public Configuration getConfiguration() {
@@ -63,8 +71,10 @@ public class MoonCore extends JavaPlugin {
         saveDefaultConfig();
         exp = new ExpList(this);
         exp.expPut();
-
         statsManager = new StatsManager(this);
+        ekonomi = new Ekonomi(this);
+        new VaultHook(this);
+        new EconomyCommand(this);
         seviyeCommand = new SeviyeCommand(this);
         attackListener = new PlayerAttackListener(this);
         levels = new Levels(this);
@@ -85,6 +95,7 @@ public class MoonCore extends JavaPlugin {
         deathListener = new PlayerDeathListener(this);
         enchantRunnable = new EnchantRunnable(this);
         playerFishListener = new PlayerFishListener(this);
+
         File playerData = new File(this.getDataFolder(), "playerdata");
         if (!playerData.exists()) {
             playerData.mkdirs();
@@ -123,14 +134,40 @@ public class MoonCore extends JavaPlugin {
         new NpcCommand(this);
         new RenameCommand(this);
         new LootCrateCommand(this);
-
+        new ChunkListener(this);
         new EnchantRunnable(this).runTaskTimer(this, 0, 2L);
+        if (!statsManager.hasClaimFile()) {
+            try {
+                statsManager.createClaimFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        for(String rawData : statsManager.getClaimFile().getStringList("Claims")) {
+
+            String[] raw = rawData.split(":");
+            statsManager.getChunkmap().put(raw[1],UUID.fromString(raw[0]));
+
+        }
         new BukkitRunnable() {
 
             @Override
             public void run() {
-
                 for (Player player : Bukkit.getOnlinePlayers()) {
+                    UUID uuid = player.getUniqueId();
+                    if (statsManager.getChunkmap().containsValue(uuid)) {
+                        List<String> chunklist = new ArrayList<>();
+                        for (String string : statsManager.getChunkmap().keySet()) {
+                            chunklist.add(statsManager.getOwner(string) + ":" + string);
+                        }
+                        statsManager.getClaimFile().set("Claims",chunklist);
+                        File f = new File("plugins/RemielCore","claims.yml");
+                        try {
+                            statsManager.getClaimFile().save(f);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                     String name = player.getUniqueId().toString();
                     File f = new File("plugins/RemielCore/playerdata", name + ".yml");
                     if (statsManager.getStatfile().containsKey(player.getUniqueId())) {
@@ -158,6 +195,20 @@ public class MoonCore extends JavaPlugin {
     public void onDisable() {
         Bukkit.getServer().getScheduler().cancelTasks(this);
         for (Player player : Bukkit.getOnlinePlayers()) {
+            UUID uuid = player.getUniqueId();
+            if (statsManager.getChunkmap().containsValue(uuid)) {
+                List<String> chunklist = new ArrayList<>();
+                for (String string : statsManager.getChunkmap().keySet()) {
+                    chunklist.add(statsManager.getOwner(string) + ":" + string);
+                }
+                statsManager.getClaimFile().set("Claims",chunklist);
+                File f = new File("plugins/RemielCore","claims.yml");
+                try {
+                    statsManager.getClaimFile().save(f);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (EnchantRunnable.getCreeper().get(player.getUniqueId()) != null) {
                 EnchantRunnable.getCreeper().get(player.getUniqueId()).remove();
                 EnchantRunnable.getCreeper().remove(player.getUniqueId());

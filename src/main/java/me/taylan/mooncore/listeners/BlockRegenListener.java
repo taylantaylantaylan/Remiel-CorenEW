@@ -3,10 +3,7 @@ package me.taylan.mooncore.listeners;
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.utils.ItemHandler;
 import me.taylan.mooncore.utils.Painter;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Tag;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,9 +12,12 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.sound.midi.MetaEventListener;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BlockRegenListener implements Listener {
@@ -47,8 +47,25 @@ public class BlockRegenListener implements Listener {
                 ))) {
                     event.setCancelled(true);
                 }
-                if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                if (item!= null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
                     NamespacedKey dura = new NamespacedKey(plugin, "durability");
+                    ItemMeta meta = item.getItemMeta();
+                  int durabilt =  meta.getPersistentDataContainer().get(dura,PersistentDataType.INTEGER);
+                  meta.getPersistentDataContainer().set(dura,PersistentDataType.INTEGER,durabilt-1);
+                  item.setItemMeta(meta);
+                  Damageable damagemeta = (Damageable) meta;
+                  if(durabilt<item.getType().getMaxDurability()) {
+                      damagemeta.setDamage(damagemeta.getDamage()+1);
+                      item.setItemMeta(damagemeta);
+                      if(durabilt<0) {
+                          player.getInventory().remove(item);
+                          player.playSound(player, Sound.ITEM_SHIELD_BREAK,0.5F,1.3F);
+                      }
+                  } else {
+                      damagemeta.setDamage(0);
+                      item.setItemMeta(damagemeta);
+                  }
+
                 }
                 switch (blocktype) {
 
@@ -78,6 +95,23 @@ public class BlockRegenListener implements Listener {
                             }
                         }
 
+                        break;
+                    case SHROOMLIGHT:
+                        event.setDropItems(false);
+                        event.getBlock().setType(Material.BEDROCK);
+                        event.setCancelled(true);
+                        if (player.getInventory().firstEmpty() == -1) {
+                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.glowstone);
+
+                        } else {
+                            player.getInventory().addItem(itemHandler.glowstone);
+                        }
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                event.getBlock().setType(Material.SHROOMLIGHT);
+                            }
+                        }.runTaskLater(plugin, 150);
                         break;
                     case TERRACOTTA:
                         event.setDropItems(false);
@@ -437,7 +471,7 @@ public class BlockRegenListener implements Listener {
                         if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
-                            if (aletgucu > 2) {
+                            if (aletgucu > 3) {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);

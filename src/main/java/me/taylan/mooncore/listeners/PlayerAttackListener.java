@@ -66,7 +66,23 @@ public class PlayerAttackListener implements Listener {
             ItemStack item = player.getInventory().getItemInMainHand();
             int realhiz = item.getItemMeta().getPersistentDataContainer().get(saldirihizi2, PersistentDataType.INTEGER);
             int saldirihizi = statsManager.getSaldiriHizi(player.getUniqueId()) / 10 + realhiz;
-
+            NamespacedKey dura = new NamespacedKey(plugin, "durability");
+            ItemMeta meta = item.getItemMeta();
+            int durabilt =  meta.getPersistentDataContainer().get(dura,PersistentDataType.INTEGER);
+            meta.getPersistentDataContainer().set(dura,PersistentDataType.INTEGER,durabilt-1);
+            item.setItemMeta(meta);
+            Damageable damagemeta = (Damageable) meta;
+            if(durabilt<item.getType().getMaxDurability()) {
+                damagemeta.setDamage(damagemeta.getDamage()+1);
+                item.setItemMeta(damagemeta);
+                if(durabilt<0) {
+                    player.getInventory().remove(item);
+                    player.playSound(player,Sound.ITEM_SHIELD_BREAK,0.5F,1.3F);
+                }
+            } else {
+                damagemeta.setDamage(0);
+                item.setItemMeta(damagemeta);
+            }
             if ((MaterialTags.HOES.isTagged(item))) {
                 if (!(player.hasCooldown(item.getType()))) {
                     if (damaged instanceof LivingEntity) {
@@ -182,6 +198,36 @@ public class PlayerAttackListener implements Listener {
                         }
                     }
                     player.setCooldown(item.getType(), (int) 30 - saldirihizi);
+                    player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1f);
+                } else {
+                    /*
+                     * ProtocolLibrary.getProtocolManager().addPacketListener( new
+                     * PacketAdapter(plugin, ListenerPriority.NORMAL,
+                     * PacketType.Play.Server.NAMED_SOUND_EFFECT) {
+                     *
+                     * @Override public void onPacketSending(PacketEvent event) { if
+                     * (event.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT) { if
+                     * (event.getPacket().getStrings().read(0)
+                     * .equalsIgnoreCase("entity.player.attack.strong")) { event.setCancelled(true);
+                     * // The sound will no longer be played } } } });
+                     */
+                    player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.2f, 1.1f);
+
+                }
+            }
+            if (item.getType() == Material.GOLDEN_PICKAXE) {
+                if (!(player.hasCooldown(item.getType()))) {
+                    for (ItemStack item2 : player.getInventory().getContents()) {
+                        if (item2 != null) {
+                            if (item2 == item) continue;
+                            if (item2 != null && item2.hasItemMeta() && item2.getItemMeta().hasLore()) {
+                                if (item2.getLore().contains("Kılıç") || item2.getLore().contains("Hançer") || item2.getLore().contains("Balta") || item2.getLore().contains("Yay") || item2.getLore().contains("Arbalet") || item2.getLore().contains("Asa") || item2.getLore().contains("Topuz") || item2.getLore().contains("Kitabı") || item2.getLore().contains("Mızrak") || item2.getLore().contains("Tırpan")) {
+                                    player.setCooldown(item2.getType(), (int) 999);
+                                }
+                            }
+                        }
+                    }
+                    player.setCooldown(item.getType(), (int) 60 - saldirihizi);
                     player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1f);
                 } else {
                     /*
@@ -479,39 +525,39 @@ public class PlayerAttackListener implements Listener {
                     Damageable itemmeta = (Damageable) item.getItemMeta();
                     itemmeta.setDamage(itemmeta.getDamage() - 1);
                     item.setItemMeta((ItemMeta) itemmeta);
-                    if(!(player.hasCooldown(item.getType()))) {
-                    if (damaged instanceof LivingEntity) {
-                        if (hancerstack.containsKey(player.getUniqueId())) {
-                            int hancerstacklendi = hancerstack.get(player.getUniqueId());
-                            if (hancerstacklendi <= 5) {
-                                hancerstack.put(player.getUniqueId(), hancerstacklendi + 1);
-                            } else if (hancerstacklendi < 7) {
-                                new BukkitRunnable() {
-                                    int hancer = 0;
+                    if (!(player.hasCooldown(item.getType()))) {
+                        if (damaged instanceof LivingEntity) {
+                            if (hancerstack.containsKey(player.getUniqueId())) {
+                                int hancerstacklendi = hancerstack.get(player.getUniqueId());
+                                if (hancerstacklendi <= 5) {
+                                    hancerstack.put(player.getUniqueId(), hancerstacklendi + 1);
+                                } else if (hancerstacklendi < 7) {
+                                    new BukkitRunnable() {
+                                        int hancer = 0;
 
-                                    @Override
-                                    public void run() {
-                                        LivingEntity ldamaged = (LivingEntity) damaged;
-                                        if (hancer >= 4 || ldamaged.isDead()) {
-                                            hancerstack.remove(player.getUniqueId());
-                                            this.cancel();
+                                        @Override
+                                        public void run() {
+                                            LivingEntity ldamaged = (LivingEntity) damaged;
+                                            if (hancer >= 4 || ldamaged.isDead()) {
+                                                hancerstack.remove(player.getUniqueId());
+                                                this.cancel();
+                                            }
+                                            hancer += 1;
+
+                                            ldamaged.damage(event.getDamage());
+                                            ldamaged.setNoDamageTicks(0);
+                                            player.playSound(player, Sound.ENTITY_WITHER_SHOOT, 0.1f, 2f);
+                                            particleslash(player);
+
                                         }
-                                        hancer += 1;
+                                    }.runTaskTimer(plugin, 0, 5);
+                                }
 
-                                        ldamaged.damage(event.getDamage());
-                                        ldamaged.setNoDamageTicks(0);
-                                        player.playSound(player, Sound.ENTITY_WITHER_SHOOT, 0.1f, 2f);
-                                        particleslash(player);
-
-                                    }
-                                }.runTaskTimer(plugin, 0, 5);
+                            } else {
+                                int hancerstacklendi = 0;
+                                hancerstack.put(player.getUniqueId(), hancerstacklendi);
                             }
-
-                        } else {
-                            int hancerstacklendi = 0;
-                            hancerstack.put(player.getUniqueId(), hancerstacklendi);
                         }
-                    }
                     }
 
                     player.setCooldown(item.getType(), (int) 15 - saldirihizi);
@@ -611,6 +657,17 @@ public class PlayerAttackListener implements Listener {
                         if (ray != null && result == null && ray.getHitEntity() != null && !SKIPPED_TYPES.contains(ray.getHitEntity().getType())) {
                             if (ray.getHitEntity() instanceof LivingEntity) {
                                 ((LivingEntity) ray.getHitEntity()).damage(4, player);
+                                NamespacedKey dura = new NamespacedKey(plugin, "durability");
+                                ItemMeta meta = item.getItemMeta();
+                                int durabilt = meta.getPersistentDataContainer().get(dura, PersistentDataType.INTEGER);
+                                meta.getPersistentDataContainer().set(dura, PersistentDataType.INTEGER, durabilt - 1);
+                                item.setItemMeta(meta);
+
+                                if (durabilt < 0) {
+                                    player.getInventory().remove(item);
+                                        player.playSound(player,Sound.ITEM_SHIELD_BREAK,0.5F,1.3F);
+
+                                }
                                 player.setCooldown(item.getType(), (int) 40 - saldirihizi);
 
                             }
@@ -635,6 +692,16 @@ public class PlayerAttackListener implements Listener {
                             }
                         }
                         particleBeam(player);
+                        NamespacedKey dura = new NamespacedKey(plugin, "durability");
+                        ItemMeta meta = item.getItemMeta();
+                        int durabilt = meta.getPersistentDataContainer().get(dura, PersistentDataType.INTEGER);
+                        meta.getPersistentDataContainer().set(dura, PersistentDataType.INTEGER, durabilt - 1);
+                        item.setItemMeta(meta);
+
+                        if(durabilt<0) {
+                            player.getInventory().remove(item);
+                            player.playSound(player,Sound.ITEM_SHIELD_BREAK,0.5F,1.3F);
+                        }
                         wand.put(player.getUniqueId(), 0);
 
                     }
@@ -669,6 +736,22 @@ public class PlayerAttackListener implements Listener {
                         Vector playerDirection = player.getLocation().getDirection().normalize().multiply(2);
                         Arrow arrow = player.launchProjectile(Arrow.class, playerDirection);
                         player.playSound(player, Sound.ENTITY_ARROW_SHOOT, 0.14f, 1.3f);
+                        NamespacedKey dura = new NamespacedKey(plugin, "durability");
+                        int durabilt =  meta.getPersistentDataContainer().get(dura,PersistentDataType.INTEGER);
+                        meta.getPersistentDataContainer().set(dura,PersistentDataType.INTEGER,durabilt-1);
+                        item.setItemMeta(meta);
+                        Damageable damagemeta = (Damageable) meta;
+                        if(durabilt<item.getType().getMaxDurability()) {
+                            damagemeta.setDamage(damagemeta.getDamage()+1);
+                            item.setItemMeta(damagemeta);
+                            if(durabilt<0) {
+                                player.getInventory().remove(item);
+                                player.playSound(player,Sound.ITEM_SHIELD_BREAK,0.5F,1.3F);
+                            }
+                        } else {
+                            damagemeta.setDamage(0);
+                            item.setItemMeta(damagemeta);
+                        }
                         if (meta.hasEnchant(Enchantment.ARROW_FIRE)) {
                             arrow.setVisualFire(true);
                             arrow.setFireTicks(-1);
@@ -772,6 +855,23 @@ public class PlayerAttackListener implements Listener {
                     }
                     shooter.playSound(shooter, Sound.ENTITY_WITHER_SHOOT, 0.25f, 1.9f);
                     shooter.playSound(shooter, Sound.ENTITY_SKELETON_SHOOT, 0.25f, 1.2f);
+                    NamespacedKey dura = new NamespacedKey(plugin, "durability");
+                    ItemMeta meta = item.getItemMeta();
+                    int durabilt =  meta.getPersistentDataContainer().get(dura,PersistentDataType.INTEGER);
+                    meta.getPersistentDataContainer().set(dura,PersistentDataType.INTEGER,durabilt-1);
+                    item.setItemMeta(meta);
+                    Damageable damagemeta = (Damageable) meta;
+                    if(durabilt<item.getType().getMaxDurability()) {
+                        damagemeta.setDamage(damagemeta.getDamage()+1);
+                        item.setItemMeta(damagemeta);
+                        if(durabilt<0) {
+                            shooter.getInventory().remove(item);
+                            shooter.playSound(shooter,Sound.ITEM_SHIELD_BREAK,0.5F,1.3F);
+                        }
+                    } else {
+                        damagemeta.setDamage(0);
+                        item.setItemMeta(damagemeta);
+                    }
                     shooter.spawnParticle(Particle.CLOUD, shooter.getLocation().add(0, 1.2, 0), 5, 0, 0, 0, 1);
                     drawing.remove(shooter.getUniqueId());
                 }

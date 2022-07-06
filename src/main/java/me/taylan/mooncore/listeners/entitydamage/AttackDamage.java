@@ -12,6 +12,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scoreboard.Scoreboard;
@@ -62,7 +64,28 @@ public class AttackDamage implements Listener {
 					);
 			float realDamage = (float) (event.getDamage()*damageReduc);
 			event.setDamage(realDamage);
-			player.sendMessage(event.getDamage()+"");
+			for(ItemStack item: player.getInventory().getArmorContents()) {
+				if (item!= null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+					NamespacedKey dura = new NamespacedKey(plugin, "durability");
+					ItemMeta meta = item.getItemMeta();
+					int durabilt =  meta.getPersistentDataContainer().get(dura,PersistentDataType.INTEGER);
+					meta.getPersistentDataContainer().set(dura,PersistentDataType.INTEGER,durabilt-1);
+					item.setItemMeta(meta);
+					Damageable damagemeta = (Damageable) meta;
+					if(durabilt<item.getType().getMaxDurability()) {
+						damagemeta.setDamage(damagemeta.getDamage()+1);
+						item.setItemMeta(damagemeta);
+						if(durabilt<0) {
+							player.getInventory().remove(item);
+							player.playSound(player, Sound.ITEM_SHIELD_BREAK,0.5F,1.3F);
+						}
+					} else {
+						damagemeta.setDamage(0);
+						item.setItemMeta(damagemeta);
+					}
+
+				}
+			}
 			Team isim = scoreboard.getTeam(player.getName());
 			if (isim.hasEntry(player.getName())) {
 				isim.setPrefix(Painter.paint("&7[&fSvy. " + stats.getLevel(player.getUniqueId()) + "&7] &f"));
@@ -90,6 +113,10 @@ public class AttackDamage implements Listener {
 					player.setLastDamageCause(event2);
 					Bukkit.getServer().getPluginManager().callEvent(event2);
 				}
+
+
+
+
 				if (!(player.hasCooldown(item.getType())) || item.getType() == Material.BLAZE_ROD) {
 					int realDamage = (int) (event.getDamage()
 							+ item.getItemMeta().getPersistentDataContainer().get(hasar, PersistentDataType.INTEGER));
@@ -99,14 +126,14 @@ public class AttackDamage implements Listener {
 					if (chance <= 4) {
 						crit.put(player.getUniqueId(), "crit");
 						event.setDamage(stats.getKritikHasari(player.getUniqueId()) / 100 + 2 * realDamage
-								+ 5 * realStrhg / 100 + 1);
+								+ 7 * realStrhg / 100 + 1);
 						if (stats.getKritikAyar(player.getUniqueId())) {
 							player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 0.2f, 0.8f);
 							player.spawnParticle(Particle.EXPLOSION_LARGE, damaged.getLocation().add(0, 1.2, 0), 1, 0,
 									0, 0, 1);
 						}
 					} else {
-						event.setDamage(realDamage + 5 * realStrhg / 100 + 1);
+						event.setDamage(realDamage + 7 * realStrhg / 100 + 1);
 					}
 				} else {
 					event.setCancelled(true);
@@ -117,14 +144,14 @@ public class AttackDamage implements Listener {
 				if (chance <= 4) {
 					crit.put(player.getUniqueId(), "crit");
 					event.setDamage(stats.getKritikHasari(player.getUniqueId()) / 100 + 2 * event.getDamage()
-							+ 5 * stats.getGuc(player.getUniqueId()) / 100 + 1);
+							+ 7 * stats.getGuc(player.getUniqueId()) / 100 + 1);
 					if (stats.getKritikAyar(player.getUniqueId())) {
 						player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 0.2f, 0.8f);
 						player.spawnParticle(Particle.EXPLOSION_LARGE, damaged.getLocation().add(0, 1.2, 0), 1, 0, 0, 0,
 								1);
 					}
 				} else {
-					event.setDamage(event.getDamage() + 5 * stats.getGuc(player.getUniqueId()) / 100 + 1);
+					event.setDamage(event.getDamage() + 7 * stats.getGuc(player.getUniqueId()) / 100 + 1);
 				}
 			}
 

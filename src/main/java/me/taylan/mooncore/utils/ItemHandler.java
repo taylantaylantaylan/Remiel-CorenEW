@@ -188,6 +188,7 @@ public class ItemHandler {
     public ItemStack ancientsilverspear;
     public ItemStack gianttoe;
     public ItemStack gianteye;
+    public ItemStack glowstone;
     public void init() {
         createOakWood();
         createDarkOakWood();
@@ -341,6 +342,7 @@ createSalt();
         createAncientSilverSpear();
         createGiantEye();
         createGiantToe();
+        createGlowstone();
     }
 
     @SuppressWarnings("deprecation")
@@ -3939,7 +3941,7 @@ createSalt();
     }
 
     public void createFarmerHoe() {
-        ItemStack stick = createToolItem(new ItemStack(Material.WOODEN_HOE), "&fÇiftçi Çapası", 1, 1, true, 0, 0, "Çapa", "<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Kullanıcının kırdığı ekinlerden", "<color:#ad7617><i:false>ekstra tohum düşer.");
+        ItemStack stick = createToolItem(new ItemStack(Material.WOODEN_HOE), "&fÇiftçi Çapası", 1, 1, true, 0, 0, "Çapa", 200,"<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Kullanıcının kırdığı ekinlerden", "<color:#ad7617><i:false>ekstra tohum düşer.");
         farmerhoe = stick;
         ShapedRecipe shapedRecipe = new ShapedRecipe(NamespacedKey.minecraft("farmer_hoe"), stick);
         shapedRecipe.shape(" BB", " T ", " T ");
@@ -3950,7 +3952,7 @@ createSalt();
     }
 
     public void createBrewGaunlet() {
-        ItemStack stick = createAccessoryItem("Eldiven", new ItemStack(Material.NAUTILUS_SHELL), "&eSimyacı Eldiveni", 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, "<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Kullanıcısı iksir demlediğinde", "<color:#ad7617><i:false>simyacılık ustalığında ekstra xp alır.");
+        ItemStack stick = createAccessoryItem("Eldiven", new ItemStack(Material.NAUTILUS_SHELL), "&eSimyacı Eldiveni", 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 200,"<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Kullanıcısı iksir demlediğinde", "<color:#ad7617><i:false>simyacılık ustalığında ekstra xp alır.");
         setUnstackable(stick, "akse");
         brewgaunlet = stick;
         ItemStack gold = goldingot;
@@ -3966,7 +3968,7 @@ createSalt();
     }
 
     public void createWolfGaunlet() {
-        ItemStack stick = createAccessoryItem("Eldiven", new ItemStack(Material.NAUTILUS_SHELL), "&fKurt Pençesi", 2, -2, 0, 0, 2, 10, 0, 0, 0, 0, 0);
+        ItemStack stick = createAccessoryItem("Eldiven", new ItemStack(Material.NAUTILUS_SHELL), "&fKurt Pençesi", 2, -2, 0, 0, 2, 10, 0, 0, 0, 0, 0,200);
         setUnstackable(stick, "akse");
         wolfgaunlet = stick;
         ItemStack gold = wolfteeth;
@@ -3980,7 +3982,7 @@ createSalt();
     }
 
     public void createWitherTalisman() {
-        ItemStack stick = createAccessoryItem("Tılsım", new ItemStack(Material.WITHER_ROSE), "&eKararmış Gül Tılsımı", 3, 0, 5, 4, 0, 0, 0, 0, 0, 0, 0, "<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Kullanıcının kararmış yaratıklardan", "<color:#ad7617><i:false>aldığı hasar %10 düşer.");
+        ItemStack stick = createAccessoryItem("Tılsım", new ItemStack(Material.WITHER_ROSE), "&eKararmış Gül Tılsımı", 3, 0, 5, 4, 0, 0, 0, 0, 0, 0, 0, 200,"<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Kullanıcının kararmış yaratıklardan", "<color:#ad7617><i:false>aldığı hasar %10 düşer.");
         setUnstackable(stick, "akse");
         witherrosetalisman = stick;
         ItemStack rose = witherrose;
@@ -3994,7 +3996,7 @@ createSalt();
     }
 
     public void createBoneSword() {
-        ItemStack stick = createWeaponItem(new ItemStack(Material.WOODEN_SWORD), "&fKemik Kılıç", 3, 10, 15, 6, 0, true, -2, 16, 0, "Orta", 0, "Kılıç", "<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Kullanıcının dengesi düşer fakat", "<color:#ad7617><i:false>her 3. vuruş kritik vuruş olur.");
+        ItemStack stick = createWeaponItem(new ItemStack(Material.WOODEN_SWORD), "&fKemik Kılıç", 3, 10, 15, 6, 0, true, -2, 16, 0, "Orta", 0, "Kılıç", 500,"<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Kullanıcının dengesi düşer fakat", "<color:#ad7617><i:false>her 3. vuruş kritik vuruş olur.");
         bonesword = stick;
         ItemStack boneitem = bone;
         ItemStack blackboneitem = blackbone;
@@ -4006,7 +4008,7 @@ createSalt();
 
     }
     public void createAncientSilverSpear() {
-        ItemStack stick = createWeaponItem(new ItemStack(Material.STICK), "&7Antik Gümüş Mızrak", 3, 15, 20, 0, 4, true, 2, 18, 0, "Orta", 0, "Mızrak", "<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Kullanıcısı su içinde iken", "<color:#ad7617><i:false>ekstra 20 hasar kazanır.");
+        ItemStack stick = createWeaponItem(new ItemStack(Material.STICK), "&7Antik Gümüş Mızrak", 3, 15, 20, 0, 4, true, 2, 18, 0, "Orta", 0, "Mızrak", 600,"<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Kullanıcısı su içinde iken", "<color:#ad7617><i:false>ekstra 20 hasar kazanır.");
         ancientsilverspear = stick;
         ShapedRecipe shapedRecipe = new ShapedRecipe(NamespacedKey.minecraft("ancient_silver_spear"), stick);
         shapedRecipe.shape(" BB", " SB", "S  ");
@@ -4016,7 +4018,7 @@ createSalt();
 
     }
     public void createKingKiller() {
-        ItemStack stick = createWeaponItem(new ItemStack(Material.SHEARS), "&cKral Katili", 3, 12, 15, 9, 4, true, 3, 10, 2, "Düşük", 0, "Hançer", "<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Rakibin arkasından yapılan saldırılar", "<color:#ad7617><i:false>ekstra hasar verir.");
+        ItemStack stick = createWeaponItem(new ItemStack(Material.SHEARS), "&cKral Katili", 3, 12, 15, 9, 4, true, 3, 10, 2, "Düşük", 0, "Hançer", 500,"<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Rakibin arkasından yapılan saldırılar", "<color:#ad7617><i:false>ekstra hasar verir.");
         kingkiller = stick;
 
         ShapedRecipe shapedRecipe = new ShapedRecipe(NamespacedKey.minecraft("king_killer"), stick);
@@ -4028,7 +4030,7 @@ createSalt();
 
     }
     public void createHellFireDagger() {
-        ItemStack stick = createWeaponItem(new ItemStack(Material.SHEARS), "&6Cehennem Ateşi Hançeri", 3, 18, 20, 13, 2, true, 3, 20, 0, "Düşük", 0, "Hançer", "<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Rakibe Yapılan her 6. Saldırı", "<color:#ad7617><i:false>rakibi bir cehennem ateşine hapseder.");
+        ItemStack stick = createWeaponItem(new ItemStack(Material.SHEARS), "&6Cehennem Ateşi Hançeri", 3, 18, 20, 13, 2, true, 3, 20, 0, "Düşük", 0, "Hançer", 500,"<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Rakibe Yapılan her 6. Saldırı", "<color:#ad7617><i:false>rakibi bir cehennem ateşine hapseder.");
         hellfiredagger = stick;
 
         ShapedRecipe shapedRecipe = new ShapedRecipe(NamespacedKey.minecraft("hellfire_dagger"), stick);
@@ -4041,7 +4043,7 @@ createSalt();
 
     }
     public void createGoldenDummy() {
-        ItemStack stick = createAccessoryItem("Tılsım", new ItemStack(Material.NAUTILUS_SHELL), "&EAltın Kukla Tılsımı", 3, 4, 0, 0, 2, 0, 0, 0, 0, 22, 9,"<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Kullanıcının katlettiği rakiplerinden", "<color:#ad7617><i:false>altın dişler düşer.");
+        ItemStack stick = createAccessoryItem("Tılsım", new ItemStack(Material.NAUTILUS_SHELL), "&EAltın Kukla Tılsımı", 3, 4, 0, 0, 2, 0, 0, 0, 0, 22, 9,200,"<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Kullanıcının katlettiği rakiplerinden", "<color:#ad7617><i:false>altın dişler düşer.");
         setUnstackable(stick, "akse");
         goldendummy = stick;
         ItemStack gold = goldblock;
@@ -4056,7 +4058,7 @@ createSalt();
     }
 
     public void createBoneHelmet() {
-        ItemStack stick = createArmorItem("Miğfer", new ItemStack(Material.LEATHER_HELMET), "&fKemik Kasket", 1, 1, 1, 0, 0, 1, 2, 0, 0, 0, 10, 0, 2, 0, "<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Kullanıcı İskeletlerden ekstra hasar alır", "<color:#ad7617><i:false>fakat yay saldırılarının hasarı artar.");
+        ItemStack stick = createArmorItem("Miğfer", new ItemStack(Material.LEATHER_HELMET), "&fKemik Kasket", 1, 1, 1, 0, 0, 1, 2, 0, 0, 0, 10, 0, 2, 0, 300,"<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Kullanıcı İskeletlerden ekstra hasar alır", "<color:#ad7617><i:false>fakat yay saldırılarının hasarı artar.");
         ItemMeta meta = stick.getItemMeta();
         stick.setItemMeta(meta);
         bonehelmet = stick;
@@ -4075,7 +4077,14 @@ createSalt();
         stick.setItemMeta(meta);
         emerald = stick;
     }
-
+    public void createGlowstone() {
+        ItemStack stick = new ItemStack(Material.GLOWSTONE_DUST);
+        ItemMeta meta = stick.getItemMeta();
+        meta.displayName((MiniMessage.miniMessage()
+                .deserialize("<gold><i:false>Işık Tozu <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        stick.setItemMeta(meta);
+        glowstone = stick;
+    }
     public void setUnstackable(ItemStack item, String key) {
         ItemMeta meta = item.getItemMeta();
         meta.addItemFlags(ItemFlag.values());

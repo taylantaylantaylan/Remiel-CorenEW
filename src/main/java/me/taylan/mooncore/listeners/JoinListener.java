@@ -94,7 +94,7 @@ public class JoinListener implements Listener {
 			isim.setPrefix(Painter.paint("&7[&fSvy. " + stats.getLevel(player.getUniqueId()) + "&7] &f"));
 			isim.setSuffix(Painter.paint(" &6[" + (int) player.getHealth() + "❤]"));
 		}
-		NamespacedKey weightitm = new NamespacedKey(plugin, "weightitm");
+		/*NamespacedKey weightitm = new NamespacedKey(plugin, "weightitm");
 		for (ItemStack item : player.getInventory().getContents()) {
 
 			int totalWeight = 0;
@@ -112,7 +112,7 @@ public class JoinListener implements Listener {
 				}
 			}
 		}
-
+*/
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date(System.currentTimeMillis());
 		FastBoard board = new FastBoard(player);

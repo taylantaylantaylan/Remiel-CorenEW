@@ -5,6 +5,7 @@ import eu.endercentral.crazy_advancements.advancement.ToastNotification;
 import fr.mrmicky.fastboard.FastBoard;
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.commands.SeviyeCommand;
+import me.taylan.mooncore.eco.Ekonomi;
 import me.taylan.mooncore.utils.ItemHandler;
 import me.taylan.mooncore.utils.StatsManager;
 import net.md_5.bungee.api.ChatColor;
@@ -23,6 +24,7 @@ public class Levels {
 	private MoonCore plugin;
 	private SeviyeCommand seviyeCommand;
 	private StatsManager stats;
+	private Ekonomi ekonomi;
 	private ItemHandler itemHandler;
 	private BukkitRunnable r;
 
@@ -31,6 +33,7 @@ public class Levels {
 		this.plugin = plugin;
 		this.itemHandler = plugin.getItemHandler();
 		this.stats = plugin.getStatsManager();
+		this.ekonomi = plugin.getEkonomi();
 
 		r = new BukkitRunnable() {
 
@@ -42,10 +45,11 @@ public class Levels {
 					FastBoard board = new FastBoard(player);
 					int agirlik = stats.getAgirlik(player.getUniqueId());
 					int maxagirlik = stats.getMaxAgirlik(player.getUniqueId());
+					double para = ekonomi.getBalance(player);
 					board.updateTitle(ChatColor.AQUA + "Moon Network");
 
 					board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "     Remiel", "    ",
-							ChatColor.GOLD + "Akçe ⛁" + ChatColor.WHITE + 0,
+							ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + para,
 							ChatColor.WHITE + "Ağırlık: " + ChatColor.GRAY + agirlik + "/" + ChatColor.RED + maxagirlik,
 							"", ChatColor.GRAY + player.getName(), ChatColor.DARK_GRAY + formatter.format(date),
 							ChatColor.AQUA + "mc.moonnw.xyz"
@@ -80,8 +84,9 @@ public class Levels {
 		int prog = 100 * smithExp / smithRequiredExp;
 		int agirlik = stats.getAgirlik(uuid);
 		int maxagirlik = stats.getMaxAgirlik(uuid);
+		double para = ekonomi.getBalance(p);
 		board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "        Remiel", " ",
-				ChatColor.GOLD + "Akçe ⛁" + ChatColor.WHITE + 0,
+				ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + para,
 				ChatColor.WHITE + "Ağırlık: " + ChatColor.GRAY + agirlik + "/" + ChatColor.RED + maxagirlik, "   ",
 
 				ChatColor.YELLOW + "El Sanatları " + ChatColor.WHITE + "Ustalık " + smithLevel,
@@ -107,25 +112,12 @@ public class Levels {
 
 			smithLevel++;
 			stats.setWorkLevel(uuid, 1);
-			stats.setWorkRequiredExp(uuid, smithLevel*2);
+			stats.setWorkRequiredExp(uuid, smithLevel*6);
 			stats.setWorkExp(uuid, -smithExp);
 			notification.send(p);
 
 		}
-		new BukkitRunnable() {
 
-			@Override
-			public void run() {
-				FastBoard board = new FastBoard(p);
-
-				board.updateTitle(ChatColor.AQUA + "Moon Network");
-				board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "     Remiel", "    ",
-						ChatColor.GOLD + "Akçe ⛁" + ChatColor.WHITE + 0, "", ChatColor.GRAY + p.getName(),
-						ChatColor.DARK_GRAY + formatter.format(date), ChatColor.AQUA + "mc.moonnw.xyz"
-
-				);
-			}
-		}.runTaskLaterAsynchronously(plugin, 80L);
 	}
 	public void giveSmithLevel(Player p, int exp) {
 		UUID uuid = p.getUniqueId();
@@ -149,8 +141,9 @@ public class Levels {
 		int prog = 100 * smithExp / smithRequiredExp;
 		int agirlik = stats.getAgirlik(uuid);
 		int maxagirlik = stats.getMaxAgirlik(uuid);
+		double para = ekonomi.getBalance(p);
 		board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "        Remiel", " ",
-				ChatColor.GOLD + "Akçe ⛁" + ChatColor.WHITE + 0,
+				ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + para,
 				ChatColor.WHITE + "Ağırlık: " + ChatColor.GRAY + agirlik + "/" + ChatColor.RED + maxagirlik, "   ",
 
 				ChatColor.YELLOW + "Demircilik " + ChatColor.WHITE + "Ustalık " + smithLevel,
@@ -176,25 +169,12 @@ public class Levels {
 
 			smithLevel++;
 			stats.setSmithLevel(uuid, 1);
-			stats.setSmithRequiredExp(uuid, smithLevel*3);
+			stats.setSmithRequiredExp(uuid, smithLevel* 6);
 			stats.setSmithExp(uuid, -smithExp);
 			notification.send(p);
 
 		}
-		new BukkitRunnable() {
 
-			@Override
-			public void run() {
-				FastBoard board = new FastBoard(p);
-
-				board.updateTitle(ChatColor.AQUA + "Moon Network");
-				board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "     Remiel", "    ",
-						ChatColor.GOLD + "Akçe ⛁" + ChatColor.WHITE + 0, "", ChatColor.GRAY + p.getName(),
-						ChatColor.DARK_GRAY + formatter.format(date), ChatColor.AQUA + "mc.moonnw.xyz"
-
-				);
-			}
-		}.runTaskLaterAsynchronously(plugin, 80L);
 	}
 
 	public void giveCookLevel(Player p, ItemStack item) {
@@ -220,8 +200,9 @@ public class Levels {
 		int prog = 100 * cookExp / cookRequiredExp;
 		int agirlik = stats.getAgirlik(uuid);
 		int maxagirlik = stats.getMaxAgirlik(uuid);
+		double para = ekonomi.getBalance(p);
 		board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "        Remiel", " ",
-				ChatColor.GOLD + "Akçe ⛁" + ChatColor.WHITE + 0,
+				ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + para,
 				ChatColor.WHITE + "Ağırlık: " + ChatColor.GRAY + agirlik + "/" + ChatColor.RED + maxagirlik, "   ",
 
 				ChatColor.YELLOW + "Aşçılık " + ChatColor.WHITE + "Ustalık " + cookLevel,
@@ -245,25 +226,12 @@ public class Levels {
 
 			cookLevel++;
 			stats.setCookLevel(uuid, 1);
-			stats.setCookRequiredExp(uuid, cookLevel*3);
+			stats.setCookRequiredExp(uuid, cookLevel* 6);
 			stats.setCookExp(uuid, -cookExp);
 			notification.send(p);
 
 		}
-		new BukkitRunnable() {
 
-			@Override
-			public void run() {
-				FastBoard board = new FastBoard(p);
-
-				board.updateTitle(ChatColor.AQUA + "Moon Network");
-				board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "     Remiel", "    ",
-						ChatColor.GOLD + "Akçe ⛁" + ChatColor.WHITE + 0, "", ChatColor.GRAY + p.getName(),
-						ChatColor.DARK_GRAY + formatter.format(date), ChatColor.AQUA + "mc.moonnw.xyz"
-
-				);
-			}
-		}.runTaskLaterAsynchronously(plugin, 80L);
 	}
 
 	public void giveCombatEXP(Player player, int exp) {
@@ -282,9 +250,10 @@ public class Levels {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date(System.currentTimeMillis());
 		int agirlik = stats.getAgirlik(player.getUniqueId());
+		double para = ekonomi.getBalance(player);
 		int maxagirlik = stats.getMaxAgirlik(player.getUniqueId());
 		board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "        Remiel", " ",
-				ChatColor.GOLD + "Akçe ⛁" + ChatColor.WHITE + 0,
+				ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + para,
 				ChatColor.WHITE + "Ağırlık: " + ChatColor.GRAY + agirlik + "/" + ChatColor.RED + maxagirlik, "   ",
 
 				ChatColor.YELLOW + "Avcılık " + ChatColor.WHITE + "Ustalık " + combatLevel,
@@ -310,11 +279,12 @@ public class Levels {
 
 			combatLevel++;
 			stats.setCombatLevel(uuid, 1);
-			stats.setCombatRequiredExp(uuid, combatLevel*3);
+			stats.setCombatRequiredExp(uuid, combatLevel* 6);
 			stats.setCombatExp(uuid, -combatExp);
 			notification.send(player);
 
 		}
+
 	}
 
 	public void giveOduncuExp(Player player, Block block) {
@@ -338,8 +308,9 @@ public class Levels {
 		Date date = new Date(System.currentTimeMillis());
 		int agirlik = stats.getAgirlik(player.getUniqueId());
 		int maxagirlik = stats.getMaxAgirlik(player.getUniqueId());
+		double para = ekonomi.getBalance(player);
 		board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "         Remiel", " ",
-				ChatColor.GOLD + "Akçe ⛁" + ChatColor.WHITE + 0,
+				ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + para,
 				ChatColor.WHITE + "Ağırlık: " + ChatColor.GRAY + agirlik + "/" + ChatColor.RED + maxagirlik, "   ",
 
 				ChatColor.YELLOW + "Odunculuk " + ChatColor.WHITE + "Ustalık " + odunculukLevel,
@@ -354,7 +325,7 @@ public class Levels {
 			int Exp = stats.getExp(uuid);
 			int RequiredExp = stats.getRequiredExp(uuid);
 			int Level = stats.getLevel(uuid);
-			stats.setExp(uuid, odunculukLevel * 3);
+			stats.setExp(uuid, odunculukLevel * 6);
 			if (Exp >= RequiredExp) {
 				seviyeCommand.seviyeAtlat(player, 1);
 
@@ -393,8 +364,9 @@ public class Levels {
 		Date date = new Date(System.currentTimeMillis());
 		int agirlik = stats.getAgirlik(player.getUniqueId());
 		int maxagirlik = stats.getMaxAgirlik(player.getUniqueId());
+		double para = ekonomi.getBalance(player);
 		board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "         Remiel", " ",
-				ChatColor.GOLD + "Akçe ⛁" + ChatColor.WHITE + 0,
+				ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + para,
 				ChatColor.WHITE + "Ağırlık: " + ChatColor.GRAY + agirlik + "/" + ChatColor.RED + maxagirlik, "   ",
 
 				ChatColor.YELLOW + "Çiftçilik " + ChatColor.WHITE + "Ustalık " + farmingLevel,
@@ -409,7 +381,7 @@ public class Levels {
 			int Exp = stats.getExp(uuid);
 			int RequiredExp = stats.getRequiredExp(uuid);
 			int Level = stats.getLevel(uuid);
-			stats.setExp(uuid, farmingLevel * 3);
+			stats.setExp(uuid, farmingLevel * 6);
 			if (Exp >= RequiredExp) {
 				seviyeCommand.seviyeAtlat(player, 1);
 
@@ -453,8 +425,10 @@ public class Levels {
 		Date date = new Date(System.currentTimeMillis());
 		int agirlik = stats.getAgirlik(player.getUniqueId());
 		int maxagirlik = stats.getMaxAgirlik(player.getUniqueId());
+		double para = ekonomi.getBalance(player);
+
 		board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "      Remiel", " ",
-				ChatColor.GOLD + "Akçe ⛁" + ChatColor.WHITE + 0,
+				ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + para,
 				ChatColor.WHITE + "Ağırlık: " + ChatColor.GRAY + agirlik + "/" + ChatColor.RED + maxagirlik, "   ",
 
 				ChatColor.YELLOW + "Balıkçılık " + ChatColor.WHITE + "Ustalık " + fishingLevel,
@@ -469,7 +443,7 @@ public class Levels {
 			int Exp = stats.getExp(uuid);
 			int RequiredExp = stats.getRequiredExp(uuid);
 			int Level = stats.getLevel(uuid);
-			stats.setExp(uuid, fishingLevel * 3);
+			stats.setExp(uuid, fishingLevel * 6);
 			if (Exp >= RequiredExp) {
 				seviyeCommand.seviyeAtlat(player, 1);
 
@@ -507,8 +481,9 @@ public class Levels {
 		Date date = new Date(System.currentTimeMillis());
 		int agirlik = stats.getAgirlik(player.getUniqueId());
 		int maxagirlik = stats.getMaxAgirlik(player.getUniqueId());
+		double para = ekonomi.getBalance(player);
 		board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "        Remiel", " ",
-				ChatColor.GOLD + "Akçe ⛁" + ChatColor.WHITE + 0,
+				ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + para,
 				ChatColor.WHITE + "Ağırlık: " + ChatColor.GRAY + agirlik + "/" + ChatColor.RED + maxagirlik, "   ",
 
 				ChatColor.YELLOW + "Madencilik " + ChatColor.WHITE + "Ustalık " + miningLevel,
@@ -561,8 +536,9 @@ public class Levels {
 		Date date = new Date(System.currentTimeMillis());
 		int agirlik = stats.getAgirlik(player.getUniqueId());
 		int maxagirlik = stats.getMaxAgirlik(player.getUniqueId());
+		double para = ekonomi.getBalance(player);
 		board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "        Remiel", " ",
-				ChatColor.GOLD + "Akçe ⛁" + ChatColor.WHITE + 0,
+				ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + para,
 				ChatColor.WHITE + "Ağırlık: " + ChatColor.GRAY + agirlik + "/" + ChatColor.RED + maxagirlik, "   ",
 
 				ChatColor.YELLOW + "Simyacılık " + ChatColor.WHITE + "Ustalık " + alchemyLevel,

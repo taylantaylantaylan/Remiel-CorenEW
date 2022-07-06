@@ -143,7 +143,7 @@ public class AttackSpeed implements Listener {
 								int atak = ThreadLocalRandom.current().nextInt(2);
 								for (int i = 0; i < atak + 2; i++) {
 									damaged.setNoDamageTicks(0);
-									damaged.damage(realDamage + 4 * realStrhg / 100 + 1, player);
+									damaged.damage(realDamage + 3 * realStrhg / 100 + 1, player);
 									if (stats.getSaldiriHiziAyar(player.getUniqueId())) {
 										player.getWorld().playSound(player, Sound.ENTITY_SKELETON_CONVERTED_TO_STRAY,
 												0.5f, 0.7f);

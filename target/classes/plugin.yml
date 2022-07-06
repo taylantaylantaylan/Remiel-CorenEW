@@ -3,7 +3,7 @@ main: me.taylan.mooncore.MoonCore
 version: 1.0.0
 api-version: 1.18
 author: Taylan
-depend: [CrazyAdvancementsAPI, CoreProtect, ProtocolLib]
+depend: [CrazyAdvancementsAPI, CoreProtect, ProtocolLib, Vault]
 
 commands:
    ustalık:
@@ -20,3 +20,4 @@ commands:
    lore:
    isim:
    lootolustur:
+   dirhem:

@@ -108,7 +108,7 @@ public class SmithAnim {
 				}
 			}.runTaskTimer(plugin, 0L, 20L);
 
-		} else if (timerlvl10 <= 1) {
+		}/* else if (timerlvl10 <= 1) {
 			int smithLevel = stats.getSmithLevel(p.getUniqueId());
 			if (smithLevel >= 10) {
 				new BukkitRunnable() {
@@ -190,7 +190,7 @@ public class SmithAnim {
 			} else {
 				p.sendMessage(Painter.paint("Demircilikte ustalığın 10. seviyeden düşük!"));
 			}
-		}
+		}*/
 
 	}
 }

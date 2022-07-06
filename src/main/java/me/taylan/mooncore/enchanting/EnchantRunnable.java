@@ -7,6 +7,7 @@ import me.taylan.mooncore.listeners.InventoryClickListener;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Damageable;
@@ -54,12 +55,7 @@ public class EnchantRunnable extends BukkitRunnable {
 		for (Player player : plugin.getServer().getOnlinePlayers()) {
 			int agirlik = stats.getAgirlik(player.getUniqueId());
 			int maxagirlik = stats.getMaxAgirlik(player.getUniqueId());
-			if (agirlik > maxagirlik) {
 
-				player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-						new TextComponent(Painter.paint("&cYük kapasiteni aşıyorsun!")));
-				player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2, 5));
-			}
 			if (player.getInventory().getLeggings() == null) {
 				if (creeper.get(player.getUniqueId()) != null) {
 					creeper.get(player.getUniqueId()).remove();
@@ -68,6 +64,33 @@ public class EnchantRunnable extends BukkitRunnable {
 			}//200
 			if(stats.getKritikSansi(player.getUniqueId()) >100) {
 				stats.setKritikSansiCap(player.getUniqueId());
+			}
+			if(stats.getKritikSansi(player.getUniqueId()) >100) {
+				stats.setKritikSansiCap(player.getUniqueId());
+			}
+			if(stats.getHiz(player.getUniqueId()) >100) {
+				stats.setSpeedCap(player.getUniqueId());
+			}
+			switch (stats.getHiz(player.getUniqueId()))   {
+				case 0:
+					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
+					break;
+				case 20:
+					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.2);
+					break;
+				case 40:
+					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+					break;
+				case 60:
+					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
+					break;
+				case 80:
+					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.5);
+					break;
+				case 100:
+					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.6);
+					break;
+
 			}
 			/*if(stats.getFurnaceAmount(player.getUniqueId()) ==0) {
 				InventoryClickListener.getFurnaceBlock().remove(player.getUniqueId());

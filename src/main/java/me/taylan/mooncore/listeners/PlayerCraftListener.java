@@ -133,20 +133,20 @@ public class PlayerCraftListener implements Listener {
                    ItemStack woodensword = itemHandler.bonesword;
                    event.getInventory().setResult(woodensword);
                } else {
-                   ItemStack woodensword = itemHandler.createWeaponItem(new ItemStack(Material.WOODEN_SWORD), "&fTahta Kılıç", 1, 4, 0, 4, 0, true, 1, 3, 0, "Düşük", 4, "Kılıç");
+                   ItemStack woodensword = itemHandler.createWeaponItem(new ItemStack(Material.WOODEN_SWORD), "&fTahta Kılıç", 1, 4, 0, 4, 0, true, 1, 3, 0, "Düşük", 4, "Kılıç",100);
                    event.getInventory().setResult(woodensword);
                }
                break;
            case WOODEN_SHOVEL:
-               ItemStack woodenshovel = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_SHOVEL), "&fTahta Kürek", 1, 3, true, 1, 10, "Kürek");
+               ItemStack woodenshovel = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_SHOVEL), "&fTahta Kürek", 1, 3, true, 1, 10, "Kürek",100);
                event.getInventory().setResult(woodenshovel);
                break;
            case WOODEN_PICKAXE:
-               ItemStack woodenpick = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_PICKAXE), "&fTahta Kazma", 1, 3, true, 1, 10, "Kazma");
+               ItemStack woodenpick = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_PICKAXE), "&fTahta Kazma", 1, 3, true, 1, 10, "Kazma",100);
                event.getInventory().setResult(woodenpick);
                break;
            case WOODEN_AXE:
-               ItemStack woodenaxe = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_AXE), "&fTahta Balta", 1, 4, true, 1, 10, "Balta");
+               ItemStack woodenaxe = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_AXE), "&fTahta Balta", 1, 4, true, 1, 10, "Balta",100);
                event.getInventory().setResult(woodenaxe);
                break;
            case WOODEN_HOE:
@@ -154,29 +154,29 @@ public class PlayerCraftListener implements Listener {
                    ItemStack woodenhoe = itemHandler.farmerhoe;
                    event.getInventory().setResult(woodenhoe);
                } else {
-                   ItemStack woodenhoe = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_HOE), "&fTahta Çapa", 1, 2, true, 1, 10, "Çapa");
+                   ItemStack woodenhoe = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_HOE), "&fTahta Çapa", 1, 2, true, 1, 10, "Çapa",150);
                    event.getInventory().setResult(woodenhoe);
                }
 
                break;
            case STONE_SWORD:
-               ItemStack stonesword = itemHandler.createWeaponItem(new ItemStack(Material.WOODEN_SWORD),"&7Taş Kılıç",1,5,0,2,3,true,2,6,0,"Düşük",4,"Kılıç");
+               ItemStack stonesword = itemHandler.createWeaponItem(new ItemStack(Material.WOODEN_SWORD),"&7Taş Kılıç",1,5,0,2,3,true,2,6,0,"Düşük",4,"Kılıç",150);
                event.getInventory().setResult(stonesword);
                break;
            case STONE_SHOVEL:
-               ItemStack stoneshovel = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_SHOVEL), "&7Taş Kürek", 1, 3, true, 2, 10, "Kürek");
+               ItemStack stoneshovel = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_SHOVEL), "&7Taş Kürek", 1, 3, true, 2, 10, "Kürek",150);
                event.getInventory().setResult(stoneshovel);
                break;
            case STONE_PICKAXE:
-               ItemStack stonepick = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_PICKAXE), "&7Taş Kazma", 1, 3, true, 2, 10, "Kazma");
+               ItemStack stonepick = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_PICKAXE), "&7Taş Kazma", 1, 3, true, 2, 10, "Kazma",150);
                event.getInventory().setResult(stonepick);
                break;
            case STONE_AXE:
-               ItemStack stoneaxe = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_AXE), "&7Taş Balta", 1, 4, true, 1, 10, "Balta");
+               ItemStack stoneaxe = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_AXE), "&7Taş Balta", 1, 4, true, 1, 10, "Balta",150);
                event.getInventory().setResult(stoneaxe);
                break;
            case STONE_HOE:
-               ItemStack stonehoe = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_HOE), "&7Taş Çapa", 1, 2, true, 1, 10, "Çapa");
+               ItemStack stonehoe = itemHandler.createToolItem(new ItemStack(Material.GOLDEN_HOE), "&7Taş Çapa", 1, 2, true, 1, 10, "Çapa",150);
                event.getInventory().setResult(stonehoe);
                break;
            case GOLDEN_SWORD:

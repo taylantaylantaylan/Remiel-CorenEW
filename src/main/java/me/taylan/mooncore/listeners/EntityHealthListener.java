@@ -801,7 +801,7 @@ public class EntityHealthListener implements Listener {
                                         case 3:
                                             i++;
                                             ArmorStand stand4 = SpawnArmorStand.spawnArmorStand(entity.getLocation().add(0, 2.3, 0), "<white>Bu da benim sana hediyem olsun. Sağ tıklayıp takabilirsin.");
-                                            ItemStack item = itemHandler.createAccessoryItem("Kolye", new ItemStack(Material.MUSIC_DISC_OTHERSIDE), "&8Çiçek Kolyesi", 1, 1, 0, 2, 0, 1, 0, 0, 0, 0, 0);
+                                            ItemStack item = itemHandler.createAccessoryItem("Kolye", new ItemStack(Material.MUSIC_DISC_OTHERSIDE), "&8Çiçek Kolyesi", 1, 1, 0, 2, 0, 1, 0, 0, 0, 0, 0,90);
                                             setUnstackable(item, "akse");
                                             itemmap.put(player.getUniqueId(), "aldı");
                                             player.getInventory().addItem(item);
@@ -883,16 +883,16 @@ public class EntityHealthListener implements Listener {
                                         BossBar bb = Bukkit.getBossBar(new NamespacedKey(plugin, "gorev5"));
                                         bb.setProgress(1.0);
                                         ArmorStand stand = SpawnArmorStand.spawnArmorStand(entity.getLocation().add(0, 2.3, 0), "<white>Talime hazır ol savaşçı. Sana verdiğim silahları");
-                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.SHEARS), "&7Demir Hançer", 4, 10, 10, 20, 5, true, 2, 20, 0, "Düşük", 0, "Hançer"));
-                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.WOODEN_SWORD), "&7Demir Kılıç", 4, 10, 10, 20, 5, true, 2, 20, 0, "Düşük", 0, "Kılıç"));
-                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.WOODEN_SHOVEL), "&7Demir Topuz", 4, 10, 10, 20, 5, true, 2, 20, 0, "Orta", 0, "Topuz"));
-                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.WOODEN_HOE), "&7Demir Tırpan", 4, 10, 10, 20, 5, true, 2, 20, 0, "Yüksek", 0, "Tırpan"));
-                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.WOODEN_AXE), "&7Demir Savaş Baltası", 4, 10, 10, 20, 5, true, 2, 20, 0, "Yüksek", 0, "Tırpan"));
-                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.STICK), "&7Demir Mızrak", 4, 10, 10, 20, 5, true, 2, 20, 0, "Yüksek", 0, "Mızrak"));
-                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.BOW), "&6Eğitim Yayı", 4, 10, 10, 20, 5, true, 2, 20, 0, "Yüksek", 0, "Yay"));
+                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.SHEARS), "&7Demir Hançer", 4, 10, 10, 20, 5, true, 2, 20, 0, "Düşük", 0, "Hançer",9999));
+                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.WOODEN_SWORD), "&7Demir Kılıç", 4, 10, 10, 20, 5, true, 2, 20, 0, "Düşük", 0, "Kılıç",9999));
+                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.WOODEN_SHOVEL), "&7Demir Topuz", 4, 10, 10, 20, 5, true, 2, 20, 0, "Orta", 0, "Topuz",9999));
+                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.WOODEN_HOE), "&7Demir Tırpan", 4, 10, 10, 20, 5, true, 2, 20, 0, "Yüksek", 0, "Tırpan",9999));
+                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.WOODEN_AXE), "&7Demir Savaş Baltası", 4, 10, 10, 20, 5, true, 2, 20, 0, "Yüksek", 0, "Tırpan",9999));
+                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.STICK), "&7Demir Mızrak", 4, 10, 10, 20, 5, true, 2, 20, 0, "Yüksek", 0, "Mızrak",9999));
+                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.BOW), "&6Eğitim Yayı", 4, 10, 10, 20, 5, true, 2, 20, 0, "Yüksek", 0, "Yay",9999));
                                         ItemStack item = new ItemStack(Material.ARROW);
                                         item.setAmount(100);
-                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.BLAZE_ROD), "&dDivinasyon Asası", 4, 10, 10, 20, 5, true, 2, 20, 0, "Yüksek", 0, "Asa"));
+                                        player.getInventory().addItem(itemHandler.createWeaponItem(new ItemStack(Material.BLAZE_ROD), "&dDivinasyon Asası", 4, 10, 10, 20, 5, true, 2, 20, 0, "Yüksek", 0, "Asa",9999));
                                         player.getInventory().addItem(item);
                                         for (Player player2 : Bukkit.getOnlinePlayers()) {
                                             if (player.getWorld().getName().equals("dungeonworld")) {
