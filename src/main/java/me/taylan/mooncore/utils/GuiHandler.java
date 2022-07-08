@@ -878,6 +878,9 @@ public class GuiHandler {
         int FarmingLevel = stats.getFarmingLevel(p.getUniqueId());
         int FarmingExp = stats.getFarmingExp(p.getUniqueId());
         int FarmingRequiredExp = stats.getFarmingRequiredExp(p.getUniqueId());
+        int WorkLevel = stats.getWorkLevel(p.getUniqueId());
+        int WorkExp = stats.getWorkExp(p.getUniqueId());
+        int WorkRequiredExp = stats.getWorkRequiredExp(p.getUniqueId());
         int progAlchemy = alchemyRequiredExp - alchemyExp;
         int progFarming = FarmingRequiredExp - FarmingExp;
         int progEnch = enchRequiredExp - enchExp;
@@ -887,6 +890,8 @@ public class GuiHandler {
         int progFishing = fishingRequiredExp - fishingExp;
         int progCombat = combatRequiredExp - combatExp;
         int progOduncu = odunculukRequiredExp - odunculukExp;
+        int progWork = WorkRequiredExp - WorkExp;
+       String meslek = stats.getMeslek(p.getUniqueId());
         Inventory toReturn = Bukkit.createInventory(null, inv_rows2, inventory_name2);
 
         itemHandler.createItem(inv2, "gray_stained_glass_pane", 1, 1, " ");
@@ -959,15 +964,22 @@ public class GuiHandler {
         itemHandler.createItem(inv2, "gray_stained_glass_pane", 1, 39, " ");
         itemHandler.createItem(inv2, "gray_stained_glass_pane", 1, 40, " ");
         itemHandler.createItem(inv2, "gray_stained_glass_pane", 1, 41, " ");
-        itemHandler.createItem(inv2, "wheat", 1, 32, ChatColor.DARK_AQUA + "Çiftçilik",
+        itemHandler.createItem(inv2, "wheat", 1, 31, ChatColor.DARK_AQUA + "Çiftçilik",
                 ChatColor.GREEN + "Ustalık " + FarmingLevel, "",
                 ChatColor.GOLD + "Tecrübe: " + ChatColor.WHITE + FarmingExp,
                 ChatColor.GOLD + "Gereken Tecrübe Puanı: " + ChatColor.WHITE + progFarming, "",
                 ChatColor.GRAY + "Meslek bilgileri için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem(inv2, "fletching_table", 1, 33, ChatColor.DARK_AQUA + "El Sanatları",
+                ChatColor.GREEN + "Ustalık " + WorkLevel, "",
+                ChatColor.GOLD + "Tecrübe: " + ChatColor.WHITE + WorkExp,
+                ChatColor.GOLD + "Gereken Tecrübe Puanı: " + ChatColor.WHITE + progWork, "",
+                ChatColor.GRAY + "Meslek bilgileri için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
         itemHandler.createItem(inv2, "gray_stained_glass_pane", 1, 42, " ");
         itemHandler.createItem(inv2, "gray_stained_glass_pane", 1, 43, " ");
         itemHandler.createItem(inv2, "gray_stained_glass_pane", 1, 44, " ");
-        itemHandler.createItem(inv2, "gray_stained_glass_pane", 1, 45, " ");
+        itemHandler.createItem(inv2, "barrier", 1, 45, ChatColor.RED + "Mesleğini Sıfırla!",
+                ChatColor.GRAY + "Buradan mesleğini sıfırlayabilirsin.",
+                ChatColor.GOLD + "Şu anki mesleğin: " + ChatColor.GREEN + meslek);
 
         toReturn.setContents(inv2.getContents());
         return toReturn;
@@ -2735,7 +2747,7 @@ public class GuiHandler {
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "Bronz Külçesi")) {
-            itemHandler.Smelting2(p, itemHandler.copperore, itemHandler.bronzeingot, 1, 1, 2, 1, itemHandler.coal, itemHandler.ironore, 5, itemHandler.bronzeingot.getItemMeta().getDisplayName());
+            itemHandler.Smelting2(p, itemHandler.copperore, itemHandler.bronzeingot, 1, 1, 2, 1, itemHandler.coal, itemHandler.nikelore, 5, itemHandler.bronzeingot.getItemMeta().getDisplayName());
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "Bakır Kılıç")) {
@@ -3290,6 +3302,31 @@ public class GuiHandler {
             }
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
+                && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_AQUA + "El Sanatları")) {
+            int workLevel = stats.getWorkLevel(p.getUniqueId());
+            if ((stats.getMeslek(p.getUniqueId()).equals("Yok.."))) {
+                if (workLevel >= 5) {
+                    itemHandler.createItem(inv, "fletching_table", 1, 33,
+                            Painter.paint("&3El Sanatları &8[&7Meslek Bilgileri&8]"), "",
+                            Painter.paint(" &fMeslek Avantajları:"),
+                            Painter.paint("&7 - El sanatları masasını kullanarak yapılan itemler daha dayanıklı olur."), Painter.paint(" &7- Yok.."), "",
+                            Painter.paint("&7Bu mesleği seçmek için &e&lSağ Tıkla."));
+                } else {
+                    itemHandler.createItem(inv, "fletching_table", 1, 33,
+                            Painter.paint("&3El Sanatları &8[&7Meslek Bilgileri&8]"), "",
+                            Painter.paint(" &fMeslek Avantajları:"),
+                            Painter.paint("&7 - El sanatları masasını kullanarak yapılan itemler daha dayanıklı olur."), Painter.paint(" &7- Yok.."), "",
+                            Painter.paint("&cBu mesleği seçebilmek için El Sanatlarında 5. seviye olman gerek."));
+                }
+            } else {
+                itemHandler.createItem(inv, "fletching_table", 1, 33,
+                        Painter.paint("&cEl Sanatları &8[&7Meslek Bilgileri&8]"), "",
+                        Painter.paint(" &fMeslek Avantajları:"),
+                        Painter.paint("&7 - El sanatları masasını kullanarak yapılan itemler daha dayanıklı olur."), Painter.paint(" &7- Yok.."), "",
+                        Painter.paint("&cZaten bir meslek seçmişsin!"));
+            }
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_AQUA + "Büyücülük")) {
             int mininglevel = stats.getEnchLevel(p.getUniqueId());
             if ((stats.getMeslek(p.getUniqueId()).equals("Yok.."))) {
@@ -3351,6 +3388,21 @@ public class GuiHandler {
                         Painter.paint("&cmesleğini değişteremeyeceksin. Bu mesleği seçmeyi"),
                         Painter.paint("&conaylıyorsan tekrar &e&lSağ Tıkla."));
                 jobekle("Avcı", p);
+            }
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName() && clicked.getItemMeta()
+                .getDisplayName().equalsIgnoreCase(Painter.paint("&3El Sanatları &8[&7Meslek Bilgileri&8]"))) {
+            int workLevel = stats.getWorkLevel(p.getUniqueId());
+            if (workLevel >= 5) {
+                itemHandler.createItem(inv, "flecthing_table", 1, 33,
+                        Painter.paint("&3El Sanatları &8[&7Meslek Bilgileri&8]"), "",
+                        Painter.paint(" &fMeslek Avantajları:"),
+                        Painter.paint("&7 - El sanatları masasını kullanarak yapılan itemler daha dayanıklı olur."), Painter.paint(" &7- Yok.."), "",
+                        Painter.paint("&cEğer bu mesleği seçersen uzun bir süre"),
+                        Painter.paint("&cmesleğini değişteremeyeceksin. Bu mesleği seçmeyi"),
+                        Painter.paint("&conaylıyorsan tekrar &e&lSağ Tıkla."));
+                jobekle("Zanaatkar", p);
             }
 
         }
@@ -3424,6 +3476,14 @@ public class GuiHandler {
                         Painter.paint("&cmesleğini değişteremeyeceksin. Bu mesleği seçmeyi"),
                         Painter.paint("&conaylıyorsan tekrar &e&lSağ Tıkla."));
                 jobekle("Aşçı", p);
+            }
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName() && clicked.getItemMeta()
+                .getDisplayName().equalsIgnoreCase(Painter.paint("&cMesleğini Sıfırla!"))) {
+
+            if (!(stats.getMeslek(p.getUniqueId()).equals("Yok.."))) {
+                jobekle("Yok..", p);
             }
 
         }

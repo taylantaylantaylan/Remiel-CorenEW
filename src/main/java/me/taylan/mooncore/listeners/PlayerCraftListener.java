@@ -203,6 +203,15 @@ public class PlayerCraftListener implements Listener {
            case GOLDEN_SHOVEL:
                event.getInventory().setResult(new ItemStack(Material.AIR));
                break;
+           case BOW:
+               event.getInventory().setResult(new ItemStack(Material.AIR));
+               break;
+           case CROSSBOW:
+               event.getInventory().setResult(new ItemStack(Material.AIR));
+               break;
+           case FISHING_ROD:
+               event.getInventory().setResult(new ItemStack(Material.AIR));
+               break;
            case GOLDEN_PICKAXE:
                event.getInventory().setResult(new ItemStack(Material.AIR));
                break;
@@ -294,12 +303,6 @@ public class PlayerCraftListener implements Listener {
 
 
     }
-    @EventHandler
-    public void aga(PlayerSpawnLocationEvent event) {
-        Player player = event.getPlayer();
-        if(!(player.hasPlayedBefore())) {
-            Location loc2 = new Location(Bukkit.getWorld("dungeonworld"),495,62,308);
-            event.setSpawnLocation(loc2);
-        }
-    }
+
+
 }

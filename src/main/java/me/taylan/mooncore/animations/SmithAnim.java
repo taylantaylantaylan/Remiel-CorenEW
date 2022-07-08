@@ -54,6 +54,7 @@ public class SmithAnim {
 					player2.hideEntity(plugin, armorStand2);
 				}
 			}
+			plugin.getIndicators2().put(armorStand2,100);
 			ArmorStand armorStand22 = SpawnArmorStand.spawnArmorStand(loc3, "");
 			for (Player player2 : Bukkit.getOnlinePlayers()) {
 				if (p.getWorld().getName().equals("dungeonworld") ||p.getWorld().getName().equals("world")) {
@@ -61,6 +62,7 @@ public class SmithAnim {
 					player2.hideEntity(plugin, armorStand22);
 				}
 			}
+			plugin.getIndicators2().put(armorStand22,100);
 			new SwingAnimation(armorStand22, 40, plugin);
 			ArmorStand armorStand = SpawnArmorStand.spawnArmorStand(loc, "");
 			for (Player player2 : Bukkit.getOnlinePlayers()) {
@@ -69,6 +71,7 @@ public class SmithAnim {
 					player2.hideEntity(plugin, armorStand);
 				}
 			}
+			plugin.getIndicators2().put(armorStand,100);
 			new BukkitRunnable() {
 
 				@Override

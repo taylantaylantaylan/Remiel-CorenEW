@@ -61,7 +61,7 @@ public class Levels {
 		r.runTaskTimerAsynchronously(plugin, 0, 100L);
 
 	}
-	public void giveWorkLevel(Player p, ItemStack item) {
+	public void giveWorkLevel(Player p, int exp2) {
 		UUID uuid = p.getUniqueId();
 		int smithLevel = stats.getWorkLevel(uuid);
 		int smithExp = stats.getWorkExp(uuid);
@@ -76,11 +76,10 @@ public class Levels {
 		ToastNotification notification = new ToastNotification(Material.SMITHING_TABLE,
 				ChatColor.YELLOW + "El Sanatlarında ustalığın yükseldi!", AdvancementFrame.CHALLENGE);
 
-		if (ExpList.getExpMap().containsKey(item.getType().toString())) {
-			int exp2 = ExpList.getExpMap().get(item.getType().toString());
+
 			stats.setSmithExp(uuid, exp2);
 
-		}
+
 		int prog = 100 * smithExp / smithRequiredExp;
 		int agirlik = stats.getAgirlik(uuid);
 		int maxagirlik = stats.getMaxAgirlik(uuid);
@@ -112,7 +111,7 @@ public class Levels {
 
 			smithLevel++;
 			stats.setWorkLevel(uuid, 1);
-			stats.setWorkRequiredExp(uuid, smithLevel*6);
+			stats.setWorkRequiredExp(uuid, smithLevel*110);
 			stats.setWorkExp(uuid, -smithExp);
 			notification.send(p);
 
@@ -169,7 +168,7 @@ public class Levels {
 
 			smithLevel++;
 			stats.setSmithLevel(uuid, 1);
-			stats.setSmithRequiredExp(uuid, smithLevel* 6);
+			stats.setSmithRequiredExp(uuid, smithLevel* 110);
 			stats.setSmithExp(uuid, -smithExp);
 			notification.send(p);
 
@@ -226,7 +225,7 @@ public class Levels {
 
 			cookLevel++;
 			stats.setCookLevel(uuid, 1);
-			stats.setCookRequiredExp(uuid, cookLevel* 6);
+			stats.setCookRequiredExp(uuid, cookLevel* 110);
 			stats.setCookExp(uuid, -cookExp);
 			notification.send(p);
 
@@ -279,7 +278,7 @@ public class Levels {
 
 			combatLevel++;
 			stats.setCombatLevel(uuid, 1);
-			stats.setCombatRequiredExp(uuid, combatLevel* 6);
+			stats.setCombatRequiredExp(uuid, combatLevel* 110);
 			stats.setCombatExp(uuid, -combatExp);
 			notification.send(player);
 
@@ -336,7 +335,7 @@ public class Levels {
 			odunculukLevel++;
 
 			stats.setOdunculukLevel(uuid, 1);
-			stats.setOdunculukRequiredExp(uuid, odunculukLevel*3);
+			stats.setOdunculukRequiredExp(uuid, odunculukLevel*110);
 			stats.setOdunculukExp(uuid, -odunculukExp);
 			notification.send(player);
 		}
@@ -391,7 +390,7 @@ public class Levels {
 			}
 			farmingLevel++;
 			stats.setFarmingLevel(uuid, 1);
-			stats.setFarmingRequiredExp(uuid, farmingLevel*3);
+			stats.setFarmingRequiredExp(uuid, farmingLevel*110);
 			stats.setFarmingExp(uuid, -farmingExp);
 			notification.send(player);
 		}
@@ -453,7 +452,7 @@ public class Levels {
 			}
 			fishingLevel++;
 			stats.setFishingLevel(uuid, 1);
-			stats.setFishingRequiredExp(uuid, fishingLevel*3);
+			stats.setFishingRequiredExp(uuid, fishingLevel*110);
 			stats.setFishingExp(uuid, -fishingExp);
 			notification.send(player);
 		}
@@ -509,7 +508,7 @@ public class Levels {
 
 			miningLevel++;
 			stats.setMadencilikLevel(uuid, 1);
-			stats.setMadencilikRequiredExp(uuid, miningLevel*3);
+			stats.setMadencilikRequiredExp(uuid, miningLevel*110);
 			stats.setMadencilikExp(uuid, -miningExp);
 			notification.send(player);
 		}
@@ -564,7 +563,7 @@ public class Levels {
 			}
 			alchemyLevel++;
 			stats.setAlchemyLevel(uuid, 1);
-			stats.setAlchemyRequiredExp(uuid, alchemyLevel*3);
+			stats.setAlchemyRequiredExp(uuid, alchemyLevel*110);
 			stats.setAlchemyExp(uuid, -alchemyExp);
 			notification.send(player);
 

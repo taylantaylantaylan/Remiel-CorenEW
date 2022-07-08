@@ -74,6 +74,7 @@ public class FurnaceAnim {
 							player2.hideEntity(plugin, armorStand2);
 						}
 					}
+					plugin.getIndicators2().put(armorStand2,100);
 					world.spawn(loc, ArmorStand.class, armorStand -> {
 						armorStand.setMarker(true);
 						armorStand.setVisible(false);
@@ -87,6 +88,7 @@ public class FurnaceAnim {
 								player2.hideEntity(plugin, armorStand);
 							}
 						}
+						plugin.getIndicators2().put(armorStand,100);
 						new BukkitRunnable() {
 
 							@Override

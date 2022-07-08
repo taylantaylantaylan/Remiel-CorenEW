@@ -25,6 +25,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.player.PlayerTakeLecternBookEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -397,36 +398,33 @@ public class InventoryClickListener implements Listener {
     }
 
     @EventHandler
-    public void onClickKnowledge(InventoryClickEvent event) {
+    public void onClickKnowledge(PlayerSwapHandItemsEvent event) {
         NamespacedKey star = new NamespacedKey(plugin, "star");
-        Player player = (Player) event.getWhoClicked();
-        if (!(event.getInventory() == player.getInventory())) {
-            return;
-        }
-        if (event.getWhoClicked().getItemOnCursor() != null && event.getCurrentItem() != null) {
-            if (event.getCurrentItem().getItemMeta().getPersistentDataContainer().has(star,
+        Player player = (Player) event.getPlayer();
+        if (event.getOffHandItem() != null && event.getOffHandItem().hasItemMeta() && event.getOffHandItem().getItemMeta().getPersistentDataContainer() != null) {
+            if (event.getOffHandItem().getItemMeta().getPersistentDataContainer().has(star,
                     PersistentDataType.STRING)) {
                 event.setCancelled(true);
                 player.openInventory(guiHandler.bilgikitabı(player));
-                event.setCurrentItem(null);
+
             }
         }
     }
 
     @EventHandler
-    public void onClick5(InventoryClickEvent event) {
-        String title = event.getView().getTitle();
-        if (title.equals(guiHandler.inventory_name5)) {
-            event.setCancelled(true);
-            if (event.getCurrentItem() == null) {
-                return;
+    public void onClickKnowledge(InventoryClickEvent event) {
+        NamespacedKey star = new NamespacedKey(plugin, "star");
+        Player player = (Player) event.getWhoClicked();
+        if (event.getWhoClicked().getItemOnCursor() != null && event.getCurrentItem() != null && event.getCurrentItem().hasItemMeta() && event.getCurrentItem().getItemMeta().getPersistentDataContainer() != null) {
+            if (event.getCurrentItem().getItemMeta().getPersistentDataContainer().has(star,
+                    PersistentDataType.STRING)) {
+                event.setCancelled(true);
+player.setItemOnCursor(null);
+                player.openInventory(guiHandler.bilgikitabı(player));
             }
-
-            guiHandler.clicked((Player) event.getWhoClicked(), event.getSlot(), event.getCurrentItem(),
-                    event.getInventory());
-
         }
     }
+
 
     @EventHandler
     public void onClicknitelik(InventoryClickEvent event) {

@@ -34,6 +34,7 @@ C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\list
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\level\Levels.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\listeners\ChatListener.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\level\ExpList.java
+C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\ItemHandlerCommand.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\utils\Loots.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\alchemy\BrewingStandData.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\eco\VaultHook.java
@@ -55,12 +56,15 @@ C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\list
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\EconomyCommand.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\listeners\PlayerCraftListener.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\listeners\entitydamage\AttackDamage.java
+C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\WarpCommand.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\utils\ItemHandler.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\utils\PlayerHeads.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\alchemy\BlockPosition.java
+C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\listeners\ChunkListener.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\utils\Painter.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\utils\GuiHandler.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\utils\LeaveChunk.java
+C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\ItemInfoCommand.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\listeners\InventoryClickListener.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\listeners\ItemPickupListener.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\ProfileCommand.java

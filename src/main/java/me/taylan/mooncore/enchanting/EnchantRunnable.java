@@ -3,8 +3,10 @@ package me.taylan.mooncore.enchanting;
 import java.util.HashMap;
 import java.util.UUID;
 
+import com.destroystokyo.paper.MaterialTags;
 import me.taylan.mooncore.listeners.InventoryClickListener;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
@@ -64,6 +66,23 @@ public class EnchantRunnable extends BukkitRunnable {
 			}//200
 			if(stats.getKritikSansi(player.getUniqueId()) >100) {
 				stats.setKritikSansiCap(player.getUniqueId());
+			}
+			if(player.getInventory().getItemInMainHand() != null && player.getInventory().getItemInMainHand().hasItemMeta() && player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() != null) {
+				if(player.getInventory().getItemInMainHand().getType() == Material.WOODEN_SHOVEL || player.getInventory().getItemInMainHand().getType() == Material.WOODEN_HOE|| player.getInventory().getItemInMainHand().getType() == Material.DIAMOND_SWORD || player.getInventory().getItemInMainHand().getType() == Material.STICK) {
+					PotionEffect effect = new PotionEffect(PotionEffectType.SLOW_DIGGING, 60,
+							1,false,false,false);
+					PotionEffect effect2 = player.getPotionEffect(PotionEffectType.SLOW_DIGGING);
+					if (effect2 == null) {
+						player.addPotionEffect(effect);
+					}
+				} else if(player.getInventory().getItemInMainHand().getType() == Material.GOLDEN_PICKAXE || player.getInventory().getItemInMainHand().getType() == Material.GOLDEN_AXE|| player.getInventory().getItemInMainHand().getType() == Material.GOLDEN_HOE ||player.getInventory().getItemInMainHand().getType() == Material.GOLDEN_SHOVEL  ) {
+					PotionEffect effect = new PotionEffect(PotionEffectType.SLOW_DIGGING, 60,
+							0, false, false, false);
+					PotionEffect effect2 = player.getPotionEffect(PotionEffectType.SLOW_DIGGING);
+					if (effect2 == null) {
+						player.addPotionEffect(effect);
+					}
+				}
 			}
 			if(stats.getKritikSansi(player.getUniqueId()) >100) {
 				stats.setKritikSansiCap(player.getUniqueId());

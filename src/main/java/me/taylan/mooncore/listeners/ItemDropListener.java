@@ -68,34 +68,7 @@ public class ItemDropListener implements Listener {
 			} else {
 				confirmCheck.remove(player.getName());
 				e.setCancelled(false);
-				NamespacedKey weightitm = new NamespacedKey(plugin, "weightitm");
-				ItemStack item = e.getItemDrop().getItemStack();
-				if (item != null && item.hasItemMeta()) {
-					if (item.getItemMeta().getPersistentDataContainer() != null) {
-						if (item.getItemMeta().getPersistentDataContainer().has(weightitm,
-								PersistentDataType.INTEGER)) {
-							int weight = item.getItemMeta().getPersistentDataContainer().get(weightitm,
-									PersistentDataType.INTEGER);
-							int agirlik = stats.getAgirlik(player.getUniqueId());
-							if (agirlik > 0) {
-								stats.setAgirlik(player.getUniqueId(), -weight);
-								int maxagirlik = stats.getMaxAgirlik(player.getUniqueId());
-								SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-								Date date = new Date(System.currentTimeMillis());
-								FastBoard board = new FastBoard(player);
 
-								board.updateTitle(ChatColor.AQUA + "Moon Network");
-
-								board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "     Remiel", "    ",
-										ChatColor.GOLD + "Akçe ⛁" + ChatColor.WHITE + 0,
-										ChatColor.WHITE + "Ağırlık: " + ChatColor.GRAY + agirlik + "/" + ChatColor.RED
-												+ maxagirlik,
-										"", ChatColor.GRAY + player.getName(),
-										ChatColor.DARK_GRAY + formatter.format(date), ChatColor.AQUA + "mc.moonnw.xyz");
-							}
-						}
-					}
-				}
 			}
 
 		}

@@ -48,12 +48,15 @@ public class WorkAnim {
 					player2.hideEntity(plugin, armorStand);
 				}
 			}
+			plugin.getIndicators2().put(armorStand2,100);
+			plugin.getIndicators2().put(armorStand,100);
 			for (Player player2 : Bukkit.getOnlinePlayers()) {
 				if (p.getWorld().getName().equals("dungeonworld") ||p.getWorld().getName().equals("world")) {
 					if (player2 == p) continue;
 					player2.hideEntity(plugin, armorStand2);
 				}
 			}
+
 			new BukkitRunnable() {
 
 				@Override
@@ -68,7 +71,7 @@ public class WorkAnim {
 					armorStand.setCustomName(
 							ChatColor.GOLD + "Ekipmanın Hazır Olmasına: " + ChatColor.WHITE + remain + " Saniye");
 					if (timer >= smithTime) {
-						levels.giveWorkLevel(p, result);
+						levels.giveWorkLevel(p, exp);
 
 						armorStand.setCustomName(ChatColor.GREEN + "✔");
 

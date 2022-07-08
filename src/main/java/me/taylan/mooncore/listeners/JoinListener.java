@@ -38,6 +38,13 @@ public class JoinListener implements Listener {
 	private StatsManager stats;
 	private static HashMap<UUID, Inventory> menu = new HashMap<UUID, Inventory>();
 	private static HashMap<UUID, Inventory> ocakmenu = new HashMap<UUID, Inventory>();
+
+
+
+	private HashMap<UUID, ItemStack[]> armor = new HashMap<UUID, ItemStack[]>();
+	public HashMap<UUID, ItemStack[]> getArmor() {
+		return armor;
+	}
 	private static HashMap<UUID, Inventory> furnacemenu = new HashMap<UUID, Inventory>();
 	private static HashMap<UUID, Inventory> elsanatmenu = new HashMap<UUID, Inventory>();
 	public JoinListener(MoonCore plugin) {
@@ -63,6 +70,9 @@ public class JoinListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent e) {
 
 		Player player = e.getPlayer();
+		if(player.getInventory().getArmorContents() != null) {
+			armor.put(player.getUniqueId(),player.getInventory().getArmorContents());
+		}
 		player.setHealthScale(20);
 		e.setJoinMessage(null);
 		String name = player.getName();

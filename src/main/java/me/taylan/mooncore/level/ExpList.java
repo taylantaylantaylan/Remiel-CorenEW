@@ -23,17 +23,20 @@ public class ExpList {
 		// MINING
 		expMap.put("DIAMOND_ORE", 5);
 		expMap.put("IRON_ORE", 3);
-		expMap.put("GOLD_ORE", 3);
+		expMap.put("GOLD_ORE", 4);
 		expMap.put("REDSTONE_ORE", 2);
 		expMap.put("NETHER_QUARTZ_ORE", 2);
+		expMap.put("OBSIDIAN", 3);
 		expMap.put("GRANITE", 1);
 		expMap.put("COAL_ORE", 2);
 		expMap.put("ANCIENT_DEBRIS", 10);
 		expMap.put("STONE", 1);
-		expMap.put("ANDESITE", 1);
-		expMap.put("DIORITE", 1);
+		expMap.put("COBBLESTONE", 1);
+		expMap.put("RAW_COPPER_BLOCK", 4);
+		expMap.put("RAW_IRON_BLOCK", 5);
+		expMap.put("DEEPSLATE_REDSTONE_ORE", 5);
+		expMap.put("NETHER_QUARTZ_ORE", 5);
 		expMap.put("LAPIS_ORE", 3);
-		expMap.put("NETHERRACK", 1);
 		// FISHING
 		expMap.put("COD", 4);
 		expMap.put("PUFFERFISH", 5);
@@ -50,20 +53,13 @@ public class ExpList {
 		expMap.put("NAUTILUS_SHELL", 10);
 		expMap.put("BONE", 1);
 		// FORAGING
-		expMap.put("OAK_WOOD", 2);
-		expMap.put("SPRUCE_WOOD", 2);
-		expMap.put("BIRCH_WOOD", 2);
-		expMap.put("JUNGLE_WOOD", 2);
-		expMap.put("DARK_OAK_WOOD", 2);
-		expMap.put("ACACIA_WOOD", 2);
-		expMap.put("OAK_WOOD", 2);
-		expMap.put("OAK_LOG", 2);
-		expMap.put("SPRUCE_LOG", 2);
-		expMap.put("BIRCH_LOG", 2);
-		expMap.put("JUNGLE_LOG", 2);
-		expMap.put("DARK_OAK_LOG", 2);
-		expMap.put("ACACIA_LOG", 2);
-		expMap.put("OAK_LOG", 2);
+		expMap.put("SPRUCE_WOOD", 4);
+		expMap.put("BIRCH_WOOD", 3);
+		expMap.put("JUNGLE_WOOD", 5);
+		expMap.put("DARK_OAK_WOOD", 3);
+		expMap.put("STRIPPED_DARK_OAK_WOOD", 4);
+		expMap.put("ACACIA_WOOD", 5);
+		expMap.put("OAK_WOOD", 1);
 		expMap.put("BREAD", 20);
 		// BREWING
 		expMap.put("SUGAR", 4);
@@ -77,12 +73,7 @@ public class ExpList {
 		expMap.put("DRAGON_BREATH", 4);
 		expMap.put("FERMENTED_SPIDER_EYE", 4);
 		expMap.put("SPIDER_EYE", 4);
-		// SMITHING
-		expMap.put("IRON_SWORD", 40);
-		expMap.put("GOLDEN_SWORD", 60);
-		expMap.put("DIAMOND_SWORD", 80);
-		expMap.put("NETHERITE_SWORD", 100);
-		expMap.put("WOODEN_SWORD", 20);
+
 		// FARMING
 		expMap.put("WHEAT", 3);
 		expMap.put("PATATOES", 2);
@@ -91,7 +82,6 @@ public class ExpList {
 		expMap.put("SUGAR_CANE", 3);
 		expMap.put("CACTUS", 3);
 		expMap.put("NETHER_WART", 4);
-		expMap.put("KELP_PLANT", 4);
 		expMap.put("RED_MUSHROOM", 2);
 		expMap.put("BROWN_MUSHROOM", 2);
 		expMap.put("PUMPKIN", 3);

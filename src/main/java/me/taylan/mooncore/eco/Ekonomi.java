@@ -26,7 +26,7 @@ public class Ekonomi implements Economy {
 
     @Override
     public String getName() {
-        return null;
+        return "Remiel";
     }
 
     @Override

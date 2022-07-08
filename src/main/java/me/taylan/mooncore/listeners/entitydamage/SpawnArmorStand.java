@@ -31,6 +31,7 @@ public class SpawnArmorStand implements Listener {
 		this.attackListener = plugin.getAttackListener();
 		r = new BukkitRunnable() {
 			Set<Entity> stands = plugin.getIndicators().keySet();
+
 			List<Entity> removal = new ArrayList<>();
 
 			@Override

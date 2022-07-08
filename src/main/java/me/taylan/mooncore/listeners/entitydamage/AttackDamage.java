@@ -64,28 +64,6 @@ public class AttackDamage implements Listener {
 					);
 			float realDamage = (float) (event.getDamage()*damageReduc);
 			event.setDamage(realDamage);
-			for(ItemStack item: player.getInventory().getArmorContents()) {
-				if (item!= null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
-					NamespacedKey dura = new NamespacedKey(plugin, "durability");
-					ItemMeta meta = item.getItemMeta();
-					int durabilt =  meta.getPersistentDataContainer().get(dura,PersistentDataType.INTEGER);
-					meta.getPersistentDataContainer().set(dura,PersistentDataType.INTEGER,durabilt-1);
-					item.setItemMeta(meta);
-					Damageable damagemeta = (Damageable) meta;
-					if(durabilt<item.getType().getMaxDurability()) {
-						damagemeta.setDamage(damagemeta.getDamage()+1);
-						item.setItemMeta(damagemeta);
-						if(durabilt<0) {
-							player.getInventory().remove(item);
-							player.playSound(player, Sound.ITEM_SHIELD_BREAK,0.5F,1.3F);
-						}
-					} else {
-						damagemeta.setDamage(0);
-						item.setItemMeta(damagemeta);
-					}
-
-				}
-			}
 			Team isim = scoreboard.getTeam(player.getName());
 			if (isim.hasEntry(player.getName())) {
 				isim.setPrefix(Painter.paint("&7[&fSvy. " + stats.getLevel(player.getUniqueId()) + "&7] &f"));

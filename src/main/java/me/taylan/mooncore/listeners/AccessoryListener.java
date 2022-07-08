@@ -24,10 +24,12 @@ import java.util.UUID;
 public class AccessoryListener implements Listener {
     private MoonCore plugin;
     private StatsManager stats;
+    private JoinListener joinListener;
 
     public AccessoryListener(MoonCore plugin) {
         this.plugin = plugin;
         this.stats = plugin.getStatsManager();
+        this.joinListener = plugin.getJoinListener();
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -42,8 +44,8 @@ public class AccessoryListener implements Listener {
         }
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
-            if(event.getClickedBlock() != null && plugin.getConfig().getStringList("blocked").contains(event.getClickedBlock().getType().toString())) {
-             return;
+            if (event.getClickedBlock() != null && plugin.getConfig().getStringList("blocked").contains(event.getClickedBlock().getType().toString())) {
+                return;
             }
             ItemStack item = player.getInventory().getItemInMainHand();
             if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
@@ -241,67 +243,19 @@ public class AccessoryListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void armorbroke(PlayerItemBreakEvent event) {
-        Player p = event.getPlayer();
-        ItemStack item = event.getBrokenItem();
-
-        if (MaterialTags.CHESTPLATES.isTagged(item)||MaterialTags.LEGGINGS.isTagged(item)||MaterialTags.BOOTS.isTagged(item)||MaterialTags.HELMETS.isTagged(item)) {
-            if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
-                ItemMeta meta = item.getItemMeta();
-                PersistentDataContainer container = meta.getPersistentDataContainer();
-                NamespacedKey can = new NamespacedKey(plugin, "can");
-                NamespacedKey doygunluk = new NamespacedKey(plugin, "doygunluk");
-                NamespacedKey canyenilenmesi = new NamespacedKey(plugin, "canyenilenmesi");
-                NamespacedKey saldirihizi = new NamespacedKey(plugin, "attackspeed");
-                NamespacedKey guc = new NamespacedKey(plugin, "guc");
-                NamespacedKey zirh = new NamespacedKey(plugin, "dayaniklilik");
-                NamespacedKey kritiksansi = new NamespacedKey(plugin, "kritiksans");
-                NamespacedKey kritikhasari = new NamespacedKey(plugin, "kritik");
-                NamespacedKey hiz = new NamespacedKey(plugin, "hiz");
-                NamespacedKey sogukdi = new NamespacedKey(plugin, "sogukdirenci");
-                NamespacedKey sicakdi = new NamespacedKey(plugin, "sicakdirenci");
-                NamespacedKey hiclikdi = new NamespacedKey(plugin, "hiclikdirenci");
-                for (NamespacedKey key : container.getKeys()) {
-                    if (key.equals(can)) {
-                        stats.setCan(p, p.getUniqueId(), -container.get(key, PersistentDataType.INTEGER));
-
-                    } else if (key.equals(canyenilenmesi)) {
-                        stats.setCanYenileme(p, p.getUniqueId(),
-                                -container.get(key, PersistentDataType.INTEGER));
-                    } else if (key.equals(guc)) {
-                        stats.setGuc(p.getUniqueId(), -container.get(key, PersistentDataType.INTEGER));
-                    } else if (key.equals(zirh)) {
-                        stats.setDirenc(p.getUniqueId(), -container.get(key, PersistentDataType.INTEGER));
-                    } else if (key.equals(doygunluk)) {
-                        stats.setDoygunluk(p, p.getUniqueId(), -container.get(key, PersistentDataType.INTEGER));
-                    } else if (key.equals(saldirihizi)) {
-                        stats.setSaldiriHizi(p.getUniqueId(), -container.get(key, PersistentDataType.INTEGER));
-                    } else if (key.equals(kritikhasari)) {
-                        stats.setKritikHasari(p.getUniqueId(), -container.get(key, PersistentDataType.INTEGER));
-                    } else if (key.equals(kritiksansi)) {
-                        stats.setKritikSansi(p.getUniqueId(), -container.get(key, PersistentDataType.INTEGER));
-                    } else if (key.equals(hiz)) {
-                        stats.setHiz(p, p.getUniqueId(), -container.get(key, PersistentDataType.INTEGER));
-                    } else if (key.equals(sogukdi)) {
-                        stats.setSogukDirenci(p.getUniqueId(), -container.get(key, PersistentDataType.INTEGER));
-                    } else if (key.equals(sicakdi)) {
-                        stats.setSicakDirenci(p.getUniqueId(), -container.get(key, PersistentDataType.INTEGER));
-                    } else if (key.equals(hiclikdi)) {
-                        stats.setHiclikDirenci(p.getUniqueId(), -container.get(key, PersistentDataType.INTEGER));
-                    }
-                }
-            }
-        }
-
-    }
 
     @EventHandler
     public void armorbroke(PlayerArmorChangeEvent event) {
         Player p = event.getPlayer();
         ItemStack item2 = event.getOldItem();
         ItemStack item = event.getNewItem();
-        if (MaterialTags.CHESTPLATES.isTagged(item)||MaterialTags.LEGGINGS.isTagged(item)||MaterialTags.BOOTS.isTagged(item)||MaterialTags.HELMETS.isTagged(item)) {
+        for (ItemStack armoritem : joinListener.getArmor().get(p.getUniqueId())) {
+            if (item2.equals(armoritem)) {
+                joinListener.getArmor().remove(p.getUniqueId());
+                return;
+            }
+        }
+        if (MaterialTags.CHESTPLATES.isTagged(item) || MaterialTags.LEGGINGS.isTagged(item) || MaterialTags.BOOTS.isTagged(item) || MaterialTags.HELMETS.isTagged(item)) {
             if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
                 ItemMeta meta = item.getItemMeta();
                 PersistentDataContainer container = meta.getPersistentDataContainer();
@@ -348,7 +302,7 @@ public class AccessoryListener implements Listener {
                 }
             }
         }
-        if (MaterialTags.CHESTPLATES.isTagged(item2)||MaterialTags.LEGGINGS.isTagged(item2)||MaterialTags.BOOTS.isTagged(item2)||MaterialTags.HELMETS.isTagged(item2)) {
+        if (MaterialTags.CHESTPLATES.isTagged(item2) || MaterialTags.LEGGINGS.isTagged(item2) || MaterialTags.BOOTS.isTagged(item2) || MaterialTags.HELMETS.isTagged(item2)) {
             if (item2.hasItemMeta() && item2.getItemMeta().getPersistentDataContainer() != null) {
                 ItemMeta meta = item2.getItemMeta();
                 PersistentDataContainer container = meta.getPersistentDataContainer();

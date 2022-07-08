@@ -12,6 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -19,7 +20,9 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ItemHandler {
@@ -28,6 +31,15 @@ public class ItemHandler {
     private StatsManager stats;
     private WorkAnim workAnim;
     private List<Component> lore = new ArrayList<>();
+
+    public Map<String, ItemStack> getItemStackMap() {
+        return itemStackMap;
+    }
+
+    private Map<String, ItemStack> itemStackMap = new HashMap<String, ItemStack>();
+
+
+
 
     public ItemHandler(MoonCore main) {
         this.main = main;
@@ -63,6 +75,7 @@ public class ItemHandler {
     public ItemStack sprucestick;
     public ItemStack heavystick;
     public ItemStack acaciastick;
+    public ItemStack apple;
     public ItemStack kozstick;
     public ItemStack godstick;
     public ItemStack kezicicek;
@@ -189,6 +202,8 @@ public class ItemHandler {
     public ItemStack gianttoe;
     public ItemStack gianteye;
     public ItemStack glowstone;
+    public ItemStack feather;
+    public ItemStack spidereye;
     public void init() {
         createOakWood();
         createDarkOakWood();
@@ -343,6 +358,9 @@ createSalt();
         createGiantEye();
         createGiantToe();
         createGlowstone();
+        createApple();
+        createFeather();
+        createSpiderEye();
     }
 
     @SuppressWarnings("deprecation")
@@ -1547,7 +1565,7 @@ createSalt();
         NamespacedKey sicak = new NamespacedKey(main, "sicakdirenci");
         NamespacedKey soguk = new NamespacedKey(main, "sogukdirenci");
         NamespacedKey hiclik = new NamespacedKey(main, "hiclikdirenci");
-        NamespacedKey durabi = new NamespacedKey(main, "dura");
+        NamespacedKey durabi = new NamespacedKey(main, "durability");
         container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
         lore.add(MiniMessage.miniMessage().deserialize(""));
 
@@ -2690,6 +2708,7 @@ createSalt();
                 .deserialize("<color:#4f3c24><i:false>Meşe Odunu <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         oakwood = stick;
+        itemStackMap.put("oakwood",stick);
     }
 
     public void createBirchWood() {
@@ -2699,6 +2718,7 @@ createSalt();
                 .deserialize("<gray><i:false>Huş Odunu <dark_aqua>[<aqua>T1<dark_aqua>]"));
         stick.setItemMeta(meta);
         birchwood = stick;
+        itemStackMap.put("birchwood",stick);
     }
 
     public void createStone() {
@@ -2708,6 +2728,7 @@ createSalt();
                 .deserialize("<gray><i:false>Taş <dark_aqua>[<aqua>T1<dark_aqua>]"));
         stick.setItemMeta(meta);
         stone = stick;
+        itemStackMap.put("stone",stick);
     }
 
     public void createCobblestone() {
@@ -2717,6 +2738,7 @@ createSalt();
                 .deserialize("<gray><i:false>Kırıktaş <dark_aqua>[<aqua>T1<dark_aqua>]"));
         stick.setItemMeta(meta);
         cobblestone = stick;
+        itemStackMap.put("cobblestone",stick);
     }
 
     public void createDarkOakWood() {
@@ -2726,6 +2748,7 @@ createSalt();
                 .deserialize("<color:#382d1e><i:false>Kara Meşe Odunu <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         darkoakwood = stick;
+        itemStackMap.put("darkoakwood",stick);
     }
 
     public void createOldOakWood() {
@@ -2735,6 +2758,7 @@ createSalt();
                 .deserialize("<color:#382d1e><i:false>Yaşlı Meşe Odunu <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         oldoakwood = stick;
+        itemStackMap.put("oldoakwood",stick);
     }
 
     public void createSpruceWood() {
@@ -2744,6 +2768,7 @@ createSalt();
                 .deserialize("<color:#241c13><i:false>Ladin Odunu <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         sprucewood = stick;
+        itemStackMap.put("sprucewood",stick);
     }
 
     public void createHeavyWood() {
@@ -2753,6 +2778,7 @@ createSalt();
                 .deserialize("<dark_gray><i:false>Ağır Odun <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         heavywood = stick;
+        itemStackMap.put("heavywood",stick);
     }
 
     public void createAcaciaWood() {
@@ -2762,6 +2788,7 @@ createSalt();
                 .deserialize("<gold><i:false>Akasya Odunu <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         acaciawood = stick;
+        itemStackMap.put("acaciawood",stick);
     }
 
     public void createKozWood() {
@@ -2771,6 +2798,7 @@ createSalt();
                 .deserialize("<gold><i:false>Körükalev Odunu <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         kozwood = stick;
+        itemStackMap.put("kozwood",stick);
     }
 
     public void createGodWood() {
@@ -2780,6 +2808,7 @@ createSalt();
                 .deserialize("<dark_red><i:false>İlah Söğüt Odunu <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         godwood = stick;
+        itemStackMap.put("godwood",stick);
     }
 
     public void createOakPlanks() {
@@ -2793,6 +2822,7 @@ createSalt();
         ShapelessRecipe recipe = new ShapelessRecipe(NamespacedKey.minecraft("tahta1"), oakplanks);
         recipe.addIngredient(2, oakwood);
         Bukkit.getServer().addRecipe(recipe);
+        itemStackMap.put("oakplanks",stick);
 
     }
 
@@ -2803,6 +2833,7 @@ createSalt();
                 .deserialize("<white><i:false>Kurt Dişi <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         wolfteeth = stick;
+        itemStackMap.put("wolfteeth",stick);
 
 
     }
@@ -2814,6 +2845,7 @@ createSalt();
                 .deserialize("<white><i:false>Yün <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         wool = stick;
+        itemStackMap.put("wool",stick);
 
 
     }
@@ -2825,7 +2857,7 @@ createSalt();
                 .deserialize("<gray><i:false>Huş Tahtası <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         birchplanks = stick;
-
+        itemStackMap.put("birchplanks",stick);
 
     }
 
@@ -2836,6 +2868,7 @@ createSalt();
                 .deserialize("<color:#382d1e><i:false>Kara Meşe Tahtası <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         darkoakplanks = stick;
+        itemStackMap.put("darkoakplanks",stick);
     }
 
     public void createOldOakPlanks() {
@@ -2845,6 +2878,7 @@ createSalt();
                 .deserialize("<color:#382d1e><i:false>Yaşlı Meşe Tahtası <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         oldoakplanks = stick;
+        itemStackMap.put("oldoakplanks",stick);
     }
 
     public void createShinyPearl() {
@@ -2855,6 +2889,7 @@ createSalt();
                 .deserialize("<dark_aqua><i:false>Parlak İnci <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         shinyenderpearl = stick;
+        itemStackMap.put("shinyenderpearl",stick);
     }
 
     public void createPearl() {
@@ -2865,8 +2900,18 @@ createSalt();
                 .deserialize("<aqua><i:false>Ender İncisi <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         enderpearl = stick;
+        itemStackMap.put("pearl",stick);
     }
+    public void createFeather() {
+        ItemStack stick = new ItemStack(Material.FEATHER);
+        ItemMeta meta = stick.getItemMeta();
 
+        meta.displayName((MiniMessage.miniMessage()
+                .deserialize("<white><i:false>Tüy <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        stick.setItemMeta(meta);
+        feather = stick;
+        itemStackMap.put("feather",stick);
+    }
     public void createRotten() {
         ItemStack stick = new ItemStack(Material.ROTTEN_FLESH);
         ItemMeta meta = stick.getItemMeta();
@@ -2875,6 +2920,7 @@ createSalt();
                 .deserialize("<white><i:false>Çürük Et <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rotten = stick;
+        itemStackMap.put("rottenflesh",stick);
     }
 
     public void createDarkBone() {
@@ -2885,6 +2931,7 @@ createSalt();
                 .deserialize("<color:#241c13><i:false>Solmuş Kemik <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         blackbone = stick;
+        itemStackMap.put("blackbone",stick);
     }
 
     public void createBone() {
@@ -2895,6 +2942,7 @@ createSalt();
                 .deserialize("<white><i:false>Kemik <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         bone = stick;
+        itemStackMap.put("bone",stick);
     }
     public void createSalt() {
         ItemStack stick = new ItemStack(Material.SUGAR);
@@ -2904,6 +2952,7 @@ createSalt();
                 .deserialize("<white><i:false>Tuz <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         salt = stick;
+        itemStackMap.put("salt",stick);
     }
     public void createSprucePlanks() {
         ItemStack stick = new ItemStack(Material.SPRUCE_PLANKS);
@@ -2913,6 +2962,7 @@ createSalt();
                 .deserialize("<color:#241c13><i:false>Ladin Tahtası <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         spruceplanks = stick;
+        itemStackMap.put("spruceplanks",stick);
     }
 
     public void createHeavyPlanks() {
@@ -2926,6 +2976,7 @@ createSalt();
         ShapelessRecipe recipe = new ShapelessRecipe(NamespacedKey.minecraft("heavy_planks"), stick);
         recipe.addIngredient(1, heavywood);
         Bukkit.getServer().addRecipe(recipe);
+        itemStackMap.put("heavyplanks",stick);
     }
 
     public void createAcaciaPlanks() {
@@ -2935,6 +2986,7 @@ createSalt();
                 .deserialize("<gold><i:false>Akasya Tathası <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         acaciaplanks = stick;
+        itemStackMap.put("acaciaplanks",stick);
     }
 
     public void createBlackDust() {
@@ -2944,6 +2996,7 @@ createSalt();
                 .deserialize("<gold><i:false>Kara Toz <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         blackdust = stick;
+        itemStackMap.put("blackdust",stick);
     }
 
     public void createKozPlanks() {
@@ -2953,6 +3006,7 @@ createSalt();
                 .deserialize("<gold><i:false>Körükalev Tahtası <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         kozplanks = stick;
+        itemStackMap.put("kozplanks",stick);
     }
 
     public void createGodPlanks() {
@@ -2962,6 +3016,7 @@ createSalt();
                 .deserialize("<dark_red><i:false>İlah Söğüt Tahtası <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         godplanks = stick;
+        itemStackMap.put("godplanks",stick);
     }
 
     public void createOakCubuk() {
@@ -2975,6 +3030,7 @@ createSalt();
         ShapelessRecipe recipe = new ShapelessRecipe(NamespacedKey.minecraft("handle1"), oakstick);
         recipe.addIngredient(2, oakplanks);
         Bukkit.getServer().addRecipe(recipe);
+        itemStackMap.put("oakstick",stick);
 
     }
 
@@ -2985,6 +3041,7 @@ createSalt();
                 .deserialize("<gray><i:false>Huş Çubuk <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         birchstick = stick;
+        itemStackMap.put("birchstick",stick);
     }
 
     public void createDarkOakCubuk() {
@@ -2994,6 +3051,7 @@ createSalt();
                 .deserialize("<color:#382d1e><i:false>Kara Meşe Çubuk <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         darkoakstick = stick;
+        itemStackMap.put("darkoakstick",stick);
     }
 
     public void createArrow() {
@@ -3003,6 +3061,7 @@ createSalt();
                 .deserialize("<color:#382d1e><i:false>Ok <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         arrow = stick;
+        itemStackMap.put("arrow",stick);
     }
 
     public void createOldOakCubuk() {
@@ -3012,6 +3071,7 @@ createSalt();
                 .deserialize("<color:#382d1e><i:false>Yaşlı Meşe Çubuk <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         oldoakstick = stick;
+        itemStackMap.put("oldoakstick",stick);
     }
     public void createRawCod() {
         ItemStack stick = new ItemStack(Material.COD);
@@ -3020,6 +3080,7 @@ createSalt();
                 .deserialize("<white><i:false>Morina <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rawcod = stick;
+        itemStackMap.put("rawcod",stick);
     }
     public void createCookedSalmon() {
         ItemStack stick = new ItemStack(Material.COOKED_SALMON);
@@ -3028,6 +3089,7 @@ createSalt();
                 .deserialize("<white><i:false>Pişmiş Somon <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         cookedsalmon = stick;
+        itemStackMap.put("cookedsalmon",stick);
     }
     public void createRawSalmon() {
         ItemStack stick = new ItemStack(Material.SALMON);
@@ -3036,6 +3098,7 @@ createSalt();
                 .deserialize("<white><i:false>Somon <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rawsalmon = stick;
+        itemStackMap.put("rawsalmon",stick);
     }
     public void createSpruceCubuk() {
         ItemStack stick = new ItemStack(Material.STICK);
@@ -3044,6 +3107,7 @@ createSalt();
                 .deserialize("<color:#241c13><i:false>Ladin Çubuk <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         sprucestick = stick;
+        itemStackMap.put("sprucecubuk",stick);
     }
 
     public void createHeavyCubuk() {
@@ -3053,6 +3117,7 @@ createSalt();
                 .deserialize("<dark_gray><i:false>Ağır Çubuk <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         heavystick = stick;
+        itemStackMap.put("heavycubuk",stick);
     }
 
     public void createAcaciaCubuk() {
@@ -3062,6 +3127,7 @@ createSalt();
                 .deserialize("<gold><i:false>Akasya Çubuk <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         acaciastick = stick;
+        itemStackMap.put("acaciacubuk",stick);
     }
 
     public void createKozCubuk() {
@@ -3071,6 +3137,7 @@ createSalt();
                 .deserialize("<gold><i:false>Körükalev Çubuk <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         kozstick = stick;
+        itemStackMap.put("kozcubuk",stick);
     }
 
     public void createGodCubuk() {
@@ -3080,6 +3147,7 @@ createSalt();
                 .deserialize("<dark_red><i:false>İlah Söğüt Çubuk <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         godstick = stick;
+        itemStackMap.put("godcubuk",stick);
     }
 
     public void createCowLeather() {
@@ -3089,6 +3157,7 @@ createSalt();
                 .deserialize("<white><i:false>İnek Derisi <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         cowleather = stick;
+        itemStackMap.put("cowleather",stick);
     }
     public void createBakedPotato() {
         ItemStack stick = new ItemStack(Material.BAKED_POTATO);
@@ -3097,6 +3166,7 @@ createSalt();
                 .deserialize("<white><i:false>Pişmiş Patates <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         bakedpotato = stick;
+        itemStackMap.put("bakedpotato",stick);
     }
 
     public void createBizoneLeather() {
@@ -3106,6 +3176,7 @@ createSalt();
                 .deserialize("<gold><i:false>Bizon Derisi <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         bizoneleather = stick;
+        itemStackMap.put("bizoneleather",stick);
     }
 
     public void createWildPigLeather() {
@@ -3115,6 +3186,7 @@ createSalt();
                 .deserialize("<red><i:false>Yaban Domuzu Derisi <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         pigleather = stick;
+        itemStackMap.put("wildpigleather",stick);
     }
 
     public void createBackpack() {
@@ -3124,6 +3196,7 @@ createSalt();
                 .deserialize("<red><i:false>Yaban Domuzu Derisinden Çanta <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         pigleather = stick;
+        itemStackMap.put("backpack",stick);
     }
 
     public void createWolfLeather() {
@@ -3133,6 +3206,7 @@ createSalt();
                 .deserialize("<gray><i:false>Kurt Postu <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         wolfleather = stick;
+        itemStackMap.put("wolfleather",stick);
     }
 
     public void createRabbitLeather() {
@@ -3142,6 +3216,7 @@ createSalt();
                 .deserialize("<color:#b5a896><i:false>Tavşan Derisi <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         rabbitleather = stick;
+        itemStackMap.put("rabbitleather",stick);
     }
 
     public void createFoxLeather() {
@@ -3151,6 +3226,7 @@ createSalt();
                 .deserialize("<yellow><i:false>Tilki Postu <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         foxleather = stick;
+        itemStackMap.put("foxleather",stick);
     }
 
     public void createCamelLeather() {
@@ -3160,6 +3236,7 @@ createSalt();
                 .deserialize("<gold><i:false>Deve Derisi <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         camelleather = stick;
+        itemStackMap.put("camelleather",stick);
     }
 
     public void createMantikorLeather() {
@@ -3169,6 +3246,7 @@ createSalt();
                 .deserialize("<green><i:false>Mantikor Derisi <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         mantikorleather = stick;
+        itemStackMap.put("mantikorleather",stick);
     }
 
     public void createZefirLeather() {
@@ -3178,6 +3256,7 @@ createSalt();
                 .deserialize("<aqua><i:false>Zefir Postu <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         zefirleather = stick;
+        itemStackMap.put("zefirleather",stick);
     }
 
     public void createKeziCicek() {
@@ -3187,6 +3266,7 @@ createSalt();
                 .deserialize("<aqua><i:false>Kezi Çiçeği <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         kezicicek = stick;
+        itemStackMap.put("kezicicek",stick);
     }
 
     public void createString() {
@@ -3196,6 +3276,7 @@ createSalt();
                 .deserialize("<white><i:false>İp <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         string = stick;
+        itemStackMap.put("string",stick);
     }
 
     public void createYanmazString() {
@@ -3205,6 +3286,7 @@ createSalt();
                 .deserialize("<yellow><i:false>Yanmaz İp <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         firestring = stick;
+        itemStackMap.put("yanmazstring",stick);
     }
 
     public void createFireBeetle() {
@@ -3214,6 +3296,7 @@ createSalt();
                 .deserialize("<gold><i:false>Alevböceği <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         firebeetle = stick;
+        itemStackMap.put("firebeetle",stick);
     }
 
     public void createFireEsans() {
@@ -3223,6 +3306,7 @@ createSalt();
                 .deserialize("<gold><i:false>Alev Özütü <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         fireoz = stick;
+        itemStackMap.put("fireesans",stick);
     }
 
     public void createSoulEsans() {
@@ -3232,6 +3316,7 @@ createSalt();
                 .deserialize("<dark_aqua><i:false>Ruh Esansı <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         soulesans = stick;
+        itemStackMap.put("soulesans",stick);
     }
 
     public void createLightningEsans() {
@@ -3241,6 +3326,7 @@ createSalt();
                 .deserialize("<yellow><i:false>Yıldırım Özütü <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         lightningesans = stick;
+        itemStackMap.put("lightningesans",stick);
     }
 
     public void createBearLeather() {
@@ -3250,6 +3336,7 @@ createSalt();
                 .deserialize("<red><i:false>Ayı Postu <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         bearleather = stick;
+        itemStackMap.put("bearleather",stick);
     }
 
     public void createJade() {
@@ -3259,6 +3346,7 @@ createSalt();
                 .deserialize("<green><i:false>Yeşim Taşı <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         jade = stick;
+        itemStackMap.put("jade",stick);
     }
 
     public void createIceEsans() {
@@ -3268,6 +3356,7 @@ createSalt();
                 .deserialize("<aqua><i:false>Gerçek Buz Özütü <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         iceesans = stick;
+        itemStackMap.put("iceesans",stick);
     }
 
     public void createCelestialStone() {
@@ -3277,6 +3366,7 @@ createSalt();
                 .deserialize("<gold><i:false>Göktaşı <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         celestialstone = stick;
+        itemStackMap.put("bronzeingot",stick);
     }
 
     public void createSaltString() {
@@ -3286,6 +3376,7 @@ createSalt();
                 .deserialize("<gray><i:false>Tuzlu İp <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         saltstring = stick;
+        itemStackMap.put("saltstring",stick);
     }
 
     public void createCursedString() {
@@ -3295,6 +3386,7 @@ createSalt();
                 .deserialize("<purple><i:false>Lanetli İp <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         cursedstring = stick;
+        itemStackMap.put("cursedstring",stick);
     }
 
     public void createTripwire() {
@@ -3304,6 +3396,7 @@ createSalt();
                 .deserialize("<white><i:false>Kanca <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         tripwire = stick;
+        itemStackMap.put("tripwire",stick);
     }
 
     public void createCopperIngot() {
@@ -3313,6 +3406,7 @@ createSalt();
                 .deserialize("<gold><i:false>Bakır Külçesi <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         copperingot = stick;
+        itemStackMap.put("copperingot",stick);
     }
 
     public void createCopperOre() {
@@ -3322,6 +3416,7 @@ createSalt();
                 .deserialize("<gold><i:false>Bakır Cevheri <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         copperore = stick;
+        itemStackMap.put("copperore",stick);
     }
 
     public void createBronzeIngot() {
@@ -3331,6 +3426,7 @@ createSalt();
                 .deserialize("<gold><i:false>Bronz Külçesi <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         bronzeingot = stick;
+        itemStackMap.put("bronzeingot",stick);
     }
 
     public void createNikelIngot() {
@@ -3340,6 +3436,7 @@ createSalt();
                 .deserialize("<gray><i:false>Nikel Külçesi <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         nikelingot = stick;
+        itemStackMap.put("nikelingot",stick);
     }
 
     public void createNikelOre() {
@@ -3349,6 +3446,7 @@ createSalt();
                 .deserialize("<gray><i:false>Nikel Cevheri <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         nikelore = stick;
+        itemStackMap.put("nikelore",stick);
     }
 
     public void createIronIngot() {
@@ -3358,6 +3456,7 @@ createSalt();
                 .deserialize("<white><i:false>Demir Külçesi <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         ironingot = stick;
+        itemStackMap.put("ironingot",stick);
     }
 
     public void createIronOre() {
@@ -3367,6 +3466,7 @@ createSalt();
                 .deserialize("<white><i:false>Demir Cevheri <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         ironore = stick;
+        itemStackMap.put("ironore",stick);
     }
 
     public void createObsidianIngot() {
@@ -3376,6 +3476,7 @@ createSalt();
                 .deserialize("<yellow><i:false>Obsidyen Külçesi <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         obsidianingot = stick;
+        itemStackMap.put("obsidianingot",stick);
     }
 
     public void createObsidianOre() {
@@ -3385,6 +3486,7 @@ createSalt();
                 .deserialize("<yellow><i:false>Obsidyen Cevheri <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         obsidianore = stick;
+        itemStackMap.put("obsidianore",stick);
     }
 
     public void createAdamantiumIngot() {
@@ -3394,6 +3496,7 @@ createSalt();
                 .deserialize("<green><i:false>Adamantium Külçesi <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         adamantiumingot = stick;
+        itemStackMap.put("adamantiumingot",stick);
     }
     public void createTerracotta() {
         ItemStack stick = new ItemStack(Material.TERRACOTTA);
@@ -3402,6 +3505,7 @@ createSalt();
                 .deserialize("<white><i:false>Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         terracotta = stick;
+        itemStackMap.put("terracotta",stick);
     }
     public void createWhiteTerracotta() {
         ItemStack stick = new ItemStack(Material.WHITE_TERRACOTTA);
@@ -3410,6 +3514,7 @@ createSalt();
                 .deserialize("<white><i:false>Beyaz Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         whiteterracotta = stick;
+        itemStackMap.put("whiteterracotta",stick);
     }
     public void createYellowTerracotta() {
         ItemStack stick = new ItemStack(Material.YELLOW_TERRACOTTA);
@@ -3418,6 +3523,7 @@ createSalt();
                 .deserialize("<yellow><i:false>Sarı Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         yellowterracotta = stick;
+        itemStackMap.put("yellowterracotta",stick);
     }
     public void createRedTerracotta() {
         ItemStack stick = new ItemStack(Material.RED_TERRACOTTA);
@@ -3426,6 +3532,7 @@ createSalt();
                 .deserialize("<red><i:false>Kırmızı Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         redterracotta = stick;
+        itemStackMap.put("redterracotta",stick);
     }
     public void createGrayTerracotta() {
         ItemStack stick = new ItemStack(Material.LIGHT_GRAY_TERRACOTTA);
@@ -3434,6 +3541,7 @@ createSalt();
                 .deserialize("<red><i:false>Gri Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         grayterracotta = stick;
+        itemStackMap.put("grayterracotta",stick);
     }
     public void createOrangeTerracotta() {
         ItemStack stick = new ItemStack(Material.ORANGE_TERRACOTTA);
@@ -3442,6 +3550,7 @@ createSalt();
                 .deserialize("<red><i:false>Turuncu Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         orangeterracotta = stick;
+        itemStackMap.put("orangeterracotta",stick);
     }
     public void createRedSand() {
         ItemStack stick = new ItemStack(Material.RED_SAND);
@@ -3450,6 +3559,7 @@ createSalt();
                 .deserialize("<red><i:false>Kırmızı Kum <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         redsand = stick;
+        itemStackMap.put("redsand",stick);
     }
     public void createCookedBeef() {
         ItemStack stick = new ItemStack(Material.COOKED_BEEF);
@@ -3458,6 +3568,7 @@ createSalt();
                 .deserialize("<white><i:false>Pişmiş Kırmızı Et <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         cookedbeef = stick;
+        itemStackMap.put("cookedbeef",stick);
     }
 
     public void createCookedPork() {
@@ -3467,6 +3578,7 @@ createSalt();
                 .deserialize("<white><i:false>Pişmiş Domuz Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         cookedpork = stick;
+        itemStackMap.put("applepie",stick);
     }
 
     public void createTopaz() {
@@ -3476,6 +3588,7 @@ createSalt();
                 .deserialize("<gold><i:false>Topaz <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         topaz = stick;
+        itemStackMap.put("topaz",stick);
     }
 
     public void createPaper() {
@@ -3485,6 +3598,7 @@ createSalt();
                 .deserialize("<white><i:false>Kağıt <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         paper = stick;
+        itemStackMap.put("paper",stick);
     }
 
     public void createSugar() {
@@ -3494,6 +3608,7 @@ createSalt();
                 .deserialize("<white><i:false>Şeker <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         SUGAR = stick;
+        itemStackMap.put("sugar",stick);
     }
 
     public void createSugarCane() {
@@ -3503,6 +3618,7 @@ createSalt();
                 .deserialize("<white><i:false>Şeker Kamışı <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         sugarcane = stick;
+        itemStackMap.put("sugarcane",stick);
     }
 
     public void createRawPork() {
@@ -3512,6 +3628,7 @@ createSalt();
                 .deserialize("<white><i:false>Çiğ Domuz Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rawpork = stick;
+        itemStackMap.put("rawpork",stick);
     }
 
     public void createRawRabbit() {
@@ -3521,6 +3638,7 @@ createSalt();
                 .deserialize("<white><i:false>Çiğ Tavşan Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rawrabbit = stick;
+        itemStackMap.put("rawrabbit",stick);
     }
 
     public void createRawMutton() {
@@ -3530,6 +3648,7 @@ createSalt();
                 .deserialize("<white><i:false>Çiğ Koyun Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rawmutton = stick;
+        itemStackMap.put("rawmutton",stick);
     }
 
     public void createRedstone() {
@@ -3539,6 +3658,7 @@ createSalt();
                 .deserialize("<red><i:false>Kızıltaş <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         redstone = stick;
+        itemStackMap.put("applepie",stick);
     }
 
     public void createLapis() {
@@ -3548,6 +3668,7 @@ createSalt();
                 .deserialize("<blue><i:false>Lapis Lazuli <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         lapis = stick;
+        itemStackMap.put("lapis",stick);
     }
 
     public void createRawChicken() {
@@ -3557,6 +3678,7 @@ createSalt();
                 .deserialize("<white><i:false>Çiğ Tavuk Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rawchicken = stick;
+        itemStackMap.put("rawchicken",stick);
     }
 
     public void createRawBeef() {
@@ -3566,6 +3688,7 @@ createSalt();
                 .deserialize("<white><i:false>Çiğ Kırmızı Et <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rawbeef = stick;
+        itemStackMap.put("rawbeef",stick);
     }
     public void createGoldenBlock() {
         ItemStack stick = new ItemStack(Material.GOLD_BLOCK);
@@ -3574,6 +3697,7 @@ createSalt();
                 .deserialize("<gold><i:false>Altın Bloğu <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         goldblock = stick;
+        itemStackMap.put("goldenblock",stick);
     }
     public void createApplePie() {
         ItemStack stick = new ItemStack(Material.PUMPKIN_PIE);
@@ -3582,6 +3706,7 @@ createSalt();
                 .deserialize("<red><i:false>Elmalı Turta <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         applepie = stick;
+        itemStackMap.put("applepie",stick);
     }
 
     public void createKuruFasulye() {
@@ -3591,6 +3716,7 @@ createSalt();
                 .deserialize("<red><i:false>Kuru Fasulye <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         kurufasulye = stick;
+        itemStackMap.put("kurufasulye",stick);
     }
     public void createGiantToe() {
         ItemStack stick = new ItemStack(Material.FERMENTED_SPIDER_EYE);
@@ -3599,6 +3725,7 @@ createSalt();
                 .deserialize("<gray><i:false>Dev Tırnağı <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         gianttoe = stick;
+        itemStackMap.put("gianttoe",stick);
     }
     public void createGiantEye() {
         ItemStack stick = new ItemStack(Material.ENDER_EYE);
@@ -3607,6 +3734,7 @@ createSalt();
                 .deserialize("<yellow><i:false>Dev Gözü <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         gianteye = stick;
+        itemStackMap.put("gianteye",stick);
     }
     public void createJuicyStew() {
         ItemStack stick = new ItemStack(Material.MUSHROOM_STEW);
@@ -3615,6 +3743,7 @@ createSalt();
                 .deserialize("<yellow><i:false>Ekşi Güveç <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         juicystew = stick;
+        itemStackMap.put("juicystew",stick);
     }
 
     public void createCookedMutton() {
@@ -3624,6 +3753,7 @@ createSalt();
                 .deserialize("<white><i:false>Pişmiş Koyun Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         cookedmutton = stick;
+        itemStackMap.put("cookedmutton",stick);
     }
 
     public void createGunpowder() {
@@ -3633,6 +3763,7 @@ createSalt();
                 .deserialize("<white><i:false>Barut <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         gunpowder = stick;
+        itemStackMap.put("gunpowder",stick);
     }
 
     public void createCookedCod() {
@@ -3642,6 +3773,7 @@ createSalt();
                 .deserialize("<white><i:false>Pişmiş Morina <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         cookedcod = stick;
+        itemStackMap.put("cookedcod",stick);
     }
 
     public void createCookedChicken() {
@@ -3651,6 +3783,7 @@ createSalt();
                 .deserialize("<white><i:false>Pişmiş Tavuk <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         cookedchicken = stick;
+        itemStackMap.put("cookedchicken",stick);
     }
 
     public void createPotato() {
@@ -3660,6 +3793,7 @@ createSalt();
                 .deserialize("<white><i:false>Patates <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         patato = stick;
+        itemStackMap.put("Potato",stick);
     }
 
     public void createCarrot() {
@@ -3669,6 +3803,7 @@ createSalt();
                 .deserialize("<white><i:false>Havuç <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         carrot = stick;
+        itemStackMap.put("carrot",stick);
     }
 
     public void createWheat() {
@@ -3678,6 +3813,7 @@ createSalt();
                 .deserialize("<white><i:false>Buğday <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         wheat = stick;
+        itemStackMap.put("wheat",stick);
     }
 
     public void createBread() {
@@ -3687,6 +3823,7 @@ createSalt();
                 .deserialize("<white><i:false>Ekmek <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         bread = stick;
+        itemStackMap.put("bread",stick);
     }
 
     public void createAdamantiumOre() {
@@ -3696,6 +3833,7 @@ createSalt();
                 .deserialize("<green><i:false>Adamantium Cevheri <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         adamantiumore = stick;
+        itemStackMap.put("adamantiumore",stick);
     }
     public void createAsh() {
         ItemStack stick = new ItemStack(Material.GUNPOWDER);
@@ -3704,6 +3842,7 @@ createSalt();
                 .deserialize("<dark_gray><i:false>Kara Kül <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         ash = stick;
+        itemStackMap.put("ash",stick);
     }
     public void createEyeOfDemon() {
         ItemStack stick = new ItemStack(Material.ENDER_EYE);
@@ -3712,6 +3851,7 @@ createSalt();
                 .deserialize("<red><i:false>İblis Gözü <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         eyeofdemon = stick;
+        itemStackMap.put("eyeofdemon",stick);
     }
     public void createNetheriteIngot() {
         ItemStack stick = new ItemStack(Material.NETHERITE_INGOT);
@@ -3720,6 +3860,7 @@ createSalt();
                 .deserialize("<dark_gray><i:false>Netherit Külçesi <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         netheriteingot = stick;
+        itemStackMap.put("netheriteingot",stick);
     }
 
     public void createNetheriteOre() {
@@ -3729,6 +3870,7 @@ createSalt();
                 .deserialize("<dark_gray><i:false>Netherit Cevheri <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         netheriteore = stick;
+        itemStackMap.put("netheriteore",stick);
     }
 
     public void createCrimsonIngot() {
@@ -3738,6 +3880,16 @@ createSalt();
                 .deserialize("<red><i:false>Kızıl Metal Külçesi <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         crimsoningot = stick;
+        itemStackMap.put("crimsoningot",stick);
+    }
+    public void createApple() {
+        ItemStack stick = new ItemStack(Material.APPLE);
+        ItemMeta meta = stick.getItemMeta();
+        meta.displayName((MiniMessage.miniMessage()
+                .deserialize("<white><i:false>Elma <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        stick.setItemMeta(meta);
+        apple = stick;
+        itemStackMap.put("apple",stick);
     }
 
     public void createCrimsonOre() {
@@ -3747,6 +3899,7 @@ createSalt();
                 .deserialize("<red><i:false>Kızıl Metal Cevheri <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         crimsonore = stick;
+        itemStackMap.put("crimsonore",stick);
     }
 
     public void createMithrilIngot() {
@@ -3756,6 +3909,7 @@ createSalt();
                 .deserialize("<aqua><i:false>Mitril Külçesi <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         mithrilingot = stick;
+        itemStackMap.put("mithrilingot",stick);
     }
 
     public void createMithrilOre() {
@@ -3765,6 +3919,7 @@ createSalt();
                 .deserialize("<aqua><i:false>Mitril Cevheri <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         mithrilore = stick;
+        itemStackMap.put("mithrilore",stick);
     }
 
     public void createVoidIngot() {
@@ -3774,6 +3929,7 @@ createSalt();
                 .deserialize("<aqua><i:false>Hiçlik Külçesi <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         voidingot = stick;
+        itemStackMap.put("voidingot",stick);
     }
 
     public void createVoidOre() {
@@ -3783,6 +3939,7 @@ createSalt();
                 .deserialize("<aqua><i:false>Hiçlik Taşı <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         voidlore = stick;
+        itemStackMap.put("voidore",stick);
     }
 
     public void createRodonitIngot() {
@@ -3792,6 +3949,7 @@ createSalt();
                 .deserialize("<red><i:false>Rodonit Külçesi <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         rodonitingot = stick;
+        itemStackMap.put("rodonitingot",stick);
     }
 
     public void createRodonitOre() {
@@ -3801,6 +3959,7 @@ createSalt();
                 .deserialize("<red><i:false>Rodonit Cevheri <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         rodonitore = stick;
+        itemStackMap.put("rodonitore",stick);
     }
 
     public void createSpektralIngot() {
@@ -3810,6 +3969,7 @@ createSalt();
                 .deserialize("<red><i:false>Spektral Külçesi <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         spektralingot = stick;
+        itemStackMap.put("spektralingot",stick);
     }
 
     public void createEktoplazma() {
@@ -3819,6 +3979,7 @@ createSalt();
                 .deserialize("<red><i:false>Ektoplazma <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         spektralore = stick;
+        itemStackMap.put("ektoplazma",stick);
     }
 
     public void createGoldIngot() {
@@ -3828,6 +3989,7 @@ createSalt();
                 .deserialize("<yellow><i:false>Altın Külçesi <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         goldingot = stick;
+        itemStackMap.put("goldingot",stick);
     }
 
     public void createGoldOre() {
@@ -3837,6 +3999,7 @@ createSalt();
                 .deserialize("<yellow><i:false>Altın Cevheri <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         goldore = stick;
+        itemStackMap.put("goldore",stick);
     }
 
     public void createSilverIngot() {
@@ -3846,6 +4009,7 @@ createSalt();
                 .deserialize("<white><i:false>Gümüş Külçesi <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         silveringot = stick;
+        itemStackMap.put("silveringot",stick);
     }
 
     public void createClay() {
@@ -3855,6 +4019,7 @@ createSalt();
                 .deserialize("<white><i:false>Kil <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         clay = stick;
+        itemStackMap.put("clay",stick);
     }
 
     public void createGravelBlock() {
@@ -3864,6 +4029,7 @@ createSalt();
                 .deserialize("<white><i:false>Çakıl <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         gravelblock = stick;
+        itemStackMap.put("gravelblock",stick);
     }
 
     public void createGravel() {
@@ -3873,6 +4039,7 @@ createSalt();
                 .deserialize("<gray><i:false>Çakmaktaşı <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         gravel = stick;
+        itemStackMap.put("gravel",stick);
     }
 
     public void createDiamond() {
@@ -3882,6 +4049,7 @@ createSalt();
                 .deserialize("<white><i:false>Elmas <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         diamond = stick;
+        itemStackMap.put("diamond",stick);
     }
     public void createSilverBlock() {
         ItemStack stick = new ItemStack(Material.POLISHED_DIORITE);
@@ -3894,6 +4062,7 @@ createSalt();
         shapedRecipe.shape("SSS", "SSS", "SSS");
         shapedRecipe.setIngredient('S', new RecipeChoice.ExactChoice(silveringot));
         Bukkit.getServer().addRecipe(shapedRecipe);
+        itemStackMap.put("silverblock",stick);
     }
     public void createSilverOre() {
         ItemStack stick = new ItemStack(Material.RAW_IRON);
@@ -3902,6 +4071,7 @@ createSalt();
                 .deserialize("<white><i:false>Gümüş Cevheri <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         silverore = stick;
+        itemStackMap.put("silverore",stick);
     }
 
     public void createCoal() {
@@ -3911,6 +4081,7 @@ createSalt();
                 .deserialize("<white><i:false>Kömür <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         coal = stick;
+        itemStackMap.put("coal",stick);
     }
 
     public void createWitherRose() {
@@ -3920,6 +4091,7 @@ createSalt();
                 .deserialize("<black><i:false>Kararmış Gül <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         witherrose = stick;
+        itemStackMap.put("witherrose",stick);
     }
 
     public void createLavaBucket() {
@@ -3929,6 +4101,7 @@ createSalt();
                 .deserialize("<white><i:false>Lav Kovası <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         lavabucket = stick;
+        itemStackMap.put("lavabucket",stick);
     }
 
     public void createWaveBreakerFish() {
@@ -3938,6 +4111,7 @@ createSalt();
                 .deserialize("<aqua><i:false>Dalgakıran Balığı <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         wawebreakerfish = stick;
+        itemStackMap.put("wavebreakerfish",stick);
     }
 
     public void createFarmerHoe() {
@@ -3948,6 +4122,7 @@ createSalt();
         shapedRecipe.setIngredient('B', new RecipeChoice.ExactChoice(oakwood));
         shapedRecipe.setIngredient('T', new RecipeChoice.ExactChoice(oakstick));
         Bukkit.getServer().addRecipe(shapedRecipe);
+        itemStackMap.put("farmerhoe",stick);
 
     }
 
@@ -3964,7 +4139,7 @@ createSalt();
         shapedRecipe.setIngredient('D', new RecipeChoice.ExactChoice(deri));
         shapedRecipe.setIngredient('B', new RecipeChoice.ExactChoice(copper));
         Bukkit.getServer().addRecipe(shapedRecipe);
-
+        itemStackMap.put("brewgaunlet",stick);
     }
 
     public void createWolfGaunlet() {
@@ -3978,6 +4153,7 @@ createSalt();
         shapedRecipe.setIngredient('A', new RecipeChoice.ExactChoice(gold));
         shapedRecipe.setIngredient('D', new RecipeChoice.ExactChoice(deri));
         Bukkit.getServer().addRecipe(shapedRecipe);
+        itemStackMap.put("wolfgaunlet",stick);
 
     }
 
@@ -3992,6 +4168,7 @@ createSalt();
         shapedRecipe.setIngredient('A', new RecipeChoice.ExactChoice(rose));
         shapedRecipe.setIngredient('D', new RecipeChoice.ExactChoice(bone));
         Bukkit.getServer().addRecipe(shapedRecipe);
+        itemStackMap.put("withertalisman",stick);
 
     }
 
@@ -4005,6 +4182,7 @@ createSalt();
         shapedRecipe.setIngredient('A', new RecipeChoice.ExactChoice(boneitem));
         shapedRecipe.setIngredient('D', new RecipeChoice.ExactChoice(blackboneitem));
         Bukkit.getServer().addRecipe(shapedRecipe);
+        itemStackMap.put("bonesword",stick);
 
     }
     public void createAncientSilverSpear() {
@@ -4015,6 +4193,7 @@ createSalt();
         shapedRecipe.setIngredient('B', new RecipeChoice.ExactChoice(silverblock));
         shapedRecipe.setIngredient('S', new RecipeChoice.ExactChoice(darkoakstick));
         Bukkit.getServer().addRecipe(shapedRecipe);
+        itemStackMap.put("ancientsilverspear",stick);
 
     }
     public void createKingKiller() {
@@ -4027,6 +4206,7 @@ createSalt();
         shapedRecipe.setIngredient('B', new RecipeChoice.ExactChoice(silverblock));
         shapedRecipe.setIngredient('S', new RecipeChoice.ExactChoice(birchstick));
         Bukkit.getServer().addRecipe(shapedRecipe);
+        itemStackMap.put("kingkiller",stick);
 
     }
     public void createHellFireDagger() {
@@ -4040,6 +4220,7 @@ createSalt();
         shapedRecipe.setIngredient('E', new RecipeChoice.ExactChoice(eyeofdemon));
         shapedRecipe.setIngredient('H', new RecipeChoice.ExactChoice(heavystick));
         Bukkit.getServer().addRecipe(shapedRecipe);
+        itemStackMap.put("hellfiredagger",stick);
 
     }
     public void createGoldenDummy() {
@@ -4054,6 +4235,7 @@ createSalt();
         shapedRecipe.setIngredient('A', new RecipeChoice.ExactChoice(deri));
         shapedRecipe.setIngredient('D', new RecipeChoice.ExactChoice(goldblock));
         Bukkit.getServer().addRecipe(shapedRecipe);
+        itemStackMap.put("goldendummy",stick);
 
     }
 
@@ -4067,6 +4249,7 @@ createSalt();
         shapedRecipe.shape("BBB", "B B", "   ");
         shapedRecipe.setIngredient('B', new RecipeChoice.ExactChoice(bone));
         Bukkit.getServer().addRecipe(shapedRecipe);
+        itemStackMap.put("bonehelmet",stick);
     }
 
     public void createEmerald() {
@@ -4076,6 +4259,7 @@ createSalt();
                 .deserialize("<green><i:false>Zümrüt <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         emerald = stick;
+        itemStackMap.put("emerald",stick);
     }
     public void createGlowstone() {
         ItemStack stick = new ItemStack(Material.GLOWSTONE_DUST);
@@ -4084,6 +4268,22 @@ createSalt();
                 .deserialize("<gold><i:false>Işık Tozu <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         glowstone = stick;
+
+        itemStackMap.put("glowstone",stick);
+
+
+    }
+    public void createSpiderEye() {
+        ItemStack stick = new ItemStack(Material.SPIDER_EYE);
+        ItemMeta meta = stick.getItemMeta();
+        meta.displayName((MiniMessage.miniMessage()
+                .deserialize("<red><i:false>Örümcek Gözü <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        stick.setItemMeta(meta);
+        spidereye = stick;
+
+        itemStackMap.put("spidereye",stick);
+
+
     }
     public void setUnstackable(ItemStack item, String key) {
         ItemMeta meta = item.getItemMeta();

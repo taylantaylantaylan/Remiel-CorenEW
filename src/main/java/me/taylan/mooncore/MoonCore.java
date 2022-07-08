@@ -21,6 +21,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -47,10 +48,23 @@ public class MoonCore extends JavaPlugin {
     private FurnaceAnim furnaceAnim;
     private SmithAnim smithAnim;
     private Loots loots;
+    private VaultHook vaultHook;
     private PlayerAttackListener attackListener;
     private PlayerDeathListener deathListener;
     private PlayerFishListener playerFishListener;
     private InventoryClickListener inventoryClickListener;
+
+    public JoinListener getJoinListener() {
+        return joinListener;
+    }
+
+    private JoinListener joinListener;
+
+    public ItemDrop getItemDrop() {
+        return itemDrop;
+    }
+
+    private ItemDrop itemDrop;
 
     public Ekonomi getEkonomi() {
         return ekonomi;
@@ -67,13 +81,20 @@ public class MoonCore extends JavaPlugin {
 
     private Map<Entity, Integer> indicators = new HashMap<>();
 
+    public Map<Entity, Integer> getIndicators2() {
+        return indicators2;
+    }
+
+    private Map<Entity, Integer> indicators2 = new HashMap<>();
+
     public void onEnable() {
         saveDefaultConfig();
         exp = new ExpList(this);
         exp.expPut();
         statsManager = new StatsManager(this);
         ekonomi = new Ekonomi(this);
-        new VaultHook(this);
+        vaultHook = new VaultHook(this);
+        vaultHook.hook();
         new EconomyCommand(this);
         seviyeCommand = new SeviyeCommand(this);
         attackListener = new PlayerAttackListener(this);
@@ -85,7 +106,7 @@ public class MoonCore extends JavaPlugin {
         itemHandler = new ItemHandler(this);
         itemHandler.init();
         loots = new Loots(this);
-
+        itemDrop = new ItemDrop(this);
 
         enchants = new Enchants(this);
         guiHandler = new GuiHandler(this);
@@ -95,14 +116,13 @@ public class MoonCore extends JavaPlugin {
         deathListener = new PlayerDeathListener(this);
         enchantRunnable = new EnchantRunnable(this);
         playerFishListener = new PlayerFishListener(this);
-
+        joinListener = new JoinListener(this);
         File playerData = new File(this.getDataFolder(), "playerdata");
         if (!playerData.exists()) {
             playerData.mkdirs();
         }
         new SpawnArmorStand(this);
         new EntityHealthListener(this);
-        new AccessoryListener(this);
         new BrewListener(this);
         new PlayerCraftListener(this);
         new VehicleDamageListener(this);
@@ -112,7 +132,7 @@ public class MoonCore extends JavaPlugin {
         new Dodge(this);
         new LoreCommand(this);
         new ItemDropListener(this);
-        new JoinListener(this);
+        new AccessoryListener(this);
         new ProjectileHitListener(this);
         new QuitListener(this);
         new SkillListener(this);
@@ -135,6 +155,10 @@ public class MoonCore extends JavaPlugin {
         new RenameCommand(this);
         new LootCrateCommand(this);
         new ChunkListener(this);
+        new WarpCommand(this);
+        new ItemHandlerCommand(this);
+        new ItemDamageListener(this);
+        new ItemInfoCommand(this);
         new EnchantRunnable(this).runTaskTimer(this, 0, 2L);
         if (!statsManager.hasClaimFile()) {
             try {
@@ -143,10 +167,11 @@ public class MoonCore extends JavaPlugin {
                 throw new RuntimeException(e);
             }
         }
-        for(String rawData : statsManager.getClaimFile().getStringList("Claims")) {
+
+        for (String rawData : statsManager.getClaimFile().getStringList("Claims")) {
 
             String[] raw = rawData.split(":");
-            statsManager.getChunkmap().put(raw[1],UUID.fromString(raw[0]));
+            statsManager.getChunkmap().put(raw[1], UUID.fromString(raw[0]));
 
         }
         new BukkitRunnable() {
@@ -160,10 +185,12 @@ public class MoonCore extends JavaPlugin {
                         for (String string : statsManager.getChunkmap().keySet()) {
                             chunklist.add(statsManager.getOwner(string) + ":" + string);
                         }
-                        statsManager.getClaimFile().set("Claims",chunklist);
-                        File f = new File("plugins/RemielCore","claims.yml");
+                        File f = new File("plugins/RemielCore", "claims.yml");
+                        FileConfiguration fc = YamlConfiguration.loadConfiguration(f);
+                        fc.set("Claims", chunklist);
+
                         try {
-                            statsManager.getClaimFile().save(f);
+                            fc.save(f);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -193,6 +220,16 @@ public class MoonCore extends JavaPlugin {
     }
 
     public void onDisable() {
+        Set<Entity> stands = indicators2.keySet();
+
+        List<Entity> removal = new ArrayList<>();
+        for (Entity stand : stands) {
+            stand.remove();
+            removal.add(stand);
+            continue;
+        }
+        stands.removeAll(removal);
+        vaultHook.unhook();
         Bukkit.getServer().getScheduler().cancelTasks(this);
         for (Player player : Bukkit.getOnlinePlayers()) {
             UUID uuid = player.getUniqueId();
@@ -201,10 +238,12 @@ public class MoonCore extends JavaPlugin {
                 for (String string : statsManager.getChunkmap().keySet()) {
                     chunklist.add(statsManager.getOwner(string) + ":" + string);
                 }
-                statsManager.getClaimFile().set("Claims",chunklist);
-                File f = new File("plugins/RemielCore","claims.yml");
+                File f = new File("plugins/RemielCore", "claims.yml");
+                FileConfiguration fc = YamlConfiguration.loadConfiguration(f);
+                fc.set("Claims", chunklist);
+
                 try {
-                    statsManager.getClaimFile().save(f);
+                    fc.save(f);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

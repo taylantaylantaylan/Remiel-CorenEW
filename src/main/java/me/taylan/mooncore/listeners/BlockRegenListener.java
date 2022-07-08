@@ -1,5 +1,6 @@
 package me.taylan.mooncore.listeners;
 
+import com.destroystokyo.paper.MaterialTags;
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.utils.ItemHandler;
 import me.taylan.mooncore.utils.Painter;
@@ -47,24 +48,32 @@ public class BlockRegenListener implements Listener {
                 ))) {
                     event.setCancelled(true);
                 }
-                if (item!= null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
-                    NamespacedKey dura = new NamespacedKey(plugin, "durability");
+                if (Tag.LOGS.isTagged(blocktype)) {
+                    if (item != null) {
+                        if (!(MaterialTags.AXES.isTagged(item))) {
+                            return;
+                        }
+                    }
+                }
+                NamespacedKey dura = new NamespacedKey(plugin, "durability");
+                if (item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null && item.getItemMeta().getPersistentDataContainer().has(dura)) {
+
                     ItemMeta meta = item.getItemMeta();
-                  int durabilt =  meta.getPersistentDataContainer().get(dura,PersistentDataType.INTEGER);
-                  meta.getPersistentDataContainer().set(dura,PersistentDataType.INTEGER,durabilt-1);
-                  item.setItemMeta(meta);
-                  Damageable damagemeta = (Damageable) meta;
-                  if(durabilt<item.getType().getMaxDurability()) {
-                      damagemeta.setDamage(damagemeta.getDamage()+1);
-                      item.setItemMeta(damagemeta);
-                      if(durabilt<0) {
-                          player.getInventory().remove(item);
-                          player.playSound(player, Sound.ITEM_SHIELD_BREAK,0.5F,1.3F);
-                      }
-                  } else {
-                      damagemeta.setDamage(0);
-                      item.setItemMeta(damagemeta);
-                  }
+                    int durabilt = meta.getPersistentDataContainer().get(dura, PersistentDataType.INTEGER);
+                    meta.getPersistentDataContainer().set(dura, PersistentDataType.INTEGER, durabilt - 1);
+                    item.setItemMeta(meta);
+                    Damageable damagemeta = (Damageable) meta;
+                    if (durabilt < item.getType().getMaxDurability()) {
+                        damagemeta.setDamage(damagemeta.getDamage() + 1);
+                        item.setItemMeta(damagemeta);
+                        if (durabilt < 0) {
+                            player.getInventory().remove(item);
+                            player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.5F, 1.3F);
+                        }
+                    } else {
+                        damagemeta.setDamage(0);
+                        item.setItemMeta(damagemeta);
+                    }
 
                 }
                 switch (blocktype) {
@@ -245,7 +254,7 @@ public class BlockRegenListener implements Listener {
                         if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
-                            if (aletgucu > 3) {
+                            if (aletgucu > 5) {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
@@ -380,21 +389,30 @@ public class BlockRegenListener implements Listener {
                         }.runTaskLater(plugin, 100);
                         break;
                     case OBSIDIAN:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.BEDROCK);
-                        event.setCancelled(true);
-                        if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.obsidianore);
+                        if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                            NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
+                            int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
+                            if (aletgucu > 5) {
+                                event.setDropItems(false);
+                                event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
+                                event.setCancelled(true);
+                                if (player.getInventory().firstEmpty() == -1) {
+                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.obsidianore);
 
-                        } else {
-                            player.getInventory().addItem(itemHandler.obsidianore);
-                        }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.OBSIDIAN);
+                                } else {
+                                    player.getInventory().addItem(itemHandler.obsidianore);
+                                }
+                                new BukkitRunnable() {
+                                    @Override
+                                    public void run() {
+                                        event.getBlock().setType(Material.IRON_ORE);
+                                    }
+                                }.runTaskLater(plugin, 100);
+                            } else {
+                                event.setCancelled(true);
+                                player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 3"));
                             }
-                        }.runTaskLater(plugin, 100);
+                        }
                         break;
                     case GRAVEL:
                         event.setDropItems(false);
@@ -421,6 +439,26 @@ public class BlockRegenListener implements Listener {
                             @Override
                             public void run() {
                                 event.getBlock().setType(Material.GRAVEL);
+                            }
+                        }.runTaskLater(plugin, 100);
+                        break;
+                    case OAK_LEAVES:
+                        event.setDropItems(false);
+                        int chance2 = ThreadLocalRandom.current().nextInt(20);
+                        event.setCancelled(true);
+                        event.getBlock().setType(Material.AIR);
+                        if (chance2 < 2) {
+                            if (player.getInventory().firstEmpty() == -1) {
+                                world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.apple);
+
+                            } else {
+                                player.getInventory().addItem(itemHandler.apple);
+                            }
+                        }
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                event.getBlock().setType(Material.OAK_LEAVES);
                             }
                         }.runTaskLater(plugin, 100);
                         break;
@@ -501,12 +539,17 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
+                                int chanceamount3 = ThreadLocalRandom.current().nextInt(1) + 2;
+                                ItemStack cooal = itemHandler.coal;
+                                cooal.setAmount(chanceamount3);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.coal);
+                                    world.dropItemNaturally(player.getLocation(), cooal);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.coal);
+                                    player.getInventory().addItem(cooal);
                                 }
+
+
                                 new BukkitRunnable() {
                                     @Override
                                     public void run() {
