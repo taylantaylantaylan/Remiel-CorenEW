@@ -39,13 +39,16 @@ public class ItemDropListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void itemDrop(PlayerDropItemEvent e) throws SQLException {
+		NamespacedKey canta = new NamespacedKey(plugin,"backpack");
 		Player player = e.getPlayer();
 		if (dogrulamaBypass.contains(player.getName()))
 			return;
 		else {
+
 			e.setCancelled(true);
 			ItemStack checkMaterial = confirmCheck.get(player.getName());
 			ItemStack eldeki = player.getInventory().getItemInMainHand();
+
 			if (!confirmCheck.containsKey(player.getName())
 					&& checkMaterial != player.getInventory().getItemInMainHand()) {
 				Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

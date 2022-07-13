@@ -60,7 +60,7 @@ public class StatsManager {
         fc.set("Levels." + "Level", 1);
         fc.set("Levels." + "Exp", 0);
         fc.set("Levels." + "RequiredExp", 100);
-        fc.set("Levels." + "OdunculukLevel", 0);
+        fc.set("Levels." + "OdunculukLevel", 1);
         fc.set("Levels." + "OdunculukExp", 0);
         fc.set("Levels." + "OdunculukRequiredExp", 20);
         fc.set("Levels." + "MiningLevel", 1);
@@ -96,26 +96,29 @@ public class StatsManager {
         fc.set("Product." + "FurnaceAmount", 0);
         fc.set("Product." + "CookProduction", 0);
         fc.set("Product." + "CookAmount", 0);
+        fc.set("Product." + "RealFurnaceProduction", 0);
+        fc.set("Product." + "RealFurnaceAmount", 0);
         fc.set("Product." + "WorkProduction", 0);
         fc.set("Stats." + "Guc", 5);
-        fc.set("Stats." + "Can", (int) 20);
-        fc.set("Stats." + "Direnc", 7);
+        fc.set("Stats." + "Can", (int) 100);
+        fc.set("Stats." + "Direnc", 2);
         fc.set("Stats." + "Hiz", 2);
         fc.set("Stats." + "HiclikDirenci", 0);
         fc.set("Stats." + "SogukDirenci", 0);
         fc.set("Stats." + "SicakDirenci", 0);
         fc.set("Stats." + "SaldiriHizi", 0);
+        fc.set("Stats." + "ZirhDelme", 0);
+        fc.set("Stats." + "BuyuHasari", 0);
         fc.set("Stats." + "KritikHasari", 12);
         fc.set("Stats." + "KritikSansi", 0);
         fc.set("Stats." + "Doygunluk", 2);
         fc.set("Stats." + "CanYenileme", 5);
-        fc.set("Stats." + "Kesif", 0);
-        fc.set("Stats." + "Agirlik", 0);
-        fc.set("Stats." + "maxAgirlik", 100);
+        fc.set("Stats." + "İlham", 100);
         fc.set("Stats." + "NP", 0);
-        fc.set("Stats." + "Para", 0);
+        fc.set("Stats." + "AlinanBolge", 0);
         fc.set("Stats." + "harcananNP", 0);
         fc.set("Storage." + "Depo", "yok");
+        fc.set("Storage." + "RealFurnaceDepo", "yok");
         fc.set("Storage." + "FurnaceDepo", "yok");
         fc.set("Storage." + "CookDepo", "yok");
         fc.set("Storage." + "WorkDepo", "yok");
@@ -192,6 +195,16 @@ public class StatsManager {
     public String getStorage(UUID uuid) {
         fc = statfile.get(uuid);
         return fc.getString("Storage." + "Depo");
+    }
+    public void setRealFurnaceStorage(UUID uuid, String name) {
+        fc = statfile.get(uuid);
+        fc.set("Storage." + "RealFurnaceDepo", name);
+        s(uuid);
+    }
+
+    public String getRealFurnaceStorage(UUID uuid) {
+        fc = statfile.get(uuid);
+        return fc.getString("Storage." + "RealFurnaceDepo");
     }
 
     public void setFurnaceStorage(UUID uuid, String name) {
@@ -765,7 +778,18 @@ public class StatsManager {
         fc.set("Product." + "CookProduction", result);
         s(uuid);
     }
+    public int getRealFurnaceAmount(UUID uuid) {
+        fc = statfile.get(uuid);
+        return fc.getInt("Product." + "RealFurnaceAmount");
+    }
 
+    public void setRealFurnaceAmount(UUID uuid, int size) {
+        fc = statfile.get(uuid);
+        int level = getRealFurnaceAmount(uuid);
+        int result = level + size;
+        fc.set("Product." + "RealFurnaceAmount", result);
+        s(uuid);
+    }
     public int getFurnaceAmount(UUID uuid) {
         fc = statfile.get(uuid);
         return fc.getInt("Product." + "FurnaceAmount");
@@ -778,7 +802,18 @@ public class StatsManager {
         fc.set("Product." + "FurnaceAmount", result);
         s(uuid);
     }
+    public int getRealFurnaceProduction(UUID uuid) {
+        fc = statfile.get(uuid);
+        return fc.getInt("Product." + "RealFurnaceProduction");
+    }
 
+    public void setRealFurnaceProduction(UUID uuid, int size) {
+        fc = statfile.get(uuid);
+        int level = getRealFurnaceProduction(uuid);
+        int result = level + size;
+        fc.set("Product." + "RealFurnaceProduction", result);
+        s(uuid);
+    }
     public int getFurnaceProduction(UUID uuid) {
         fc = statfile.get(uuid);
         return fc.getInt("Product." + "FurnaceProduction");
@@ -864,7 +899,42 @@ public class StatsManager {
         fc = statfile.get(uuid);
         return fc.getInt("Stats." + "harcananNP");
     }
+    public void setBuyuHasari(UUID uuid, int size) {
+        fc = statfile.get(uuid);
+        double level = getBuyuHasari(uuid);
+        double result = level + size;
+        fc.set("Stats." + "BuyuHasari", result);
+        s(uuid);
+    }
 
+    public int getBuyuHasari(UUID uuid) {
+        fc = statfile.get(uuid);
+        return fc.getInt("Stats." + "BuyuHasari");
+    }
+
+    public void setİlham(UUID uuid, int size) {
+        fc = statfile.get(uuid);
+        double level = getharcananNP(uuid);
+        double result = level + size;
+        fc.set("Stats." + "İlham", result);
+        s(uuid);
+    }
+
+    public int getİlham(UUID uuid) {
+        fc = statfile.get(uuid);
+        return fc.getInt("Stats." + "İlham");
+    }
+    public void setAlinanBolge(UUID uuid, int size) {
+        fc = statfile.get(uuid);
+        int level = getAlinanBolge(uuid);
+        int result = level + size;
+        fc.set("Stats." + "AlinanBolge", result);
+        s(uuid);
+    }
+    public int getAlinanBolge(UUID uuid) {
+        fc = statfile.get(uuid);
+        return fc.getInt("Stats." + "AlinanBolge");
+    }
     public void setDirenc(UUID uuid, int size) {
         fc = statfile.get(uuid);
         int level = getDirenc(uuid);
@@ -943,7 +1013,18 @@ public class StatsManager {
         fc = statfile.get(uuid);
         return fc.getInt("Stats." + "SogukDirenci");
     }
+    public void setZirhDelme(UUID uuid, int size) {
+        fc = statfile.get(uuid);
+        int level = getZirhDelme(uuid);
+        int result = level + size;
+        fc.set("Stats." + "ZirhDelme", result);
+        s(uuid);
+    }
 
+    public int getZirhDelme(UUID uuid) {
+        fc = statfile.get(uuid);
+        return fc.getInt("Stats." + "ZirhDelme");
+    }
     public void setSicakDirenci(UUID uuid, int size) {
         fc = statfile.get(uuid);
         int level = getSicakDirenci(uuid);

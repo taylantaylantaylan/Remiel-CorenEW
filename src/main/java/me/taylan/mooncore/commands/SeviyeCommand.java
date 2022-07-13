@@ -79,8 +79,8 @@ public class SeviyeCommand implements CommandExecutor {
         int xOff = ThreadLocalRandom.current().nextInt(-offset, offset);
         int zOff = ThreadLocalRandom.current().nextInt(-offset2, offset2);
 
-        int seviye2 = stats.getLevel(p.getUniqueId()) - seviye+1;
-        int seviyestat =stats.getLevel(p.getUniqueId())+1;
+        int seviye2 = stats.getLevel(p.getUniqueId()) - seviye + 1;
+        int seviyestat = stats.getLevel(p.getUniqueId()) + 1;
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         Team isim = scoreboard.getTeam(p.getName());
         if (isim.hasEntry(p.getName())) {
@@ -144,6 +144,13 @@ public class SeviyeCommand implements CommandExecutor {
             p.discoverRecipe(NamespacedKey.minecraft("brew_gaunlet"));
             p.discoverRecipe(NamespacedKey.minecraft("wolf_gaunlet"));
             p.discoverRecipe(NamespacedKey.minecraft("bone_sword"));
+        } else if (seviye2 + 1 == 4) {
+            p.discoverRecipe(NamespacedKey.minecraft("spider_bow"));
+            p.discoverRecipe(NamespacedKey.minecraft("black_helmet"));
+            p.discoverRecipe(NamespacedKey.minecraft("oksidat_pant"));
+        }else if (seviye2 + 1 == 5) {
+            p.discoverRecipe(NamespacedKey.minecraft("mistik_bow"));
+            p.discoverRecipe(NamespacedKey.minecraft("experience_bottle_lapis"));
         }
 
     }

@@ -66,23 +66,23 @@ public class ProfileCommand implements CommandExecutor {
 				} else if (args.length > 0) {
 					Player target = Bukkit.getPlayerExact(args[0]);
 					p.openInventory(gui.profil(p, target));
-					ArrayList<ItemStack> list = (ArrayList<ItemStack>) stats.getHepsi(p.getUniqueId());
-					if (p.getInventory().getHelmet() != null) {
+					ArrayList<ItemStack> list = (ArrayList<ItemStack>) stats.getHepsi(target.getUniqueId());
+					if (target.getInventory().getHelmet() != null) {
 						p.getOpenInventory().getTopInventory().setItem(13, target.getInventory().getHelmet());
 					}
-					if (p.getInventory().getChestplate() != null) {
+					if (target.getInventory().getChestplate() != null) {
 						p.getOpenInventory().getTopInventory().setItem(22, target.getInventory().getChestplate());
 					}
-					if (p.getInventory().getLeggings() != null) {
+					if (target.getInventory().getLeggings() != null) {
 						p.getOpenInventory().getTopInventory().setItem(31, target.getInventory().getLeggings());
 					}
-					if (p.getInventory().getBoots() != null) {
+					if (target.getInventory().getBoots() != null) {
 						p.getOpenInventory().getTopInventory().setItem(40, target.getInventory().getBoots());
 					}
-					if (p.getInventory().getItemInMainHand() != null) {
+					if (target.getInventory().getItemInMainHand() != null) {
 						p.getOpenInventory().getTopInventory().setItem(39, target.getInventory().getItemInMainHand());
 					}
-					if (p.getInventory().getItemInOffHand() != null) {
+					if (target.getInventory().getItemInOffHand() != null) {
 						p.getOpenInventory().getTopInventory().setItem(41, target.getInventory().getItemInOffHand());
 					}
 					if (!(stats.getKolye(target.getUniqueId()).equals("Yok.."))) {

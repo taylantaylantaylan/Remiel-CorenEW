@@ -1,9 +1,6 @@
 package me.taylan.mooncore;
 
-import me.taylan.mooncore.animations.CookAnim;
-import me.taylan.mooncore.animations.FurnaceAnim;
-import me.taylan.mooncore.animations.SmithAnim;
-import me.taylan.mooncore.animations.WorkAnim;
+import me.taylan.mooncore.animations.*;
 import me.taylan.mooncore.commands.*;
 import me.taylan.mooncore.eco.Ekonomi;
 import me.taylan.mooncore.eco.VaultHook;
@@ -54,6 +51,12 @@ public class MoonCore extends JavaPlugin {
     private PlayerFishListener playerFishListener;
     private InventoryClickListener inventoryClickListener;
 
+    public RealFurnaceAnim getRealFurnaceAnim() {
+        return realFurnaceAnim;
+    }
+
+    private RealFurnaceAnim realFurnaceAnim;
+
     public JoinListener getJoinListener() {
         return joinListener;
     }
@@ -98,13 +101,19 @@ public class MoonCore extends JavaPlugin {
         new EconomyCommand(this);
         seviyeCommand = new SeviyeCommand(this);
         attackListener = new PlayerAttackListener(this);
+
+
+
+
         levels = new Levels(this);
+        smithAnim = new SmithAnim(this);
         cookAnim = new CookAnim(this);
         workAnim = new WorkAnim(this);
         furnaceAnim = new FurnaceAnim(this);
-        smithAnim = new SmithAnim(this);
         itemHandler = new ItemHandler(this);
         itemHandler.init();
+
+        realFurnaceAnim = new RealFurnaceAnim(this);
         loots = new Loots(this);
         itemDrop = new ItemDrop(this);
 
@@ -159,6 +168,9 @@ public class MoonCore extends JavaPlugin {
         new ItemHandlerCommand(this);
         new ItemDamageListener(this);
         new ItemInfoCommand(this);
+        new XpGiveCommand(this);
+        new MapCommand(this);
+        new SkillGetCommand(this);
         new EnchantRunnable(this).runTaskTimer(this, 0, 2L);
         if (!statsManager.hasClaimFile()) {
             try {
@@ -167,12 +179,13 @@ public class MoonCore extends JavaPlugin {
                 throw new RuntimeException(e);
             }
         }
-
-        for (String rawData : statsManager.getClaimFile().getStringList("Claims")) {
-
-            String[] raw = rawData.split(":");
-            statsManager.getChunkmap().put(raw[1], UUID.fromString(raw[0]));
-
+        File f = new File("plugins/RemielCore", "claims.yml");
+        FileConfiguration fc = YamlConfiguration.loadConfiguration(f);
+        for (String rawData : fc.getStringList("Claims")) {
+            if (f.exists()) {
+                String[] raw = rawData.split(":");
+                statsManager.getChunkmap().put(raw[1], UUID.fromString(raw[0]));
+            }
         }
         new BukkitRunnable() {
 
@@ -188,11 +201,12 @@ public class MoonCore extends JavaPlugin {
                         File f = new File("plugins/RemielCore", "claims.yml");
                         FileConfiguration fc = YamlConfiguration.loadConfiguration(f);
                         fc.set("Claims", chunklist);
-
-                        try {
-                            fc.save(f);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
+                        if (f.exists()) {
+                            try {
+                                fc.save(f);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     }
                     String name = player.getUniqueId().toString();
@@ -210,7 +224,7 @@ public class MoonCore extends JavaPlugin {
                 }
 
             }
-        }.runTaskTimerAsynchronously(this, 0, 40L);
+        }.runTaskTimerAsynchronously(this, 0, 100L);
 
         send("MoonCore Aktif");
     }
@@ -241,11 +255,12 @@ public class MoonCore extends JavaPlugin {
                 File f = new File("plugins/RemielCore", "claims.yml");
                 FileConfiguration fc = YamlConfiguration.loadConfiguration(f);
                 fc.set("Claims", chunklist);
-
-                try {
-                    fc.save(f);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                if (f.exists()) {
+                    try {
+                        fc.save(f);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
             if (EnchantRunnable.getCreeper().get(player.getUniqueId()) != null) {
@@ -254,6 +269,8 @@ public class MoonCore extends JavaPlugin {
             }
             String invToBase64 = BukkitSerialization
                     .itemStackArrayToBase64(JoinListener.getMenu().get(player.getUniqueId()).getContents());
+            String invToBase64RealFurnace = BukkitSerialization
+                    .itemStackArrayToBase64(JoinListener.getRealfurnacemenu().get(player.getUniqueId()).getContents());
             String invToBase64furnace = BukkitSerialization
                     .itemStackArrayToBase64(JoinListener.getFurnacemenu().get(player.getUniqueId()).getContents());
             String invToBase64smoker = BukkitSerialization
@@ -264,6 +281,7 @@ public class MoonCore extends JavaPlugin {
             File f = new File("plugins/RemielCore/playerdata", name + ".yml");
             FileConfiguration fc = statsManager.getStatfile().get(player.getUniqueId());
             statsManager.setStorage(player.getUniqueId(), invToBase64);
+            statsManager.setRealFurnaceStorage(player.getUniqueId(),invToBase64RealFurnace);
             statsManager.setFurnaceStorage(player.getUniqueId(), invToBase64furnace);
             statsManager.setCookStorage(player.getUniqueId(), invToBase64smoker);
             statsManager.setWorkStorage(player.getUniqueId(), invToBase64work);

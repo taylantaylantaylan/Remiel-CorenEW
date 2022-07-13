@@ -37,6 +37,21 @@ public class ExpList {
 		expMap.put("DEEPSLATE_REDSTONE_ORE", 5);
 		expMap.put("NETHER_QUARTZ_ORE", 5);
 		expMap.put("LAPIS_ORE", 3);
+		// COMBAT
+		expMap.put("WITHER_SKELETON", 3);
+		expMap.put("SKELETON", 2);
+		expMap.put("ZOMBIE", 1);
+		expMap.put("GHAST", 5);
+		expMap.put("MAGMA_CUBE", 3);
+		expMap.put("SLIME", 2);
+		expMap.put("BLAZE", 5);
+		expMap.put("CREEPER", 5);
+		expMap.put("WOLF", 3);
+		expMap.put("COW", 1);
+		expMap.put("SHEEP", 1);
+		expMap.put("ZOGLIN", 3);
+		expMap.put("CHICKEN", 1);
+		expMap.put("HORSE", 2);
 		// FISHING
 		expMap.put("COD", 4);
 		expMap.put("PUFFERFISH", 5);
@@ -60,7 +75,14 @@ public class ExpList {
 		expMap.put("STRIPPED_DARK_OAK_WOOD", 4);
 		expMap.put("ACACIA_WOOD", 5);
 		expMap.put("OAK_WOOD", 1);
-		expMap.put("BREAD", 20);
+		//COOKING
+		expMap.put("BREAD", 5);
+		expMap.put("COOKED_BEEF", 10);
+		expMap.put("COOKED_MUTTON", 8);
+		expMap.put("COOKED_COD", 8);
+		expMap.put("COOKED_PORKCHOP", 8);
+		expMap.put("BAKED_POTATO", 8);
+		expMap.put("COOKED_CHICKEN", 8);
 		// BREWING
 		expMap.put("SUGAR", 4);
 		expMap.put("NETHER_WART", 3);
@@ -86,7 +108,6 @@ public class ExpList {
 		expMap.put("BROWN_MUSHROOM", 2);
 		expMap.put("PUMPKIN", 3);
 		expMap.put("MELON", 3);
-		expMap.put("SWEET_BERRIES", 3);
 
 	}
 

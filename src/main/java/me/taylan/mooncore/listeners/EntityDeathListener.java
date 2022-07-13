@@ -40,6 +40,7 @@ public class EntityDeathListener implements Listener {
         Entity entity = event.getEntity();
         World world = entity.getWorld();
         String name = entity.getName();
+
         Entity entitykiller = event.getEntity().getKiller();
         if (!(entitykiller instanceof Player)) return;
         Player player = (Player) entitykiller;
@@ -385,7 +386,7 @@ public class EntityDeathListener implements Listener {
             } else {
                 player.getInventory().addItem(itemHandler.rawchicken);
             }
-            if (chance4 < 3) {
+
                 ItemStack item = itemHandler.feather;
                 item.setAmount(chanceamount3);
                 if (player.getInventory().firstEmpty() == -1) {
@@ -394,7 +395,7 @@ public class EntityDeathListener implements Listener {
                 } else {
                     player.getInventory().addItem(item);
                 }
-            }
+
         } else if (name.contains("Dev")) {
 
             int chance4 = ThreadLocalRandom.current().nextInt(30);
@@ -436,7 +437,10 @@ public class EntityDeathListener implements Listener {
                 itemDrop.itemDrop(player,entity, item, EquipmentSlot.HEAD);
             } else if (chanceminer == 5) {
                 ItemStack item = itemHandler.createArmorItem("Botlar", new ItemStack(Material.GOLDEN_LEGGINGS), "&7Ağır Gardiyan Botları", 3, 4, 3, 7, 4, 2, 2, 0, 0, 0, 14, 5, 2, 2, 400);
-                itemDrop.itemDrop(player,entity, item, EquipmentSlot.FEET);
+                itemDrop.itemDrop(player,entity, item, EquipmentSlot.LEGS);
+            } else if (chanceminer == 6) {
+                ItemStack item = itemHandler.witherrose;
+                itemDrop.itemDrop(player,entity, item, EquipmentSlot.HAND);
             }
             ItemStack item = itemHandler.blackbone;
             item.setAmount(chanceamountspider);

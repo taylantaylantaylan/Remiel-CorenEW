@@ -25,3 +25,6 @@ commands:
    warp:
    adminitem:
    iteminfo:
+   xpadd:
+   map:
+   skillget:

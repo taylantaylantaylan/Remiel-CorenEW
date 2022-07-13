@@ -28,16 +28,6 @@ public class DiscordCommand implements CommandExecutor {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
 				p.sendMessage(Painter.paint("&bDiscord Linki &r discord.gg/moonnetwork"));
-				ItemStack book = new ItemStack(Material.BOOK);
-				ItemMeta meta = book.getItemMeta();
-				List<String> lore = new ArrayList<>();
-				lore.add(Painter.paint("&8<Boş Büyü Bölmesi>"));
-				meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-				meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-				meta.setLore(lore);
-				book.setItemMeta(meta);
-				p.getInventory().addItem(book);
-
 		}
 		return false;
 	}

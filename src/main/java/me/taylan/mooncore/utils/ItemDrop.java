@@ -1,6 +1,8 @@
 package me.taylan.mooncore.utils;
 
 import me.taylan.mooncore.MoonCore;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -53,13 +55,18 @@ public class ItemDrop {
                     for (Entity entity : armorStand.getNearbyEntities(0.1, 0.1, 0.1)) {
                         if (entity.getUniqueId().equals(dropmap.get(armorStand))) {
                             Player playerdrop = Bukkit.getPlayer(dropmap.get(armorStand));
-                            playerdrop.getInventory().addItem(item);
-                            playerdrop.sendMessage(
-                                    Painter.paint("&7Yerden bir eşya alındı: " + item.getItemMeta().getDisplayName()));
-                            playerdrop.playSound(playerdrop, Sound.ENTITY_ITEM_PICKUP, 0.5F, 1.3F);
-                            plugin.getIndicators2().put(armorStand,100);
-                            armorStand.remove();
-                            this.cancel();
+                            if(playerdrop.getInventory().firstEmpty() == -1) {
+                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                                        new TextComponent(Painter.paint("&cEnvanterin Dolu!")));
+                            } else {
+                                playerdrop.getInventory().addItem(item);
+                                playerdrop.sendMessage(
+                                        Painter.paint("&7Yerden bir eşya alındı: " + item.getItemMeta().getDisplayName()));
+                                playerdrop.playSound(playerdrop, Sound.ENTITY_ITEM_PICKUP, 0.5F, 1.3F);
+                                plugin.getIndicators2().put(armorStand, 100);
+                                armorStand.remove();
+                                this.cancel();
+                            }
                         }
                     }
 

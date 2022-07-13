@@ -1,12 +1,14 @@
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\NpcCommand.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\listeners\PlayerDeathListener.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\animations\SmithAnim.java
+C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\SkillGetCommand.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\listeners\SkillListener.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\animations\SwingAnimation.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\listeners\SpellListener.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\animations\CookAnim.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\LootCrateCommand.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\utils\ItemDrop.java
+C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\XpGiveCommand.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\CoreProtectApi.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\listeners\ProjectileHitListener.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\BackCommand.java
@@ -20,6 +22,7 @@ C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\anim
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\StatsCommand.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\enchanting\Enchants.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\DiscordCommand.java
+C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\custommining\BrokenBlock.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\listeners\LootListener.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\LoreCommand.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\alchemy\Spells.java
@@ -39,6 +42,7 @@ C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\util
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\alchemy\BrewingStandData.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\eco\VaultHook.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\enchanting\EnchantConstructor.java
+C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\animations\RealFurnaceAnim.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\utils\BukkitSerialization.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\listeners\PlayerFishListener.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\PlaytimeCommand.java
@@ -59,7 +63,9 @@ C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\list
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\WarpCommand.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\utils\ItemHandler.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\utils\PlayerHeads.java
+C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\custommining\BrokenBlocksService.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\alchemy\BlockPosition.java
+C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\commands\MapCommand.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\listeners\ChunkListener.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\utils\Painter.java
 C:\Users\90553\IdeaProjects\Remiel-CorenEW\src\main\java\me\taylan\mooncore\utils\GuiHandler.java

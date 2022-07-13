@@ -47,6 +47,7 @@ public class JoinListener implements Listener {
 	}
 	private static HashMap<UUID, Inventory> furnacemenu = new HashMap<UUID, Inventory>();
 	private static HashMap<UUID, Inventory> elsanatmenu = new HashMap<UUID, Inventory>();
+	private static HashMap<UUID, Inventory> realfurnacemenu = new HashMap<UUID, Inventory>();
 	public JoinListener(MoonCore plugin) {
 		this.plugin = plugin;
 		this.stats = plugin.getStatsManager();
@@ -64,6 +65,9 @@ public class JoinListener implements Listener {
 	}
 	public static HashMap<UUID, Inventory> getElsanatmenu() {
 		return elsanatmenu;
+	}
+	public static HashMap<UUID, Inventory> getRealfurnacemenu() {
+		return realfurnacemenu;
 	}
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -162,13 +166,25 @@ public class JoinListener implements Listener {
 
 		menu.put(player.getUniqueId(), Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize("<dark_gray>Depo")));
 		ocakmenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize("<dark_gray>Ocak Deposu")));
-		furnacemenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize("<dark_gray>Fırın Deposu")));
+		furnacemenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize("<dark_gray>Maden Fırın Deposu")));
 		elsanatmenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize("<dark_gray>El Sanatları Deposu")));
+		realfurnacemenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize("<dark_gray>Fırın Deposu")));
+
 		if (!(stats.getStorage(player.getUniqueId()).equals("yok"))) {
 			String contents = stats.getStorage(player.getUniqueId());
 			try {
 				ItemStack[] inv = BukkitSerialization.itemStackArrayFromBase64(contents);
 				menu.get(player.getUniqueId()).setContents(inv);
+			} catch (IOException ev) {
+				plugin.getLogger().warning("Broken");
+				ev.printStackTrace();
+			}
+		}
+		if (!(stats.getRealFurnaceStorage(player.getUniqueId()).equals("yok"))) {
+			String contents = stats.getRealFurnaceStorage(player.getUniqueId());
+			try {
+				ItemStack[] inv = BukkitSerialization.itemStackArrayFromBase64(contents);
+				realfurnacemenu.get(player.getUniqueId()).setContents(inv);
 			} catch (IOException ev) {
 				plugin.getLogger().warning("Broken");
 				ev.printStackTrace();

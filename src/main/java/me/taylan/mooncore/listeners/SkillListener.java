@@ -52,7 +52,7 @@ public class SkillListener implements Listener {
 
         if (event.getEntity() == e) {
             if (e.getKiller() instanceof Player) {
-                levels.giveCombatEXP(player, 2);
+                levels.giveCombatEXP(player, 2, e);
             }
         }
     }
@@ -181,15 +181,15 @@ public class SkillListener implements Listener {
                 || block.getType() == Material.REDSTONE_ORE || block.getType() == Material.LAPIS_ORE
                 || block.getType() == Material.ANDESITE || block.getType() == Material.GRANITE
                 || block.getType() == Material.DIORITE || block.getType() == Material.ANCIENT_DEBRIS
-                || block.getType() == Material.DIAMOND_ORE || block.getType() == Material.NETHER_QUARTZ_ORE)) {
+                || block.getType() == Material.DIAMOND_ORE || block.getType() == Material.NETHER_QUARTZ_ORE || block.getType() == Material.RAW_COPPER_BLOCK || block.getType() == Material.OBSIDIAN || block.getType() == Material.RAW_IRON_BLOCK)) {
             return;
         }
-        if (block.getType() == Material.STONE || block.getType() == Material.IRON_ORE
+        if ((block.getType() == Material.STONE || block.getType() == Material.IRON_ORE
                 || block.getType() == Material.COAL_ORE || block.getType() == Material.GOLD_ORE
                 || block.getType() == Material.REDSTONE_ORE || block.getType() == Material.LAPIS_ORE
                 || block.getType() == Material.ANDESITE || block.getType() == Material.GRANITE
                 || block.getType() == Material.DIORITE || block.getType() == Material.ANCIENT_DEBRIS
-                || block.getType() == Material.DIAMOND_ORE || block.getType() == Material.NETHER_QUARTZ_ORE) {
+                || block.getType() == Material.DIAMOND_ORE || block.getType() == Material.NETHER_QUARTZ_ORE || block.getType() == Material.RAW_COPPER_BLOCK || block.getType() == Material.OBSIDIAN || block.getType() == Material.RAW_IRON_BLOCK)) {
 
             Player player = event.getPlayer();
             levels.giveMiningExp(player, block);

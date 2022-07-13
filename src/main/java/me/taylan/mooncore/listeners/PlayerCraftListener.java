@@ -63,7 +63,7 @@ public class PlayerCraftListener implements Listener {
                break;
            case ARROW:
                ItemStack arrow = new ItemStack(itemHandler.arrow);
-               arrow.setAmount(2);
+               arrow.setAmount(4);
                event.getInventory().setResult(arrow);
                break;
            case COAL:
@@ -100,6 +100,15 @@ public class PlayerCraftListener implements Listener {
            case RAW_GOLD_BLOCK:
                event.getInventory().setResult(new ItemStack(Material.AIR));
                break;
+           case BRICKS:
+               event.getInventory().setResult(itemHandler.bottle);
+               break;
+           case GLASS_BOTTLE:
+               event.getInventory().setResult(itemHandler.bottle);
+               break;
+           case LAPIS_BLOCK:
+               event.getInventory().setResult(itemHandler.lapislazuliblock);
+               break;
            case GOLD_BLOCK:
                event.getInventory().setResult(itemHandler.goldblock);
                break;
@@ -110,6 +119,11 @@ public class PlayerCraftListener implements Listener {
                break;
            case RAW_GOLD:
                event.getInventory().setResult(new ItemStack(Material.AIR));
+               break;
+           case LAPIS_LAZULI:
+               ItemStack lapisingot = new ItemStack(itemHandler.lapis);
+               lapisingot.setAmount(9);
+               event.getInventory().setResult(lapisingot);
                break;
            case GOLD_INGOT:
                ItemStack golingot = new ItemStack(itemHandler.goldingot);

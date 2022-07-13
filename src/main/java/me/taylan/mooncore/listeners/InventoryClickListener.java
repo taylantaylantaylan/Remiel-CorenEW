@@ -3,10 +3,7 @@ package me.taylan.mooncore.listeners;
 import com.destroystokyo.paper.MaterialTags;
 import com.manya.pdc.DataTypes;
 import me.taylan.mooncore.MoonCore;
-import me.taylan.mooncore.utils.GuiHandler;
-import me.taylan.mooncore.utils.ItemHandler;
-import me.taylan.mooncore.utils.Painter;
-import me.taylan.mooncore.utils.StatsManager;
+import me.taylan.mooncore.utils.*;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -17,28 +14,33 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
-import org.bukkit.event.player.PlayerTakeLecternBookEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.io.IOException;
 import java.util.*;
 
 public class InventoryClickListener implements Listener {
     private static HashMap<UUID, Block> SmithBlock = new HashMap<UUID, Block>();
     private static HashMap<UUID, Block> CookBlock = new HashMap<UUID, Block>();
     private static HashMap<UUID, Block> FurnaceBlock = new HashMap<UUID, Block>();
+
+    public static HashMap<UUID, Block> getRealFurnaceBlock() {
+        return RealFurnaceBlock;
+    }
+
+    private static HashMap<UUID, Block> RealFurnaceBlock = new HashMap<UUID, Block>();
     private static HashMap<UUID, Block> ElSanatBlock = new HashMap<UUID, Block>();
     private MoonCore plugin;
     private ItemHandler itemHandler;
@@ -364,6 +366,23 @@ public class InventoryClickListener implements Listener {
     }
 
     @EventHandler
+    public void onClick42(InventoryClickEvent event) {
+        String title = event.getView().getTitle();
+        if (title.equals(guiHandler.inventory_name22)) {
+            event.setCancelled(true);
+            if (event.getCurrentItem() == null) {
+                return;
+            }
+
+            guiHandler.clicked((Player) event.getWhoClicked(), event.getSlot(), event.getCurrentItem(),
+                    event.getInventory());
+            Player player = (Player) event.getWhoClicked();
+            player.playSound(player, Sound.UI_LOOM_SELECT_PATTERN, 2, 1.1f);
+
+        }
+    }
+
+    @EventHandler
     public void onClick4(InventoryClickEvent event) {
         String title = event.getView().getTitle();
         if (title.equals(guiHandler.inventory_name4)) {
@@ -419,12 +438,30 @@ public class InventoryClickListener implements Listener {
             if (event.getCurrentItem().getItemMeta().getPersistentDataContainer().has(star,
                     PersistentDataType.STRING)) {
                 event.setCancelled(true);
-player.setItemOnCursor(null);
+                if(event.getWhoClicked().getItemOnCursor().hasItemMeta() && event.getWhoClicked().getItemOnCursor().getItemMeta().getPersistentDataContainer() != null && event.getWhoClicked().getItemOnCursor().getItemMeta().getPersistentDataContainer().has(star)) {
+
+                    player.setItemOnCursor(null);
+                }
                 player.openInventory(guiHandler.bilgikitabı(player));
             }
         }
     }
+    @EventHandler
+    public void Claimbilgi(InventoryClickEvent event) {
+        String title = event.getView().getTitle();
+        Player player = (Player) event.getWhoClicked();
+        if (title.equals(guiHandler.inventory_name23)) {
+            event.setCancelled(true);
+            if (event.getCurrentItem() == null) {
+                return;
+            }
 
+            guiHandler.clicked((Player) event.getWhoClicked(), event.getSlot(), event.getCurrentItem(),
+                    event.getInventory());
+            player.playSound(player, Sound.UI_LOOM_SELECT_PATTERN, 2, 1.1f);
+
+        }
+    }
 
     @EventHandler
     public void onClicknitelik(InventoryClickEvent event) {
@@ -442,6 +479,47 @@ player.setItemOnCursor(null);
 
         }
     }
+
+    @EventHandler
+    public void onClickBackPack(InventoryClickEvent event) {
+        NamespacedKey backp = new NamespacedKey(plugin, "backpack");
+        String title = event.getView().getTitle();
+        Player player = (Player) event.getWhoClicked();
+        if (event.getCurrentItem() == null) {
+            return;
+        }
+        if (title.contains("Çanta")) {
+            if (event.getCurrentItem().hasItemMeta() && event.getCurrentItem().getItemMeta().getPersistentDataContainer() != null && event.getCurrentItem().getItemMeta().getPersistentDataContainer().has(backp)) {
+                event.setCancelled(true);
+            }
+
+
+        }
+    }
+
+    @EventHandler
+    public void dropbackpack(PlayerDropItemEvent event) throws IOException {
+        NamespacedKey backp = new NamespacedKey(plugin, "backpack");
+        NamespacedKey backpslot = new NamespacedKey(plugin, "backpackslot");
+        Player player = event.getPlayer();
+        ItemStack item = event.getItemDrop().getItemStack();
+        if (item.hasItemMeta() && item != null) {
+            if (item.getItemMeta().getPersistentDataContainer().has(backp, PersistentDataType.STRING)) {
+                event.setCancelled(true);
+                if (!(item.getItemMeta().getPersistentDataContainer().get(backp, PersistentDataType.STRING).equals("Yok.."))) {
+                    String contents = item.getItemMeta().getPersistentDataContainer().get(backp, PersistentDataType.STRING);
+                    Inventory inventory = Bukkit.createInventory(null, item.getItemMeta().getPersistentDataContainer().get(backpslot, PersistentDataType.INTEGER), item.getItemMeta().getDisplayName());
+                    ItemStack[] inv = BukkitSerialization.itemStackArrayFromBase64(contents);
+                    inventory.setContents(inv);
+                    player.openInventory(inventory);
+
+                } else {
+                    player.openInventory(Bukkit.createInventory(null, item.getItemMeta().getPersistentDataContainer().get(backpslot, PersistentDataType.INTEGER), item.getItemMeta().getDisplayName()));
+                }
+            }
+        }
+    }
+
 
     @EventHandler
     public void dropbook(PlayerDropItemEvent event) {
@@ -475,6 +553,62 @@ player.setItemOnCursor(null);
     }
 
     @EventHandler
+    public void clickbook2(PlayerInteractEvent event) throws IOException {
+        Player player = event.getPlayer();
+        NamespacedKey backp = new NamespacedKey(plugin, "backpack");
+        NamespacedKey backpslot = new NamespacedKey(plugin, "backpackslot");
+        ItemStack item = player.getInventory().getItemInMainHand();
+        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (player.getInventory().getItemInMainHand().hasItemMeta()
+                    && player.getInventory().getItemInMainHand() != null) {
+                if (item.getItemMeta().getPersistentDataContainer().has(backp,
+                        PersistentDataType.STRING) && item.getItemMeta().getPersistentDataContainer().has(backpslot,
+                        PersistentDataType.INTEGER)) {
+
+
+                    if (!(item.getItemMeta().getPersistentDataContainer().get(backp, PersistentDataType.STRING).equals("Yok.."))) {
+                        String contents = item.getItemMeta().getPersistentDataContainer().get(backp, PersistentDataType.STRING);
+                        Inventory inventory = Bukkit.createInventory(null, item.getItemMeta().getPersistentDataContainer().get(backpslot, PersistentDataType.INTEGER), item.getItemMeta().getDisplayName());
+                        ItemStack[] inv = BukkitSerialization.itemStackArrayFromBase64(contents);
+                        inventory.setContents(inv);
+                        player.openInventory(inventory);
+
+                    } else {
+                        player.openInventory(Bukkit.createInventory(null, item.getItemMeta().getPersistentDataContainer().get(backpslot, PersistentDataType.INTEGER), item.getItemMeta().getDisplayName()));
+                    }
+
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void Backpackclose(InventoryCloseEvent event) {
+        Player player = (Player) event.getPlayer();
+        String title = event.getView().getTitle();
+        if (title.contains("Çanta")) {
+            NamespacedKey backp = new NamespacedKey(plugin, "backpack");
+            NamespacedKey backpslot = new NamespacedKey(plugin, "backpackslot");
+            ItemStack item = player.getInventory().getItemInMainHand();
+            ItemMeta meta = item.getItemMeta();
+            if (item != null && item.hasItemMeta()
+            ) {
+                if (meta.getPersistentDataContainer().has(backp,
+                        PersistentDataType.STRING) && meta.getPersistentDataContainer().has(backpslot,
+                        PersistentDataType.INTEGER)) {
+                    String invToBase64work = BukkitSerialization
+                            .itemStackArrayToBase64(event.getView().getTopInventory().getContents());
+                    meta.getPersistentDataContainer().set(backp, PersistentDataType.STRING, invToBase64work);
+                    item.setItemMeta(meta);
+
+                }
+            }
+        }
+    }
+
+
+    @EventHandler
+
     public void onClick622(InventoryClickEvent event) {
         String title = event.getView().getTitle();
         if (title.equals(guiHandler.inventory_name6)) {
@@ -695,6 +829,7 @@ player.setItemOnCursor(null);
 
     }
 
+
     @EventHandler
     public void onClickEnv(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
@@ -748,6 +883,80 @@ player.setItemOnCursor(null);
         if (block.getRelative(BlockFace.EAST).getType().equals(Material.SCAFFOLDING)) return true;
         if (block.getRelative(BlockFace.WEST).getType().equals(Material.SCAFFOLDING)) return true;
         return false;
+    }
+
+    @EventHandler
+    public void profil(PlayerInteractEntityEvent event) {
+
+        Player player = event.getPlayer();
+        Entity entity = event.getRightClicked();
+        if (!(entity instanceof Player)) {
+            return;
+        }
+        Player clickedplayer = (Player) entity;
+        if (player.isSneaking()) {
+            player.openInventory(guiHandler.profil(player, clickedplayer));
+            ArrayList<ItemStack> list = (ArrayList<ItemStack>) stats.getHepsi(clickedplayer.getUniqueId());
+            if (clickedplayer.getInventory().getHelmet() != null) {
+                player.getOpenInventory().getTopInventory().setItem(13, clickedplayer.getInventory().getHelmet());
+            }
+            if (clickedplayer.getInventory().getChestplate() != null) {
+                player.getOpenInventory().getTopInventory().setItem(22, clickedplayer.getInventory().getChestplate());
+            }
+            if (clickedplayer.getInventory().getLeggings() != null) {
+                player.getOpenInventory().getTopInventory().setItem(31, clickedplayer.getInventory().getLeggings());
+            }
+            if (clickedplayer.getInventory().getBoots() != null) {
+                player.getOpenInventory().getTopInventory().setItem(40, clickedplayer.getInventory().getBoots());
+            }
+            if (clickedplayer.getInventory().getItemInMainHand() != null) {
+                player.getOpenInventory().getTopInventory().setItem(39, clickedplayer.getInventory().getItemInMainHand());
+            }
+            if (clickedplayer.getInventory().getItemInOffHand() != null) {
+                player.getOpenInventory().getTopInventory().setItem(41, clickedplayer.getInventory().getItemInOffHand());
+            }
+            if (!(stats.getKolye(clickedplayer.getUniqueId()).equals("Yok.."))) {
+                player.getOpenInventory().getTopInventory().setItem(21, list.get(2));
+            }
+            if (!(stats.getTilsim(clickedplayer.getUniqueId()).equals("Yok.."))) {
+                player.getOpenInventory().getTopInventory().setItem(23, list.get(0));
+            }
+            if (!(stats.getEldiven(clickedplayer.getUniqueId()).equals("Yok.."))) {
+                player.getOpenInventory().getTopInventory().setItem(30, list.get(1));
+            }
+            if (!(stats.getYuzuk(clickedplayer.getUniqueId()).equals("Yok.."))) {
+                player.getOpenInventory().getTopInventory().setItem(32, list.get(3));
+            }
+
+        }
+
+    }
+
+    @EventHandler
+    public void RealFurnace(PlayerInteractEvent event) {
+
+        Player player = event.getPlayer();
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            Block block = event.getClickedBlock();
+            if (block.getType() == Material.FURNACE) {
+
+                int cookProduct = stats.getRealFurnaceProduction(player.getUniqueId());
+                if (cookProduct <= 0) {
+                    if (!(RealFurnaceBlock.containsKey(player.getUniqueId()))) {
+                        RealFurnaceBlock.put(player.getUniqueId(), block);
+                    }
+                    event.setCancelled(true);
+                    player.openInventory(guiHandler.realFurnaceGui(player));
+                } else {
+                    if (!(RealFurnaceBlock.containsKey(player.getUniqueId()))) {
+                        RealFurnaceBlock.put(player.getUniqueId(), block);
+                    }
+                    event.setCancelled(true);
+                    player.openInventory(guiHandler.productRealFurnace(player));
+                }
+
+            }
+        }
     }
 
     @EventHandler

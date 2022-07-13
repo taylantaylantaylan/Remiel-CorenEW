@@ -36,7 +36,7 @@ public class WarpCommand implements CommandExecutor {
                             .paint("&cYanlış Kullanım! Doğrusu /warp <Bölge İsmi>"));
                 }
                 if (args[0].equalsIgnoreCase("liman")) {
-                        if (stats.getLevel(p.getUniqueId()) > 3) {
+                        if (stats.getLevel(p.getUniqueId()) > 2) {
                             coneEffect(p);
                         }
 

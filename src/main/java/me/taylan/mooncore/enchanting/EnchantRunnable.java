@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import com.destroystokyo.paper.MaterialTags;
+import me.taylan.mooncore.commands.SeviyeCommand;
 import me.taylan.mooncore.listeners.InventoryClickListener;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -37,6 +38,7 @@ public class EnchantRunnable extends BukkitRunnable {
 	private EnchantListener enchantListener;
 	private MoonCore plugin;
 	private static HashMap<UUID, Entity> creeper = new HashMap<UUID, Entity>();
+	private SeviyeCommand seviyeCommand;
 	public static HashMap<UUID, Entity> getCreeper() {
 		return creeper;
 	}
@@ -48,6 +50,7 @@ public class EnchantRunnable extends BukkitRunnable {
 		this.plugin = plugin;
 		this.enchantListener = plugin.getEnchantListener();
 		this.stats = plugin.getStatsManager();
+		this.seviyeCommand = plugin.getSeviyeCommand();
 	}
 
 	@Override
@@ -67,6 +70,14 @@ public class EnchantRunnable extends BukkitRunnable {
 			if(stats.getKritikSansi(player.getUniqueId()) >100) {
 				stats.setKritikSansiCap(player.getUniqueId());
 			}
+			int Exp = stats.getExp(player.getUniqueId());
+			int RequiredExp = stats.getRequiredExp(player.getUniqueId());
+			if (Exp >= RequiredExp) {
+				seviyeCommand.seviyeAtlat(player, 1);
+				stats.setRequiredExp(player.getUniqueId(), RequiredExp*2);
+				stats.setExp0(player.getUniqueId(), 0);
+
+			}
 			if(player.getInventory().getItemInMainHand() != null && player.getInventory().getItemInMainHand().hasItemMeta() && player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() != null) {
 				if(player.getInventory().getItemInMainHand().getType() == Material.WOODEN_SHOVEL || player.getInventory().getItemInMainHand().getType() == Material.WOODEN_HOE|| player.getInventory().getItemInMainHand().getType() == Material.DIAMOND_SWORD || player.getInventory().getItemInMainHand().getType() == Material.STICK) {
 					PotionEffect effect = new PotionEffect(PotionEffectType.SLOW_DIGGING, 60,
@@ -75,7 +86,7 @@ public class EnchantRunnable extends BukkitRunnable {
 					if (effect2 == null) {
 						player.addPotionEffect(effect);
 					}
-				} else if(player.getInventory().getItemInMainHand().getType() == Material.GOLDEN_PICKAXE || player.getInventory().getItemInMainHand().getType() == Material.GOLDEN_AXE|| player.getInventory().getItemInMainHand().getType() == Material.GOLDEN_HOE ||player.getInventory().getItemInMainHand().getType() == Material.GOLDEN_SHOVEL  ) {
+				} else if(player.getInventory().getItemInMainHand().getType() == Material.GOLDEN_AXE|| player.getInventory().getItemInMainHand().getType() == Material.GOLDEN_HOE ||player.getInventory().getItemInMainHand().getType() == Material.GOLDEN_SHOVEL  ) {
 					PotionEffect effect = new PotionEffect(PotionEffectType.SLOW_DIGGING, 60,
 							0, false, false, false);
 					PotionEffect effect2 = player.getPotionEffect(PotionEffectType.SLOW_DIGGING);

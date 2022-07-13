@@ -68,21 +68,6 @@ public class PlayerAttackListener implements Listener {
             int saldirihizi = statsManager.getSaldiriHizi(player.getUniqueId()) / 10 + realhiz;
             NamespacedKey dura = new NamespacedKey(plugin, "durability");
             ItemMeta meta = item.getItemMeta();
-            int durabilt =  meta.getPersistentDataContainer().get(dura,PersistentDataType.INTEGER);
-            meta.getPersistentDataContainer().set(dura,PersistentDataType.INTEGER,durabilt-1);
-            item.setItemMeta(meta);
-            Damageable damagemeta = (Damageable) meta;
-            if(durabilt<item.getType().getMaxDurability()) {
-                damagemeta.setDamage(damagemeta.getDamage()+1);
-                item.setItemMeta(damagemeta);
-                if(durabilt<0) {
-                    player.getInventory().remove(item);
-                    player.playSound(player,Sound.ITEM_SHIELD_BREAK,0.5F,1.3F);
-                }
-            } else {
-                damagemeta.setDamage(0);
-                item.setItemMeta(damagemeta);
-            }
             if ((MaterialTags.HOES.isTagged(item))) {
                 if (!(player.hasCooldown(item.getType()))) {
                     if (damaged instanceof LivingEntity) {
@@ -197,6 +182,7 @@ public class PlayerAttackListener implements Listener {
                             }
                         }
                     }
+
                     player.setCooldown(item.getType(), (int) 30 - saldirihizi);
                     player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1f);
                 } else {
@@ -217,16 +203,6 @@ public class PlayerAttackListener implements Listener {
             }
             if (item.getType() == Material.GOLDEN_PICKAXE) {
                 if (!(player.hasCooldown(item.getType()))) {
-                    for (ItemStack item2 : player.getInventory().getContents()) {
-                        if (item2 != null) {
-                            if (item2 == item) continue;
-                            if (item2 != null && item2.hasItemMeta() && item2.getItemMeta().hasLore()) {
-                                if (item2.getLore().contains("Kılıç") || item2.getLore().contains("Hançer") || item2.getLore().contains("Balta") || item2.getLore().contains("Yay") || item2.getLore().contains("Arbalet") || item2.getLore().contains("Asa") || item2.getLore().contains("Topuz") || item2.getLore().contains("Kitabı") || item2.getLore().contains("Mızrak") || item2.getLore().contains("Tırpan")) {
-                                    player.setCooldown(item2.getType(), (int) 999);
-                                }
-                            }
-                        }
-                    }
                     player.setCooldown(item.getType(), (int) 60 - saldirihizi);
                     player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1f);
                 } else {
@@ -525,6 +501,25 @@ public class PlayerAttackListener implements Listener {
                     Damageable itemmeta = (Damageable) item.getItemMeta();
                     itemmeta.setDamage(itemmeta.getDamage() - 1);
                     item.setItemMeta((ItemMeta) itemmeta);
+                    if (item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null && item.getItemMeta().getPersistentDataContainer().has(dura)) {
+
+                        int durabilt = meta.getPersistentDataContainer().get(dura, PersistentDataType.INTEGER);
+                        meta.getPersistentDataContainer().set(dura, PersistentDataType.INTEGER, durabilt - 1);
+                        player.sendMessage("" + durabilt);
+                        item.setItemMeta(meta);
+                        Damageable damagemeta = (Damageable) meta;
+                        if (durabilt < item.getType().getMaxDurability()) {
+                            damagemeta.setDamage(damagemeta.getDamage() + 1);
+                            item.setItemMeta(damagemeta);
+                            if (durabilt < 0) {
+                                player.getInventory().remove(item);
+                                player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.5F, 1.3F);
+                            }
+                        } else {
+                            damagemeta.setDamage(0);
+                            item.setItemMeta(damagemeta);
+                        }
+                    }
                     if (!(player.hasCooldown(item.getType()))) {
                         if (damaged instanceof LivingEntity) {
                             if (hancerstack.containsKey(player.getUniqueId())) {
@@ -635,6 +630,20 @@ public class PlayerAttackListener implements Listener {
                         player.setCooldown(item.getType(), (int) 50 - saldirihizi);
                     }
                 }
+                if (item.getType() == Material.GOLDEN_PICKAXE) {
+                    if (!(player.hasCooldown(item.getType()))) {
+                        world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0.1f);
+                        world.playSound(player, Sound.ITEM_AXE_SCRAPE, 0.25f, 0.8f);
+                        player.setCooldown(item.getType(), (int) 50 - saldirihizi);
+                    }
+                }
+                if (item.getType() == Material.GOLDEN_AXE) {
+                    if (!(player.hasCooldown(item.getType()))) {
+                        world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0.1f);
+                        world.playSound(player, Sound.ITEM_AXE_SCRAPE, 0.25f, 0.8f);
+                        player.setCooldown(item.getType(), (int) 40 - saldirihizi);
+                    }
+                }
                 if (item.getType() == Material.GOLDEN_SHOVEL) {
                     if (!(player.hasCooldown(item.getType()))) {
                         world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0.1f);
@@ -652,9 +661,12 @@ public class PlayerAttackListener implements Listener {
                                 EntityType.GLOW_ITEM_FRAME, EntityType.VILLAGER);
                         Vector vec = player.getEyeLocation().getDirection();
                         final RayTraceResult ray = player.getWorld().rayTraceEntities(player.getEyeLocation(), vec, 6, 0, (e) -> e != player);
+                        if (ray == null) {
+                            return;
+                        }
                         final RayTraceResult result = player.getWorld().rayTraceBlocks(player.getEyeLocation(), vec, player.getLocation().distance(ray.getHitEntity().getLocation()));
 
-                        if (ray != null && result == null && ray.getHitEntity() != null && !SKIPPED_TYPES.contains(ray.getHitEntity().getType())) {
+                        if (result == null && ray.getHitEntity() != null && !SKIPPED_TYPES.contains(ray.getHitEntity().getType())) {
                             if (ray.getHitEntity() instanceof LivingEntity) {
                                 ((LivingEntity) ray.getHitEntity()).damage(4, player);
                                 NamespacedKey dura = new NamespacedKey(plugin, "durability");
@@ -665,7 +677,7 @@ public class PlayerAttackListener implements Listener {
 
                                 if (durabilt < 0) {
                                     player.getInventory().remove(item);
-                                        player.playSound(player,Sound.ITEM_SHIELD_BREAK,0.5F,1.3F);
+                                    player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.5F, 1.3F);
 
                                 }
                                 player.setCooldown(item.getType(), (int) 40 - saldirihizi);
@@ -698,9 +710,9 @@ public class PlayerAttackListener implements Listener {
                         meta.getPersistentDataContainer().set(dura, PersistentDataType.INTEGER, durabilt - 1);
                         item.setItemMeta(meta);
 
-                        if(durabilt<0) {
+                        if (durabilt < 0) {
                             player.getInventory().remove(item);
-                            player.playSound(player,Sound.ITEM_SHIELD_BREAK,0.5F,1.3F);
+                            player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.5F, 1.3F);
                         }
                         wand.put(player.getUniqueId(), 0);
 
@@ -737,16 +749,16 @@ public class PlayerAttackListener implements Listener {
                         Arrow arrow = player.launchProjectile(Arrow.class, playerDirection);
                         player.playSound(player, Sound.ENTITY_ARROW_SHOOT, 0.14f, 1.3f);
                         NamespacedKey dura = new NamespacedKey(plugin, "durability");
-                        int durabilt =  meta.getPersistentDataContainer().get(dura,PersistentDataType.INTEGER);
-                        meta.getPersistentDataContainer().set(dura,PersistentDataType.INTEGER,durabilt-1);
+                        int durabilt = meta.getPersistentDataContainer().get(dura, PersistentDataType.INTEGER);
+                        meta.getPersistentDataContainer().set(dura, PersistentDataType.INTEGER, durabilt - 1);
                         item.setItemMeta(meta);
                         Damageable damagemeta = (Damageable) meta;
-                        if(durabilt<item.getType().getMaxDurability()) {
-                            damagemeta.setDamage(damagemeta.getDamage()+1);
+                        if (durabilt < item.getType().getMaxDurability()) {
+                            damagemeta.setDamage(damagemeta.getDamage() + 1);
                             item.setItemMeta(damagemeta);
-                            if(durabilt<0) {
+                            if (durabilt < 0) {
                                 player.getInventory().remove(item);
-                                player.playSound(player,Sound.ITEM_SHIELD_BREAK,0.5F,1.3F);
+                                player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.5F, 1.3F);
                             }
                         } else {
                             damagemeta.setDamage(0);
@@ -857,20 +869,25 @@ public class PlayerAttackListener implements Listener {
                     shooter.playSound(shooter, Sound.ENTITY_SKELETON_SHOOT, 0.25f, 1.2f);
                     NamespacedKey dura = new NamespacedKey(plugin, "durability");
                     ItemMeta meta = item.getItemMeta();
-                    int durabilt =  meta.getPersistentDataContainer().get(dura,PersistentDataType.INTEGER);
-                    meta.getPersistentDataContainer().set(dura,PersistentDataType.INTEGER,durabilt-1);
+                    int durabilt = meta.getPersistentDataContainer().get(dura, PersistentDataType.INTEGER);
+                    meta.getPersistentDataContainer().set(dura, PersistentDataType.INTEGER, durabilt - 1);
                     item.setItemMeta(meta);
                     Damageable damagemeta = (Damageable) meta;
-                    if(durabilt<item.getType().getMaxDurability()) {
-                        damagemeta.setDamage(damagemeta.getDamage()+1);
+                    if (durabilt < item.getType().getMaxDurability()) {
+                        damagemeta.setDamage(damagemeta.getDamage() + 1);
                         item.setItemMeta(damagemeta);
-                        if(durabilt<0) {
+                        if (durabilt < 0) {
                             shooter.getInventory().remove(item);
-                            shooter.playSound(shooter,Sound.ITEM_SHIELD_BREAK,0.5F,1.3F);
+                            shooter.playSound(shooter, Sound.ITEM_SHIELD_BREAK, 0.5F, 1.3F);
                         }
                     } else {
                         damagemeta.setDamage(0);
                         item.setItemMeta(damagemeta);
+                    }
+                    if (meta.hasEnchant(Enchantment.ARROW_DAMAGE)) {
+                        arrow.setDamage(20);
+                    } else {
+                        arrow.setDamage(15);
                     }
                     shooter.spawnParticle(Particle.CLOUD, shooter.getLocation().add(0, 1.2, 0), 5, 0, 0, 0, 1);
                     drawing.remove(shooter.getUniqueId());
@@ -1125,6 +1142,9 @@ public class PlayerAttackListener implements Listener {
 
             // The run() function runs every X number of ticks - see below
             public void run() {
+                if (!(player.getWorld().equals(particleLoc.getWorld()))) {
+                    cancel();
+                }
                 ticks++;
                 if (ticks == ticksPerParticle) {
                     ticks = 0;
