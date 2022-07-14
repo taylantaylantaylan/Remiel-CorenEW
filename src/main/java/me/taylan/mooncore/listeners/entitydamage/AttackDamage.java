@@ -101,6 +101,7 @@ public class AttackDamage implements Listener {
                     int chance = ThreadLocalRandom.current().nextInt(102 - stats.getKritikSansi(player.getUniqueId()));
                     NamespacedKey hit = new NamespacedKey(plugin, "bonehit");
                     if (item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Kemik Kılıç")) {
+                        player.sendMessage("oldkemik"+"");
 
                         if (item.getItemMeta().getPersistentDataContainer().has(hit)) {
                             ItemMeta meta = item.getItemMeta();
@@ -112,7 +113,7 @@ public class AttackDamage implements Listener {
                             if (hitdetect >= 4) {
                                 crit.put(player.getUniqueId(), "crit");
                                 event.setDamage(stats.getKritikHasari(player.getUniqueId()) / 5 + 3 * realDamage
-                                        + 8 * realStrhg / 100 + 1);
+                                        + 20 * realStrhg / 100 + 1);
                                 if (stats.getKritikAyar(player.getUniqueId())) {
                                     player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 0.2f, 0.8f);
                                     player.spawnParticle(Particle.EXPLOSION_LARGE, damaged.getLocation().add(0, 1.2, 0), 1, 0,
@@ -122,6 +123,7 @@ public class AttackDamage implements Listener {
                                 item.setItemMeta(meta);
                             }
                         } else {
+                            player.sendMessage("oldu"+"");
                             ItemMeta meta = item.getItemMeta();
                             int hitdetect = 0;
                             item.getItemMeta().getPersistentDataContainer().set(hit, PersistentDataType.INTEGER, hitdetect);
@@ -132,14 +134,14 @@ public class AttackDamage implements Listener {
 
                         crit.put(player.getUniqueId(), "crit");
                         event.setDamage(stats.getKritikHasari(player.getUniqueId()) / 5 + 3 * realDamage
-                                + 8 * realStrhg / 100 + 1);
+                                + 20 * realStrhg / 100 + 1);
                         if (stats.getKritikAyar(player.getUniqueId())) {
                             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 0.2f, 0.8f);
                             player.spawnParticle(Particle.EXPLOSION_LARGE, damaged.getLocation().add(0, 1.2, 0), 1, 0,
                                     0, 0, 1);
                         }
                     } else {
-                        event.setDamage(realDamage + 7 * realStrhg / 100 + 1);
+                        event.setDamage(realDamage + 20 * realStrhg / 100 + 1);
                     }
                 } else {
                     event.setCancelled(true);
@@ -150,14 +152,14 @@ public class AttackDamage implements Listener {
                 if (chance <= 4) {
                     crit.put(player.getUniqueId(), "crit");
                     event.setDamage(stats.getKritikHasari(player.getUniqueId()) / 5 + 2 * event.getDamage()
-                            + 10 * stats.getGuc(player.getUniqueId()) / 100 + 1);
+                            + 2 * stats.getGuc(player.getUniqueId()) / 100 + 1);
                     if (stats.getKritikAyar(player.getUniqueId())) {
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 0.2f, 0.8f);
                         player.spawnParticle(Particle.EXPLOSION_LARGE, damaged.getLocation().add(0, 1.2, 0), 1, 0, 0, 0,
                                 1);
                     }
                 } else {
-                    event.setDamage(event.getDamage() + 8 * stats.getGuc(player.getUniqueId()) / 100 + 1);
+                    event.setDamage(event.getDamage() + 2 * stats.getGuc(player.getUniqueId()) / 100 + 1);
                 }
             }
 

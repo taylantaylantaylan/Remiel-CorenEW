@@ -555,8 +555,7 @@ public class GuiHandler {
                 Painter.paint("&7Toplam Çeviklik: &f") + stats.getHiz(p.getUniqueId()), "",
                 Painter.paint("&7Nitelik Puanı eklemek için &e&lSağ Tıkla."));
         itemHandler.createItem(inv14, "nether_star", 1, 35, Painter.paint("&3&lHüner"),
-                Painter.paint("&7Puan başına &3Kritik Hasarını &e+1"),
-                Painter.paint("&7ve &3Kritik Şansını &e+%1 &7arttırır."), "",
+                Painter.paint("&7Puan başına &3Kritik Hasarını &e+1 &7arttırır."), "",
                 Painter.paint("&8Hüner savaşta kullandığınız silahı daha iyi kullanmanızı sağlar."),
                 Painter.paint("&8Silahını iyi kullanan bir kişi rakibin zayıf noktalarını da görebilir."), "",
                 Painter.paint("&7Taban Hüner: &f12 &7/ &f0"),
@@ -1181,6 +1180,9 @@ public class GuiHandler {
         itemHandler.createItem(inv13, "black_stained_glass_pane", 1, 18, " ");
         itemHandler.createItem(inv13, "comparator", 1, 29, ChatColor.GRAY + "Ayarlar",
                 ChatColor.WHITE + "Açmak için " + ChatColor.YELLOW + "Sağ Tıkla.");
+        itemHandler.createItem(inv13, "book", 1, 32, ChatColor.YELLOW + "Görev Defteri",
+                ChatColor.WHITE + "Buradan görevlerini takip edebilirsin. ", "",
+                ChatColor.GRAY + "Açmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
         itemHandler.createItem(inv13, "experience_bottle", 1, 31, ChatColor.RED + "Niteliklerin",
                 ChatColor.WHITE + "Buradan nitelik puanlarını harcayabilir ",
                 ChatColor.WHITE + "ve gücüne güç katabilirsin!", "",
@@ -1258,12 +1260,14 @@ public class GuiHandler {
         itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 9, " ");
         itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 10, " ");
         itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 11, " ");
-        itemHandler.createItem(inv26, "campfire", 1, 12, "&6Bölge Bilgileri", "&eBölge Sahibi: " +Bukkit.getPlayer(stats.getOwner(chunkID)).getName());
-        itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 13, " ");
-        itemHandler.createItem(inv26, "grass_block", 1, 14, "&aBölgeni Genişlet.","&7Buradan bölgeni genişletebilirsin. Açmak için &e&lSağ Tıkla.");
+        itemHandler.createItem(inv26, "campfire", 1, 12, "&6Bölge Bilgileri", "&eBölge Sahibi: " + Bukkit.getPlayer(stats.getOwner(chunkID)).getName());
+        itemHandler.createItem(inv26, "white_banner", 1, 13, "&cKlan Kur", "&7Buradan klan kurup güclenebilirsin. Klan Kurmak için &e&lSağ Tıkla.");
 
-        itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 16, " ");
-        itemHandler.createItem(inv26, "chest", 1, 16, "&eBelediye Binası Deposu","&7Altın madenlerinden ve Mistik Rün altarlarından gelen","&7malzemeler burada depolanır. Açmak için &e&lSağ Tıkla.");
+        itemHandler.createItem(inv26, "grass_block", 1, 14, "&aBölgeni Genişlet", "&7Buradan bölgeni genişletebilirsin. Açmak için &e&lSağ Tıkla.");
+
+        itemHandler.createItem(inv26, "barrier", 1, 15, "&cBölgeni Yık", "&7Buradan Belediye Binanı yıkabilirsin fakat malzemelerin", " geri gelmez. Belediye Binanı yıkmak için &e&lSağ Tıkla.");
+
+        itemHandler.createItem(inv26, "chest", 1, 16, "&eBelediye Binası Deposu", "&7Altın madenlerinden ve Mistik Rün altarlarından gelen", "&7malzemeler burada depolanır. Açmak için &e&lSağ Tıkla.");
         itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 17, " ");
         itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 18, " ");
         itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 19, " ");
@@ -2994,10 +2998,8 @@ public class GuiHandler {
                 stats.setNP(p.getUniqueId(), -1);
                 stats.setharcananNP(p.getUniqueId(), 1);
                 stats.setKritikHasari(p.getUniqueId(), 1);
-                stats.setKritikSansi(p.getUniqueId(), 1);
                 itemHandler.createItem(inv, "nether_star", 1, 35, Painter.paint("&3&lHüner"),
-                        Painter.paint("&7Puan başına &3Kritik Hasarını &e+1"),
-                        Painter.paint("&7ve &3Kritik Şansını &e+%1 &7arttırır."), "",
+                        Painter.paint("&7Puan başına &3Kritik Hasarını &e+1 &7arttırır."), "",
                         Painter.paint("&8Hüner savaşta kullandığınız silahı daha iyi kullanmanızı sağlar."),
                         Painter.paint("&8Silahını iyi kullanan bir kişi rakibin zayıf noktalarını da görebilir."), "",
                         Painter.paint("&7Taban Hüner: &f12 &7/ &f0"),
@@ -3010,8 +3012,7 @@ public class GuiHandler {
                         ChatColor.GOLD + "Sahip Olduğun Nitelik Puanı: " + ChatColor.RED + stats.getNP(p.getUniqueId()));
             } else {
                 itemHandler.createItem(inv, "nether_star", 1, 35, Painter.paint("&3&lHüner"),
-                        Painter.paint("&7Puan başına &3Kritik Hasarını &e+1"),
-                        Painter.paint("&7ve &3Kritik Şansını &e+%1 &7arttırır."), "",
+                        Painter.paint("&7Puan başına &3Kritik Hasarını &e+1 &7arttırır."), "",
                         Painter.paint("&8Hüner savaşta kullandığınız silahı daha iyi kullanmanızı sağlar."),
                         Painter.paint("&8Silahını iyi kullanan bir kişi rakibin zayıf noktalarını da görebilir."), "",
                         Painter.paint("&7Taban Hüner: &f12 &7/ &f0"),

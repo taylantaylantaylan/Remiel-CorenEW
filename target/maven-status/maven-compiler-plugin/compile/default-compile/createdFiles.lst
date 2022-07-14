@@ -178,6 +178,7 @@ me\taylan\mooncore\listeners\BlockRegenListener$29.class
 me\taylan\mooncore\listeners\BlockRegenListener$42.class
 me\taylan\mooncore\listeners\EntityHealthListener$3$18.class
 me\taylan\mooncore\listeners\EntityHealthListener$3$8.class
+me\taylan\mooncore\listeners\BlockRegenListener$75.class
 me\taylan\mooncore\animations\FurnaceAnim$1$2$1.class
 me\taylan\mooncore\listeners\BlockRegenListener$35.class
 me\taylan\mooncore\listeners\EntityHealthListener$3$2.class
@@ -186,6 +187,7 @@ me\taylan\mooncore\listeners\EntityHealthListener$5$5.class
 me\taylan\mooncore\listeners\EntityHealthListener$6$3.class
 me\taylan\mooncore\listeners\BlockRegenListener$5.class
 me\taylan\mooncore\animations\WorkAnim$1$1.class
+me\taylan\mooncore\listeners\BlockRegenListener$76.class
 me\taylan\mooncore\listeners\VehicleDamageListener.class
 me\taylan\mooncore\listeners\ChatListener.class
 me\taylan\mooncore\listeners\PlayerAttackListener$1.class
@@ -227,6 +229,7 @@ me\taylan\mooncore\listeners\BlockRegenListener$71.class
 me\taylan\mooncore\listeners\entitydamage\AttackDamage.class
 me\taylan\mooncore\listeners\EntityHealthListener$3$1.class
 me\taylan\mooncore\level\Levels$1.class
+me\taylan\mooncore\listeners\BlockRegenListener$74.class
 me\taylan\mooncore\listeners\BlockRegenListener$14.class
 me\taylan\mooncore\commands\WarpCommand.class
 me\taylan\mooncore\listeners\BlockRegenListener$17.class
