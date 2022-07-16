@@ -132,7 +132,7 @@ public class EnchantListener implements Listener {
 						armorStand.setSmall(true);
 						armorStand.setInvulnerable(true);
 						armorStand.setCustomNameVisible(true);
-						armorStand.customName(MiniMessage.miniMessage().deserialize("<green>☣"));
+						armorStand.customName(MiniMessage.builder().build().deserialize("<green>☣"));
 						plugin.getIndicators().put(armorStand, 0);
 						new BukkitRunnable() {
 
@@ -230,7 +230,7 @@ public class EnchantListener implements Listener {
 						armorStand.setSmall(true);
 						armorStand.setInvulnerable(true);
 						armorStand.setCustomNameVisible(true);
-						armorStand.customName(MiniMessage.miniMessage().deserialize("<aqua>❆"));
+						armorStand.customName(MiniMessage.builder().build().deserialize("<aqua>❆"));
 						plugin.getIndicators().put(armorStand, 0);
 						new BukkitRunnable() {
 
@@ -334,7 +334,7 @@ public class EnchantListener implements Listener {
 							armorStand.setSmall(true);
 							armorStand.setInvulnerable(true);
 							armorStand.setCustomNameVisible(true);
-							armorStand.customName(MiniMessage.miniMessage().deserialize("<#446A58>SABOTAJ"));
+							armorStand.customName(MiniMessage.builder().build().deserialize("<#446A58>SABOTAJ"));
 							plugin.getIndicators().put(armorStand, 0);
 							new BukkitRunnable() {
 
@@ -980,7 +980,7 @@ public class EnchantListener implements Listener {
 						armorStand.setSmall(true);
 						armorStand.setInvulnerable(true);
 						armorStand.setCustomNameVisible(true);
-						armorStand.customName(MiniMessage.miniMessage().deserialize("<gray>✦"));
+						armorStand.customName(MiniMessage.builder().build().deserialize("<gray>✦"));
 						plugin.getIndicators().put(armorStand, 0);
 						new BukkitRunnable() {
 
@@ -1080,7 +1080,7 @@ public class EnchantListener implements Listener {
 							armorStand.setSmall(true);
 							armorStand.setInvulnerable(true);
 							armorStand.setCustomNameVisible(true);
-							armorStand.customName(MiniMessage.miniMessage().deserialize("<red>✖"));
+							armorStand.customName(MiniMessage.builder().build().deserialize("<red>✖"));
 							plugin.getIndicators().put(armorStand, 0);
 							new BukkitRunnable() {
 
@@ -1177,7 +1177,7 @@ public class EnchantListener implements Listener {
 						armorStand.setSmall(true);
 						armorStand.setInvulnerable(true);
 						armorStand.setCustomNameVisible(true);
-						armorStand.customName(MiniMessage.miniMessage().deserialize("<dark_aqua><bold>İNFAZ"));
+						armorStand.customName(MiniMessage.builder().build().deserialize("<dark_aqua><bold>İNFAZ"));
 						plugin.getIndicators().put(armorStand, 0);
 						new BukkitRunnable() {
 
@@ -1283,7 +1283,7 @@ public class EnchantListener implements Listener {
 							armorStand.setSmall(true);
 							armorStand.setInvulnerable(true);
 							armorStand.setCustomNameVisible(true);
-							armorStand.customName(MiniMessage.miniMessage().deserialize("<red>⑊"));
+							armorStand.customName(MiniMessage.builder().build().deserialize("<red>⑊"));
 							plugin.getIndicators().put(armorStand, 0);
 
 							new BukkitRunnable() {
@@ -1515,7 +1515,7 @@ public class EnchantListener implements Listener {
 						armorStand.setSmall(true);
 						armorStand.setInvulnerable(true);
 						armorStand.setCustomNameVisible(true);
-						armorStand.customName(MiniMessage.miniMessage().deserialize("<gold>❂"));
+						armorStand.customName(MiniMessage.builder().build().deserialize("<gold>❂"));
 						plugin.getIndicators().put(armorStand, 0);
 						new BukkitRunnable() {
 

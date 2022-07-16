@@ -442,27 +442,27 @@ public class GuiHandler {
         itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 20, " ");
         itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 21, " ");
         itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 22, " ");
-        itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 23, " ");
         itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 24, " ");
         itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 25, " ");
         itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 26, " ");
         itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 27, " ");
         itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 28, " ");
-        itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 29, " ");
+        itemHandler.createItem(inv7, "red_stained_glass_pane", 1, 29, " ");
         itemHandler.createItem(inv7, "red_stained_glass_pane", 1, 30, " ");
-        itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 31, " ");
-        itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 33, " ");
+        itemHandler.createItem(inv7, "red_stained_glass_pane", 1, 31, " ");
+        itemHandler.createItem(inv7, "red_stained_glass_pane", 1, 32, " ");
+        itemHandler.createItem(inv7, "red_stained_glass_pane", 1, 33, " ");
         itemHandler.createItem(inv7, "red_stained_glass_pane", 1, 34, " ");
-        itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 35, " ");
+        itemHandler.createItem(inv7, "red_stained_glass_pane", 1, 35, " ");
         itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 36, " ");
         itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 37, " ");
-        itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 38, " ");
-        itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 39, " ");
-        itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 40, " ");
+        itemHandler.createItem(inv7, "red_stained_glass_pane", 1, 38, " ");
+        itemHandler.createItem(inv7, "red_stained_glass_pane", 1, 39, " ");
+        itemHandler.createItem(inv7, "red_stained_glass_pane", 1, 40, " ");
         itemHandler.createItem(inv7, "red_stained_glass_pane", 1, 41, " ");
-        itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 42, " ");
-        itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 43, " ");
-        itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 44, " ");
+        itemHandler.createItem(inv7, "red_stained_glass_pane", 1, 42, " ");
+        itemHandler.createItem(inv7, "red_stained_glass_pane", 1, 43, " ");
+        itemHandler.createItem(inv7, "red_stained_glass_pane", 1, 44, " ");
         itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 45, " ");
         itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 46, " ");
         itemHandler.createItem(inv7, "gray_stained_glass_pane", 1, 47, " ");
@@ -2453,9 +2453,8 @@ public class GuiHandler {
                         p.showTitle(
 
                                 Title.title(
-                                        MiniMessage.miniMessage()
-                                                .deserialize("<gold>[</gold><red>Bölge Alınmış!</red><gold>]</gold>"),
-                                        MiniMessage.miniMessage().deserialize("")));
+                                        MiniMessage.miniMessage().deserialize("<gold>[</gold><red>Bölge Alınmış!</red><gold>]</gold>"),
+                                         MiniMessage.miniMessage().deserialize("")));
                     } else {
                         File myfile = new File(plugin.getDataFolder().getAbsolutePath() + "/house.schem");
                         ClipboardFormat format = ClipboardFormats.findByFile(myfile);
@@ -2479,9 +2478,8 @@ public class GuiHandler {
                         p.showTitle(
 
                                 Title.title(
-                                        MiniMessage.miniMessage()
-                                                .deserialize("<gold>[</gold><green>Bölge Artık Senin!</green><gold>]</gold>"),
-                                        MiniMessage.miniMessage().deserialize("")));
+                                        MiniMessage.miniMessage().deserialize("<gold>[</gold><green>Bölge Artık Senin!</green><gold>]</gold>"),
+                                         MiniMessage.miniMessage().deserialize("")));
 
                     }
                 } else {
@@ -3140,7 +3138,7 @@ public class GuiHandler {
                 p.closeInventory();
                 p.showTitle(
 
-                        Title.title(MiniMessage.miniMessage().deserialize("<red>Nitelikler</red>"),
+                        Title.title( MiniMessage.miniMessage().deserialize("<red>Nitelikler</red>"),
                                 MiniMessage.miniMessage().deserialize("<gray>Sıfırlandı!</gray>")));
                 stats.setNP(p.getUniqueId(), stats.getharcananNP(p.getUniqueId()) - 3);
                 stats.setharcananNP(p.getUniqueId(), -stats.getharcananNP(p.getUniqueId()));
@@ -4955,9 +4953,8 @@ public class GuiHandler {
             p.showTitle(
 
                     Title.title(
-                            MiniMessage.miniMessage()
-                                    .deserialize("<gold>[</gold><yellow>Meslek Seçildi!</yellow><gold>]</gold>"),
-                            MiniMessage.miniMessage().deserialize("<gray>" + meslek + "</gray>")));
+                            MiniMessage.miniMessage().deserialize("<gold>[</gold><yellow>Meslek Seçildi!</yellow><gold>]</gold>"),
+                             MiniMessage.miniMessage().deserialize("<gray>" + meslek + "</gray>")));
             job.remove(p.getUniqueId());
         } else {
             job.put(p.getUniqueId(), "job");

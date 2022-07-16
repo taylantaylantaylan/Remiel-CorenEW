@@ -205,8 +205,8 @@ public class InventoryClickListener implements Listener {
             if (clicked == event.getWhoClicked().getInventory()) {
 
                 ItemStack clickedOn = event.getCurrentItem();
-                if (clickedOn != null && event.getCurrentItem().hasItemMeta() && event.getCurrentItem().getItemMeta().displayName().contains(MiniMessage.miniMessage()
-                        .deserialize("Oyuncu El Kitabı"))) {
+                if (clickedOn != null && event.getCurrentItem().hasItemMeta() && event.getCurrentItem().getItemMeta().displayName().contains(MiniMessage.builder().build().deserialize("Oyuncu El Kitabı")
+                )) {
                     event.setCancelled(true);
                 }
             }
@@ -438,7 +438,7 @@ public class InventoryClickListener implements Listener {
             if (event.getCurrentItem().getItemMeta().getPersistentDataContainer().has(star,
                     PersistentDataType.STRING)) {
                 event.setCancelled(true);
-                if(event.getWhoClicked().getItemOnCursor().hasItemMeta() && event.getWhoClicked().getItemOnCursor().getItemMeta().getPersistentDataContainer() != null && event.getWhoClicked().getItemOnCursor().getItemMeta().getPersistentDataContainer().has(star)) {
+                if (event.getWhoClicked().getItemOnCursor().hasItemMeta() && event.getWhoClicked().getItemOnCursor().getItemMeta().getPersistentDataContainer() != null && event.getWhoClicked().getItemOnCursor().getItemMeta().getPersistentDataContainer().has(star)) {
 
                     player.setItemOnCursor(null);
                 }
@@ -446,6 +446,7 @@ public class InventoryClickListener implements Listener {
             }
         }
     }
+
     @EventHandler
     public void Claimbilgi(InventoryClickEvent event) {
         String title = event.getView().getTitle();
@@ -1063,79 +1064,799 @@ public class InventoryClickListener implements Listener {
                             || MaterialTags.BOOTS.isTagged(item) || MaterialTags.SHOVELS.isTagged(item)
                             || item.getType() == Material.FISHING_ROD || item.getType() == Material.BOOK
                             && (item.getItemMeta().getLore().contains(Painter.paint("&8<Boş Büyü Bölmesi>")))) {
-                        int enchLevel = plugin.getConfig().getInt("Levels." + player.getUniqueId() + ".EnchLevel");
-                        if (event.getView().getItem(31) == null) {
+                        int enchLevel = stats.getEnchLevel(player.getUniqueId());
+                        if (event.getView().getItem(22) == null) {
                             int amount = item.getAmount();
                             item2.setAmount(1);
                             player.getInventory().removeItem(item2);
-                            event.getView().setItem(31, item2);
+                            event.getView().setItem(22, item2);
                         }
+                        if (MaterialTags.SWORDS.isTagged(item)) {
 
-                        ItemStack buyu1 = new ItemStack(Material.EXPERIENCE_BOTTLE);
-                        ItemMeta meta1 = buyu1.getItemMeta();
-                        List<String> lore = new ArrayList<>();
-                        meta1.setDisplayName(Painter.paint("&e5. Seviye Büyü"));
-                        lore.add(Painter.paint("&aUstalık 1"));
-                        lore.add("");
-                        lore.add(Painter.paint("&7???"));
-                        lore.add("");
-                        lore.add(Painter.paint(" &7Gerekli Malzemeler:"));
-                        lore.add(Painter.paint(" &7- &f1 Büyü Parşömeni"));
-                        lore.add(Painter.paint(" &7- &f5 Seviye"));
-                        lore.add(Painter.paint(""));
-                        lore.add(Painter.paint("&7Büyüyü ekipmanına basmak için"));
-                        lore.add(Painter.paint("&e&lSağ Tıkla."));
-                        meta1.setLore(lore);
-                        buyu1.setItemMeta(meta1);
-                        event.getView().setItem(29, buyu1);
-                        lore.clear();
-                        ItemStack buyu2 = new ItemStack(Material.EXPERIENCE_BOTTLE);
-                        ItemMeta meta2 = buyu2.getItemMeta();
-                        List<String> lore2 = new ArrayList<>();
-                        meta2.setDisplayName(Painter.paint("&d10. Seviye Büyü"));
-                        lore2.add(Painter.paint("&aUstalık 5"));
-                        lore2.add("");
-                        lore2.add(Painter.paint("&7???"));
-                        lore2.add("");
-                        lore2.add(Painter.paint(" &7Gerekli Malzemeler:"));
-                        lore2.add(Painter.paint(" &7- &f2 Büyü Parşömeni"));
-                        lore2.add(Painter.paint(" &7- &f10 Seviye"));
-                        lore2.add(Painter.paint(""));
-                        if (enchLevel >= 5) {
-                            lore2.add(Painter.paint("&7Büyüyü ekipmanına basmak için"));
-                            lore2.add(Painter.paint("&e&lSağ Tıkla."));
-                        } else {
-                            lore2.add(
-                                    Painter.paint("&cBüyücülükteki ustalığınız bu büyüyü basmak için yeterli değil!"));
-                        }
-                        meta2.setLore(lore2);
-                        buyu2.setItemMeta(meta2);
-                        event.getView().setItem(40, buyu2);
-                        lore.clear();
-                        ItemStack buyu3 = new ItemStack(Material.EXPERIENCE_BOTTLE);
-                        ItemMeta meta3 = buyu3.getItemMeta();
-                        List<String> lore3 = new ArrayList<>();
-                        meta3.setDisplayName(Painter.paint("&c15. Seviye Büyü"));
-                        lore3.add(Painter.paint("&aUstalık 10"));
-                        lore3.add("");
-                        lore3.add(Painter.paint("&7???"));
-                        lore3.add("");
-                        lore3.add(Painter.paint(" &7Gerekli Malzemeler:"));
-                        lore3.add(Painter.paint(" &7- &f3 Büyü Parşömeni"));
-                        lore3.add(Painter.paint(" &7- &f15 Seviye"));
-                        lore3.add(Painter.paint(""));
-                        if (enchLevel >= 10) {
-                            lore3.add(Painter.paint("&7Büyüyü ekipmanına basmak için"));
-                            lore3.add(Painter.paint("&e&lSağ Tıkla."));
-                        } else {
-                            lore3.add(
-                                    Painter.paint("&cBüyücülükteki ustalığınız bu büyüyü basmak için yeterli değil!"));
-                        }
-                        meta3.setLore(lore3);
-                        buyu3.setItemMeta(meta3);
-                        event.getView().setItem(33, buyu3);
-                        lore.clear();
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Eklembacaklılar'ın Kıyameti", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7eklembacaklılara ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Keskinlik", "&aUstalık 1", "", " &7Büyüyü barındıran ekipmanın saldırı hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Darbe", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7ölü yaratıklara daha fazla hasar verir", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 33, "&6Alevden Çehre", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar kurbanı yakar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6Savurma", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan", " &7saldırılar rakibi uzaklara savurur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6Hünerli Avcı", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın", " &7kritik hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
 
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6Zehirli Kesik", "&aUstalık 2", "", " &7Büyüyü barındıran ekipman ile yapılan", " &7saldırılar kurbanı zehirler.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6Kırılmazlık", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın dayanıklılığı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6Tecrübe Desteği", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile avlanan", " &7yaratıklardan ekstra tecrübe puanı düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6Öfke", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7kullanıcıyı öfkelendirir. Kullanıcı öfkesi", " &7arttıkça ekstra hasar ve saldırı hızı kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6Süpürücü Kenar", "&aUstalık 3", "", " &6Büyüyü barındıran ekipman ile yapılan saldırılar", " &7kurbanın etrafındaki birimlere de hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6Ganimet", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile öldürülen", " &7kurbandan ekstra ganimet düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6Sömürü", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile yapılan", " &7saldırılar kurbandan can çalar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6İnfaz", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7canı az olan kurbanları infaz eder.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "arrow", 1, 50, "&aSonraki Sayfa", "&7Sonraki sayfaya geçmek için &e&lSağ Tıkla.");
+                        } else if (item.getType() == Material.BOW) {
+
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Güç", "&aUstalık 1", "", " &7Büyüyü barındıran yay ile yapılan saldırılar ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Yumruk", "&aUstalık 1", "", " &7Büyüyü barındıran yay ile vurulan rakipler savrulur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Alev", "&aUstalık 1", "", " &7Büyüyü barındıran yay ile yapılan saldırılar rakibi yakar", " &7", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 33, "&6Delme", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar rakipleri deler.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6Tam İsabet", "&aUstalık 1", "", " &7Büyüyü barındıran yay ile rakinin kafasına", " &7yapılan saldırılar ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6Hünerli Avcı", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın", " &7kritik hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6Keskin Görüş", "&aUstalık 2", "", " &7Büyüyü barındıran yay ile fırlatılan", " &7okun katettiği mesafeye göre hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6Kırılmazlık", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın dayanıklılığı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6Tecrübe Desteği", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile avlanan", " &7yaratıklardan ekstra tecrübe puanı düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6Aşırı Yükleme", "&aUstalık 3", "", " &7Büyüyü barındıran yay ile yapılan ağır", " &7yüklü atışlar rakibi sersemletir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6Yıldırım Oku", "&aUstalık 3", "", " &6Büyüyü barındıran yay ile fırlatılan ok", " &7rakipler arasında seker ve hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6Şişleme", "&aUstalık 4", "", " &7Büyüyü barındıran yay ile yapılan saldırılar", " &7su yaratıklarına ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6Nişangah", "&aUstalık 4", "", " &7Büyüyü barındıran yay ile yapılan saldırılar", " &7saldırılar oyuncunun kritik hasarını arttırır.", "&7Kullanıcı saldırıya devam etmez ise", "&7bu etki bir süre sonra kaybolur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6Şölen", "&aUstalık 4", "", " &7Yürüdüğünüzde yük biriktirirsiniz. Her 100. yükde", " &7bir vuruş yaparsanız iyileşirsiniz.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "arrow", 1, 50, "&aSonraki Sayfa", "&7Sonraki sayfaya geçmek için &e&lSağ Tıkla.");
+                        } else if (item.getType() == Material.WOODEN_AXE) {
+
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Eklembacaklılar'ın Kıyameti", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7eklembacaklılara ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Keskinlik", "&aUstalık 1", "", " &7Büyüyü barındıran ekipmanın saldırı hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Darbe", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7ölü yaratıklara daha fazla hasar verir", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 33, "&6Verimlilik", "&aUstalık 1", "", " &7Büyüyü barındıran ekipmanın kazma hızı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6Ustalık Desteği", "&aUstalık 1", "", " &7Büyüyü barındıran baltanın verdiği &6Ustalık EXP'si &7artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6Hünerli Avcı", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın", " &7kritik hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6Karşılama", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanla bir saldırıyı", " &7karşılayabilirsiniz. Bir saldırıyı karşılamak", "&7rakibe hasar verir ve onu savurur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6Kırılmazlık", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın dayanıklılığı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6Tecrübe Desteği", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile avlanan", " &7yaratıklardan ekstra tecrübe puanı düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6İlk Vuruş", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile yapılan ilk", " &7vuruş rakibe ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6Yıldırım Lordu", "&aUstalık 3", "", " &6Büyüyü barındıran ekipman ile yapılan", " &7saldırılar kurbana yıldırım çarpar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6Ganimet", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile öldürülen", " &7kurbandan ekstra ganimet düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6Sömürü", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile yapılan", " &7saldırılar kurbandan can çalar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6İnfaz", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7canı az olan kurbanları infaz eder.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "arrow", 1, 50, "&aSonraki Sayfa", "&7Sonraki sayfaya geçmek için &e&lSağ Tıkla.");
+
+
+                        } else if (item.getType() == Material.STICK) {
+
+
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Eklembacaklılar'ın Kıyameti", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7eklembacaklılara ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Keskinlik", "&aUstalık 1", "", " &7Büyüyü barındıran ekipmanın saldırı hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Darbe", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7ölü yaratıklara daha fazla hasar verir", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 33, "&6Çekiş", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar kurbanı kullanıcıya çeker.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6Şişleme", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7su yaratıklarına ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6Hünerli Avcı", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın", " &7kritik hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6Zehirli Kesik", "&aUstalık 2", "", " &7Büyüyü barındıran ekipman ile yapılan", " &7saldırılar kurbanı zehirler.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6Kırılmazlık", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın dayanıklılığı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6Tecrübe Desteği", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile avlanan", " &7yaratıklardan ekstra tecrübe puanı düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6Öfke", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7kullanıcıyı öfkelendirir. Kullanıcı öfkesi", " &7arttıkça ekstra hasar ve saldırı hızı kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6Yara Deşme", "&aUstalık 3", "", " &6Büyüyü barındıran ekipman ile kanayan rakiplere", " &7yapılan saldırılar ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6Ganimet", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile öldürülen", " &7kurbandan ekstra ganimet düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6Sömürü", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile yapılan", " &7saldırılar kurbandan can çalar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6İnfaz", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7canı az olan kurbanları infaz eder.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "arrow", 1, 50, "&aSonraki Sayfa", "&7Sonraki sayfaya geçmek için &e&lSağ Tıkla.");
+                        } else if (item.getType() == Material.SHEARS) {
+
+
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Eklembacaklılar'ın Kıyameti", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7eklembacaklılara ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Keskinlik", "&aUstalık 1", "", " &7Büyüyü barındıran ekipmanın saldırı hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Darbe", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7ölü yaratıklara daha fazla hasar verir", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 33, "&6Akuapunktur Ustası", "&aUstalık 1", "", " &7Büyüyü barındıran hançer ile iğnelemeler rakibi kanatır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6Şişleme", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7su yaratıklarına ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6Hünerli Avcı", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın", " &7kritik hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6Zehirli Kesik", "&aUstalık 2", "", " &7Büyüyü barındıran ekipman ile yapılan", " &7saldırılar kurbanı zehirler.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6Kırılmazlık", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın dayanıklılığı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6Tecrübe Desteği", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile avlanan", " &7yaratıklardan ekstra tecrübe puanı düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6Suikastci Ruhu", "&aUstalık 3", "", " &7Görünmez iken verilen hasarı arttırır.", " &7arttıkça ekstra hasar ve saldırı hızı kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6Yara Deşme", "&aUstalık 3", "", " &6Büyüyü barındıran ekipman ile kanayan rakiplere", " &7yapılan saldırılar ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6Ganimet", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile öldürülen", " &7kurbandan ekstra ganimet düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6Sömürü", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile yapılan", " &7saldırılar kurbandan can çalar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6İnfaz", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7canı az olan kurbanları infaz eder.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "arrow", 1, 50, "&aSonraki Sayfa", "&7Sonraki sayfaya geçmek için &e&lSağ Tıkla.");
+                        } else if (MaterialTags.HELMETS.isTagged(item)) {
+
+
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Koruma", "&aUstalık 1", "", " &7Kullanıcıyı gelen hasarın birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Patlama Koruması", "&aUstalık 1", "", " &7Kullanıcıyı gelen patlama hasarının birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Alev Koruması", "&aUstalık 1", "", " &7Kullanıcıyı gelen alev hasarının birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 33, "&6Büyülü Kaplama", "&aUstalık 1", "", " &7Kullanıcıyı gelen menzilli saldırı hasarının birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6Dikenler", "&aUstalık 1", "", " &7Kullanıcıya gelen hasarın birazını saldırana yansıtır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6Aşırı Büyüme", "&aUstalık 2", "", " &7Kullanıcının can değerini arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6Barbar Gücü", "&aUstalık 2", "", " &7Kullanıcının yakın menzildeki hasarını arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6Kırılmazlık", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın dayanıklılığı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6Keskin Görüş", "&aUstalık 3", "", " &7Kullanıcının uzak menzildeki hasarını arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6Dev Yarma", "&aUstalık 3", "", " &7Can değeri kullanıcıdan büyük olan", " &7rakiplere kullanıcı ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6Solungaç", "&aUstalık 3", "", " &6Kullanıcının su altında daha fazla", " &7oksijen depolayabilmesini sağlar..", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6Dinçleştirme", "&aUstalık 4", "", " &7Kullanıcının doğal can yenilenmesini arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6Potansiyel", "&aUstalık 4", "", " &7Kullanıcı bir iyileştirme etkisi alırsa", " &7etrafındakilere patlama hasarı verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6Sıvışma", "&aUstalık 4", "", " &7Kullanıcı bazı saldırılardan sıvışabilir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "arrow", 1, 50, "&aSonraki Sayfa", "&7Sonraki sayfaya geçmek için &e&lSağ Tıkla.");
+                        } else if (MaterialTags.CHESTPLATES.isTagged(item)) {
+
+
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Koruma", "&aUstalık 1", "", " &7Kullanıcıyı gelen hasarın birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Patlama Koruması", "&aUstalık 1", "", " &7Kullanıcıyı gelen patlama hasarının birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Alev Koruması", "&aUstalık 1", "", " &7Kullanıcıyı gelen alev hasarının birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 33, "&6Büyülü Kaplama", "&aUstalık 1", "", " &7Kullanıcıyı gelen menzilli saldırı hasarının birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6Dikenler", "&aUstalık 1", "", " &7Kullanıcıya gelen hasarın birazını saldırana yansıtır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6Aşırı Büyüme", "&aUstalık 2", "", " &7Kullanıcının can değerini arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6Bağışıklık", "&aUstalık 2", "", " &7Kullanıcı bazı kötü efektlere karşı bağışıklık kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6Kırılmazlık", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın dayanıklılığı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6Obsidyen Kaplama", "&aUstalık 3", "", " &7Kullanıcı ateş direnci kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6Kutsanmış", "&aUstalık 3", "", " &7Kullanıcı savaş dışında iken yenilenme kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6Karşı Saldırı", "&aUstalık 3", "", " &6Kullanıcı aldığı ilk hasarda direnç etkisi kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6Dinçleştirme", "&aUstalık 4", "", " &7Kullanıcının doğal can yenilenmesini arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6İntikam", "&aUstalık 4", "", " &7Kullanıcı ölürse düşük şans ile geri doğar.", " &7ve etrafındakilere hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6Sıvışma", "&aUstalık 4", "", " &7Kullanıcı bazı saldırılardan sıvışabilir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "arrow", 1, 50, "&aSonraki Sayfa", "&7Sonraki sayfaya geçmek için &e&lSağ Tıkla.");
+                        } else if (MaterialTags.LEGGINGS.isTagged(item)) {
+
+
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Koruma", "&aUstalık 1", "", " &7Kullanıcıyı gelen hasarın birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Patlama Koruması", "&aUstalık 1", "", " &7Kullanıcıyı gelen patlama hasarının birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Alev Koruması", "&aUstalık 1", "", " &7Kullanıcıyı gelen alev hasarının birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 33, "&6Büyülü Kaplama", "&aUstalık 1", "", " &7Kullanıcıyı gelen menzilli saldırı hasarının birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6Dikenler", "&aUstalık 1", "", " &7Kullanıcıya gelen hasarın birazını saldırana yansıtır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6Aşırı Büyüme", "&aUstalık 2", "", " &7Kullanıcının can değerini arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6Ruh Koruması", "&aUstalık 2", "", " &7Kullanıcı bazı kötü efektlere karşı bağışıklık kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6Kırılmazlık", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın dayanıklılığı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6Kaplama Darbesi", "&aUstalık 3", "", " &7Kullanıcının aldığı ilk hasar rakiplere", "&7hasar verir ve onları uçurur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6Kutsanmış", "&aUstalık 3", "", " &7Kullanıcı savaş dışında iken yenilenme kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6Karşı Saldırı", "&aUstalık 3", "", " &6Kullanıcı aldığı ilk hasarda direnç etkisi kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6Dinçleştirme", "&aUstalık 4", "", " &7Kullanıcının doğal can yenilenmesini arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6Mutlak Sıfır", "&aUstalık 4", "", " &7Kullanıcı hasar alırsa saldıran.", " &7rakipler yavaşlar ve saldırı hızları düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6Sıvışma", "&aUstalık 4", "", " &7Kullanıcı bazı saldırılardan sıvışabilir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "arrow", 1, 50, "&aSonraki Sayfa", "&7Sonraki sayfaya geçmek için &e&lSağ Tıkla.");
+                        } else if (MaterialTags.BOOTS.isTagged(item)) {
+
+
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Koruma", "&aUstalık 1", "", " &7Kullanıcıyı gelen hasarın birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Patlama Koruması", "&aUstalık 1", "", " &7Kullanıcıyı gelen patlama hasarının birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Alev Koruması", "&aUstalık 1", "", " &7Kullanıcıyı gelen alev hasarının birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 33, "&6Büyülü Kaplama", "&aUstalık 1", "", " &7Kullanıcıyı gelen menzilli saldırı hasarının birazından korur.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6Dikenler", "&aUstalık 1", "", " &7Kullanıcıya gelen hasarın birazını saldırana yansıtır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6Aşırı Büyüme", "&aUstalık 2", "", " &7Kullanıcının can değerini arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6Sihirli Pabuçlar", "&aUstalık 2", "", " &7Kullanıcı ekstra &fÇeviklik &7kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6Kırılmazlık", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın dayanıklılığı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6Statik Yüklenme", "&aUstalık 3", "", " &7Kullanıcının yürürken yük biriktirir. Her 100.", "&7yük rakibe bir yıldırım çarpar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6Dikenli Taban", "&aUstalık 3", "", " &7Kullanıcı savrulma direnci kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6Hafif Düşüş", "&aUstalık 3", "", " &6Kullanıcı daha az düşme hasarı alır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6Dinçleştirme", "&aUstalık 4", "", " &7Kullanıcının doğal can yenilenmesini arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6Sağlam Duruş", "&aUstalık 4", "", " &6Kullanıcı ekstra &eDenge &7kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6Sıvışma", "&aUstalık 4", "", " &7Kullanıcı bazı saldırılardan sıvışabilir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "arrow", 1, 50, "&aSonraki Sayfa", "&7Sonraki sayfaya geçmek için &e&lSağ Tıkla.");
+                        } else if (MaterialTags.PICKAXES.isTagged(item)) {
+
+
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Verimlilik", "&aUstalık 1", "", " &7Büyüyü barındıran ekipmanın kazma hızı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Ustalık Desteği", "&aUstalık 1", "", " &7Büyüyü barındıran kazmanın verdiği &6Ustalık EXP'si &7artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Sıcak Dokunuş", "&aUstalık 1", "", " &7Büyüyü barındıran kazma ile kazılan madenler", "&7kullanıcının envanterine eriyik halde gelir", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 33, "&6Servet", "&aUstalık 1", "", " &7Büyüyü barındıran kazma ile kazılan", "&7ekstra malzeme düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6Dedektör", "&aUstalık 1", "", " &7Kırılan her 64. blokta oyuncuya rastgele bir ganimet verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6Kırılmazlık", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın dayanıklılığı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6Madencinin Lütfu", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın ile kazılan her", "&7her kömür kullanıcıya acele kazandırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "arrow", 1, 50, "&aSonraki Sayfa", "&7Sonraki sayfaya geçmek için &e&lSağ Tıkla.");
+                        }  else if (item.getType() == Material.GOLDEN_AXE) {
+
+
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Verimlilik", "&aUstalık 1", "", " &7Büyüyü barındıran ekipmanın kazma hızı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Ustalık Desteği", "&aUstalık 1", "", " &7Büyüyü barındıran baltanın verdiği &6Ustalık EXP'si &7artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Servet", "&aUstalık 1", "", " &7Büyüyü barındıran kazma ile kazılan", "&7ekstra malzeme düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6Kırılmazlık", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın dayanıklılığı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "arrow", 1, 50, "&aSonraki Sayfa", "&7Sonraki sayfaya geçmek için &e&lSağ Tıkla.");
+                        } else if (item.getType() == Material.WOODEN_HOE) {
+
+
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Eklembacaklılar'ın Kıyameti", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7eklembacaklılara ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Keskinlik", "&aUstalık 1", "", " &7Büyüyü barındıran ekipmanın saldırı hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Darbe", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7ölü yaratıklara daha fazla hasar verir", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 33, "&6Çekiş", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar kurbanı kullanıcıya çeker.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6Şişleme", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7su yaratıklarına ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6Hünerli Avcı", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın", " &7kritik hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6Biçme", "&aUstalık 2", "", " &7Büyüyü barındıran tırpan ile yapılan", " &7alan saldırıları ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6Kırılmazlık", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın dayanıklılığı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6Tecrübe Desteği", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile avlanan", " &7yaratıklardan ekstra tecrübe puanı düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6Öfke", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7kullanıcıyı öfkelendirir. Kullanıcı öfkesi", " &7arttıkça ekstra hasar ve saldırı hızı kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6Ruh Yiyen", "&aUstalık 3", "", " &6Öldürülen bir rakibin ruhunu ekipman ele geçirir.", " &7Her 100 ruhda ekstra hasar artışı yaşanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6Ganimet", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile öldürülen", " &7kurbandan ekstra ganimet düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6Sömürü", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile yapılan", " &7saldırılar kurbandan can çalar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6İnfaz", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7canı az olan kurbanları infaz eder.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "arrow", 1, 50, "&aSonraki Sayfa", "&7Sonraki sayfaya geçmek için &e&lSağ Tıkla.");
+                        } else if (item.getType() == Material.WOODEN_SHOVEL) {
+
+
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Eklembacaklılar'ın Kıyameti", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7eklembacaklılara ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Keskinlik", "&aUstalık 1", "", " &7Büyüyü barındıran ekipmanın saldırı hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Darbe", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7ölü yaratıklara daha fazla hasar verir", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 33, "&6Göçertme", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan sersemletmelerin süresi uzar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6Şişleme", "&aUstalık 1", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7su yaratıklarına ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6Hünerli Avcı", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın", " &7kritik hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6Sersemdöver", "&aUstalık 2", "", " &7Sersemlemiş rakiplere ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6Kırılmazlık", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın dayanıklılığı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6Tecrübe Desteği", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile avlanan", " &7yaratıklardan ekstra tecrübe puanı düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6Deprem", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile yere yapılan saldırılar", " &7bir yeryüzü parçasını havaya fırlatır.","&7Bu parça bir süre sonra yere düşer","&7ve etrafındakilere hasar verir.", " &7arttıkça ekstra hasar ve saldırı hızı kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6Zayıflatma", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7rakibi zayıflatır ve saldırı hızını düşürür.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6Ganimet", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile öldürülen", " &7kurbandan ekstra ganimet düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6Sömürü", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile yapılan", " &7saldırılar kurbandan can çalar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6İnfaz", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7canı az olan kurbanları infaz eder.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "arrow", 1, 50, "&aSonraki Sayfa", "&7Sonraki sayfaya geçmek için &e&lSağ Tıkla.");
+                        } else if (item.getType() == Material.FISHING_ROD) {
+
+
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Denizin Şansı", "&aUstalık 1", "", " &7Büyüyü barındıran olta ile iyi bir","&7yakalama yapma şansını arttırır.", " &7eklembacaklılara ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Ayartma", "&aUstalık 1", "", " &7Büyüyü barındıran oltanın yakalama hızını arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Siftah", "&aUstalık 1", "", " &7Büyüyü barındıran olta kullanıcıya çifte","&7yakalama yapma şansı ekler.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 33, "&6Ustalık Desteği", "&aUstalık 1", "", " &7Büyüyü barındıran oltanın verdiği &6Ustalık EXP'si &7artar.",  "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6Dikenli Kanca", "&aUstalık 1", "", " &7Büyüyü barındıran oltanın verdiği hasarı arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6Hünerli Avcı", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın", " &7kritik hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6Deniz Çöplüğü Avcısı", "&aUstalık 2", "", " &7Kullanıcının denizden balık dışında"," &7diğer şeyleri tutma şansını arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+                            }
+                            if (enchLevel > 1) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6Kırılmazlık", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın dayanıklılığı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 38, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6Tecrübe Desteği", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile avlanan", " &7yaratıklardan ekstra tecrübe puanı düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 39, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6Deprem", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile yere yapılan saldırılar", " &7bir yeryüzü parçasını havaya fırlatır.","&7Bu parça bir süre sonra yere düşer","&7ve etrafındakilere hasar verir.", " &7arttıkça ekstra hasar ve saldırı hızı kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 2) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6Şanslı Kanca", "&aUstalık 3", "", " &7Büyüyü barındıran oltaya yem harcamama olasılığı ekler.", " &7rakibi zayıflatır ve saldırı hızını düşürür.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 41, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6Ganimet", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile öldürülen", " &7kurbandan ekstra ganimet düşer.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 42, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6Sömürü", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile yapılan", " &7saldırılar kurbandan can çalar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 43, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            if (enchLevel > 3) {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6İnfaz", "&aUstalık 4", "", " &7Büyüyü barındıran ekipman ile yapılan saldırılar", " &7canı az olan kurbanları infaz eder.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            } else {
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 44, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 3. seviyeden yüksek olması gerekir.");
+
+                            }
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "arrow", 1, 50, "&aSonraki Sayfa", "&7Sonraki sayfaya geçmek için &e&lSağ Tıkla.");
+                        }
                     }
                 }
             } else {
@@ -1153,17 +1874,41 @@ public class InventoryClickListener implements Listener {
                         if (player.getInventory().firstEmpty() == -1) {
 
                             player.getWorld().dropItemNaturally(player.getLocation(), item);
-                            event.getView().setItem(31, null);
+                            event.getView().setItem(22, null);
+                            event.getView().setItem(28, new ItemStack(Material.RED_STAINED_GLASS_PANE));
                             event.getView().setItem(29, new ItemStack(Material.RED_STAINED_GLASS_PANE));
-                            event.getView().setItem(40, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(30, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(31, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(32, new ItemStack(Material.RED_STAINED_GLASS_PANE));
                             event.getView().setItem(33, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(34, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+
+                            event.getView().setItem(37, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(38, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(39, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(40, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(41, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(42, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(43, new ItemStack(Material.RED_STAINED_GLASS_PANE));
 
                         } else {
                             player.getInventory().addItem(item);
-                            event.getView().setItem(31, null);
+                            event.getView().setItem(22, null);
+                            event.getView().setItem(28, new ItemStack(Material.RED_STAINED_GLASS_PANE));
                             event.getView().setItem(29, new ItemStack(Material.RED_STAINED_GLASS_PANE));
-                            event.getView().setItem(40, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(30, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(31, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(32, new ItemStack(Material.RED_STAINED_GLASS_PANE));
                             event.getView().setItem(33, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(34, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+
+                            event.getView().setItem(37, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(38, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(39, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(40, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(41, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(42, new ItemStack(Material.RED_STAINED_GLASS_PANE));
+                            event.getView().setItem(43, new ItemStack(Material.RED_STAINED_GLASS_PANE));
                         }
                     }
                 }
@@ -1179,13 +1924,13 @@ public class InventoryClickListener implements Listener {
     public void enchclose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
         if (event.getInventory() != null & event.getView().getTitle().equals(guiHandler.inventory_name7)) {
-            if (event.getInventory().getItem(31) != null) {
+            if (event.getInventory().getItem(22) != null) {
                 if (player.getInventory().firstEmpty() == -1) {
-                    ItemStack item = event.getInventory().getItem(31);
+                    ItemStack item = event.getInventory().getItem(22);
                     player.getWorld().dropItemNaturally(player.getLocation(), item);
 
                 } else {
-                    ItemStack item = event.getInventory().getItem(31);
+                    ItemStack item = event.getInventory().getItem(22);
                     player.getInventory().addItem(item);
                 }
             }

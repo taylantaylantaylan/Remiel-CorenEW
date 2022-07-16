@@ -464,7 +464,7 @@ public class ItemHandler {
         PersistentDataContainer container = itemMeta.getPersistentDataContainer();
         container.set(key, PersistentDataType.INTEGER, slotNumber);
         for (int i = 0; i < slotNumber; i++) {
-            Loreknk.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
+            Loreknk.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
         }
 
     }
@@ -489,10 +489,10 @@ public class ItemHandler {
             meta.setDisplayName(Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
             NamespacedKey key = new NamespacedKey(main, "Name");
             container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize(Painter
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize(Painter
                     .paint("<color:#B42C0F><i:false>" + slot + "<color:#E88E28><i:false> Boyutu")));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
 
             container.set(backp, PersistentDataType.STRING, "Yok..");
             container.set(backpslot, PersistentDataType.INTEGER, slot);
@@ -506,9 +506,9 @@ public class ItemHandler {
             lore.clear();
             ItemStack pre = item.clone();
             ItemMeta meta2 = pre.getItemMeta();
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
             meta2.lore(lore);
             pre.setItemMeta(meta2);
             lore.clear();
@@ -560,107 +560,86 @@ public class ItemHandler {
             container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
             int realDamage = defaulthasar - 3;
             if (el) {
-                lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
+                lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
             } else {
-                lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
+                lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
             }
-            lore.add(MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
 
-            lore.add(MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
+            lore.add( MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
                     + defaulthasar + "<color:#E65A26><i:false> Saldırı Hasarı")));
             if (menzil > 0) {
-                lore.add(MiniMessage.miniMessage().deserialize(Painter
+                lore.add( MiniMessage.miniMessage().deserialize(Painter
                         .paint("<color:#B42C0F><i:false>" + menzil + "<color:#E88E28><i:false> Saldırı Menzili")));
             }
             if (knockback.equalsIgnoreCase("Düşük")) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+                lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
                 item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
             } else if (knockback.equalsIgnoreCase("Orta")) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+                lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
                 item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
             } else if (knockback.equalsIgnoreCase("Yüksek")) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+                lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
                 item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
             }
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + atkspeed + "<color:#E88E28><i:false> Saldırı Hızı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + atkspeed + "<color:#E88E28><i:false> Saldırı Hızı"));
 
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
             if (gucdeger > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
             } else if (gucdeger >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
             } else if (gucdeger >= 20) {
-                lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
             } else if (gucdeger >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
             }
             if (kritikhasar > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             } else if (kritikhasar >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             } else if (kritikhasar >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             } else if (kritikhasar >= 20) {
-                lore.add(MiniMessage.miniMessage().deserialize(
+                lore.add( MiniMessage.miniMessage().deserialize(
                         "<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             }
             if (kritsansi > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             } else if (kritsansi >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             } else if (kritsansi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             } else if (kritsansi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             }
             if (hiz > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             } else if (hiz >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             } else if (hiz >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             } else if (hiz >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             }
             if (denge > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
             } else if (denge >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
             } else if (denge >= 20) {
-                lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
             } else if (denge >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
             }
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
             addEnchantSlot(item, tierNumber, lore);
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><italic>*" + "Ağırlık: " + weight + "⦾*"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><italic>*" + "Ağırlık: " + weight + "⦾*"));
             container.set(weightitm, PersistentDataType.INTEGER, weight);
             container.set(hasar, PersistentDataType.INTEGER, defaulthasar);
             container.set(attackspeed, PersistentDataType.INTEGER, atkspeed);
@@ -681,9 +660,9 @@ public class ItemHandler {
             lore.clear();
             ItemStack pre = item.clone();
             ItemMeta meta2 = pre.getItemMeta();
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
             meta2.lore(lore);
             pre.setItemMeta(meta2);
             lore.clear();
@@ -734,107 +713,86 @@ public class ItemHandler {
             container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
             int realDamage = defaulthasar - 3;
             if (el) {
-                lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
+                lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
             } else {
-                lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
+                lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
             }
-            lore.add(MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
 
-            lore.add(MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
+            lore.add( MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
                     + defaulthasar + "<color:#E65A26><i:false> Saldırı Hasarı")));
             if (menzil > 0) {
-                lore.add(MiniMessage.miniMessage().deserialize(Painter
+                lore.add( MiniMessage.miniMessage().deserialize(Painter
                         .paint("<color:#B42C0F><i:false>" + menzil + "<color:#E88E28><i:false> Saldırı Menzili")));
             }
             if (knockback.equalsIgnoreCase("Düşük")) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+                lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
                 item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
             } else if (knockback.equalsIgnoreCase("Orta")) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+                lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
                 item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
             } else if (knockback.equalsIgnoreCase("Yüksek")) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+                lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
                 item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
             }
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + atkspeed + "<color:#E88E28><i:false> Saldırı Hızı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + atkspeed + "<color:#E88E28><i:false> Saldırı Hızı"));
 
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
             if (gucdeger > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
             } else if (gucdeger >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
             } else if (gucdeger >= 20) {
-                lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
             } else if (gucdeger >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
             }
             if (kritikhasar > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             } else if (kritikhasar >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             } else if (kritikhasar >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             } else if (kritikhasar >= 20) {
-                lore.add(MiniMessage.miniMessage().deserialize(
+                lore.add( MiniMessage.miniMessage().deserialize(
                         "<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             }
             if (kritsansi > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             } else if (kritsansi >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             } else if (kritsansi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             } else if (kritsansi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             }
             if (hiz > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             } else if (hiz >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             } else if (hiz >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             } else if (hiz >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             }
             if (denge > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
             } else if (denge >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
             } else if (denge >= 20) {
-                lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
             } else if (denge >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
             }
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
             addEnchantSlot(item, tierNumber, lore);
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><italic>*" + "Ağırlık: " + weight + "⦾*"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><italic>*" + "Ağırlık: " + weight + "⦾*"));
             container.set(weightitm, PersistentDataType.INTEGER, weight);
             container.set(hasar, PersistentDataType.INTEGER, defaulthasar);
             container.set(attackspeed, PersistentDataType.INTEGER, atkspeed);
@@ -852,9 +810,9 @@ public class ItemHandler {
             lore.clear();
             ItemStack pre = item.clone();
             ItemMeta meta2 = pre.getItemMeta();
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
             meta2.lore(lore);
             pre.setItemMeta(meta2);
             lore.clear();
@@ -912,107 +870,86 @@ public class ItemHandler {
             container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
             int realDamage = defaulthasar - 3;
             if (el) {
-                lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
+                lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
             } else {
-                lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
+                lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
             }
-            lore.add(MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
 
-            lore.add(MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
+            lore.add( MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
                     + defaulthasar + "<color:#E65A26><i:false> Saldırı Hasarı")));
             if (menzil > 0) {
-                lore.add(MiniMessage.miniMessage().deserialize(Painter
+                lore.add( MiniMessage.miniMessage().deserialize(Painter
                         .paint("<color:#B42C0F><i:false>" + menzil + "<color:#E88E28><i:false> Saldırı Menzili")));
             }
             if (knockback.equalsIgnoreCase("Düşük")) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+                lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
                 item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
             } else if (knockback.equalsIgnoreCase("Orta")) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+                lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
                 item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
             } else if (knockback.equalsIgnoreCase("Yüksek")) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+                lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
                 item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
             }
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + atkspeed + "<color:#E88E28><i:false> Saldırı Hızı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + atkspeed + "<color:#E88E28><i:false> Saldırı Hızı"));
 
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
             if (gucdeger > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
             } else if (gucdeger >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
             } else if (gucdeger >= 20) {
-                lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
             } else if (gucdeger >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
             }
             if (kritikhasar > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             } else if (kritikhasar >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             } else if (kritikhasar >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             } else if (kritikhasar >= 20) {
-                lore.add(MiniMessage.miniMessage().deserialize(
+                lore.add( MiniMessage.miniMessage().deserialize(
                         "<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             }
             if (kritsansi > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             } else if (kritsansi >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             } else if (kritsansi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             } else if (kritsansi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             }
             if (hiz > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             } else if (hiz >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             } else if (hiz >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             } else if (hiz >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             }
             if (denge > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
             } else if (denge >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
             } else if (denge >= 20) {
-                lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
             } else if (denge >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
             }
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
             addEnchantSlot(item, tierNumber, lore);
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><italic>*" + "Ağırlık: " + weight + "⦾*"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><italic>*" + "Ağırlık: " + weight + "⦾*"));
             container.set(weightitm, PersistentDataType.INTEGER, weight);
             container.set(hasar, PersistentDataType.INTEGER, defaulthasar);
             container.set(attackspeed, PersistentDataType.INTEGER, atkspeed);
@@ -1030,9 +967,9 @@ public class ItemHandler {
             lore.clear();
             ItemStack pre = item.clone();
             ItemMeta meta2 = pre.getItemMeta();
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
             meta2.lore(lore);
             pre.setItemMeta(meta2);
             lore.clear();
@@ -1084,29 +1021,28 @@ public class ItemHandler {
             container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
 
             if (el) {
-                lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
+                lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
             } else {
-                lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
+                lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
             }
-            lore.add(MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
             int realDamage = defaulthasar - 3;
-            lore.add(MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
+            lore.add( MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
                     + defaulthasar + "<color:#E65A26><i:false> Saldırı Hasarı")));
 
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + aletGucu + "<color:#E88E28><i:false> Alet Gücü"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + aletGucu + "<color:#E88E28><i:false> Alet Gücü"));
 
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<color:#A88EFF><i:false><bold>Nitelikler:"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#A88EFF><i:false><bold>Nitelikler:"));
 
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
             addEnchantSlot(item, tierNumber, lore);
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<i>" + type));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i>*" + "Ağırlık: " + weight + "⦾*"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<i>" + type));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i>*" + "Ağırlık: " + weight + "⦾*"));
             NamespacedKey weightitm = new NamespacedKey(main, "weightitm");
             container.set(hasar, PersistentDataType.INTEGER, defaulthasar);
             container.set(aletGuc, PersistentDataType.INTEGER, aletGucu);
@@ -1120,9 +1056,9 @@ public class ItemHandler {
             lore.clear();
             ItemStack pre = item.clone();
             ItemMeta meta2 = pre.getItemMeta();
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
             meta2.lore(lore);
             pre.setItemMeta(meta2);
             lore.clear();
@@ -1175,138 +1111,102 @@ public class ItemHandler {
             NamespacedKey hiclik = new NamespacedKey(main, "hiclikdirenci");
             NamespacedKey durabi = new NamespacedKey(main, "durability");
             container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
-            lore.add(MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
 
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#B42C0F><i:false>" + zırh + "<color:#E65A26><i:false> Zırh"));
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + can + "<color:#E88E28><i:false> Can"));
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#B42C0F><i:false>" + zırh + "<color:#E65A26><i:false> Zırh"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + can + "<color:#E88E28><i:false> Can"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
             if (dayanıklılık > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
             } else if (dayanıklılık >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
             } else if (dayanıklılık >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
             } else if (dayanıklılık >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
             }
             if (gucdeger > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
             } else if (gucdeger >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
             } else if (gucdeger >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
             } else if (gucdeger >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
             }
             if (kritikhasar > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             } else if (kritikhasar >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             } else if (kritikhasar >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             } else if (kritikhasar >= 20) {
-                lore.add(MiniMessage.miniMessage().deserialize(
+                lore.add( MiniMessage.miniMessage().deserialize(
                         "<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             }
             if (kritiksansi > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             } else if (kritiksansi >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             } else if (kritiksansi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             } else if (kritiksansi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             }
             if (hiz > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             } else if (hiz >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             } else if (hiz >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             } else if (hiz >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             }
             if (denge > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
             } else if (denge >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
             } else if (denge >= 20) {
-                lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
             } else if (denge >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
             }
             if (sicakdi > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
             } else if (sicakdi >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
             } else if (sicakdi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
             } else if (sicakdi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
             }
             if (sogukdi > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
             } else if (sogukdi >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
             } else if (sogukdi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
             } else if (sogukdi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
             }
             if (hiclikdi > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
             } else if (hiclikdi >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
             } else if (hiclikdi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
             } else if (hiclikdi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
             }
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
             addEnchantSlot(item, tierNumber, lore);
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<i>" + type));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i>*" + "Ağırlık: " + weight + "⦾*"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<i>" + type));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i>*" + "Ağırlık: " + weight + "⦾*"));
             NamespacedKey weightitm = new NamespacedKey(main, "weightitm");
             container.set(weightitm, PersistentDataType.INTEGER, weight);
             container.set(zırhdeger, PersistentDataType.INTEGER, zırh);
@@ -1330,9 +1230,9 @@ public class ItemHandler {
             lore.clear();
             ItemStack pre = item.clone();
             ItemMeta meta2 = pre.getItemMeta();
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
             meta2.lore(lore);
             pre.setItemMeta(meta2);
             lore.clear();
@@ -1388,138 +1288,102 @@ public class ItemHandler {
             NamespacedKey durabi = new NamespacedKey(main, "durability");
             NamespacedKey hiclik = new NamespacedKey(main, "hiclikdirenci");
             container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
-            lore.add(MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
 
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#B42C0F><i:false>" + zırh + "<color:#E65A26><i:false> Zırh"));
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + can + "<color:#E88E28><i:false> Can"));
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#B42C0F><i:false>" + zırh + "<color:#E65A26><i:false> Zırh"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + can + "<color:#E88E28><i:false> Can"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
             if (dayanıklılık > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
             } else if (dayanıklılık >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
             } else if (dayanıklılık >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
             } else if (dayanıklılık >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
             }
             if (gucdeger > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
             } else if (gucdeger >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
             } else if (gucdeger >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
             } else if (gucdeger >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
             }
             if (kritikhasar > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             } else if (kritikhasar >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             } else if (kritikhasar >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             } else if (kritikhasar >= 20) {
-                lore.add(MiniMessage.miniMessage().deserialize(
+                lore.add( MiniMessage.miniMessage().deserialize(
                         "<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
             }
             if (kritiksansi > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             } else if (kritiksansi >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             } else if (kritiksansi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             } else if (kritiksansi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
             }
             if (hiz > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             } else if (hiz >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             } else if (hiz >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             } else if (hiz >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
             }
             if (denge > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
             } else if (denge >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
             } else if (denge >= 20) {
-                lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
             } else if (denge >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
             }
             if (sicakdi > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
             } else if (sicakdi >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
             } else if (sicakdi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
             } else if (sicakdi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
             }
             if (sogukdi > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
             } else if (sogukdi >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
             } else if (sogukdi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
             } else if (sogukdi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
             }
             if (hiclikdi > 0) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<green><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
             } else if (hiclikdi >= 10) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<yellow><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
             } else if (hiclikdi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
             } else if (hiclikdi >= 20) {
-                lore.add(MiniMessage.miniMessage()
-                        .deserialize("<dark_red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+                lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
             }
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
             addEnchantSlot(item, tierNumber, lore);
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
-            lore.add(MiniMessage.miniMessage().deserialize(""));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<i>" + type));
-            lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i>*" + "Ağırlık: " + weight + "⦾*"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
+            lore.add( MiniMessage.miniMessage().deserialize(""));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<i>" + type));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i>*" + "Ağırlık: " + weight + "⦾*"));
             NamespacedKey weightitm = new NamespacedKey(main, "weightitm");
             container.set(weightitm, PersistentDataType.INTEGER, weight);
             container.set(zırhdeger, PersistentDataType.INTEGER, zırh);
@@ -1542,9 +1406,9 @@ public class ItemHandler {
             lore.clear();
             ItemStack pre = item.clone();
             ItemMeta meta2 = pre.getItemMeta();
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false> ???"));
             meta2.lore(lore);
             pre.setItemMeta(meta2);
             lore.clear();
@@ -1689,135 +1553,103 @@ public class ItemHandler {
         NamespacedKey hiclik = new NamespacedKey(main, "hiclikdirenci");
         NamespacedKey durabi = new NamespacedKey(main, "durability");
         container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
 
-        lore.add(MiniMessage.miniMessage()
-                .deserialize("<color:#B42C0F><i:false>" + zırh + "<color:#E65A26><i:false> Zırh"));
-        lore.add(MiniMessage.miniMessage()
-                .deserialize("<color:#C97515><i:false>" + can + "<color:#E88E28><i:false> Can"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#B42C0F><i:false>" + zırh + "<color:#E65A26><i:false> Zırh"));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + can + "<color:#E88E28><i:false> Can"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
         if (dayanıklılık > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         } else if (dayanıklılık >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         } else if (dayanıklılık >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         } else if (dayanıklılık >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         }
         if (gucdeger > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         } else if (gucdeger >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         }
         if (kritikhasar > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         }
         if (kritiksansi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritiksansi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritiksansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritiksansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         }
         if (hiz > 0) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                     MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         }
         if (denge > 0) {
-            lore.add(MiniMessage.miniMessage().deserialize("<green><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 10) {
-            lore.add(MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+                     MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         }
         if (sicakdi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         } else if (sicakdi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         } else if (sicakdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         } else if (sicakdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         }
         if (sogukdi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         } else if (sogukdi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         } else if (sogukdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         } else if (sogukdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         }
         if (hiclikdi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         } else if (hiclikdi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         } else if (hiclikdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         } else if (hiclikdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         }
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
         addEnchantSlot(item, tierNumber, lore);
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<i>" + type));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i>*" + "Ağırlık: " + weight + "⦾*"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<i>" + type));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i>*" + "Ağırlık: " + weight + "⦾*"));
         NamespacedKey weightitm = new NamespacedKey(main, "weightitm");
         container.set(weightitm, PersistentDataType.INTEGER, weight);
         container.set(zırhdeger, PersistentDataType.INTEGER, zırh);
@@ -1861,140 +1693,107 @@ public class ItemHandler {
         NamespacedKey hiclik = new NamespacedKey(main, "hiclikdirenci");
         NamespacedKey durabi = new NamespacedKey(main, "durability");
         container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
 
-        lore.add(MiniMessage.miniMessage()
-                .deserialize("<color:#B42C0F><i:false>" + zırh + "<color:#E65A26><i:false> Zırh"));
-        lore.add(MiniMessage.miniMessage()
-                .deserialize("<color:#C97515><i:false>" + can + "<color:#E88E28><i:false> Can"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#B42C0F><i:false>" + zırh + "<color:#E65A26><i:false> Zırh"));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + can + "<color:#E88E28><i:false> Can"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
         if (dayanıklılık > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         } else if (dayanıklılık >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         } else if (dayanıklılık >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         } else if (dayanıklılık >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         }
         if (gucdeger > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         } else if (gucdeger >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         }
         if (kritikhasar > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         }
         if (kritiksansi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritiksansi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritiksansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritiksansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         }
         if (hiz > 0) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                     MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         }
         if (denge > 0) {
-            lore.add(MiniMessage.miniMessage().deserialize("<green><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 10) {
-            lore.add(MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+                     MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         }
         if (sicakdi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         } else if (sicakdi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         } else if (sicakdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         } else if (sicakdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         }
         if (sogukdi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         } else if (sogukdi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         } else if (sogukdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         } else if (sogukdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         }
         if (hiclikdi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         } else if (hiclikdi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         } else if (hiclikdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         } else if (hiclikdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         }
-        lore.add(MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
         for (String s : lorestring) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize(s));
+            lore.add( MiniMessage.miniMessage().deserialize(s));
         }
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
         addEnchantSlot(item, tierNumber, lore);
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<i>" + type));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i>*" + "Ağırlık: " + weight + "⦾*"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<i>" + type));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i>*" + "Ağırlık: " + weight + "⦾*"));
         NamespacedKey weightitm = new NamespacedKey(main, "weightitm");
         container.set(weightitm, PersistentDataType.INTEGER, weight);
         container.set(zırhdeger, PersistentDataType.INTEGER, zırh);
@@ -2042,127 +1841,96 @@ public class ItemHandler {
         NamespacedKey hiclik = new NamespacedKey(main, "hiclikdirenci");
         NamespacedKey durabi = new NamespacedKey(main, "durability");
         container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage()
-                .deserialize("<color:#C97515><i:false>" + can + "<color:#E88E28><i:false> Can"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + can + "<color:#E88E28><i:false> Can"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
         if (dayanıklılık > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         } else if (dayanıklılık >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         } else if (dayanıklılık >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         } else if (dayanıklılık >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         }
         if (gucdeger > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         } else if (gucdeger >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         }
         if (kritikhasar > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         }
         if (kritiksansi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritiksansi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritiksansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritiksansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         }
         if (hiz > 0) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                     MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         }
         if (denge > 0) {
-            lore.add(MiniMessage.miniMessage().deserialize("<green><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 10) {
-            lore.add(MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+                     MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         }
         if (sicakdi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         } else if (sicakdi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         } else if (sicakdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         } else if (sicakdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         }
         if (sogukdi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         } else if (sogukdi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         } else if (sogukdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         } else if (sogukdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         }
         if (hiclikdi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         } else if (hiclikdi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         } else if (hiclikdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         } else if (hiclikdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         }
 
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<dark_gray><i>" + type2));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<dark_gray><i>" + type2));
         container.set(speed, PersistentDataType.INTEGER, hiz);
         container.set(attackspeed, PersistentDataType.INTEGER, denge);
         container.set(soguk, PersistentDataType.INTEGER, sogukdi);
@@ -2207,131 +1975,99 @@ public class ItemHandler {
         NamespacedKey hiclik = new NamespacedKey(main, "hiclikdirenci");
         NamespacedKey durabi = new NamespacedKey(main, "durability");
         container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage()
-                .deserialize("<color:#C97515><i:false>" + can + "<color:#E88E28><i:false> Can"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + can + "<color:#E88E28><i:false> Can"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
         if (dayanıklılık > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         } else if (dayanıklılık >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         } else if (dayanıklılık >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         } else if (dayanıklılık >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + dayanıklılık + "<gray><i:false> ⓪ Dayanıklılık"));
         }
         if (gucdeger > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         } else if (gucdeger >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<color:#C97515><i:false> ⚔ Güç"));
         }
         if (kritikhasar > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         }
         if (kritiksansi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritiksansi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritiksansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritiksansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritiksansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         }
         if (hiz > 0) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                     MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         }
         if (denge > 0) {
-            lore.add(MiniMessage.miniMessage().deserialize("<green><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 10) {
-            lore.add(MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
+                     MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + denge + "<yellow><i:false> ❂ Denge"));
         }
         if (sicakdi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         } else if (sicakdi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         } else if (sicakdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         } else if (sicakdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + sicakdi + "<color:#90200C><i:false> 🔥 Sıcak Direnci"));
         }
         if (sogukdi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         } else if (sogukdi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         } else if (sogukdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         } else if (sogukdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + sogukdi + "<color:#0A8E99><i:false> ❆ Soğuk Direnci"));
         }
         if (hiclikdi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         } else if (hiclikdi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         } else if (hiclikdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         } else if (hiclikdi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiclikdi + "<color:#5C1DB1><i:false> ⌘ Hiçlik Direnci"));
         }
-        lore.add(MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
         for (String s : loreString) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize(s));
+            lore.add( MiniMessage.miniMessage().deserialize(s));
         }
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<dark_gray><i>" + type2));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<dark_gray><i>" + type2));
         container.set(speed, PersistentDataType.INTEGER, hiz);
         container.set(attackspeed, PersistentDataType.INTEGER, denge);
         container.set(soguk, PersistentDataType.INTEGER, sogukdi);
@@ -2367,33 +2103,31 @@ public class ItemHandler {
         container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
 
         if (el) {
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
         } else {
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
         }
-        lore.add(MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
         int realDamage = defaulthasar - 3;
-        lore.add(MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
+        lore.add( MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
                 + defaulthasar + "<color:#E65A26><i:false> Saldırı Hasarı")));
 
-        lore.add(MiniMessage.miniMessage()
-                .deserialize("<color:#C97515><i:false>" + aletGucu + "<color:#E88E28><i:false> Alet Gücü"));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + aletGucu + "<color:#E88E28><i:false> Alet Gücü"));
 
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<color:#A88EFF><i:false><bold>Nitelikler:"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#A88EFF><i:false><bold>Nitelikler:"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
         for (String s : loreString) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize(s));
+            lore.add( MiniMessage.miniMessage().deserialize(s));
         }
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
         addEnchantSlot(item, tierNumber, lore);
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<i>" + type));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i>*" + "Ağırlık: " + weight + "⦾*"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<i>" + type));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i>*" + "Ağırlık: " + weight + "⦾*"));
         NamespacedKey weightitm = new NamespacedKey(main, "weightitm");
         container.set(hasar, PersistentDataType.INTEGER, defaulthasar);
         container.set(aletGuc, PersistentDataType.INTEGER, aletGucu);
@@ -2431,100 +2165,86 @@ public class ItemHandler {
         container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
         int realDamage = defaulthasar - 3;
         if (el) {
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
         } else {
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
         }
-        lore.add(MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
 
-        lore.add(MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
+        lore.add( MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
                 + defaulthasar + "<color:#E65A26><i:false> Saldırı Hasarı")));
 
         if (knockback.equalsIgnoreCase("Düşük")) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
             item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
         } else if (knockback.equalsIgnoreCase("Orta")) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
             item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
         } else if (knockback.equalsIgnoreCase("Yüksek")) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
             item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
         }
-        lore.add(MiniMessage.miniMessage()
-                .deserialize("<color:#C97515><i:false>" + atkspeed + "<color:#E88E28><i:false> Saldırı Hızı"));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + atkspeed + "<color:#E88E28><i:false> Saldırı Hızı"));
 
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
         if (gucdeger > 0) {
-            lore.add(MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         } else if (gucdeger >= 10) {
-            lore.add(MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                     MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         }
         if (kritikhasar > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         }
         if (kritsansi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritsansi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritsansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritsansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         }
         if (hiz > 0) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                     MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         }
         if (denge > 0) {
-            lore.add(MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 10) {
-            lore.add(MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                     MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         }
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
         addEnchantSlot(item, tierNumber, lore);
         meta.setCustomModelData(modelnumber);
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><italic>*" + "Ağırlık: " + weight + "⦾*"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><italic>*" + "Ağırlık: " + weight + "⦾*"));
         container.set(weightitm, PersistentDataType.INTEGER, weight);
         container.set(hasar, PersistentDataType.INTEGER, defaulthasar);
         container.set(attackspeed, PersistentDataType.INTEGER, atkspeed);
@@ -2567,99 +2287,85 @@ public class ItemHandler {
         container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
         int realDamage = defaulthasar - 3;
         if (el) {
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
         } else {
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
         }
-        lore.add(MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
 
-        lore.add(MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
+        lore.add( MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
                 + defaulthasar + "<color:#E65A26><i:false> Saldırı Hasarı")));
 
         if (knockback.equalsIgnoreCase("Düşük")) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
             item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
         } else if (knockback.equalsIgnoreCase("Orta")) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
             item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
         } else if (knockback.equalsIgnoreCase("Yüksek")) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
             item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
         }
-        lore.add(MiniMessage.miniMessage()
-                .deserialize("<color:#C97515><i:false>" + atkspeed + "<color:#E88E28><i:false> Saldırı Hızı"));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + atkspeed + "<color:#E88E28><i:false> Saldırı Hızı"));
 
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
         if (gucdeger > 0) {
-            lore.add(MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         } else if (gucdeger >= 10) {
-            lore.add(MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                     MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         }
         if (kritikhasar > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         }
         if (kritsansi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritsansi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritsansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritsansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         }
         if (hiz > 0) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                     MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         }
         if (denge > 0) {
-            lore.add(MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 10) {
-            lore.add(MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                     MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         }
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
         addEnchantSlot(item, tierNumber, lore);
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><italic>*" + "Ağırlık: " + weight + "⦾*"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><italic>*" + "Ağırlık: " + weight + "⦾*"));
         container.set(weightitm, PersistentDataType.INTEGER, weight);
         container.set(hasar, PersistentDataType.INTEGER, defaulthasar);
         container.set(attackspeed, PersistentDataType.INTEGER, atkspeed);
@@ -2702,106 +2408,91 @@ public class ItemHandler {
         container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
         int realDamage = defaulthasar - 3;
         if (el) {
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
         } else {
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
         }
-        lore.add(MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
 
-        lore.add(MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
+        lore.add( MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
                 + defaulthasar + "<color:#E65A26><i:false> Saldırı Hasarı")));
 
         if (knockback.equalsIgnoreCase("Düşük")) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
             item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
         } else if (knockback.equalsIgnoreCase("Orta")) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
             item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
         } else if (knockback.equalsIgnoreCase("Yüksek")) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
             item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
         }
-        lore.add(MiniMessage.miniMessage()
-                .deserialize("<color:#C97515><i:false>" + atkspeed + "<color:#E88E28><i:false> Saldırı Hızı"));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + atkspeed + "<color:#E88E28><i:false> Saldırı Hızı"));
 
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
         if (gucdeger > 0) {
-            lore.add(MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         } else if (gucdeger >= 10) {
-            lore.add(MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                     MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         }
         if (kritikhasar > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         }
         if (kritsansi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritsansi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritsansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritsansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         }
         if (hiz > 0) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                     MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         }
         if (denge > 0) {
-            lore.add(MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 10) {
-            lore.add(MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                     MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         }
 
-        lore.add(MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
         for (String s : loreString) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize(s));
+            lore.add( MiniMessage.miniMessage().deserialize(s));
         }
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
         addEnchantSlot(item, tierNumber, lore);
         meta.setCustomModelData(modelnumber);
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><italic>*" + "Ağırlık: " + weight + "⦾*"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><italic>*" + "Ağırlık: " + weight + "⦾*"));
         container.set(weightitm, PersistentDataType.INTEGER, weight);
         container.set(hasar, PersistentDataType.INTEGER, defaulthasar);
         container.set(attackspeed, PersistentDataType.INTEGER, atkspeed);
@@ -2844,105 +2535,90 @@ public class ItemHandler {
         container.set(key, PersistentDataType.STRING, Painter.paint(name + " &3[&bT" + tierNumber + "&3]"));
         int realDamage = defaulthasar - 3;
         if (el) {
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sağ El)"));
         } else {
-            lore.add(MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
+            lore.add( MiniMessage.miniMessage().deserialize("<gray><i:false>(Sol El)"));
         }
-        lore.add(MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
 
-        lore.add(MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
+        lore.add( MiniMessage.miniMessage().deserialize(Painter.paint("<color:#B42C0F><i:false>" + realDamage + "-"
                 + defaulthasar + "<color:#E65A26><i:false> Saldırı Hasarı")));
 
         if (knockback.equalsIgnoreCase("Düşük")) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
             item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
         } else if (knockback.equalsIgnoreCase("Orta")) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
             item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
         } else if (knockback.equalsIgnoreCase("Yüksek")) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
+            lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + knockback + "<color:#E88E28><i:false> Savurma"));
             item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
         }
-        lore.add(MiniMessage.miniMessage()
-                .deserialize("<color:#C97515><i:false>" + atkspeed + "<color:#E88E28><i:false> Saldırı Hızı"));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#C97515><i:false>" + atkspeed + "<color:#E88E28><i:false> Saldırı Hızı"));
 
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<color:#A88EFF><bold><i:false>Nitelikler:"));
         if (gucdeger > 0) {
-            lore.add(MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         } else if (gucdeger >= 10) {
-            lore.add(MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         } else if (gucdeger >= 20) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
+                     MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + gucdeger + "<red><i:false> ⚔ Güç"));
         }
         if (kritikhasar > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         } else if (kritikhasar >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritikhasar + "<color:#434FDF><i:false> ※ Kritik Hasarı"));
         }
         if (kritsansi > 0) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<green><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritsansi >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritsansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         } else if (kritsansi >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + kritsansi + "<dark_aqua><i:false> ❈ Kritik Şansı"));
         }
         if (hiz > 0) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+                     MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 10) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         } else if (hiz >= 20) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
+            lore.add( MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<white><i:false> 🌊 Çeviklik"));
         }
         if (denge > 0) {
-            lore.add(MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<green><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 10) {
-            lore.add(MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<yellow><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
-            lore.add(MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+            lore.add( MiniMessage.miniMessage().deserialize("<red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         } else if (denge >= 20) {
             lore.add(
-                    MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
+                     MiniMessage.miniMessage().deserialize("<dark_red><i:false> +" + hiz + "<yellow><i:false> ❂ Denge"));
         }
 
-        lore.add(MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
         for (String s : loreString) {
-            lore.add(MiniMessage.miniMessage()
-                    .deserialize(s));
+            lore.add( MiniMessage.miniMessage().deserialize(s));
         }
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false><Boş Büyü Bölmesi>"));
         addEnchantSlot(item, tierNumber, lore);
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
-        lore.add(MiniMessage.miniMessage().deserialize(""));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
-        lore.add(MiniMessage.miniMessage().deserialize("<dark_gray><italic>*" + "Ağırlık: " + weight + "⦾*"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<gray><i>﴾Efsun Bölmeleri Açılmamış!﴿"));
+        lore.add( MiniMessage.miniMessage().deserialize(""));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ekipman Tipi: " + "<italic>" + type));
+        lore.add( MiniMessage.miniMessage().deserialize("<dark_gray><italic>*" + "Ağırlık: " + weight + "⦾*"));
         container.set(weightitm, PersistentDataType.INTEGER, weight);
         container.set(hasar, PersistentDataType.INTEGER, defaulthasar);
         container.set(attackspeed, PersistentDataType.INTEGER, atkspeed);
@@ -3145,8 +2821,7 @@ public class ItemHandler {
     public void createOakWood() {
         ItemStack stick = new ItemStack(Material.OAK_LOG);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<color:#4f3c24><i:false>Meşe Odunu <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<color:#4f3c24><i:false>Meşe Odunu <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         oakwood = stick;
         itemStackMap.put("oakwood", stick);
@@ -3155,8 +2830,7 @@ public class ItemHandler {
     public void createBirchWood() {
         ItemStack stick = new ItemStack(Material.BIRCH_LOG);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName(MiniMessage.miniMessage()
-                .deserialize("<gray><i:false>Huş Odunu <dark_aqua>[<aqua>T1<dark_aqua>]"));
+        meta.displayName( MiniMessage.miniMessage().deserialize("<gray><i:false>Huş Odunu <dark_aqua>[<aqua>T1<dark_aqua>]"));
         stick.setItemMeta(meta);
         birchwood = stick;
         itemStackMap.put("birchwood", stick);
@@ -3165,8 +2839,7 @@ public class ItemHandler {
     public void createStone() {
         ItemStack stick = new ItemStack(Material.STONE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName(MiniMessage.miniMessage()
-                .deserialize("<gray><i:false>Taş <dark_aqua>[<aqua>T1<dark_aqua>]"));
+        meta.displayName( MiniMessage.miniMessage().deserialize("<gray><i:false>Taş <dark_aqua>[<aqua>T1<dark_aqua>]"));
         stick.setItemMeta(meta);
         stone = stick;
         itemStackMap.put("stone", stick);
@@ -3175,8 +2848,7 @@ public class ItemHandler {
     public void createCobblestone() {
         ItemStack stick = new ItemStack(Material.COBBLESTONE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName(MiniMessage.miniMessage()
-                .deserialize("<gray><i:false>Kırıktaş <dark_aqua>[<aqua>T1<dark_aqua>]"));
+        meta.displayName( MiniMessage.miniMessage().deserialize("<gray><i:false>Kırıktaş <dark_aqua>[<aqua>T1<dark_aqua>]"));
         stick.setItemMeta(meta);
         cobblestone = stick;
         itemStackMap.put("cobblestone", stick);
@@ -3185,8 +2857,7 @@ public class ItemHandler {
     public void createDarkOakWood() {
         ItemStack stick = new ItemStack(Material.DARK_OAK_LOG);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<color:#382d1e><i:false>Kara Meşe Odunu <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<color:#382d1e><i:false>Kara Meşe Odunu <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         darkoakwood = stick;
         itemStackMap.put("darkoakwood", stick);
@@ -3195,8 +2866,7 @@ public class ItemHandler {
     public void createOldOakWood() {
         ItemStack stick = new ItemStack(Material.DARK_OAK_LOG);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<color:#382d1e><i:false>Yaşlı Meşe Odunu <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<color:#382d1e><i:false>Yaşlı Meşe Odunu <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         oldoakwood = stick;
         itemStackMap.put("oldoakwood", stick);
@@ -3205,8 +2875,7 @@ public class ItemHandler {
     public void createSpruceWood() {
         ItemStack stick = new ItemStack(Material.SPRUCE_LOG);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<color:#241c13><i:false>Ladin Odunu <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<color:#241c13><i:false>Ladin Odunu <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         sprucewood = stick;
         itemStackMap.put("sprucewood", stick);
@@ -3215,8 +2884,7 @@ public class ItemHandler {
     public void createHeavyWood() {
         ItemStack stick = new ItemStack(Material.BASALT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<dark_gray><i:false>Ağır Odun <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ağır Odun <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         heavywood = stick;
         itemStackMap.put("heavywood", stick);
@@ -3225,8 +2893,7 @@ public class ItemHandler {
     public void createAcaciaWood() {
         ItemStack stick = new ItemStack(Material.ACACIA_LOG);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Akasya Odunu <dark_aqua>[<aqua>T4<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Akasya Odunu <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         acaciawood = stick;
         itemStackMap.put("acaciawood", stick);
@@ -3235,8 +2902,7 @@ public class ItemHandler {
     public void createKozWood() {
         ItemStack stick = new ItemStack(Material.DARK_OAK_LOG);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Körükalev Odunu <dark_aqua>[<aqua>T5<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Körükalev Odunu <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         kozwood = stick;
         itemStackMap.put("kozwood", stick);
@@ -3245,8 +2911,7 @@ public class ItemHandler {
     public void createGodWood() {
         ItemStack stick = new ItemStack(Material.JUNGLE_LOG);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<dark_red><i:false>İlah Söğüt Odunu <dark_aqua>[<aqua>T6<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<dark_red><i:false>İlah Söğüt Odunu <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         godwood = stick;
         itemStackMap.put("godwood", stick);
@@ -3255,8 +2920,7 @@ public class ItemHandler {
     public void createOakPlanks() {
         ItemStack stick = new ItemStack(Material.OAK_PLANKS);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<color:#4f3c24><i:false>Meşe Tahtası <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<color:#4f3c24><i:false>Meşe Tahtası <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         oakplanks = stick;
 
@@ -3270,8 +2934,7 @@ public class ItemHandler {
     public void createWoofTeeth() {
         ItemStack stick = new ItemStack(Material.GHAST_TEAR);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Kurt Dişi <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Kurt Dişi <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         wolfteeth = stick;
         itemStackMap.put("wolfteeth", stick);
@@ -3282,8 +2945,7 @@ public class ItemHandler {
     public void createWool() {
         ItemStack stick = new ItemStack(Material.WHITE_WOOL);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Yün <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Yün <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         wool = stick;
         itemStackMap.put("wool", stick);
@@ -3294,8 +2956,7 @@ public class ItemHandler {
     public void createBirchPlanks() {
         ItemStack stick = new ItemStack(Material.BIRCH_PLANKS);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gray><i:false>Huş Tahtası <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gray><i:false>Huş Tahtası <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         birchplanks = stick;
         itemStackMap.put("birchplanks", stick);
@@ -3305,8 +2966,7 @@ public class ItemHandler {
     public void createDarkOakPlanks() {
         ItemStack stick = new ItemStack(Material.DARK_OAK_PLANKS);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<color:#382d1e><i:false>Kara Meşe Tahtası <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<color:#382d1e><i:false>Kara Meşe Tahtası <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         darkoakplanks = stick;
         itemStackMap.put("darkoakplanks", stick);
@@ -3315,8 +2975,7 @@ public class ItemHandler {
     public void createOldOakPlanks() {
         ItemStack stick = new ItemStack(Material.DARK_OAK_PLANKS);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<color:#382d1e><i:false>Yaşlı Meşe Tahtası <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<color:#382d1e><i:false>Yaşlı Meşe Tahtası <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         oldoakplanks = stick;
         itemStackMap.put("oldoakplanks", stick);
@@ -3326,8 +2985,7 @@ public class ItemHandler {
         ItemStack stick = new ItemStack(Material.ENDER_PEARL);
         ItemMeta meta = stick.getItemMeta();
 
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<dark_aqua><i:false>Parlak İnci <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<dark_aqua><i:false>Parlak İnci <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         shinyenderpearl = stick;
         itemStackMap.put("shinyenderpearl", stick);
@@ -3337,8 +2995,7 @@ public class ItemHandler {
         ItemStack stick = new ItemStack(Material.ENDER_PEARL);
         ItemMeta meta = stick.getItemMeta();
 
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<aqua><i:false>Ender İncisi <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<aqua><i:false>Ender İncisi <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         enderpearl = stick;
         itemStackMap.put("pearl", stick);
@@ -3348,8 +3005,7 @@ public class ItemHandler {
         ItemStack stick = new ItemStack(Material.FEATHER);
         ItemMeta meta = stick.getItemMeta();
 
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Tüy <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Tüy <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         feather = stick;
         itemStackMap.put("feather", stick);
@@ -3359,8 +3015,7 @@ public class ItemHandler {
         ItemStack stick = new ItemStack(Material.ROTTEN_FLESH);
         ItemMeta meta = stick.getItemMeta();
 
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Çürük Et <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Çürük Et <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rotten = stick;
         itemStackMap.put("rottenflesh", stick);
@@ -3370,8 +3025,7 @@ public class ItemHandler {
         ItemStack stick = new ItemStack(Material.BONE);
         ItemMeta meta = stick.getItemMeta();
 
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<color:#241c13><i:false>Solmuş Kemik <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<color:#241c13><i:false>Solmuş Kemik <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         blackbone = stick;
         itemStackMap.put("blackbone", stick);
@@ -3381,8 +3035,7 @@ public class ItemHandler {
         ItemStack stick = new ItemStack(Material.BONE);
         ItemMeta meta = stick.getItemMeta();
 
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Kemik <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Kemik <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         bone = stick;
         itemStackMap.put("bone", stick);
@@ -3392,8 +3045,7 @@ public class ItemHandler {
         ItemStack stick = new ItemStack(Material.SUGAR);
         ItemMeta meta = stick.getItemMeta();
 
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Tuz <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Tuz <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         salt = stick;
         itemStackMap.put("salt", stick);
@@ -3403,8 +3055,7 @@ public class ItemHandler {
         ItemStack stick = new ItemStack(Material.SPRUCE_PLANKS);
         ItemMeta meta = stick.getItemMeta();
 
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<color:#241c13><i:false>Ladin Tahtası <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<color:#241c13><i:false>Ladin Tahtası <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         spruceplanks = stick;
         itemStackMap.put("spruceplanks", stick);
@@ -3413,8 +3064,7 @@ public class ItemHandler {
     public void createHeavyPlanks() {
         ItemStack stick = new ItemStack(Material.POLISHED_BASALT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<dark_gray><i:false>Ağır Tahta <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ağır Tahta <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         heavyplanks = stick;
 
@@ -3427,8 +3077,7 @@ public class ItemHandler {
     public void createAcaciaPlanks() {
         ItemStack stick = new ItemStack(Material.ACACIA_PLANKS);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Akasya Tathası <dark_aqua>[<aqua>T4<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Akasya Tathası <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         acaciaplanks = stick;
         itemStackMap.put("acaciaplanks", stick);
@@ -3437,8 +3086,7 @@ public class ItemHandler {
     public void createBlackDust() {
         ItemStack stick = new ItemStack(Material.INK_SAC);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Kara Toz <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Kara Toz <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         blackdust = stick;
         itemStackMap.put("blackdust", stick);
@@ -3447,8 +3095,7 @@ public class ItemHandler {
     public void createKozPlanks() {
         ItemStack stick = new ItemStack(Material.DARK_OAK_PLANKS);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Körükalev Tahtası <dark_aqua>[<aqua>T5<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Körükalev Tahtası <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         kozplanks = stick;
         itemStackMap.put("kozplanks", stick);
@@ -3457,8 +3104,7 @@ public class ItemHandler {
     public void createGodPlanks() {
         ItemStack stick = new ItemStack(Material.JUNGLE_PLANKS);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<dark_red><i:false>İlah Söğüt Tahtası <dark_aqua>[<aqua>T6<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<dark_red><i:false>İlah Söğüt Tahtası <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         godplanks = stick;
         itemStackMap.put("godplanks", stick);
@@ -3467,8 +3113,7 @@ public class ItemHandler {
     public void createOakCubuk() {
         ItemStack stick = new ItemStack(Material.STICK);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<color:#4f3c24><i:false>Meşe Çubuk <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<color:#4f3c24><i:false>Meşe Çubuk <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         oakstick = stick;
 
@@ -3482,8 +3127,7 @@ public class ItemHandler {
     public void createBirchCubuk() {
         ItemStack stick = new ItemStack(Material.STICK);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gray><i:false>Huş Çubuk <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gray><i:false>Huş Çubuk <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         birchstick = stick;
         itemStackMap.put("birchstick", stick);
@@ -3492,8 +3136,7 @@ public class ItemHandler {
     public void createDarkOakCubuk() {
         ItemStack stick = new ItemStack(Material.STICK);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<color:#382d1e><i:false>Kara Meşe Çubuk <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<color:#382d1e><i:false>Kara Meşe Çubuk <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         darkoakstick = stick;
         itemStackMap.put("darkoakstick", stick);
@@ -3502,8 +3145,7 @@ public class ItemHandler {
     public void createArrow() {
         ItemStack stick = new ItemStack(Material.ARROW);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<color:#382d1e><i:false>Ok <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<color:#382d1e><i:false>Ok <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         arrow = stick;
         itemStackMap.put("arrow", stick);
@@ -3512,8 +3154,7 @@ public class ItemHandler {
     public void createOldOakCubuk() {
         ItemStack stick = new ItemStack(Material.STICK);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<color:#382d1e><i:false>Yaşlı Meşe Çubuk <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<color:#382d1e><i:false>Yaşlı Meşe Çubuk <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         oldoakstick = stick;
         itemStackMap.put("oldoakstick", stick);
@@ -3522,8 +3163,7 @@ public class ItemHandler {
     public void createRawCod() {
         ItemStack stick = new ItemStack(Material.COD);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Morina <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Morina <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rawcod = stick;
         itemStackMap.put("rawcod", stick);
@@ -3532,8 +3172,7 @@ public class ItemHandler {
     public void createCookedSalmon() {
         ItemStack stick = new ItemStack(Material.COOKED_SALMON);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Pişmiş Somon <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Pişmiş Somon <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         cookedsalmon = stick;
         itemStackMap.put("cookedsalmon", stick);
@@ -3542,8 +3181,7 @@ public class ItemHandler {
     public void createRawSalmon() {
         ItemStack stick = new ItemStack(Material.SALMON);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Somon <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Somon <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rawsalmon = stick;
         itemStackMap.put("rawsalmon", stick);
@@ -3552,8 +3190,7 @@ public class ItemHandler {
     public void createSpruceCubuk() {
         ItemStack stick = new ItemStack(Material.STICK);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<color:#241c13><i:false>Ladin Çubuk <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<color:#241c13><i:false>Ladin Çubuk <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         sprucestick = stick;
         itemStackMap.put("sprucecubuk", stick);
@@ -3562,8 +3199,7 @@ public class ItemHandler {
     public void createHeavyCubuk() {
         ItemStack stick = new ItemStack(Material.STICK);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<dark_gray><i:false>Ağır Çubuk <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ağır Çubuk <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         heavystick = stick;
         itemStackMap.put("heavycubuk", stick);
@@ -3572,8 +3208,7 @@ public class ItemHandler {
     public void createAcaciaCubuk() {
         ItemStack stick = new ItemStack(Material.STICK);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Akasya Çubuk <dark_aqua>[<aqua>T4<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Akasya Çubuk <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         acaciastick = stick;
         itemStackMap.put("acaciacubuk", stick);
@@ -3582,8 +3217,7 @@ public class ItemHandler {
     public void createKozCubuk() {
         ItemStack stick = new ItemStack(Material.STICK);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Körükalev Çubuk <dark_aqua>[<aqua>T5<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Körükalev Çubuk <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         kozstick = stick;
         itemStackMap.put("kozcubuk", stick);
@@ -3592,8 +3226,7 @@ public class ItemHandler {
     public void createGodCubuk() {
         ItemStack stick = new ItemStack(Material.STICK);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<dark_red><i:false>İlah Söğüt Çubuk <dark_aqua>[<aqua>T6<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<dark_red><i:false>İlah Söğüt Çubuk <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         godstick = stick;
         itemStackMap.put("godcubuk", stick);
@@ -3602,8 +3235,7 @@ public class ItemHandler {
     public void createCowLeather() {
         ItemStack stick = new ItemStack(Material.LEATHER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>İnek Derisi <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>İnek Derisi <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         cowleather = stick;
         itemStackMap.put("cowleather", stick);
@@ -3612,8 +3244,7 @@ public class ItemHandler {
     public void createBakedPotato() {
         ItemStack stick = new ItemStack(Material.BAKED_POTATO);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Pişmiş Patates <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Pişmiş Patates <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         bakedpotato = stick;
         itemStackMap.put("bakedpotato", stick);
@@ -3622,8 +3253,7 @@ public class ItemHandler {
     public void createBizoneLeather() {
         ItemStack stick = new ItemStack(Material.LEATHER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Bizon Derisi <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Bizon Derisi <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         bizoneleather = stick;
         itemStackMap.put("bizoneleather", stick);
@@ -3632,8 +3262,7 @@ public class ItemHandler {
     public void createWildPigLeather() {
         ItemStack stick = new ItemStack(Material.LEATHER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Yaban Domuzu Derisi <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Yaban Domuzu Derisi <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         pigleather = stick;
         itemStackMap.put("wildpigleather", stick);
@@ -3642,8 +3271,7 @@ public class ItemHandler {
     public void createBackpack() {
         ItemStack stick = new ItemStack(Material.BUNDLE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Yaban Domuzu Derisinden Çanta <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Yaban Domuzu Derisinden Çanta <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         pigleather = stick;
         itemStackMap.put("backpack", stick);
@@ -3652,8 +3280,7 @@ public class ItemHandler {
     public void createWolfLeather() {
         ItemStack stick = new ItemStack(Material.LEATHER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gray><i:false>Kurt Postu <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gray><i:false>Kurt Postu <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         wolfleather = stick;
         itemStackMap.put("wolfleather", stick);
@@ -3662,8 +3289,7 @@ public class ItemHandler {
     public void createRabbitLeather() {
         ItemStack stick = new ItemStack(Material.LEATHER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<color:#b5a896><i:false>Tavşan Derisi <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<color:#b5a896><i:false>Tavşan Derisi <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         rabbitleather = stick;
         itemStackMap.put("rabbitleather", stick);
@@ -3672,8 +3298,7 @@ public class ItemHandler {
     public void createFoxLeather() {
         ItemStack stick = new ItemStack(Material.LEATHER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<yellow><i:false>Tilki Postu <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<yellow><i:false>Tilki Postu <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         foxleather = stick;
         itemStackMap.put("foxleather", stick);
@@ -3682,8 +3307,7 @@ public class ItemHandler {
     public void createCamelLeather() {
         ItemStack stick = new ItemStack(Material.LEATHER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Deve Derisi <dark_aqua>[<aqua>T4<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Deve Derisi <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         camelleather = stick;
         itemStackMap.put("camelleather", stick);
@@ -3692,8 +3316,7 @@ public class ItemHandler {
     public void createMantikorLeather() {
         ItemStack stick = new ItemStack(Material.LEATHER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<green><i:false>Mantikor Derisi <dark_aqua>[<aqua>T5<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<green><i:false>Mantikor Derisi <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         mantikorleather = stick;
         itemStackMap.put("mantikorleather", stick);
@@ -3702,8 +3325,7 @@ public class ItemHandler {
     public void createZefirLeather() {
         ItemStack stick = new ItemStack(Material.LEATHER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<aqua><i:false>Zefir Postu <dark_aqua>[<aqua>T6<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<aqua><i:false>Zefir Postu <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         zefirleather = stick;
         itemStackMap.put("zefirleather", stick);
@@ -3711,8 +3333,7 @@ public class ItemHandler {
     public void createSead() {
         ItemStack stick = new ItemStack(Material.WHEAT_SEEDS);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<aqua><i:false>Buğday Tohumu <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<aqua><i:false>Buğday Tohumu <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         sead = stick;
         itemStackMap.put("seed", stick);
@@ -3720,8 +3341,7 @@ public class ItemHandler {
     public void createKeziCicek() {
         ItemStack stick = new ItemStack(Material.ALLIUM);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<aqua><i:false>Kezi Çiçeği <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<aqua><i:false>Kezi Çiçeği <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         kezicicek = stick;
         itemStackMap.put("kezicicek", stick);
@@ -3730,8 +3350,7 @@ public class ItemHandler {
     public void createString() {
         ItemStack stick = new ItemStack(Material.STRING);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>İp <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>İp <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         string = stick;
         itemStackMap.put("string", stick);
@@ -3740,8 +3359,7 @@ public class ItemHandler {
     public void createYanmazString() {
         ItemStack stick = new ItemStack(Material.STRING);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<yellow><i:false>Yanmaz İp <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<yellow><i:false>Yanmaz İp <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         firestring = stick;
         itemStackMap.put("yanmazstring", stick);
@@ -3750,8 +3368,7 @@ public class ItemHandler {
     public void createFireBeetle() {
         ItemStack stick = new ItemStack(Material.SPIDER_EYE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Alevböceği <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Alevböceği <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         firebeetle = stick;
         itemStackMap.put("firebeetle", stick);
@@ -3760,8 +3377,7 @@ public class ItemHandler {
     public void createFireEsans() {
         ItemStack stick = new ItemStack(Material.GLOWSTONE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Alev Özütü <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Alev Özütü <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         fireoz = stick;
         itemStackMap.put("fireesans", stick);
@@ -3770,8 +3386,7 @@ public class ItemHandler {
     public void createSoulEsans() {
         ItemStack stick = new ItemStack(Material.GLOWSTONE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<dark_aqua><i:false>Ruh Esansı <dark_aqua>[<aqua>T4<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<dark_aqua><i:false>Ruh Esansı <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         soulesans = stick;
         itemStackMap.put("soulesans", stick);
@@ -3780,8 +3395,7 @@ public class ItemHandler {
     public void createLightningEsans() {
         ItemStack stick = new ItemStack(Material.GLOWSTONE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<yellow><i:false>Yıldırım Özütü <dark_aqua>[<aqua>T5<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<yellow><i:false>Yıldırım Özütü <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         lightningesans = stick;
         itemStackMap.put("lightningesans", stick);
@@ -3790,8 +3404,7 @@ public class ItemHandler {
     public void createBearLeather() {
         ItemStack stick = new ItemStack(Material.LEATHER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Ayı Postu <dark_aqua>[<aqua>T5<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Ayı Postu <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         bearleather = stick;
         itemStackMap.put("bearleather", stick);
@@ -3800,8 +3413,7 @@ public class ItemHandler {
     public void createJade() {
         ItemStack stick = new ItemStack(Material.FIRE_CHARGE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<green><i:false>Yeşim Taşı <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<green><i:false>Yeşim Taşı <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         jade = stick;
         itemStackMap.put("jade", stick);
@@ -3810,8 +3422,7 @@ public class ItemHandler {
     public void createIceEsans() {
         ItemStack stick = new ItemStack(Material.GLOWSTONE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<aqua><i:false>Gerçek Buz Özütü <dark_aqua>[<aqua>T4<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<aqua><i:false>Gerçek Buz Özütü <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         iceesans = stick;
         itemStackMap.put("iceesans", stick);
@@ -3820,8 +3431,7 @@ public class ItemHandler {
     public void createCelestialStone() {
         ItemStack stick = new ItemStack(Material.FIRE_CHARGE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Göktaşı <dark_aqua>[<aqua>T4<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Göktaşı <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         celestialstone = stick;
         itemStackMap.put("bronzeingot", stick);
@@ -3830,8 +3440,7 @@ public class ItemHandler {
     public void createSaltString() {
         ItemStack stick = new ItemStack(Material.STRING);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gray><i:false>Tuzlu İp <dark_aqua>[<aqua>T4<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gray><i:false>Tuzlu İp <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         saltstring = stick;
         itemStackMap.put("saltstring", stick);
@@ -3840,8 +3449,7 @@ public class ItemHandler {
     public void createCursedString() {
         ItemStack stick = new ItemStack(Material.STRING);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<purple><i:false>Lanetli İp <dark_aqua>[<aqua>T4<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<purple><i:false>Lanetli İp <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         cursedstring = stick;
         itemStackMap.put("cursedstring", stick);
@@ -3850,8 +3458,7 @@ public class ItemHandler {
     public void createTripwire() {
         ItemStack stick = new ItemStack(Material.TRIPWIRE_HOOK);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Kanca <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Kanca <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         tripwire = stick;
         itemStackMap.put("tripwire", stick);
@@ -3860,8 +3467,7 @@ public class ItemHandler {
     public void createCopperIngot() {
         ItemStack stick = new ItemStack(Material.COPPER_INGOT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Bakır Külçesi <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Bakır Külçesi <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         copperingot = stick;
         itemStackMap.put("copperingot", stick);
@@ -3870,8 +3476,7 @@ public class ItemHandler {
     public void createCopperOre() {
         ItemStack stick = new ItemStack(Material.RAW_COPPER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Bakır Cevheri <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Bakır Cevheri <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         copperore = stick;
         itemStackMap.put("copperore", stick);
@@ -3880,8 +3485,7 @@ public class ItemHandler {
     public void createBronzeIngot() {
         ItemStack stick = new ItemStack(Material.COPPER_INGOT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Bronz Külçesi <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Bronz Külçesi <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         bronzeingot = stick;
         itemStackMap.put("bronzeingot", stick);
@@ -3890,8 +3494,7 @@ public class ItemHandler {
     public void createNikelIngot() {
         ItemStack stick = new ItemStack(Material.COPPER_INGOT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gray><i:false>Nikel Külçesi <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gray><i:false>Nikel Külçesi <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         nikelingot = stick;
         itemStackMap.put("nikelingot", stick);
@@ -3900,8 +3503,7 @@ public class ItemHandler {
     public void createNikelOre() {
         ItemStack stick = new ItemStack(Material.RAW_COPPER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gray><i:false>Nikel Cevheri <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gray><i:false>Nikel Cevheri <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         nikelore = stick;
         itemStackMap.put("nikelore", stick);
@@ -3910,8 +3512,7 @@ public class ItemHandler {
     public void createIronIngot() {
         ItemStack stick = new ItemStack(Material.IRON_INGOT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Demir Külçesi <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Demir Külçesi <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         ironingot = stick;
         itemStackMap.put("ironingot", stick);
@@ -3920,8 +3521,7 @@ public class ItemHandler {
     public void createIronOre() {
         ItemStack stick = new ItemStack(Material.RAW_IRON);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Demir Cevheri <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Demir Cevheri <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         ironore = stick;
         itemStackMap.put("ironore", stick);
@@ -3930,8 +3530,7 @@ public class ItemHandler {
     public void createObsidianIngot() {
         ItemStack stick = new ItemStack(Material.COPPER_INGOT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<yellow><i:false>Obsidyen Külçesi <dark_aqua>[<aqua>T4<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<yellow><i:false>Obsidyen Külçesi <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         obsidianingot = stick;
         itemStackMap.put("obsidianingot", stick);
@@ -3940,8 +3539,7 @@ public class ItemHandler {
     public void createObsidianOre() {
         ItemStack stick = new ItemStack(Material.RAW_COPPER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<yellow><i:false>Obsidyen Cevheri <dark_aqua>[<aqua>T4<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<yellow><i:false>Obsidyen Cevheri <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         obsidianore = stick;
         itemStackMap.put("obsidianore", stick);
@@ -3950,8 +3548,7 @@ public class ItemHandler {
     public void createAdamantiumIngot() {
         ItemStack stick = new ItemStack(Material.IRON_INGOT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<green><i:false>Adamantium Külçesi <dark_aqua>[<aqua>T4<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<green><i:false>Adamantium Külçesi <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         adamantiumingot = stick;
         itemStackMap.put("adamantiumingot", stick);
@@ -3960,8 +3557,7 @@ public class ItemHandler {
     public void createBrick() {
         ItemStack stick = new ItemStack(Material.BRICK);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Tuğla <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Tuğla <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         brick = stick;
         itemStackMap.put("brick", stick);
@@ -3970,8 +3566,7 @@ public class ItemHandler {
     public void createSand() {
         ItemStack stick = new ItemStack(Material.SAND);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Kum <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Kum <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         sand = stick;
         itemStackMap.put("sand", stick);
@@ -3980,8 +3575,7 @@ public class ItemHandler {
     public void createTerracotta() {
         ItemStack stick = new ItemStack(Material.TERRACOTTA);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         terracotta = stick;
         itemStackMap.put("terracotta", stick);
@@ -3990,8 +3584,7 @@ public class ItemHandler {
     public void createWhiteTerracotta() {
         ItemStack stick = new ItemStack(Material.WHITE_TERRACOTTA);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Beyaz Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Beyaz Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         whiteterracotta = stick;
         itemStackMap.put("whiteterracotta", stick);
@@ -4000,8 +3593,7 @@ public class ItemHandler {
     public void createYellowTerracotta() {
         ItemStack stick = new ItemStack(Material.YELLOW_TERRACOTTA);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<yellow><i:false>Sarı Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<yellow><i:false>Sarı Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         yellowterracotta = stick;
         itemStackMap.put("yellowterracotta", stick);
@@ -4010,8 +3602,7 @@ public class ItemHandler {
     public void createBricks() {
         ItemStack stick = new ItemStack(Material.BRICKS);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Tuğla Bloğu <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Tuğla Bloğu <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         bricks = stick;
         itemStackMap.put("bricks", stick);
@@ -4020,8 +3611,7 @@ public class ItemHandler {
     public void createRedTerracotta() {
         ItemStack stick = new ItemStack(Material.RED_TERRACOTTA);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Kırmızı Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Kırmızı Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         redterracotta = stick;
         itemStackMap.put("redterracotta", stick);
@@ -4030,8 +3620,7 @@ public class ItemHandler {
     public void createGrayTerracotta() {
         ItemStack stick = new ItemStack(Material.LIGHT_GRAY_TERRACOTTA);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Gri Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Gri Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         grayterracotta = stick;
         itemStackMap.put("grayterracotta", stick);
@@ -4040,8 +3629,7 @@ public class ItemHandler {
     public void createIronBlock() {
         ItemStack stick = new ItemStack(Material.IRON_BLOCK);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gray><i:false>Demir Blok <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gray><i:false>Demir Blok <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         ironblock = stick;
         itemStackMap.put("ironblock", stick);
@@ -4050,8 +3638,7 @@ public class ItemHandler {
     public void createOrangeTerracotta() {
         ItemStack stick = new ItemStack(Material.ORANGE_TERRACOTTA);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Turuncu Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Turuncu Terakota <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         orangeterracotta = stick;
         itemStackMap.put("orangeterracotta", stick);
@@ -4060,8 +3647,7 @@ public class ItemHandler {
     public void createRedSand() {
         ItemStack stick = new ItemStack(Material.RED_SAND);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Kırmızı Kum <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Kırmızı Kum <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         redsand = stick;
         itemStackMap.put("redsand", stick);
@@ -4070,8 +3656,7 @@ public class ItemHandler {
     public void createCookedBeef() {
         ItemStack stick = new ItemStack(Material.COOKED_BEEF);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Pişmiş Kırmızı Et <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Pişmiş Kırmızı Et <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         cookedbeef = stick;
         itemStackMap.put("cookedbeef", stick);
@@ -4080,8 +3665,7 @@ public class ItemHandler {
     public void createCookedPork() {
         ItemStack stick = new ItemStack(Material.COOKED_PORKCHOP);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Pişmiş Domuz Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Pişmiş Domuz Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         cookedpork = stick;
         itemStackMap.put("applepie", stick);
@@ -4090,8 +3674,7 @@ public class ItemHandler {
     public void createTopaz() {
         ItemStack stick = new ItemStack(Material.FIRE_CHARGE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Topaz <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Topaz <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         topaz = stick;
         itemStackMap.put("topaz", stick);
@@ -4100,8 +3683,7 @@ public class ItemHandler {
     public void createPaper() {
         ItemStack stick = new ItemStack(Material.PAPER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Kağıt <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Kağıt <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         paper = stick;
         itemStackMap.put("paper", stick);
@@ -4110,8 +3692,7 @@ public class ItemHandler {
     public void createSugar() {
         ItemStack stick = new ItemStack(Material.SUGAR);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Şeker <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Şeker <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         SUGAR = stick;
         itemStackMap.put("sugar", stick);
@@ -4120,8 +3701,7 @@ public class ItemHandler {
     public void createSugarCane() {
         ItemStack stick = new ItemStack(Material.SUGAR_CANE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Şeker Kamışı <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Şeker Kamışı <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         sugarcane = stick;
         itemStackMap.put("sugarcane", stick);
@@ -4130,8 +3710,7 @@ public class ItemHandler {
     public void createRawPork() {
         ItemStack stick = new ItemStack(Material.PORKCHOP);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Çiğ Domuz Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Çiğ Domuz Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rawpork = stick;
         itemStackMap.put("rawpork", stick);
@@ -4140,8 +3719,7 @@ public class ItemHandler {
     public void createRawRabbit() {
         ItemStack stick = new ItemStack(Material.RABBIT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Çiğ Tavşan Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Çiğ Tavşan Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rawrabbit = stick;
         itemStackMap.put("rawrabbit", stick);
@@ -4150,8 +3728,7 @@ public class ItemHandler {
     public void createRawMutton() {
         ItemStack stick = new ItemStack(Material.MUTTON);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Çiğ Koyun Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Çiğ Koyun Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rawmutton = stick;
         itemStackMap.put("rawmutton", stick);
@@ -4160,8 +3737,7 @@ public class ItemHandler {
     public void createRedstone() {
         ItemStack stick = new ItemStack(Material.REDSTONE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Kızıltaş <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Kızıltaş <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         redstone = stick;
         itemStackMap.put("applepie", stick);
@@ -4170,8 +3746,7 @@ public class ItemHandler {
     public void createLapis() {
         ItemStack stick = new ItemStack(Material.LAPIS_LAZULI);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<blue><i:false>Lapis Lazuli <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<blue><i:false>Lapis Lazuli <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         lapis = stick;
         itemStackMap.put("lapis", stick);
@@ -4180,8 +3755,7 @@ public class ItemHandler {
     public void createRawChicken() {
         ItemStack stick = new ItemStack(Material.CHICKEN);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Çiğ Tavuk Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Çiğ Tavuk Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rawchicken = stick;
         itemStackMap.put("rawchicken", stick);
@@ -4190,8 +3764,7 @@ public class ItemHandler {
     public void createRawBeef() {
         ItemStack stick = new ItemStack(Material.BEEF);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Çiğ Kırmızı Et <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Çiğ Kırmızı Et <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         rawbeef = stick;
         itemStackMap.put("rawbeef", stick);
@@ -4200,8 +3773,7 @@ public class ItemHandler {
     public void createGoldenBlock() {
         ItemStack stick = new ItemStack(Material.GOLD_BLOCK);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Altın Bloğu <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Altın Bloğu <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         goldblock = stick;
         itemStackMap.put("goldenblock", stick);
@@ -4210,8 +3782,7 @@ public class ItemHandler {
     public void createApplePie() {
         ItemStack stick = new ItemStack(Material.PUMPKIN_PIE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Elmalı Turta <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Elmalı Turta <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         applepie = stick;
         itemStackMap.put("applepie", stick);
@@ -4220,8 +3791,7 @@ public class ItemHandler {
     public void createKuruFasulye() {
         ItemStack stick = new ItemStack(Material.RABBIT_STEW);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Kuru Fasulye <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Kuru Fasulye <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         kurufasulye = stick;
         itemStackMap.put("kurufasulye", stick);
@@ -4230,8 +3800,7 @@ public class ItemHandler {
     public void createGiantToe() {
         ItemStack stick = new ItemStack(Material.FERMENTED_SPIDER_EYE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gray><i:false>Dev Tırnağı <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gray><i:false>Dev Tırnağı <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         gianttoe = stick;
         itemStackMap.put("gianttoe", stick);
@@ -4240,8 +3809,7 @@ public class ItemHandler {
     public void createGiantEye() {
         ItemStack stick = new ItemStack(Material.ENDER_EYE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<yellow><i:false>Dev Gözü <dark_aqua>[<aqua>T4<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<yellow><i:false>Dev Gözü <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         gianteye = stick;
         itemStackMap.put("gianteye", stick);
@@ -4250,8 +3818,7 @@ public class ItemHandler {
     public void createJuicyStew() {
         ItemStack stick = new ItemStack(Material.MUSHROOM_STEW);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<yellow><i:false>Ekşi Güveç <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<yellow><i:false>Ekşi Güveç <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         juicystew = stick;
         itemStackMap.put("juicystew", stick);
@@ -4260,8 +3827,7 @@ public class ItemHandler {
     public void createCookedMutton() {
         ItemStack stick = new ItemStack(Material.COOKED_MUTTON);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Pişmiş Koyun Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Pişmiş Koyun Eti <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         cookedmutton = stick;
         itemStackMap.put("cookedmutton", stick);
@@ -4270,8 +3836,7 @@ public class ItemHandler {
     public void createGunpowder() {
         ItemStack stick = new ItemStack(Material.GUNPOWDER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Barut <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Barut <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         gunpowder = stick;
         itemStackMap.put("gunpowder", stick);
@@ -4280,8 +3845,7 @@ public class ItemHandler {
     public void createCookedCod() {
         ItemStack stick = new ItemStack(Material.COOKED_COD);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Pişmiş Morina <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Pişmiş Morina <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         cookedcod = stick;
         itemStackMap.put("cookedcod", stick);
@@ -4290,8 +3854,7 @@ public class ItemHandler {
     public void createCookedChicken() {
         ItemStack stick = new ItemStack(Material.COOKED_CHICKEN);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Pişmiş Tavuk <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Pişmiş Tavuk <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         cookedchicken = stick;
         itemStackMap.put("cookedchicken", stick);
@@ -4300,8 +3863,7 @@ public class ItemHandler {
     public void createPotato() {
         ItemStack stick = new ItemStack(Material.POTATO);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Patates <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Patates <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         patato = stick;
         itemStackMap.put("Potato", stick);
@@ -4310,8 +3872,7 @@ public class ItemHandler {
     public void createCarrot() {
         ItemStack stick = new ItemStack(Material.CARROT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Havuç <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Havuç <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         carrot = stick;
         itemStackMap.put("carrot", stick);
@@ -4320,8 +3881,7 @@ public class ItemHandler {
     public void createWheat() {
         ItemStack stick = new ItemStack(Material.WHEAT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Buğday <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Buğday <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         wheat = stick;
         itemStackMap.put("wheat", stick);
@@ -4330,8 +3890,7 @@ public class ItemHandler {
     public void createBread() {
         ItemStack stick = new ItemStack(Material.BREAD);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Ekmek <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Ekmek <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         bread = stick;
         itemStackMap.put("bread", stick);
@@ -4340,8 +3899,7 @@ public class ItemHandler {
     public void createAdamantiumOre() {
         ItemStack stick = new ItemStack(Material.RAW_IRON);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<green><i:false>Adamantium Cevheri <dark_aqua>[<aqua>T4<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<green><i:false>Adamantium Cevheri <dark_aqua>[<aqua>T4<dark_aqua>]")));
         stick.setItemMeta(meta);
         adamantiumore = stick;
         itemStackMap.put("adamantiumore", stick);
@@ -4350,8 +3908,7 @@ public class ItemHandler {
     public void createAsh() {
         ItemStack stick = new ItemStack(Material.GUNPOWDER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<dark_gray><i:false>Kara Kül <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Kara Kül <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         ash = stick;
         itemStackMap.put("ash", stick);
@@ -4360,8 +3917,7 @@ public class ItemHandler {
     public void createEyeOfDemon() {
         ItemStack stick = new ItemStack(Material.ENDER_EYE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>İblis Gözü <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>İblis Gözü <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         eyeofdemon = stick;
         itemStackMap.put("eyeofdemon", stick);
@@ -4370,8 +3926,7 @@ public class ItemHandler {
     public void createNetheriteIngot() {
         ItemStack stick = new ItemStack(Material.NETHERITE_INGOT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<dark_gray><i:false>Netherit Külçesi <dark_aqua>[<aqua>T5<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Netherit Külçesi <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         netheriteingot = stick;
         itemStackMap.put("netheriteingot", stick);
@@ -4380,8 +3935,7 @@ public class ItemHandler {
     public void createNetheriteOre() {
         ItemStack stick = new ItemStack(Material.NETHERITE_SCRAP);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<dark_gray><i:false>Netherit Cevheri <dark_aqua>[<aqua>T5<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Netherit Cevheri <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         netheriteore = stick;
         itemStackMap.put("netheriteore", stick);
@@ -4390,8 +3944,7 @@ public class ItemHandler {
     public void createCrimsonIngot() {
         ItemStack stick = new ItemStack(Material.COPPER_INGOT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Kızıl Metal Külçesi <dark_aqua>[<aqua>T5<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Kızıl Metal Külçesi <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         crimsoningot = stick;
         itemStackMap.put("crimsoningot", stick);
@@ -4400,8 +3953,7 @@ public class ItemHandler {
     public void createApple() {
         ItemStack stick = new ItemStack(Material.APPLE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Elma <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Elma <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         apple = stick;
         itemStackMap.put("apple", stick);
@@ -4410,8 +3962,7 @@ public class ItemHandler {
     public void createCrimsonOre() {
         ItemStack stick = new ItemStack(Material.RAW_COPPER);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Kızıl Metal Cevheri <dark_aqua>[<aqua>T5<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Kızıl Metal Cevheri <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         crimsonore = stick;
         itemStackMap.put("crimsonore", stick);
@@ -4420,8 +3971,7 @@ public class ItemHandler {
     public void createMithrilIngot() {
         ItemStack stick = new ItemStack(Material.IRON_INGOT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<aqua><i:false>Mitril Külçesi <dark_aqua>[<aqua>T5<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<aqua><i:false>Mitril Külçesi <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         mithrilingot = stick;
         itemStackMap.put("mithrilingot", stick);
@@ -4430,8 +3980,7 @@ public class ItemHandler {
     public void createMithrilOre() {
         ItemStack stick = new ItemStack(Material.RAW_IRON);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<aqua><i:false>Mitril Cevheri <dark_aqua>[<aqua>T5<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<aqua><i:false>Mitril Cevheri <dark_aqua>[<aqua>T5<dark_aqua>]")));
         stick.setItemMeta(meta);
         mithrilore = stick;
         itemStackMap.put("mithrilore", stick);
@@ -4440,8 +3989,7 @@ public class ItemHandler {
     public void createVoidIngot() {
         ItemStack stick = new ItemStack(Material.GOLD_INGOT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<aqua><i:false>Hiçlik Külçesi <dark_aqua>[<aqua>T6<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<aqua><i:false>Hiçlik Külçesi <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         voidingot = stick;
         itemStackMap.put("voidingot", stick);
@@ -4450,8 +3998,7 @@ public class ItemHandler {
     public void createLapisBlock() {
         ItemStack stick = new ItemStack(Material.LAPIS_BLOCK);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<blue><i:false>Lapis Lazuli Bloğu <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<blue><i:false>Lapis Lazuli Bloğu <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         lapislazuliblock = stick;
         itemStackMap.put("lapislazuliblock", stick);
@@ -4460,8 +4007,7 @@ public class ItemHandler {
     public void createBottle() {
         ItemStack stick = new ItemStack(Material.GLASS_BOTTLE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Cam Şişe <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Cam Şişe <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         bottle = stick;
         itemStackMap.put("bottle", stick);
@@ -4470,8 +4016,7 @@ public class ItemHandler {
     public void createGlass() {
         ItemStack stick = new ItemStack(Material.GLASS);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Cam <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Cam <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         glass = stick;
         itemStackMap.put("glass", stick);
@@ -4480,8 +4025,7 @@ public class ItemHandler {
     public void createVoidOre() {
         ItemStack stick = new ItemStack(Material.RAW_GOLD);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<aqua><i:false>Hiçlik Taşı <dark_aqua>[<aqua>T6<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<aqua><i:false>Hiçlik Taşı <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         voidlore = stick;
         itemStackMap.put("voidore", stick);
@@ -4490,8 +4034,7 @@ public class ItemHandler {
     public void createRodonitIngot() {
         ItemStack stick = new ItemStack(Material.IRON_INGOT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Rodonit Külçesi <dark_aqua>[<aqua>T6<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Rodonit Külçesi <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         rodonitingot = stick;
         itemStackMap.put("rodonitingot", stick);
@@ -4500,8 +4043,7 @@ public class ItemHandler {
     public void createRodonitOre() {
         ItemStack stick = new ItemStack(Material.RAW_IRON);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Rodonit Cevheri <dark_aqua>[<aqua>T6<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Rodonit Cevheri <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         rodonitore = stick;
         itemStackMap.put("rodonitore", stick);
@@ -4510,8 +4052,7 @@ public class ItemHandler {
     public void createSpektralIngot() {
         ItemStack stick = new ItemStack(Material.IRON_INGOT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Spektral Külçesi <dark_aqua>[<aqua>T6<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Spektral Külçesi <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         spektralingot = stick;
         itemStackMap.put("spektralingot", stick);
@@ -4520,8 +4061,7 @@ public class ItemHandler {
     public void createEktoplazma() {
         ItemStack stick = new ItemStack(Material.RAW_IRON);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Ektoplazma <dark_aqua>[<aqua>T6<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Ektoplazma <dark_aqua>[<aqua>T6<dark_aqua>]")));
         stick.setItemMeta(meta);
         spektralore = stick;
         itemStackMap.put("ektoplazma", stick);
@@ -4530,8 +4070,7 @@ public class ItemHandler {
     public void createGoldIngot() {
         ItemStack stick = new ItemStack(Material.GOLD_INGOT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<yellow><i:false>Altın Külçesi <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<yellow><i:false>Altın Külçesi <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         goldingot = stick;
         itemStackMap.put("goldingot", stick);
@@ -4540,8 +4079,7 @@ public class ItemHandler {
     public void createGoldOre() {
         ItemStack stick = new ItemStack(Material.RAW_GOLD);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<yellow><i:false>Altın Cevheri <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<yellow><i:false>Altın Cevheri <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         goldore = stick;
         itemStackMap.put("goldore", stick);
@@ -4550,8 +4088,7 @@ public class ItemHandler {
     public void createSilverIngot() {
         ItemStack stick = new ItemStack(Material.IRON_INGOT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Gümüş Külçesi <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Gümüş Külçesi <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         silveringot = stick;
         itemStackMap.put("silveringot", stick);
@@ -4560,8 +4097,7 @@ public class ItemHandler {
     public void createClay() {
         ItemStack stick = new ItemStack(Material.CLAY_BALL);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Kil <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Kil <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         clay = stick;
         itemStackMap.put("clay", stick);
@@ -4570,8 +4106,7 @@ public class ItemHandler {
     public void createGravelBlock() {
         ItemStack stick = new ItemStack(Material.GRAVEL);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Çakıl <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Çakıl <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         gravelblock = stick;
         itemStackMap.put("gravelblock", stick);
@@ -4580,8 +4115,7 @@ public class ItemHandler {
     public void createGravel() {
         ItemStack stick = new ItemStack(Material.FLINT);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gray><i:false>Çakmaktaşı <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gray><i:false>Çakmaktaşı <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         gravel = stick;
         itemStackMap.put("gravel", stick);
@@ -4590,8 +4124,7 @@ public class ItemHandler {
     public void createDiamond() {
         ItemStack stick = new ItemStack(Material.DIAMOND);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Elmas <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Elmas <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         diamond = stick;
         itemStackMap.put("diamond", stick);
@@ -4600,8 +4133,7 @@ public class ItemHandler {
     public void createSilverBlock() {
         ItemStack stick = new ItemStack(Material.POLISHED_DIORITE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Gümüş Bloğu <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Gümüş Bloğu <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         silverblock = stick;
         ShapedRecipe shapedRecipe = new ShapedRecipe(NamespacedKey.minecraft("silver_block"), stick);
@@ -4614,8 +4146,7 @@ public class ItemHandler {
     public void createSilverOre() {
         ItemStack stick = new ItemStack(Material.RAW_IRON);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Gümüş Cevheri <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Gümüş Cevheri <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         silverore = stick;
         itemStackMap.put("silverore", stick);
@@ -4624,8 +4155,7 @@ public class ItemHandler {
     public void createCoal() {
         ItemStack stick = new ItemStack(Material.COAL);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Kömür <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Kömür <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         coal = stick;
         itemStackMap.put("coal", stick);
@@ -4634,8 +4164,7 @@ public class ItemHandler {
     public void createWitherRose() {
         ItemStack stick = new ItemStack(Material.WITHER_ROSE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<black><i:false>Kararmış Gül <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<black><i:false>Kararmış Gül <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         witherrose = stick;
         itemStackMap.put("witherrose", stick);
@@ -4644,8 +4173,7 @@ public class ItemHandler {
     public void createLavaBucket() {
         ItemStack stick = new ItemStack(Material.LAVA_BUCKET);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Lav Kovası <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Lav Kovası <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         lavabucket = stick;
         itemStackMap.put("lavabucket", stick);
@@ -4654,8 +4182,7 @@ public class ItemHandler {
     public void createWaveBreakerFish() {
         ItemStack stick = new ItemStack(Material.COD);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<aqua><i:false>Dalgakıran Balığı <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<aqua><i:false>Dalgakıran Balığı <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         wawebreakerfish = stick;
         itemStackMap.put("wavebreakerfish", stick);
@@ -4793,8 +4320,7 @@ public class ItemHandler {
     public void createExperienceBottle() {
         ItemStack stick = new ItemStack(Material.EXPERIENCE_BOTTLE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<green><i:false>Tecrübe Puanı Şişesi <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<green><i:false>Tecrübe Puanı Şişesi <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         experiencebottle = stick;
         ItemStack lapiss = lapis;
@@ -4846,8 +4372,7 @@ public class ItemHandler {
     public void createEmerald() {
         ItemStack stick = new ItemStack(Material.EMERALD);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<green><i:false>Zümrüt <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<green><i:false>Zümrüt <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         emerald = stick;
         itemStackMap.put("emerald", stick);
@@ -4856,8 +4381,7 @@ public class ItemHandler {
     public void createCactus() {
         ItemStack stick = new ItemStack(Material.CACTUS);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<white><i:false>Kaktüs <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<white><i:false>Kaktüs <dark_aqua>[<aqua>T1<dark_aqua>]")));
         stick.setItemMeta(meta);
         cactus = stick;
         itemStackMap.put("cactus", stick);
@@ -4866,8 +4390,7 @@ public class ItemHandler {
     public void createGlowstone() {
         ItemStack stick = new ItemStack(Material.GLOWSTONE_DUST);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<gold><i:false>Işık Tozu <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<gold><i:false>Işık Tozu <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         glowstone = stick;
 
@@ -4879,8 +4402,7 @@ public class ItemHandler {
     public void createSpiderEye() {
         ItemStack stick = new ItemStack(Material.SPIDER_EYE);
         ItemMeta meta = stick.getItemMeta();
-        meta.displayName((MiniMessage.miniMessage()
-                .deserialize("<red><i:false>Örümcek Gözü <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        meta.displayName(( MiniMessage.miniMessage().deserialize("<red><i:false>Örümcek Gözü <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
         spidereye = stick;
 

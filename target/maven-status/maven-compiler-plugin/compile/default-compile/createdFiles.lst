@@ -42,6 +42,7 @@ me\taylan\mooncore\listeners\BlockRegenListener$65.class
 me\taylan\mooncore\listeners\EnchantListener$3.class
 me\taylan\mooncore\listeners\BlockRegenListener$59.class
 me\taylan\mooncore\listeners\PlayerFishListener$1.class
+me\taylan\mooncore\listeners\PlayerAttackListener$2.class
 me\taylan\mooncore\listeners\EntityHealthListener$1$5.class
 me\taylan\mooncore\listeners\BlockRegenListener$25.class
 me\taylan\mooncore\listeners\EntityHealthListener$6.class

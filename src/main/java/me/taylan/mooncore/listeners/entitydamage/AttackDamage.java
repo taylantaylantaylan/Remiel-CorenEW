@@ -100,8 +100,14 @@ public class AttackDamage implements Listener {
                             + item.getItemMeta().getPersistentDataContainer().get(guc, PersistentDataType.INTEGER);
                     int chance = ThreadLocalRandom.current().nextInt(102 - stats.getKritikSansi(player.getUniqueId()));
                     NamespacedKey hit = new NamespacedKey(plugin, "bonehit");
+<<<<<<< HEAD
                     if (item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Kemik Kılıç")) {
                         player.sendMessage("oldkemik"+"");
+=======
+                    player.sendMessage("oldkemik"+"");
+                    if (item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Kemik Kılıç")) {
+                        player.sendMessage("aga"+"");
+>>>>>>> c82b554 (initial commit)
 
                         if (item.getItemMeta().getPersistentDataContainer().has(hit)) {
                             ItemMeta meta = item.getItemMeta();

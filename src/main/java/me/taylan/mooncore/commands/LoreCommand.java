@@ -35,7 +35,7 @@ public class LoreCommand implements CommandExecutor {
 					ItemStack hand = p.getInventory().getItemInMainHand();
 					ItemMeta meta = hand.getItemMeta();
 					for(String s:args) {
-						lore.add(MiniMessage.miniMessage()
+						lore.add(MiniMessage.builder().build()
 								.deserialize(s));
 					}
 					meta.lore(lore);

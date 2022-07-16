@@ -50,7 +50,7 @@ public class NpcCommand implements CommandExecutor {
 					villager.setPersistent(true);
 					villager.setVillagerType(Villager.Type.valueOf(memleket));
 
-					villager.customName(MiniMessage.miniMessage().deserialize(name));
+					villager.customName(MiniMessage.builder().build().deserialize(name));
 					villager.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(-1);
 					villager.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(100);
 					villager.setCollidable(false);

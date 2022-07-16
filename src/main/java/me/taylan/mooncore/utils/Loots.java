@@ -1,6 +1,7 @@
 package me.taylan.mooncore.utils;
 
 import me.taylan.mooncore.MoonCore;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -38,16 +39,8 @@ public class Loots {
 		List<ItemStack> list = new ArrayList<>();
 		int chance = ThreadLocalRandom.current().nextInt(3);
 		int chance2 = ThreadLocalRandom.current().nextInt(10);
-		ItemStack loot1 = new ItemStack(Material.TRIPWIRE_HOOK, 1);
-		rename(loot1, "&eGeçit Anahtarı");
-		ItemStack loot2 = new ItemStack(Material.GOLD_INGOT, chance);
-		rename(loot2, "&6Dirhem");
-		ItemStack loot3 = new ItemStack(Material.ENDER_EYE, chance);
-		rename(loot3, "&bRuh Bağı");
-		ItemStack loot4 = new ItemStack(Material.BONE, chance);
-		loot4.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
-		loot4.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		rename(loot4, "&bBüyülü Kemik");
+
+
 		if(chance2<3) {
 			ItemStack loot5 = itemHandler.shinyenderpearl;
 			list.add(loot5);
@@ -56,15 +49,15 @@ public class Loots {
 			ItemStack loot6 = itemHandler.woodKutu();
 			list.add(loot6);
 		}
-		list.add(loot1);
-		list.add(loot2);
-		list.add(loot3);
-		list.add(loot4);
+		list.add(itemHandler.silverore);
+		list.add(itemHandler.zincirlenmisgogusluk);
+		list.add(itemHandler.delinmiscarik);
+		list.add(itemHandler.experiencebottle);
 		return list;
 	}
 	public void rename(ItemStack item, String s) {
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(Painter.paint(s));
+		meta.displayName(MiniMessage.miniMessage().deserialize(Painter.paint(s)));
 		item.setItemMeta(meta);
 	}
 }

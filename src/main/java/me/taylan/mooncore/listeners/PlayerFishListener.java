@@ -50,7 +50,7 @@ public class PlayerFishListener implements Listener {
             armorStand.getLocation().setDirection(catcher.getLocation().getDirection().multiply(-1));
             armorStand.getEquipment().setHelmet(head);
             armorStand.setCustomNameVisible(true);
-            armorStand.customName(MiniMessage.miniMessage().deserialize(name));
+            armorStand.customName(MiniMessage.builder().build().deserialize(name));
 
         });
         return armorStand2;

@@ -61,7 +61,7 @@ public class LootListener implements Listener {
         if (inv.getTitle().equals(Painter.paint("&8Orman Ganimet Sandığı"))) {
             int trapchance = ThreadLocalRandom.current().nextInt(20);
             if (trapchance < 2) {
-                player.sendActionBar(MiniMessage.miniMessage().deserialize("<red><BOLD>BU SANDIK TUZAKLIYMIŞ!"));
+                player.sendActionBar(MiniMessage.builder().build().deserialize("<red><BOLD>BU SANDIK TUZAKLIYMIŞ!"));
                 PotionEffect effect = new PotionEffect(PotionEffectType.POISON, 300, 1);
                 player.addPotionEffect(effect);
                 player.damage(10);
@@ -92,7 +92,7 @@ public class LootListener implements Listener {
                         }
                     }.runTaskLater(plugin, 1200);
                 } else {
-                    player.sendActionBar(MiniMessage.miniMessage().deserialize("<red>Bu sandık daha önce yağmalanmış."));
+                    player.sendActionBar(MiniMessage.builder().build().deserialize("<red>Bu sandık daha önce yağmalanmış."));
                     event.setCancelled(true);
                 }
             }
@@ -107,7 +107,7 @@ public class LootListener implements Listener {
         if (inv.getTitle().equals(Painter.paint("&8Zindan Ganimet Sandığı"))) {
             int trapchance = ThreadLocalRandom.current().nextInt(20);
             if (trapchance < 2) {
-                player.sendActionBar(MiniMessage.miniMessage().deserialize("<red><BOLD>BU SANDIK TUZAKLIYMIŞ!"));
+                player.sendActionBar(MiniMessage.builder().build().deserialize("<red><BOLD>BU SANDIK TUZAKLIYMIŞ!"));
                 PotionEffect effect = new PotionEffect(PotionEffectType.POISON, 300, 1);
                 player.addPotionEffect(effect);
                 player.damage(10);
@@ -138,7 +138,7 @@ public class LootListener implements Listener {
                         }
                     }.runTaskLater(plugin, 1200);
                 } else {
-                    player.sendActionBar(MiniMessage.miniMessage().deserialize("<red>Bu sandık daha önce yağmalanmış."));
+                    player.sendActionBar(MiniMessage.builder().build().deserialize("<red>Bu sandık daha önce yağmalanmış."));
                     event.setCancelled(true);
                 }
             }
@@ -155,7 +155,38 @@ public class LootListener implements Listener {
             }
         }
     }
+    @EventHandler
+    public void lootclose2(InventoryCloseEvent event) {
+        Player player = (Player) event.getPlayer();
+        InventoryView inv = event.getView();
+        Inventory invreal = event.getInventory();
+        if (!(invreal.getHolder() instanceof BlockState)) {
+            return;
+        }
+        BlockState chestinv = (BlockState) invreal.getHolder();
+        if (inv.getTitle().equals(Painter.paint("&8Zindan Ganimet Sandığı"))) {
+            if (player.getInventory().firstEmpty() == -1) {
+                for (ItemStack item : event.getInventory().getContents()) {
+                    if (item != null) {
+                        lootanim(chestinv.getLocation(), item);
+                        player.getWorld().dropItem(player.getLocation(), item);
+                        event.getInventory().remove(item);
+                        // stash yapacaksın pickupstash
+                    }
+                }
+            } else {
+                for (ItemStack item : event.getInventory().getContents()) {
+                    if (item != null) {
+                        lootanim(chestinv.getLocation(), item);
+                        player.getInventory().addItem(item);
+                        event.getInventory().remove(item);
 
+
+                    }
+                }
+            }
+        }
+    }
     @EventHandler
     public void lootclose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();

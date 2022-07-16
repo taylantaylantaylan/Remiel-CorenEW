@@ -164,11 +164,11 @@ public class JoinListener implements Listener {
 			player.getInventory().setItem(8, star);
 		}
 
-		menu.put(player.getUniqueId(), Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize("<dark_gray>Depo")));
-		ocakmenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize("<dark_gray>Ocak Deposu")));
-		furnacemenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize("<dark_gray>Maden Fırın Deposu")));
-		elsanatmenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize("<dark_gray>El Sanatları Deposu")));
-		realfurnacemenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54, MiniMessage.miniMessage().deserialize("<dark_gray>Fırın Deposu")));
+		menu.put(player.getUniqueId(), Bukkit.createInventory(player, 54,       MiniMessage.miniMessage().deserialize("<dark_gray>Depo")));
+		ocakmenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54,      MiniMessage.miniMessage().deserialize("<dark_gray>Ocak Deposu")));
+		furnacemenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54,       MiniMessage.miniMessage().deserialize("<dark_gray>Maden Fırın Deposu")));
+		elsanatmenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54,      MiniMessage.miniMessage().deserialize("<dark_gray>El Sanatları Deposu")));
+		realfurnacemenu.put(player.getUniqueId(), Bukkit.createInventory(player, 54,       MiniMessage.miniMessage().deserialize("<dark_gray>Fırın Deposu")));
 
 		if (!(stats.getStorage(player.getUniqueId()).equals("yok"))) {
 			String contents = stats.getStorage(player.getUniqueId());

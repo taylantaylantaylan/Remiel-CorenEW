@@ -664,7 +664,7 @@ public class StatsManager {
 
     public int getEnchLevel(UUID uuid) {
         fc = statfile.get(uuid);
-        return fc.getInt("Levels." + "SmithLevel");
+        return fc.getInt("Levels." + "EnchLevel");
     }
 
     public void setEnchExp(UUID uuid, int size) {

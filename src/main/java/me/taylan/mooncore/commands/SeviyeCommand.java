@@ -101,8 +101,8 @@ public class SeviyeCommand implements CommandExecutor {
         p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 100, 0.8f);
         p.showTitle(
 
-                Title.title(MiniMessage.miniMessage().deserialize("<green>-=[</green><aqua>Seviye Atladın!</aqua><green>]=-</green>"),
-                        MiniMessage.miniMessage().deserialize("<yellow>(</yellow><green>" + seviye2 + " <yellow>-></yellow> <green> "
+                Title.title(MiniMessage.builder().build().deserialize("<green>-=[</green><aqua>Seviye Atladın!</aqua><green>]=-</green>"),
+                        MiniMessage.builder().build().deserialize("<yellow>(</yellow><green>" + seviye2 + " <yellow>-></yellow> <green> "
                                 + seviyestat + "<yellow>)")));
         p.spawnParticle(Particle.VILLAGER_HAPPY, p.getLocation().add(0, 1, 0), 40, 0.4, 0.3, 0.4, 0);
         p.spawnParticle(Particle.SPELL_INSTANT, p.getLocation(), 50, 0.4, 0.3, 0.4, 0);
