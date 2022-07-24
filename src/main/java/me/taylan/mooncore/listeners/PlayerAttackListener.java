@@ -2,6 +2,7 @@ package me.taylan.mooncore.listeners;
 
 import com.destroystokyo.paper.MaterialTags;
 import me.taylan.mooncore.MoonCore;
+import me.taylan.mooncore.utils.Painter;
 import me.taylan.mooncore.utils.StatsManager;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -13,6 +14,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -34,6 +36,7 @@ public class PlayerAttackListener implements Listener {
     private Map<UUID, Integer> tirpanstack = new HashMap<UUID, Integer>();
     private Map<UUID, Integer> mizrakstack = new HashMap<UUID, Integer>();
     private Map<UUID, Integer> topuzStack = new HashMap<UUID, Integer>();
+    private Map<UUID, Integer> sword = new HashMap<UUID, Integer>();
     private Map<UUID, Integer> axeStack = new HashMap<UUID, Integer>();
     private Map<UUID, Integer> bleed = new HashMap<UUID, Integer>();
     private static Map<UUID, Integer> wand = new HashMap<UUID, Integer>();
@@ -57,6 +60,7 @@ public class PlayerAttackListener implements Listener {
         }
 
         Player player = (Player) event.getDamager();
+
         World world = player.getWorld();
         NamespacedKey saldirihizi2 = new NamespacedKey(plugin, "attackspeed");
         if (player.getInventory().getItemInMainHand() != null && player.getInventory().getItemInMainHand().hasItemMeta()
@@ -64,11 +68,22 @@ public class PlayerAttackListener implements Listener {
                 && player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
                 .has(saldirihizi2)) {
             ItemStack item = player.getInventory().getItemInMainHand();
+            NamespacedKey lvlrequirement = new NamespacedKey(plugin, "lvlrequirement");
+            if(item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                if(item.getItemMeta().getPersistentDataContainer().has(lvlrequirement)) {
+                    if(!(statsManager.getLevel(player.getUniqueId()) >= item.getItemMeta().getPersistentDataContainer().get(lvlrequirement, PersistentDataType.INTEGER))) {
+
+                            event.setCancelled(true);
+                            player.sendMessage(Painter.paint("&cSeviyen ekipmanı kullanmak için gereken seviyeden düşük!"));
+
+                    }
+                }
+            }
             int realhiz = item.getItemMeta().getPersistentDataContainer().get(saldirihizi2, PersistentDataType.INTEGER);
             int saldirihizi = statsManager.getSaldiriHizi(player.getUniqueId()) / 10 + realhiz;
             NamespacedKey dura = new NamespacedKey(plugin, "durability");
             ItemMeta meta = item.getItemMeta();
-            if ((MaterialTags.HOES.isTagged(item))) {
+            if ((item.getType() == Material.WOODEN_HOE)) {
                 if (!(player.hasCooldown(item.getType()))) {
                     if (damaged instanceof LivingEntity) {
                         for (Entity alan : damaged.getNearbyEntities(3, 2, 3)) {
@@ -109,16 +124,7 @@ public class PlayerAttackListener implements Listener {
                             tirpanstack.put(player.getUniqueId(), tirpanstacklendi);
                         }
                     }
-                    for (ItemStack item2 : player.getInventory().getContents()) {
-                        if (item2 != null) {
-                            if (item2 == item) continue;
-                            if (item2 != null && item2.hasItemMeta() && item2.getItemMeta().hasLore()) {
-                                if (item2.getLore().contains("Kılıç") || item2.getLore().contains("Hançer") || item2.getLore().contains("Balta") || item2.getLore().contains("Yay") || item2.getLore().contains("Arbalet") || item2.getLore().contains("Asa") || item2.getLore().contains("Topuz") || item2.getLore().contains("Kitabı") || item2.getLore().contains("Mızrak") || item2.getLore().contains("Tırpan")) {
-                                    player.setCooldown(item2.getType(), (int) 999);
-                                }
-                            }
-                        }
-                    }
+
                     player.setCooldown(item.getType(), (int) 30 - saldirihizi);
                     player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0.1f);
                     player.spawnParticle(Particle.SWEEP_ATTACK, damaged.getLocation().add(0, 1.2, 0), 5, 0.1, 0.1, 0.1,
@@ -140,19 +146,30 @@ public class PlayerAttackListener implements Listener {
 
                 }
             }
+            if (item.getType() == Material.GOLDEN_HOE) {
+                if (!(player.hasCooldown(item.getType()))) {
+                    player.setCooldown(item.getType(),45);
+
+                    player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0.2f);
+                } else {
+                    /*
+                     * ProtocolLibrary.getProtocolManager().addPacketListener( new
+                     * PacketAdapter(plugin, ListenerPriority.NORMAL,
+                     * PacketType.Play.Server.NAMED_SOUND_EFFECT) {
+                     *
+                     * @Override public void onPacketSending(PacketEvent event) { if
+                     * (event.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT) { if
+                     * (event.getPacket().getStrings().read(0)
+                     * .equalsIgnoreCase("entity.player.attack.strong")) { event.setCancelled(true);
+                     * // The sound will no longer be played } } } });
+                     */
+                    player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.2f, 1.1f);
+
+                }
+            }
             if (item.getType() == Material.DIAMOND_SWORD) {
                 if (!(player.hasCooldown(item.getType()))) {
-                    for (ItemStack item2 : player.getInventory().getContents()) {
-                        if (item2 != null) {
-                            if (item2 == item) continue;
-                            if (item2 != null && item2.hasItemMeta() && item2.getItemMeta().hasLore()) {
-                                if (item2.getLore().contains("Kılıç") || item2.getLore().contains("Hançer") || item2.getLore().contains("Balta") || item2.getLore().contains("Yay") || item2.getLore().contains("Arbalet") || item2.getLore().contains("Asa") || item2.getLore().contains("Topuz") || item2.getLore().contains("Kitabı") || item2.getLore().contains("Mızrak") || item2.getLore().contains("Tırpan")) {
-                                    player.setCooldown(item2.getType(), (int) 999);
-                                }
-                            }
-                        }
-                    }
-
+                    player.setCooldown(item.getType(),45);
                     player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1f);
                 } else {
                     /*
@@ -172,19 +189,31 @@ public class PlayerAttackListener implements Listener {
             }
             if (item.getType() == Material.WOODEN_SWORD) {
                 if (!(player.hasCooldown(item.getType()))) {
-                    for (ItemStack item2 : player.getInventory().getContents()) {
-                        if (item2 != null) {
-                            if (item2 == item) continue;
-                            if (item2 != null && item2.hasItemMeta() && item2.getItemMeta().hasLore()) {
-                                if (item2.getLore().contains("Kılıç") || item2.getLore().contains("Hançer") || item2.getLore().contains("Balta") || item2.getLore().contains("Yay") || item2.getLore().contains("Arbalet") || item2.getLore().contains("Asa") || item2.getLore().contains("Topuz") || item2.getLore().contains("Kitabı") || item2.getLore().contains("Mızrak") || item2.getLore().contains("Tırpan")) {
-                                    player.setCooldown(item2.getType(), (int) 999);
-                                }
-                            }
-                        }
-                    }
 
-                    player.setCooldown(item.getType(), (int) 30 - saldirihizi);
-                    player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1f);
+                    player.setCooldown(item.getType(), (int) 35 - saldirihizi);
+                    player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0);
+                    if (damaged instanceof LivingEntity) {
+                        if (sword.containsKey(player.getUniqueId())) {
+                            int axestacklendi = sword.get(player.getUniqueId());
+                            if (axestacklendi <= 5) {
+                                sword.put(player.getUniqueId(), axestacklendi + 1);
+                            } else {
+                                LivingEntity ldamaged = (LivingEntity) damaged;
+                                if (ldamaged.isDead()) {
+                                    sword.remove(player.getUniqueId());
+                                }
+                                sword.remove(player.getUniqueId());
+                                world.playSound(player, Sound.ENTITY_WITHER_BREAK_BLOCK, 1f, 1.7f);
+                                ((Player) entity).damage(4, player);
+
+                            }
+
+                        } else {
+                            int axestacklendi = 0;
+                            sword.put(player.getUniqueId(), axestacklendi);
+                        }
+
+                    }
                 } else {
                     /*
                      * ProtocolLibrary.getProtocolManager().addPacketListener( new
@@ -200,40 +229,24 @@ public class PlayerAttackListener implements Listener {
                     player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.2f, 1.1f);
 
                 }
+            }
+            if (item.getType() == Material.BOW) {
+                event.setCancelled(true);
             }
             if (item.getType() == Material.GOLDEN_PICKAXE) {
                 if (!(player.hasCooldown(item.getType()))) {
                     player.setCooldown(item.getType(), (int) 60 - saldirihizi);
                     player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1f);
                 } else {
-                    /*
-                     * ProtocolLibrary.getProtocolManager().addPacketListener( new
-                     * PacketAdapter(plugin, ListenerPriority.NORMAL,
-                     * PacketType.Play.Server.NAMED_SOUND_EFFECT) {
-                     *
-                     * @Override public void onPacketSending(PacketEvent event) { if
-                     * (event.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT) { if
-                     * (event.getPacket().getStrings().read(0)
-                     * .equalsIgnoreCase("entity.player.attack.strong")) { event.setCancelled(true);
-                     * // The sound will no longer be played } } } });
-                     */
+
                     player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.2f, 1.1f);
 
                 }
             }
-            if ((MaterialTags.AXES.isTagged(item))) {
+            if (item.getType() == Material.WOODEN_AXE) {
                 if (!(player.hasCooldown(item.getType()))) {
-                    for (ItemStack item2 : player.getInventory().getContents()) {
-                        if (item2 != null) {
-                            if (item2 == item) continue;
-                            if (item2 != null && item2.hasItemMeta() && item2.getItemMeta().hasLore()) {
-                                if (item2.getLore().contains("Kılıç") || item2.getLore().contains("Hançer") || item2.getLore().contains("Balta") || item2.getLore().contains("Yay") || item2.getLore().contains("Arbalet") || item2.getLore().contains("Asa") || item2.getLore().contains("Topuz") || item2.getLore().contains("Kitabı") || item2.getLore().contains("Mızrak") || item2.getLore().contains("Tırpan")) {
-                                    player.setCooldown(item2.getType(), (int) 999);
-                                }
-                            }
-                        }
-                    }
-                    player.setCooldown(item.getType(), (int) 30 - saldirihizi);
+
+                    player.setCooldown(item.getType(), (int) 35 - saldirihizi);
                     player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0);
                     if (damaged instanceof LivingEntity) {
                         if (!(bleed.containsKey(player.getUniqueId()))) {
@@ -287,24 +300,14 @@ public class PlayerAttackListener implements Listener {
                         }
                     }
                 } else {
-                    /*
-                     * ProtocolLibrary.getProtocolManager().addPacketListener( new
-                     * PacketAdapter(plugin, ListenerPriority.NORMAL,
-                     * PacketType.Play.Server.NAMED_SOUND_EFFECT) {
-                     *
-                     * @Override public void onPacketSending(PacketEvent event) { if
-                     * (event.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT) { if
-                     * (event.getPacket().getStrings().read(0)
-                     * .equalsIgnoreCase("entity.player.attack.strong")) { event.setCancelled(true);
-                     * // The sound will no longer be played } } } });
-                     */
+
                     player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.2f, 1.1f);
 
                 }
             }
-            if (item.getType() == Material.GOLDEN_SHOVEL) {
+            if (item.getType() == Material.GOLDEN_AXE) {
                 if (!(player.hasCooldown(item.getType()))) {
-                    player.setCooldown(item.getType(), (int) 25 - saldirihizi);
+                    player.setCooldown(item.getType(), (int) 45 - saldirihizi);
                     player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1.2f);
                     for (ItemStack item2 : player.getInventory().getContents()) {
                         if (item2 != null) {
@@ -332,20 +335,22 @@ public class PlayerAttackListener implements Listener {
 
                 }
             }
+            if (item.getType() == Material.GOLDEN_SHOVEL) {
+                if (!(player.hasCooldown(item.getType()))) {
+                    player.setCooldown(item.getType(), (int) 25 - saldirihizi);
+                    player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1.2f);
+
+                } else {
+
+                    player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.2f, 1.1f);
+
+                }
+            }
             if (item.getType() == Material.STICK) {
                 if (!(player.hasCooldown(item.getType()))) {
                     world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1.1f);
                     player.setCooldown(item.getType(), (int) 40 - saldirihizi);
-                    for (ItemStack item2 : player.getInventory().getContents()) {
-                        if (item2 != null) {
-                            if (item2 == item) continue;
-                            if (item2 != null && item2.hasItemMeta() && item2.getItemMeta().hasLore()) {
-                                if (item2.getLore().contains("Kılıç") || item2.getLore().contains("Hançer") || item2.getLore().contains("Balta") || item2.getLore().contains("Yay") || item2.getLore().contains("Arbalet") || item2.getLore().contains("Asa") || item2.getLore().contains("Topuz") || item2.getLore().contains("Kitabı") || item2.getLore().contains("Mızrak") || item2.getLore().contains("Tırpan")) {
-                                    player.setCooldown(item2.getType(), (int) 999);
-                                }
-                            }
-                        }
-                    }
+
                     if (damaged instanceof LivingEntity) {
 
                         if (mizrakstack.containsKey(player.getUniqueId())) {
@@ -406,16 +411,6 @@ public class PlayerAttackListener implements Listener {
                 if (!(player.hasCooldown(item.getType()))) {
                     world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1.1f);
                     player.setCooldown(item.getType(), (int) 50 - saldirihizi);
-                    for (ItemStack item2 : player.getInventory().getContents()) {
-                        if (item2 != null) {
-                            if (item2 == item) continue;
-                            if (item2 != null && item2.hasItemMeta() && item2.getItemMeta().hasLore()) {
-                                if (item2.getLore().contains("Kılıç") || item2.getLore().contains("Hançer") || item2.getLore().contains("Balta") || item2.getLore().contains("Yay") || item2.getLore().contains("Arbalet") || item2.getLore().contains("Asa") || item2.getLore().contains("Topuz") || item2.getLore().contains("Kitabı") || item2.getLore().contains("Mızrak") || item2.getLore().contains("Tırpan")) {
-                                    player.setCooldown(item2.getType(), (int) 999);
-                                }
-                            }
-                        }
-                    }
                     if (damaged instanceof LivingEntity) {
                         if (topuzStack.containsKey(player.getUniqueId())) {
                             int topuzstacklendi = topuzStack.get(player.getUniqueId());
@@ -437,7 +432,6 @@ public class PlayerAttackListener implements Listener {
                                         @Override
                                         public void run() {
                                             if (timer < 50) {
-                                                player.sendMessage("" + timer);
                                                 Location loc = damaged.getLocation();
                                                 loc.setYaw(loc.getYaw() + 10);
                                                 damaged.teleport(loc);
@@ -480,17 +474,7 @@ public class PlayerAttackListener implements Listener {
 
                     }
                 } else {
-                    /*
-                     * ProtocolLibrary.getProtocolManager().addPacketListener( new
-                     * PacketAdapter(plugin, ListenerPriority.NORMAL,
-                     * PacketType.Play.Server.NAMED_SOUND_EFFECT) {
-                     *
-                     * @Override public void onPacketSending(PacketEvent event) { if
-                     * (event.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT) { if
-                     * (event.getPacket().getStrings().read(0)
-                     * .equalsIgnoreCase("entity.player.attack.strong")) { event.setCancelled(true);
-                     * } } } });
-                     */
+
                     player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.2f, 1.1f);
 
                 }
@@ -505,7 +489,6 @@ public class PlayerAttackListener implements Listener {
 
                         int durabilt = meta.getPersistentDataContainer().get(dura, PersistentDataType.INTEGER);
                         meta.getPersistentDataContainer().set(dura, PersistentDataType.INTEGER, durabilt - 1);
-                        player.sendMessage("" + durabilt);
                         item.setItemMeta(meta);
                         Damageable damagemeta = (Damageable) meta;
                         if (durabilt < item.getType().getMaxDurability()) {
@@ -539,7 +522,7 @@ public class PlayerAttackListener implements Listener {
                                             }
                                             hancer += 1;
 
-                                            ldamaged.damage(event.getDamage());
+                                            ldamaged.damage(4);
                                             ldamaged.setNoDamageTicks(0);
                                             player.playSound(player, Sound.ENTITY_WITHER_SHOOT, 0.1f, 2f);
                                             particleslash(player);
@@ -555,30 +538,11 @@ public class PlayerAttackListener implements Listener {
                         }
                     }
 
-                    player.setCooldown(item.getType(), (int) 15 - saldirihizi);
-                    for (ItemStack item2 : player.getInventory().getContents()) {
-                        if (item2 != null) {
-                            if (item2 != null && item2.hasItemMeta() && item2.getItemMeta().hasLore()) {
-                                if (item2.getLore().contains("Kılıç") || item2.getLore().contains("Hançer") || item2.getLore().contains("Balta") || item2.getLore().contains("Yay") || item2.getLore().contains("Arbalet") || item2.getLore().contains("Asa") || item2.getLore().contains("Topuz") || item2.getLore().contains("Kitabı") || item2.getLore().contains("Mızrak") || item2.getLore().contains("Tırpan")) {
-                                    player.setCooldown(item2.getType(), (int) 999);
-                                }
-                            }
-                        }
-                    }
+                    player.setCooldown(item.getType(), (int) 20 - saldirihizi);
                     player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1.9f);
 
                 } else {
-                    /*
-                     * ProtocolLibrary.getProtocolManager().addPacketListener( new
-                     * PacketAdapter(plugin, ListenerPriority.NORMAL,
-                     * PacketType.Play.Server.NAMED_SOUND_EFFECT) {
-                     *
-                     * @Override public void onPacketSending(PacketEvent event) { if
-                     * (event.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT) { if
-                     * (event.getPacket().getStrings().read(0)
-                     * .equalsIgnoreCase("entity.player.attack.strong")) { event.setCancelled(true);
-                     * // The sound will no longer be played } } } });
-                     */
+
                     player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.2f, 1.1f);
 
                 }
@@ -592,6 +556,7 @@ public class PlayerAttackListener implements Listener {
     @EventHandler
     public void playerswing(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        NamespacedKey lvlrequirement = new NamespacedKey(plugin, "lvlrequirement");
 
         World world = player.getWorld();
         if (event.getAction() == Action.LEFT_CLICK_AIR) {
@@ -605,10 +570,26 @@ public class PlayerAttackListener implements Listener {
                         .get(saldirihizi2, PersistentDataType.INTEGER);
                 int saldirihizi = statsManager.getSaldiriHizi(player.getUniqueId()) / 10 + realhiz;
                 ItemStack item = player.getInventory().getItemInMainHand();
-                if ((MaterialTags.HOES.isTagged(item))) {
+                if(item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                    if(item.getItemMeta().getPersistentDataContainer().has(lvlrequirement)) {
+                        if(!(statsManager.getLevel(player.getUniqueId()) >= item.getItemMeta().getPersistentDataContainer().get(lvlrequirement, PersistentDataType.INTEGER))) {
+
+                            event.setCancelled(true);
+                            player.sendMessage(Painter.paint("&cSeviyen ekipmanı kullanmak için gereken seviyeden düşük!"));
+
+                        }
+                    }
+                }
+                if (item.getType() == Material.WOODEN_HOE) {
                     if (!(player.hasCooldown(item.getType()))) {
                         world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0.1f);
-                        player.setCooldown(item.getType(), (int) 30 - saldirihizi);
+                        player.setCooldown(item.getType(), (int) 45 - saldirihizi);
+                    }
+                }
+                if (item.getType() == Material.GOLDEN_HOE) {
+                    if (!(player.hasCooldown(item.getType()))) {
+                        world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0.1f);
+                        player.setCooldown(item.getType(), (int) 55 - saldirihizi);
                     }
                 }
                 if (item.getType() == Material.DIAMOND_SWORD) {
@@ -641,7 +622,7 @@ public class PlayerAttackListener implements Listener {
                     if (!(player.hasCooldown(item.getType()))) {
                         world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0.1f);
                         world.playSound(player, Sound.ITEM_AXE_SCRAPE, 0.25f, 0.8f);
-                        player.setCooldown(item.getType(), (int) 40 - saldirihizi);
+                        player.setCooldown(item.getType(), (int) 45 - saldirihizi);
                     }
                 }
                 if (item.getType() == Material.GOLDEN_SHOVEL) {
@@ -653,7 +634,11 @@ public class PlayerAttackListener implements Listener {
                 }
                 if (item.getType() == Material.STICK) {
                     if (!(player.hasCooldown(item.getType()))) {
-
+                        if (player.isSneaking()) {
+                            spearThrow(player);
+                            player.setCooldown(item.getType(), (int) 60 - saldirihizi);
+                            world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1.1f);
+                        }
                         world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1.1f);
 
                         final Location eyeLocation = player.getEyeLocation();
@@ -718,17 +703,17 @@ public class PlayerAttackListener implements Listener {
 
                     }
                 }
-                if ((MaterialTags.AXES.isTagged(item))) {
+                if (item.getType() == Material.WOODEN_AXE) {
                     if (!(player.hasCooldown(item.getType()))) {
                         world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0);
-                        player.setCooldown(item.getType(), (int) 30 - saldirihizi);
+                        player.setCooldown(item.getType(), (int) 40 - saldirihizi);
 
                     }
                 }
                 if (item.getType() == Material.SHEARS) {
                     if (!(player.hasCooldown(item.getType()))) {
                         world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1.9f);
-                        player.setCooldown(item.getType(), (int) 15 - saldirihizi);
+                        player.setCooldown(item.getType(), (int) 20 - saldirihizi);
 
                     }
                 }
@@ -772,7 +757,7 @@ public class PlayerAttackListener implements Listener {
                         if (meta.hasEnchant(Enchantment.ARROW_DAMAGE)) {
                             arrow.setDamage(10);
                         } else {
-                            arrow.setDamage(5);
+                            arrow.setDamage(3);
                         }
 
                     }
@@ -887,7 +872,7 @@ public class PlayerAttackListener implements Listener {
                     if (meta.hasEnchant(Enchantment.ARROW_DAMAGE)) {
                         arrow.setDamage(20);
                     } else {
-                        arrow.setDamage(15);
+                        arrow.setDamage(8);
                     }
                     shooter.spawnParticle(Particle.CLOUD, shooter.getLocation().add(0, 1.2, 0), 5, 0, 0, 0, 1);
                     drawing.remove(shooter.getUniqueId());
@@ -1019,6 +1004,112 @@ public class PlayerAttackListener implements Listener {
             entity.getWorld().spawnParticle(p, loc, 1, 0, 0, 0, 0);
 
         }
+    }
+
+    public void spearThrow(Player player) {
+        // Player's eye location is the starting location for the particle
+        Location startLoc = player.getEyeLocation().subtract(0, 0.7, 0);
+
+        // We need to clone() this location, because we will add() to it later.
+        Location particleLoc = startLoc.clone();
+
+        World world = startLoc.getWorld(); // We need this later to show the particle
+
+        // dir is the Vector direction (offset from 0,0,0) the player is facing in 3D
+        // space
+        Vector dir = startLoc.getDirection();
+
+        /*
+         * vecOffset is used to determine where the next particle should appear We are
+         * taking the direction and multiplying it by 0.5 to make it appear 1/2 block in
+         * its continuing Vector direction. NOTE: We have to clone() because multiply()
+         * modifies the original variable! For a straight beam, we only need to
+         * calculate this once, as the direction does not change.
+         */
+        Vector vecOffset = dir.clone().multiply(0.7);
+
+        new BukkitRunnable() {
+            int maxBeamLength = 50; // Max beam length
+            int beamLength = 0; // Current beam length
+            ArmorStand armorStand2 = startLoc.getWorld().spawn(startLoc, ArmorStand.class, armorStand -> {
+                armorStand.setMarker(true);
+                armorStand.setVisible(false);
+                armorStand.setGravity(false);
+                armorStand.setSmall(false);
+                armorStand.setInvulnerable(true);
+                armorStand.setCustomNameVisible(false);
+                armorStand.setItem(EquipmentSlot.HAND, player.getInventory().getItemInMainHand().clone());
+
+            });
+
+            // The run() function runs every X number of ticks - see below
+            public void run() {
+
+
+                // Search for any entities near the particle's current location
+                for (Entity entity : world.getNearbyEntities(particleLoc, 5, 5, 5)) {
+                    // We only care about living entities. Any others will be ignored.
+                    if (entity instanceof LivingEntity) {
+                        // Ignore player that initiated the shot
+                        if (entity == player) {
+                            continue;
+                        }
+
+                        /*
+                         * Define the bounding box of the particle. We will use 0.25 here, since the
+                         * particle is moving 0.5 blocks each time. That means the particle won't miss
+                         * very small entities like chickens or bats, as the particle bounding box
+                         * covers 1/2 of the movement distance.
+                         */
+                        Vector particleMinVector = new Vector(particleLoc.getX() - 0.25, particleLoc.getY() - 0.25,
+                                particleLoc.getZ() - 0.25);
+                        Vector particleMaxVector = new Vector(particleLoc.getX() + 0.25, particleLoc.getY() + 0.25,
+                                particleLoc.getZ() + 0.25);
+
+                        // Now use a spigot API call to determine if the particle is inside the entity's
+                        // hitbox
+                        if (entity.getBoundingBox().overlaps(particleMinVector, particleMaxVector)) {
+                            // We have a hit!
+                            // Display a flash at the location of the particle
+                            // Play an explosion sound at the particle location
+
+                            // Knock-back the entity in the same direction from where the particle is
+                            // coming.
+                            entity.setVelocity(
+                                    entity.getVelocity().add(particleLoc.getDirection().normalize().multiply(0.2)));
+
+                            // Damage the target, using the shooter as the damager
+                            ((LivingEntity) entity).damage(3, player);
+                            armorStand2.remove();
+                            // Cancel the particle beam
+                            this.cancel();
+                            // We must return here, otherwise the code below will display one more particle.
+                            return;
+                        }
+                    }
+                }
+
+                beamLength++; // This is the distance between each particle
+
+                // Kill this task if the beam length is max
+                if (beamLength >= maxBeamLength) {
+                    this.cancel();
+                    return;
+                }
+
+                // Now we add the direction vector offset to the particle's current location
+                particleLoc.add(vecOffset);
+
+                // Display the particle in the new location
+
+
+                armorStand2.teleport(particleLoc);
+                world.spawnParticle(Particle.CRIT, particleLoc, 1, 0.4, 0.4, 0.4, 0);
+            }
+        }.runTaskTimer(plugin, 0, 1);
+        // 0 is the delay in ticks before starting this task
+        // 1 is the how often to repeat the run() function, in ticks (20 ticks are in
+        // one second)
     }
 
     public void particleBeam(Player player) {
@@ -1277,7 +1368,6 @@ public class PlayerAttackListener implements Listener {
 
                     // Kill this task if the beam length is max
                     if (beamLength >= maxBeamLength) {
-                        world.strikeLightning(particleLoc);
                         this.cancel();
                         return;
                     }

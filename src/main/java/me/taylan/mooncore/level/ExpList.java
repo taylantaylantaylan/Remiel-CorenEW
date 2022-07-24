@@ -42,7 +42,7 @@ public class ExpList {
 		expMap.put("SKELETON", 2);
 		expMap.put("ZOMBIE", 1);
 		expMap.put("GHAST", 5);
-		expMap.put("MAGMA_CUBE", 3);
+		expMap.put("MAGMA_CUBE", 10);
 		expMap.put("SLIME", 2);
 		expMap.put("BLAZE", 5);
 		expMap.put("CREEPER", 5);
@@ -108,7 +108,7 @@ public class ExpList {
 		expMap.put("BROWN_MUSHROOM", 2);
 		expMap.put("PUMPKIN", 3);
 		expMap.put("MELON", 3);
-
+		expMap.put("APPLE", 3);
 	}
 
 }

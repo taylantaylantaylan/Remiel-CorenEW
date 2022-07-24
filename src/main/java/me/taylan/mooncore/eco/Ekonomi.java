@@ -8,6 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import javax.naming.OperationNotSupportedException;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +23,7 @@ public class Ekonomi implements Economy {
     }
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     @Override
@@ -46,34 +48,33 @@ public class Ekonomi implements Economy {
 
     @Override
     public String currencyNamePlural() {
-        return null;
+        return "Dinar";
     }
 
     @Override
     public String currencyNameSingular() {
-        return null;
+        return "Dinar";
     }
 
     @Override
-    public boolean hasAccount(String s) {
-        return false;
+    public boolean hasAccount(String playerName) {
+        return hasAccount(playerName, "");
     }
 
     @Override
     public boolean hasAccount(OfflinePlayer offlinePlayer) {
-        return false;
+        return true;
     }
 
     @Override
-    public boolean hasAccount(String s, String s1) {
-        return false;
+    public boolean hasAccount(String playerName, String worldName) {
+        return true;
     }
 
     @Override
-    public boolean hasAccount(OfflinePlayer offlinePlayer, String s) {
-        return false;
+    public boolean hasAccount(OfflinePlayer player, String worldName) {
+        return hasAccount(player);
     }
-
     @Override
     public double getBalance(String s) {
         Player player = Bukkit.getPlayer(s);
@@ -102,44 +103,57 @@ public class Ekonomi implements Economy {
 
     @Override
     public boolean has(String s, double v) {
-        return false;
+        return getBalance(Bukkit.getPlayer(s)) >= v;
     }
 
     @Override
     public boolean has(OfflinePlayer offlinePlayer, double v) {
-        return false;
+        return getBalance(offlinePlayer) >= v;
     }
 
     @Override
     public boolean has(String s, String s1, double v) {
-        return false;
+        return getBalance(Bukkit.getPlayer(s)) >= v;
     }
 
     @Override
     public boolean has(OfflinePlayer offlinePlayer, String s, double v) {
-        return false;
+        return getBalance(offlinePlayer) >= v;
+    }
+
+
+
+    @Override
+    public EconomyResponse withdrawPlayer(String playerName, String worldName, double v) {
+        Player player = Bukkit.getPlayer(playerName);
+        UUID uuid = player.getUniqueId();
+        statsManager.setPara(uuid,-v);
+        return new EconomyResponse(-v,getBalance(playerName), EconomyResponse.ResponseType.SUCCESS,"Hatalı");
+
     }
 
     @Override
-    public EconomyResponse withdrawPlayer(String s, double v) {
-        return null;
+    public EconomyResponse withdrawPlayer(String playerName, double v) {
+        Player player = Bukkit.getPlayer(playerName);
+        UUID uuid = player.getUniqueId();
+        statsManager.setPara(uuid,-v);
+        return new EconomyResponse(-v,getBalance(playerName), EconomyResponse.ResponseType.SUCCESS,"Hatalı");
+
     }
 
     @Override
     public EconomyResponse withdrawPlayer(OfflinePlayer offlinePlayer, double v) {
-        return null;
+        UUID uuid = offlinePlayer.getUniqueId();
+        statsManager.setPara(uuid,-v);
+        return new EconomyResponse(-v,getBalance(offlinePlayer), EconomyResponse.ResponseType.SUCCESS,"Hatalı");
     }
 
     @Override
-    public EconomyResponse withdrawPlayer(String s, String s1, double v) {
-        return null;
+    public EconomyResponse withdrawPlayer(OfflinePlayer player, String worldName, double v) {
+        UUID uuid = player.getUniqueId();
+        statsManager.setPara(uuid,-v);
+        return new EconomyResponse(-v,getBalance(player), EconomyResponse.ResponseType.SUCCESS,"Hatalı");
     }
-
-    @Override
-    public EconomyResponse withdrawPlayer(OfflinePlayer offlinePlayer, String s, double v) {
-        return null;
-    }
-
     @Override
     public EconomyResponse depositPlayer(String s, double v) {
         Player player = Bukkit.getPlayer(s);
@@ -171,68 +185,69 @@ public class Ekonomi implements Economy {
     }
 
     @Override
-    public EconomyResponse createBank(String s, String s1) {
-        return null;
+    public EconomyResponse createBank(String name, String player) {
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, null);
     }
 
     @Override
-    public EconomyResponse createBank(String s, OfflinePlayer offlinePlayer) {
-        return null;
+    public EconomyResponse createBank(String name, OfflinePlayer player) {
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, null);
     }
 
     @Override
-    public EconomyResponse deleteBank(String s) {
-        return null;
+    public EconomyResponse deleteBank(String name) {
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, null);
     }
 
     @Override
-    public EconomyResponse bankBalance(String s) {
-        return null;
+    public EconomyResponse bankBalance(String name) {
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, null);
     }
 
     @Override
-    public EconomyResponse bankHas(String s, double v) {
-        return null;
+    public EconomyResponse bankHas(String name, double amount) {
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, null);
     }
 
     @Override
-    public EconomyResponse bankWithdraw(String s, double v) {
-        return null;
+    public EconomyResponse bankWithdraw(String name, double amount) {
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, null);
     }
 
     @Override
-    public EconomyResponse bankDeposit(String s, double v) {
-        return null;
+    public EconomyResponse bankDeposit(String name, double amount) {
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, null);
     }
 
     @Override
-    public EconomyResponse isBankOwner(String s, String s1) {
-        return null;
+    public EconomyResponse isBankOwner(String name, String playerName) {
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, null);
     }
 
     @Override
-    public EconomyResponse isBankOwner(String s, OfflinePlayer offlinePlayer) {
-        return null;
+    public EconomyResponse isBankOwner(String name, OfflinePlayer player) {
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, null);
     }
 
     @Override
-    public EconomyResponse isBankMember(String s, String s1) {
-        return null;
+    public EconomyResponse isBankMember(String name, String playerName) {
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, null);
     }
 
     @Override
-    public EconomyResponse isBankMember(String s, OfflinePlayer offlinePlayer) {
-        return null;
+    public EconomyResponse isBankMember(String name, OfflinePlayer player) {
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, null);
     }
+
 
     @Override
     public List<String> getBanks() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
-    public boolean createPlayerAccount(String s) {
-        return false;
+    public boolean createPlayerAccount(String player) {
+        return createPlayerAccount(Bukkit.getPlayer(player));
     }
 
     @Override
@@ -241,12 +256,12 @@ public class Ekonomi implements Economy {
     }
 
     @Override
-    public boolean createPlayerAccount(String s, String s1) {
-        return false;
+    public boolean createPlayerAccount(String playerName, String worldName) {
+        return createPlayerAccount(playerName);
     }
 
     @Override
-    public boolean createPlayerAccount(OfflinePlayer offlinePlayer, String s) {
-        return false;
+    public boolean createPlayerAccount(OfflinePlayer player, String worldName) {
+        return createPlayerAccount(player);
     }
 }

@@ -96,13 +96,23 @@ public class StatsManager {
         fc.set("Product." + "FurnaceAmount", 0);
         fc.set("Product." + "CookProduction", 0);
         fc.set("Product." + "CookAmount", 0);
+        fc.set("Product." + "JeweleryProduction", 0);
+        fc.set("Product." + "JeweleryAmount", 0);
         fc.set("Product." + "RealFurnaceProduction", 0);
         fc.set("Product." + "RealFurnaceAmount", 0);
         fc.set("Product." + "WorkProduction", 0);
+        fc.set("Product." + "CookBlock", null);
+        fc.set("Product." + "FurnaceBlock", null);
+        fc.set("Product." + "SmithBlock", null);
+        fc.set("Product." + "WorkBlock", null);
+        fc.set("Product." + "BlastFurnaceBlock", null);
+        fc.set("Product." + "JeweleryBlock", null);
+        fc.set("Product." + "Time", 0);
         fc.set("Stats." + "Guc", 5);
         fc.set("Stats." + "Can", (int) 100);
         fc.set("Stats." + "Direnc", 2);
         fc.set("Stats." + "Hiz", 2);
+        fc.set("Stats." + "Para", 50);
         fc.set("Stats." + "HiclikDirenci", 0);
         fc.set("Stats." + "SogukDirenci", 0);
         fc.set("Stats." + "SicakDirenci", 0);
@@ -935,6 +945,18 @@ public class StatsManager {
         fc = statfile.get(uuid);
         return fc.getInt("Stats." + "AlinanBolge");
     }
+    public void setCan1(UUID uuid) {
+        fc = statfile.get(uuid);
+        fc.set("Stats." + "Can", 1);
+        s(uuid);
+    }
+
+    public void setDirenc1(UUID uuid) {
+        fc = statfile.get(uuid);
+        fc.set("Stats." + "Direnc", 1);
+        s(uuid);
+    }
+
     public void setDirenc(UUID uuid, int size) {
         fc = statfile.get(uuid);
         int level = getDirenc(uuid);
@@ -948,32 +970,6 @@ public class StatsManager {
         return fc.getInt("Stats." + "Direnc");
     }
 
-    public void setAgirlik(UUID uuid, int size) {
-        fc = statfile.get(uuid);
-        int level = getAgirlik(uuid);
-        int result = level + size;
-        fc.set("Stats." + "Agirlik", result);
-        s(uuid);
-    }
-
-    public int getAgirlik(UUID uuid) {
-        fc = statfile.get(uuid);
-
-        return fc.getInt("Stats." + "Agirlik");
-    }
-
-    public void setMaxAgirlik(UUID uuid, int size) {
-        fc = statfile.get(uuid);
-        int level = getMaxAgirlik(uuid);
-        int result = level + size;
-        fc.set("Stats." + "maxAgirlik", result);
-        s(uuid);
-    }
-
-    public int getMaxAgirlik(UUID uuid) {
-        fc = statfile.get(uuid);
-        return fc.getInt("Stats." + "maxAgirlik");
-    }
 
     public void setHiz(Player p, UUID uuid, int size) {
         fc = statfile.get(uuid);

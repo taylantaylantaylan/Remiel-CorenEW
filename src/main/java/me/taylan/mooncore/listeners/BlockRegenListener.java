@@ -2,6 +2,8 @@ package me.taylan.mooncore.listeners;
 
 import com.destroystokyo.paper.MaterialTags;
 import me.taylan.mooncore.MoonCore;
+import me.taylan.mooncore.level.ExpList;
+import me.taylan.mooncore.level.Levels;
 import me.taylan.mooncore.utils.ItemHandler;
 import me.taylan.mooncore.utils.Painter;
 import me.taylan.mooncore.utils.StatsManager;
@@ -26,11 +28,13 @@ public class BlockRegenListener implements Listener {
     private MoonCore plugin;
     private ItemHandler itemHandler;
     private StatsManager statsManager;
+    private Levels levels;
 
 
     public BlockRegenListener(MoonCore plugin) {
         this.plugin = plugin;
         this.itemHandler = plugin.getItemHandler();
+        this.levels = plugin.getLevels();
         this.statsManager = plugin.getStatsManager();
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
 
@@ -44,10 +48,10 @@ public class BlockRegenListener implements Listener {
             Material blocktype = event.getBlock().getType();
             World world = player.getWorld();
             ItemStack item = player.getInventory().getItemInMainHand();
-            if (player.getWorld().getName().equals("world") || player.getWorld().getName().equals("dungeonworld")|| player.getWorld().getName().equals("remielsurvival")) {
+            if (player.getWorld().getName().equals("world") || player.getWorld().getName().equals("dungeonworld") || player.getWorld().getName().equals("remielsurvival")) {
                 if (!(Tag.LOGS.isTagged(blocktype) || (Tag.COAL_ORES.isTagged(blocktype) ||
                         (Tag.IRON_ORES.isTagged(blocktype)) || (Tag.DIAMOND_ORES.isTagged(blocktype)) || (Tag.LAPIS_ORES.isTagged(blocktype)) ||
-                        (Tag.REDSTONE_ORES.isTagged(blocktype)) || (Tag.COPPER_ORES.isTagged(blocktype)) || (Tag.GOLD_ORES.isTagged(blocktype)) || blocktype == Material.OBSIDIAN || blocktype == Material.CLAY || blocktype == Material.RAW_COPPER_BLOCK || blocktype == Material.RAW_IRON_BLOCK || blocktype == Material.GRAVEL || blocktype == Material.BASALT
+                        (Tag.REDSTONE_ORES.isTagged(blocktype)) || (Tag.COPPER_ORES.isTagged(blocktype)) || (Tag.GOLD_ORES.isTagged(blocktype)) || blocktype == Material.OBSIDIAN || blocktype == Material.CLAY || blocktype == Material.RAW_COPPER_BLOCK || blocktype == Material.RAW_IRON_BLOCK || blocktype == Material.GRAVEL
                 ))) {
                     event.setCancelled(true);
                 }
@@ -61,11 +65,13 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
+                                ItemStack silver = itemHandler.silverore;
+                                silver.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.silverore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(),silver);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.silverore);
+                                    player.getInventory().addItem(silver);
                                 }
                                 new BukkitRunnable() {
                                     @Override
@@ -88,11 +94,13 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
+                                ItemStack silver = itemHandler.copperore;
+                                silver.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.copperore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), silver);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.copperore);
+                                    player.getInventory().addItem(silver);
                                 }
                                 new BukkitRunnable() {
                                     @Override
@@ -111,11 +119,13 @@ public class BlockRegenListener implements Listener {
                         event.setDropItems(false);
                         event.getBlock().setType(Material.BEDROCK);
                         event.setCancelled(true);
+                        ItemStack silver1 = itemHandler.glowstone;
+                        silver1.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.glowstone);
+                            world.dropItemNaturally(event.getBlock().getLocation(), silver1);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.glowstone);
+                            player.getInventory().addItem(silver1);
                         }
                         new BukkitRunnable() {
                             @Override
@@ -128,11 +138,13 @@ public class BlockRegenListener implements Listener {
                         event.setDropItems(false);
                         event.getBlock().setType(Material.AIR);
                         event.setCancelled(true);
+                        ItemStack silver2 = itemHandler.cactus;
+                        silver2.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.glowstone);
+                            world.dropItemNaturally(event.getBlock().getLocation(), silver2);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.cactus);
+                            player.getInventory().addItem(silver2);
                         }
                         new BukkitRunnable() {
                             @Override
@@ -145,8 +157,10 @@ public class BlockRegenListener implements Listener {
                         event.setDropItems(false);
                         event.getBlock().setType(Material.BEDROCK);
                         event.setCancelled(true);
+                        ItemStack silver3 = itemHandler.terracotta;
+                        silver3.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.terracotta);
+                            world.dropItemNaturally(event.getBlock().getLocation(), silver3);
 
                         } else {
                             player.getInventory().addItem(itemHandler.terracotta);
@@ -157,6 +171,50 @@ public class BlockRegenListener implements Listener {
                                 event.getBlock().setType(Material.TERRACOTTA);
                             }
                         }.runTaskLater(plugin, 200);
+                        break;
+                    case LARGE_FERN:
+                        event.setDropItems(false);
+                        event.getBlock().setType(Material.AIR);
+                        event.setCancelled(true);
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                event.getBlock().setType(Material.LARGE_FERN);
+                            }
+                        }.runTaskLater(plugin, 800);
+                        break;
+                    case FERN:
+                        event.setDropItems(false);
+                        event.getBlock().setType(Material.AIR);
+                        event.setCancelled(true);
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                event.getBlock().setType(Material.FERN);
+                            }
+                        }.runTaskLater(plugin, 800);
+                        break;
+                    case GRASS:
+                        event.setDropItems(false);
+                        event.getBlock().setType(Material.AIR);
+                        event.setCancelled(true);
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                event.getBlock().setType(Material.GRASS);
+                            }
+                        }.runTaskLater(plugin, 800);
+                        break;
+                    case TALL_GRASS:
+                        event.setDropItems(false);
+                        event.getBlock().setType(Material.AIR);
+                        event.setCancelled(true);
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                event.getBlock().setType(Material.TALL_GRASS);
+                            }
+                        }.runTaskLater(plugin, 800);
                         break;
                     case WHITE_TERRACOTTA:
                         event.setDropItems(false);
@@ -226,15 +284,36 @@ public class BlockRegenListener implements Listener {
                             }
                         }.runTaskLater(plugin, 200);
                         break;
+                    case SAND:
+                        event.setDropItems(false);
+                        event.getBlock().setType(Material.BEDROCK);
+                        event.setCancelled(true);
+                        ItemStack silver4 = itemHandler.sand;
+                        silver4.setAmount(1);
+                        if (player.getInventory().firstEmpty() == -1) {
+                            world.dropItemNaturally(event.getBlock().getLocation(), silver4);
+
+                        } else {
+                            player.getInventory().addItem(silver4);
+                        }
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                event.getBlock().setType(Material.SAND);
+                            }
+                        }.runTaskLater(plugin, 200);
+                        break;
                     case RED_SAND:
                         event.setDropItems(false);
                         event.getBlock().setType(Material.BEDROCK);
                         event.setCancelled(true);
+                        ItemStack silver5 = itemHandler.redsand;
+                        silver5.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.redsand);
+                            world.dropItemNaturally(event.getBlock().getLocation(), silver5);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.redsand);
+                            player.getInventory().addItem(silver5);
                         }
                         new BukkitRunnable() {
                             @Override
@@ -251,11 +330,13 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
+                                ItemStack silver6 = itemHandler.goldore;
+                                silver6.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.goldore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), silver6);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.goldore);
+                                    player.getInventory().addItem(silver6);
                                 }
                                 new BukkitRunnable() {
                                     @Override
@@ -277,11 +358,13 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.BEDROCK);
                                 event.setCancelled(true);
+                                ItemStack silver7 = itemHandler.adamantiumore;
+                                silver7.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.adamantiumore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), silver7);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.adamantiumore);
+                                    player.getInventory().addItem(silver7);
                                 }
                                 new BukkitRunnable() {
                                     @Override
@@ -303,11 +386,13 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.BEDROCK);
                                 event.setCancelled(true);
+                                ItemStack silver12 = itemHandler.crimsonore;
+                                silver12.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.crimsonore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), silver12);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.crimsonore);
+                                    player.getInventory().addItem(silver12);
                                 }
                                 new BukkitRunnable() {
                                     @Override
@@ -330,11 +415,13 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
+                                ItemStack silver9 = itemHandler.nikelore;
+                                silver9.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.nikelore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), silver9);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.nikelore);
+                                    player.getInventory().addItem(silver9);
                                 }
                                 new BukkitRunnable() {
                                     @Override
@@ -348,32 +435,17 @@ public class BlockRegenListener implements Listener {
                             }
                         }
                         break;
-                    case STONE:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
-                        event.setCancelled(true);
-                        if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.cobblestone);
-
-                        } else {
-                            player.getInventory().addItem(itemHandler.cobblestone);
-                        }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.STONE);
-                            }
-                        }.runTaskLater(plugin, 200);
-                        break;
                     case COBBLESTONE:
                         event.setDropItems(false);
                         event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                         event.setCancelled(true);
+                        ItemStack stone = itemHandler.cobblestone;
+                        stone.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.cobblestone);
+                            world.dropItemNaturally(event.getBlock().getLocation(), stone);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.cobblestone);
+                            player.getInventory().addItem(stone);
                         }
                         new BukkitRunnable() {
                             @Override
@@ -382,15 +454,18 @@ public class BlockRegenListener implements Listener {
                             }
                         }.runTaskLater(plugin, 200);
                         break;
+
                     case TUFF:
                         event.setDropItems(false);
                         event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                         event.setCancelled(true);
+                        ItemStack stone2 = itemHandler.cobblestone;
+                        stone2.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.cobblestone);
+                            world.dropItemNaturally(event.getBlock().getLocation(), stone2);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.cobblestone);
+                            player.getInventory().addItem(stone2);
                         }
                         new BukkitRunnable() {
                             @Override
@@ -399,16 +474,39 @@ public class BlockRegenListener implements Listener {
                             }
                         }.runTaskLater(plugin, 200);
                         break;
+
+                    case STONE:
+                        event.setDropItems(false);
+                        event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
+                        event.setCancelled(true);
+                        ItemStack stone1 = itemHandler.cobblestone;
+                        stone1.setAmount(1);
+                        if (player.getInventory().firstEmpty() == -1) {
+                            world.dropItemNaturally(event.getBlock().getLocation(), stone1);
+
+                        } else {
+                            player.getInventory().addItem(stone1);
+                        }
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                event.getBlock().setType(Material.STONE);
+                            }
+                        }.runTaskLater(plugin, 200);
+                        break;
+
                     case REDSTONE_ORE:
                         event.setDropItems(false);
                         event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                         event.setCancelled(true);
-                       event.setExpToDrop(2);
+                        event.setExpToDrop(2);
+                        ItemStack stoneRED = itemHandler.redstone;
+                        stoneRED.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.redstone);
+                            world.dropItemNaturally(event.getBlock().getLocation(), stoneRED);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.redstone);
+                            player.getInventory().addItem(stoneRED);
                         }
                         new BukkitRunnable() {
                             @Override
@@ -457,11 +555,13 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
+                                ItemStack obsidianore2 = itemHandler.obsidianore;
+                                obsidianore2.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.obsidianore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), obsidianore2);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.obsidianore);
+                                    player.getInventory().addItem(obsidianore2);
                                 }
                                 new BukkitRunnable() {
                                     @Override
@@ -510,10 +610,16 @@ public class BlockRegenListener implements Listener {
                         event.getBlock().setType(Material.AIR);
                         if (chance2 < 2) {
                             if (player.getInventory().firstEmpty() == -1) {
-                                world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.apple);
+                                ItemStack aple = itemHandler.apple;
+                                aple.setAmount(1);
+                                world.dropItemNaturally(event.getBlock().getLocation(), aple);
+                               levels.giveFarmingExp(player,aple);
 
                             } else {
-                                player.getInventory().addItem(itemHandler.apple);
+                                ItemStack aple2 = itemHandler.apple;
+                                aple2.setAmount(1);
+                                player.getInventory().addItem(aple2);
+                                levels.giveFarmingExp(player,aple2);
                             }
                         }
                         new BukkitRunnable() {
@@ -528,10 +634,14 @@ public class BlockRegenListener implements Listener {
                         event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                         event.setCancelled(true);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.clay);
+                            ItemStack clay = itemHandler.clay;
+                            clay.setAmount(1);
+                            world.dropItemNaturally(event.getBlock().getLocation(), clay);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.clay);
+                            ItemStack clay = itemHandler.clay;
+                            clay.setAmount(1);
+                            player.getInventory().addItem(clay);
                         }
                         new BukkitRunnable() {
                             @Override
@@ -548,11 +658,13 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
+                                ItemStack diamond = itemHandler.diamond;
+                                diamond.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.diamond);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), diamond);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.diamond);
+                                    player.getInventory().addItem(diamond);
                                 }
                                 new BukkitRunnable() {
                                     @Override
@@ -574,11 +686,13 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
+                                ItemStack ironore = itemHandler.ironore;
+                                ironore.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.ironore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), ironore);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.ironore);
+                                    player.getInventory().addItem(ironore);
                                 }
                                 new BukkitRunnable() {
                                     @Override
@@ -641,73 +755,93 @@ public class BlockRegenListener implements Listener {
                             }
                         }.runTaskLater(plugin, 200);
                         break;
-                    case SPRUCE_WOOD:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.SPRUCE_PLANKS);
-                        event.setCancelled(true);
-                        if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.sprucewood);
+                    case STRIPPED_DARK_OAK_WOOD:
+                        if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                            NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
+                            int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
+                            if (aletgucu > 5) {
+                                event.setDropItems(false);
+                                event.getBlock().setType(Material.AIR);
+                                event.setCancelled(true);
+                                ItemStack silver = itemHandler.oldoakwood;
+                                silver.setAmount(1);
+                                if (player.getInventory().firstEmpty() == -1) {
+                                    world.dropItemNaturally(event.getBlock().getLocation(),silver);
 
-                        } else {
-                            player.getInventory().addItem(itemHandler.sprucewood);
-                        }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.SPRUCE_WOOD);
+                                } else {
+                                    player.getInventory().addItem(silver);
+                                }
+                                new BukkitRunnable() {
+                                    @Override
+                                    public void run() {
+                                        event.getBlock().setType(Material.STRIPPED_DARK_OAK_WOOD);
+                                    }
+                                }.runTaskLater(plugin, 400);
+                            } else {
+                                event.setCancelled(true);
+                                player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 6"));
                             }
-                        }.runTaskLater(plugin, 200);
+                        }
+
                         break;
-                    case BIRCH_WOOD:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.BIRCH_PLANKS);
-                        event.setCancelled(true);
-                        if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.birchwood);
 
-                        } else {
-                            player.getInventory().addItem(itemHandler.birchwood);
-                        }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.BIRCH_WOOD);
+                    case SPRUCE_WOOD:
+                        if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                            NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
+                            int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
+                            if (aletgucu > 4) {
+                                event.setDropItems(false);
+                                event.getBlock().setType(Material.AIR);
+                                event.setCancelled(true);
+                                ItemStack silver = itemHandler.sprucewood;
+                                silver.setAmount(1);
+                                if (player.getInventory().firstEmpty() == -1) {
+                                    world.dropItemNaturally(event.getBlock().getLocation(),silver);
+
+                                } else {
+                                    player.getInventory().addItem(silver);
+                                }
+                                new BukkitRunnable() {
+                                    @Override
+                                    public void run() {
+                                        event.getBlock().setType(Material.SPRUCE_WOOD);
+                                    }
+                                }.runTaskLater(plugin, 200);
+                            } else {
+                                event.setCancelled(true);
+                                player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 5"));
                             }
-                        }.runTaskLater(plugin, 200);
+                        }
+
                         break;
                     case ACACIA_WOOD:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.ACACIA_PLANKS);
-                        event.setCancelled(true);
-                        if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.acaciawood);
+                        if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                            NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
+                            int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
+                            if (aletgucu > 6) {
+                                event.setDropItems(false);
+                                event.getBlock().setType(Material.AIR);
+                                event.setCancelled(true);
+                                ItemStack silver = itemHandler.acaciawood;
+                                silver.setAmount(1);
+                                if (player.getInventory().firstEmpty() == -1) {
+                                    world.dropItemNaturally(event.getBlock().getLocation(),silver);
 
-                        } else {
-                            player.getInventory().addItem(itemHandler.acaciawood);
-                        }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.ACACIA_WOOD);
+                                } else {
+                                    player.getInventory().addItem(silver);
+                                }
+                                new BukkitRunnable() {
+                                    @Override
+                                    public void run() {
+                                        event.getBlock().setType(Material.ACACIA_WOOD);
+                                    }
+                                }.runTaskLater(plugin, 200);
+                            } else {
+                                event.setCancelled(true);
+                                player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 7"));
                             }
-                        }.runTaskLater(plugin, 200);
-                        break;
-                    case STRIPPED_DARK_OAK_WOOD:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.DARK_OAK_PLANKS);
-                        event.setCancelled(true);
-                        if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.oldoakwood);
+                        }
 
-                        } else {
-                            player.getInventory().addItem(itemHandler.oldoakwood);
-                        }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.STRIPPED_DARK_OAK_WOOD);
-                            }
-                        }.runTaskLater(plugin, 200);
                         break;
 
                     case OAK_LOG:
@@ -739,39 +873,94 @@ public class BlockRegenListener implements Listener {
                         event.setCancelled(true);
                         break;
                     case JUNGLE_WOOD:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.JUNGLE_PLANKS);
-                        event.setCancelled(true);
-                        if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.godwood);
+                        if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                            NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
+                            int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
+                            if (aletgucu > 9) {
+                                event.setDropItems(false);
+                                event.setExpToDrop(1);
+                                event.getBlock().setType(Material.AIR);
+                                event.setCancelled(true);
+                                ItemStack godwood = itemHandler.godwood;
+                                godwood.setAmount(1);
+                                if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
+                                    int logchance = ThreadLocalRandom.current().nextInt(30);
+                                    if(logchance<5) {
+                                        player.sendMessage(Painter.paint("&6Ekstra Odun Düşürdün!"));
+                                        if (player.getInventory().firstEmpty() == -1) {
+                                            world.dropItemNaturally(event.getBlock().getLocation(), godwood);
 
-                        } else {
-                            player.getInventory().addItem(itemHandler.godwood);
-                        }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.JUNGLE_WOOD);
+                                        } else {
+                                            player.getInventory().addItem(godwood);
+
+                                        }
+                                    }
+                                }
+                                if (player.getInventory().firstEmpty() == -1) {
+                                    world.dropItemNaturally(player.getLocation(), godwood);
+
+                                } else {
+                                    player.getInventory().addItem(godwood);
+                                }
+
+
+                                new BukkitRunnable() {
+                                    @Override
+                                    public void run() {
+                                        event.getBlock().setType(Material.JUNGLE_WOOD);
+                                    }
+                                }.runTaskLater(plugin, 250);
+                            } else {
+                                event.setCancelled(true);
+                                player.sendMessage(Painter.paint("&6Bu odun için gereken minimum alet gücü: 10"));
                             }
-                        }.runTaskLater(plugin, 200);
+                        }
                         break;
+
                     case DARK_OAK_WOOD:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.DARK_OAK_PLANKS);
-                        event.setCancelled(true);
-                        if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.darkoakwood);
+                        if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                            NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
+                            int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
+                            if (aletgucu > 8) {
+                                event.setDropItems(false);
+                                event.getBlock().setType(Material.AIR);
+                                event.setCancelled(true);
+                                ItemStack darkoakwood = itemHandler.darkoakwood;
+                                darkoakwood.setAmount(1);
+                                if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
+                                    int logchance = ThreadLocalRandom.current().nextInt(30);
+                                    if(logchance<5) {
+                                        player.sendMessage(Painter.paint("&6Ekstra Odun Düşürdün!"));
+                                        if (player.getInventory().firstEmpty() == -1) {
+                                            world.dropItemNaturally(event.getBlock().getLocation(), darkoakwood);
 
-                        } else {
-                            player.getInventory().addItem(itemHandler.darkoakwood);
-                        }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.DARK_OAK_WOOD);
+                                        } else {
+                                            player.getInventory().addItem(darkoakwood);
+
+                                        }
+                                    }
+                                }
+                                if (player.getInventory().firstEmpty() == -1) {
+                                    world.dropItemNaturally(player.getLocation(), darkoakwood);
+
+                                } else {
+                                    player.getInventory().addItem(darkoakwood);
+                                }
+
+
+                                new BukkitRunnable() {
+                                    @Override
+                                    public void run() {
+                                        event.getBlock().setType(Material.DARK_OAK_WOOD);
+                                    }
+                                }.runTaskLater(plugin, 250);
+                            } else {
+                                event.setCancelled(true);
+                                player.sendMessage(Painter.paint("&6Bu odun için gereken minimum alet gücü: 9"));
                             }
-                        }.runTaskLater(plugin, 200);
+                        }
                         break;
+
                     case ANCIENT_DEBRIS:
                         if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
                             if (MaterialTags.AXES.isTagged(item)) {
@@ -781,11 +970,13 @@ public class BlockRegenListener implements Listener {
                                     event.setDropItems(false);
                                     event.getBlock().setType(Material.BEDROCK);
                                     event.setCancelled(true);
+                                    ItemStack heavywood = itemHandler.heavywood;
+                                    heavywood.setAmount(1);
                                     if (player.getInventory().firstEmpty() == -1) {
-                                        world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.heavywood);
+                                        world.dropItemNaturally(event.getBlock().getLocation(), heavywood);
 
                                     } else {
-                                        player.getInventory().addItem(itemHandler.heavywood);
+                                        player.getInventory().addItem(heavywood);
                                     }
                                     new BukkitRunnable() {
                                         @Override
@@ -806,11 +997,27 @@ public class BlockRegenListener implements Listener {
                         event.setDropItems(false);
                         event.getBlock().setType(Material.OAK_PLANKS);
                         event.setCancelled(true);
+                        ItemStack oakwood = itemHandler.oakwood;
+                        oakwood.setAmount(1);
+                        if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
+                            int logchance = ThreadLocalRandom.current().nextInt(30);
+                            if(logchance<5) {
+                                player.sendMessage(Painter.paint("&6Ekstra Odun Düşürdün!"));
+                                if (player.getInventory().firstEmpty() == -1) {
+                                    world.dropItemNaturally(event.getBlock().getLocation(), oakwood);
+
+                                } else {
+                                    player.getInventory().addItem(oakwood);
+
+                                }
+                            }
+                        }
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.oakwood);
+                            world.dropItemNaturally(event.getBlock().getLocation(), oakwood);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.oakwood);
+                            player.getInventory().addItem(oakwood);
+
                         }
                         new BukkitRunnable() {
                             @Override
@@ -824,11 +1031,13 @@ public class BlockRegenListener implements Listener {
                         event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                         event.setCancelled(true);
                         event.setExpToDrop(1);
+                        ItemStack salt = itemHandler.salt;
+                        salt.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.salt);
+                            world.dropItemNaturally(event.getBlock().getLocation(),salt);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.salt);
+                            player.getInventory().addItem(salt);
                         }
                         new BukkitRunnable() {
                             @Override
@@ -849,18 +1058,15 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
+                                ItemStack silver = itemHandler.silverore;
+                                silver.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.silverore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(),silver);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.silverore);
+                                    player.getInventory().addItem(silver);
                                 }
-                                new BukkitRunnable() {
-                                    @Override
-                                    public void run() {
-                                        event.getBlock().setType(Material.RAW_IRON_BLOCK);
-                                    }
-                                }.runTaskLater(plugin, 200);
+
                             } else {
                                 event.setCancelled(true);
                                 player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 6"));
@@ -876,18 +1082,15 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
+                                ItemStack silver = itemHandler.copperore;
+                                silver.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.copperore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), silver);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.copperore);
+                                    player.getInventory().addItem(silver);
                                 }
-                                new BukkitRunnable() {
-                                    @Override
-                                    public void run() {
-                                        event.getBlock().setType(Material.COPPER_ORE);
-                                    }
-                                }.runTaskLater(plugin, 200);
+
                             } else {
                                 event.setCancelled(true);
                                 player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 2"));
@@ -899,52 +1102,65 @@ public class BlockRegenListener implements Listener {
                         event.setDropItems(false);
                         event.getBlock().setType(Material.BEDROCK);
                         event.setCancelled(true);
+                        ItemStack silver1 = itemHandler.glowstone;
+                        silver1.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.glowstone);
+                            world.dropItemNaturally(event.getBlock().getLocation(), silver1);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.glowstone);
+                            player.getInventory().addItem(silver1);
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.SHROOMLIGHT);
-                            }
-                        }.runTaskLater(plugin, 200);
+
                         break;
                     case CACTUS:
                         event.setDropItems(false);
                         event.getBlock().setType(Material.AIR);
                         event.setCancelled(true);
+                        ItemStack silver2 = itemHandler.cactus;
+                        silver2.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.glowstone);
+                            world.dropItemNaturally(event.getBlock().getLocation(), silver2);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.cactus);
+                            player.getInventory().addItem(silver2);
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.CACTUS);
-                            }
-                        }.runTaskLater(plugin, 250);
+
                         break;
                     case TERRACOTTA:
                         event.setDropItems(false);
                         event.getBlock().setType(Material.BEDROCK);
                         event.setCancelled(true);
+                        ItemStack silver3 = itemHandler.terracotta;
+                        silver3.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.terracotta);
+                            world.dropItemNaturally(event.getBlock().getLocation(), silver3);
 
                         } else {
                             player.getInventory().addItem(itemHandler.terracotta);
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.TERRACOTTA);
-                            }
-                        }.runTaskLater(plugin, 200);
+                        break;
+                    case LARGE_FERN:
+                        event.setDropItems(false);
+                        event.getBlock().setType(Material.AIR);
+                        event.setCancelled(true);
+                        break;
+                    case FERN:
+                        event.setDropItems(false);
+                        event.getBlock().setType(Material.AIR);
+                        event.setCancelled(true);
+
+                        break;
+                    case GRASS:
+                        event.setDropItems(false);
+                        event.getBlock().setType(Material.AIR);
+                        event.setCancelled(true);
+
+                        break;
+                    case TALL_GRASS:
+                        event.setDropItems(false);
+                        event.getBlock().setType(Material.AIR);
+                        event.setCancelled(true);
+
                         break;
                     case WHITE_TERRACOTTA:
                         event.setDropItems(false);
@@ -956,12 +1172,7 @@ public class BlockRegenListener implements Listener {
                         } else {
                             player.getInventory().addItem(itemHandler.whiteterracotta);
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.WHITE_TERRACOTTA);
-                            }
-                        }.runTaskLater(plugin, 200);
+
                         break;
                     case YELLOW_TERRACOTTA:
                         event.setDropItems(false);
@@ -973,12 +1184,7 @@ public class BlockRegenListener implements Listener {
                         } else {
                             player.getInventory().addItem(itemHandler.yellowterracotta);
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.YELLOW_TERRACOTTA);
-                            }
-                        }.runTaskLater(plugin, 200);
+
                         break;
                     case ORANGE_TERRACOTTA:
                         event.setDropItems(false);
@@ -990,12 +1196,7 @@ public class BlockRegenListener implements Listener {
                         } else {
                             player.getInventory().addItem(itemHandler.orangeterracotta);
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.ORANGE_TERRACOTTA);
-                            }
-                        }.runTaskLater(plugin, 200);
+
                         break;
                     case LIGHT_GRAY_TERRACOTTA:
                         event.setDropItems(false);
@@ -1007,10 +1208,24 @@ public class BlockRegenListener implements Listener {
                         } else {
                             player.getInventory().addItem(itemHandler.grayterracotta);
                         }
+
+                        break;
+                    case SAND:
+                        event.setDropItems(false);
+                        event.getBlock().setType(Material.BEDROCK);
+                        event.setCancelled(true);
+                        ItemStack silver4 = itemHandler.sand;
+                        silver4.setAmount(1);
+                        if (player.getInventory().firstEmpty() == -1) {
+                            world.dropItemNaturally(event.getBlock().getLocation(), silver4);
+
+                        } else {
+                            player.getInventory().addItem(silver4);
+                        }
                         new BukkitRunnable() {
                             @Override
                             public void run() {
-                                event.getBlock().setType(Material.LIGHT_GRAY_TERRACOTTA);
+                                event.getBlock().setType(Material.SAND);
                             }
                         }.runTaskLater(plugin, 200);
                         break;
@@ -1018,18 +1233,14 @@ public class BlockRegenListener implements Listener {
                         event.setDropItems(false);
                         event.getBlock().setType(Material.BEDROCK);
                         event.setCancelled(true);
+                        ItemStack silver5 = itemHandler.redsand;
+                        silver5.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.redsand);
+                            world.dropItemNaturally(event.getBlock().getLocation(), silver5);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.redsand);
+                            player.getInventory().addItem(silver5);
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.RED_SAND);
-                            }
-                        }.runTaskLater(plugin, 200);
                         break;
                     case GOLD_ORE:
                         if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
@@ -1039,40 +1250,19 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
+                                ItemStack silver6 = itemHandler.goldore;
+                                silver6.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.goldore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), silver6);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.goldore);
+                                    player.getInventory().addItem(silver6);
                                 }
-                                new BukkitRunnable() {
-                                    @Override
-                                    public void run() {
-                                        event.getBlock().setType(Material.GOLD_ORE);
-                                    }
-                                }.runTaskLater(plugin, 200);
                             } else {
                                 event.setCancelled(true);
                                 player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 5"));
                             }
                         }
-                        break;
-                    case SPRUCE_WOOD:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.SPRUCE_PLANKS);
-                        event.setCancelled(true);
-                        if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.sprucewood);
-
-                        } else {
-                            player.getInventory().addItem(itemHandler.sprucewood);
-                        }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.SPRUCE_WOOD);
-                            }
-                        }.runTaskLater(plugin, 200);
                         break;
                     case DEEPSLATE_DIAMOND_ORE:
                         if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
@@ -1082,18 +1272,15 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.BEDROCK);
                                 event.setCancelled(true);
+                                ItemStack silver7 = itemHandler.adamantiumore;
+                                silver7.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.adamantiumore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), silver7);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.adamantiumore);
+                                    player.getInventory().addItem(silver7);
                                 }
-                                new BukkitRunnable() {
-                                    @Override
-                                    public void run() {
-                                        event.getBlock().setType(Material.DEEPSLATE_DIAMOND_ORE);
-                                    }
-                                }.runTaskLater(plugin, 200);
+
                             } else {
                                 event.setCancelled(true);
                                 player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 9"));
@@ -1108,18 +1295,14 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.BEDROCK);
                                 event.setCancelled(true);
+                                ItemStack silver12 = itemHandler.crimsonore;
+                                silver12.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.crimsonore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), silver12);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.crimsonore);
+                                    player.getInventory().addItem(silver12);
                                 }
-                                new BukkitRunnable() {
-                                    @Override
-                                    public void run() {
-                                        event.getBlock().setType(Material.DEEPSLATE_REDSTONE_ORE);
-                                    }
-                                }.runTaskLater(plugin, 200);
                             } else {
                                 event.setCancelled(true);
                                 player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 8"));
@@ -1135,92 +1318,77 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
+                                ItemStack silver9 = itemHandler.nikelore;
+                                silver9.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.nikelore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), silver9);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.nikelore);
+                                    player.getInventory().addItem(silver9);
                                 }
-                                new BukkitRunnable() {
-                                    @Override
-                                    public void run() {
-                                        event.getBlock().setType(Material.RAW_COPPER_BLOCK);
-                                    }
-                                }.runTaskLater(plugin, 200);
                             } else {
                                 event.setCancelled(true);
                                 player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 3"));
                             }
                         }
                         break;
-                    case STONE:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
-                        event.setCancelled(true);
-                        if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.cobblestone);
-
-                        } else {
-                            player.getInventory().addItem(itemHandler.cobblestone);
-                        }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.STONE);
-                            }
-                        }.runTaskLater(plugin, 200);
-                        break;
                     case COBBLESTONE:
                         event.setDropItems(false);
                         event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                         event.setCancelled(true);
+                        ItemStack stone = itemHandler.cobblestone;
+                        stone.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.cobblestone);
+                            world.dropItemNaturally(event.getBlock().getLocation(), stone);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.cobblestone);
+                            player.getInventory().addItem(stone);
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.COBBLESTONE);
-                            }
-                        }.runTaskLater(plugin, 200);
                         break;
+
                     case TUFF:
                         event.setDropItems(false);
                         event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                         event.setCancelled(true);
+                        ItemStack stone2 = itemHandler.cobblestone;
+                        stone2.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.cobblestone);
+                            world.dropItemNaturally(event.getBlock().getLocation(), stone2);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.cobblestone);
+                            player.getInventory().addItem(stone2);
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.TUFF);
-                            }
-                        }.runTaskLater(plugin, 200);
                         break;
+
+                    case STONE:
+                        event.setDropItems(false);
+                        event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
+                        event.setCancelled(true);
+                        ItemStack stone1 = itemHandler.cobblestone;
+                        stone1.setAmount(1);
+                        if (player.getInventory().firstEmpty() == -1) {
+                            world.dropItemNaturally(event.getBlock().getLocation(), stone1);
+
+                        } else {
+                            player.getInventory().addItem(stone1);
+                        }
+
+                        break;
+
                     case REDSTONE_ORE:
                         event.setDropItems(false);
                         event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                         event.setCancelled(true);
                         event.setExpToDrop(2);
+                        ItemStack stoneRED = itemHandler.redstone;
+                        stoneRED.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.redstone);
+                            world.dropItemNaturally(event.getBlock().getLocation(), stoneRED);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.redstone);
+                            player.getInventory().addItem(stoneRED);
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.REDSTONE_ORE);
-                            }
-                        }.runTaskLater(plugin, 200);
+
                         break;
                     case LAPIS_ORE:
                         if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
@@ -1242,12 +1410,7 @@ public class BlockRegenListener implements Listener {
                                 }
 
 
-                                new BukkitRunnable() {
-                                    @Override
-                                    public void run() {
-                                        event.getBlock().setType(Material.LAPIS_ORE);
-                                    }
-                                }.runTaskLater(plugin, 200);
+
                             } else {
                                 event.setCancelled(true);
                                 player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 2"));
@@ -1262,21 +1425,18 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
+                                ItemStack obsidianore2 = itemHandler.obsidianore;
+                                obsidianore2.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.obsidianore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), obsidianore2);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.obsidianore);
+                                    player.getInventory().addItem(obsidianore2);
                                 }
-                                new BukkitRunnable() {
-                                    @Override
-                                    public void run() {
-                                        event.getBlock().setType(Material.OBSIDIAN);
-                                    }
-                                }.runTaskLater(plugin, 200);
+
                             } else {
                                 event.setCancelled(true);
-                                player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 6"));
+                                player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 3"));
                             }
                         }
                         break;
@@ -1301,12 +1461,7 @@ public class BlockRegenListener implements Listener {
                                 player.getInventory().addItem(itemHandler.gravelblock);
                             }
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.GRAVEL);
-                            }
-                        }.runTaskLater(plugin, 200);
+
                         break;
                     case OAK_LEAVES:
                         event.setDropItems(false);
@@ -1315,35 +1470,34 @@ public class BlockRegenListener implements Listener {
                         event.getBlock().setType(Material.AIR);
                         if (chance2 < 2) {
                             if (player.getInventory().firstEmpty() == -1) {
-                                world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.apple);
+                                ItemStack aple = itemHandler.apple;
+                                aple.setAmount(1);
+                                world.dropItemNaturally(event.getBlock().getLocation(), aple);
+                                levels.giveFarmingExp(player,aple);
 
                             } else {
-                                player.getInventory().addItem(itemHandler.apple);
+                                ItemStack aple2 = itemHandler.apple;
+                                aple2.setAmount(1);
+                                player.getInventory().addItem(aple2);
+                                levels.giveFarmingExp(player,aple2);
                             }
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.OAK_LEAVES);
-                            }
-                        }.runTaskLater(plugin, 200);
+
                         break;
                     case CLAY:
                         event.setDropItems(false);
                         event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                         event.setCancelled(true);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.clay);
+                            ItemStack clay = itemHandler.clay;
+                            clay.setAmount(1);
+                            world.dropItemNaturally(event.getBlock().getLocation(), clay);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.clay);
+                            ItemStack clay = itemHandler.clay;
+                            clay.setAmount(1);
+                            player.getInventory().addItem(clay);
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.CLAY);
-                            }
-                        }.runTaskLater(plugin, 200);
                         break;
                     case DIAMOND_ORE:
                         if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
@@ -1353,18 +1507,14 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
+                                ItemStack diamond = itemHandler.diamond;
+                                diamond.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.diamond);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), diamond);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.diamond);
+                                    player.getInventory().addItem(diamond);
                                 }
-                                new BukkitRunnable() {
-                                    @Override
-                                    public void run() {
-                                        event.getBlock().setType(Material.DIAMOND_ORE);
-                                    }
-                                }.runTaskLater(plugin, 200);
                             } else {
                                 event.setCancelled(true);
                                 player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 4"));
@@ -1379,18 +1529,15 @@ public class BlockRegenListener implements Listener {
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
+                                ItemStack ironore = itemHandler.ironore;
+                                ironore.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
-                                    world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.ironore);
+                                    world.dropItemNaturally(event.getBlock().getLocation(), ironore);
 
                                 } else {
-                                    player.getInventory().addItem(itemHandler.ironore);
+                                    player.getInventory().addItem(ironore);
                                 }
-                                new BukkitRunnable() {
-                                    @Override
-                                    public void run() {
-                                        event.getBlock().setType(Material.IRON_ORE);
-                                    }
-                                }.runTaskLater(plugin, 200);
+
                             } else {
                                 event.setCancelled(true);
                                 player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 4"));
@@ -1416,13 +1563,6 @@ public class BlockRegenListener implements Listener {
                                     player.getInventory().addItem(cooal);
                                 }
 
-
-                                new BukkitRunnable() {
-                                    @Override
-                                    public void run() {
-                                        event.getBlock().setType(Material.COAL_ORE);
-                                    }
-                                }.runTaskLater(plugin, 200);
                             } else {
                                 event.setCancelled(true);
                                 player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 2"));
@@ -1439,102 +1579,173 @@ public class BlockRegenListener implements Listener {
                         } else {
                             player.getInventory().addItem(itemHandler.kezicicek);
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.ALLIUM);
+                        break;
+                    case SPRUCE_WOOD:
+                        if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                            NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
+                            int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
+                            if (aletgucu > 4) {
+                                event.setDropItems(false);
+                                event.setExpToDrop(1);
+                                event.getBlock().setType(Material.AIR);
+                                event.setCancelled(true);
+                                ItemStack sprucewood = itemHandler.sprucewood;
+                                sprucewood.setAmount(1);
+                                if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
+                                    int logchance = ThreadLocalRandom.current().nextInt(30);
+                                    if(logchance<5) {
+                                        player.sendMessage(Painter.paint("&6Ekstra Odun Düşürdün!"));
+                                        if (player.getInventory().firstEmpty() == -1) {
+                                            world.dropItemNaturally(event.getBlock().getLocation(),sprucewood);
+
+                                        } else {
+                                            player.getInventory().addItem(sprucewood);
+
+                                        }
+                                    }
+                                }
+                                if (player.getInventory().firstEmpty() == -1) {
+                                    world.dropItemNaturally(player.getLocation(),sprucewood);
+
+                                } else {
+                                    player.getInventory().addItem(sprucewood);
+                                }
+
+
+                            } else {
+                                event.setCancelled(true);
+                                player.sendMessage(Painter.paint("&6Bu odun için gereken minimum alet gücü: 5"));
                             }
-                        }.runTaskLater(plugin, 200);
+                        }
                         break;
                     case BIRCH_WOOD:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.BIRCH_PLANKS);
-                        event.setCancelled(true);
-                        if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.birchwood);
+                        if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                            NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
+                            int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
+                            if (aletgucu > 3) {
+                                event.setDropItems(false);
+                                event.setExpToDrop(1);
+                                event.getBlock().setType(Material.AIR);
+                                event.setCancelled(true);
+                                ItemStack birchwood = itemHandler.birchwood;
+                                birchwood.setAmount(1);
+                                if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
+                                    int logchance = ThreadLocalRandom.current().nextInt(30);
+                                    if(logchance<5) {
+                                        player.sendMessage(Painter.paint("&6Ekstra Odun Düşürdün!"));
+                                        if (player.getInventory().firstEmpty() == -1) {
+                                            world.dropItemNaturally(event.getBlock().getLocation(), birchwood);
 
-                        } else {
-                            player.getInventory().addItem(itemHandler.birchwood);
-                        }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.BIRCH_WOOD);
+                                        } else {
+                                            player.getInventory().addItem(birchwood);
+
+                                        }
+                                    }
+                                }
+                                if (player.getInventory().firstEmpty() == -1) {
+                                    world.dropItemNaturally(player.getLocation(), birchwood);
+
+                                } else {
+                                    player.getInventory().addItem(birchwood);
+                                }
+
+
+                            } else {
+                                event.setCancelled(true);
+                                player.sendMessage(Painter.paint("&6Bu odun için gereken minimum alet gücü: 4"));
                             }
-                        }.runTaskLater(plugin, 200);
+                        }
                         break;
                     case ACACIA_WOOD:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.ACACIA_PLANKS);
-                        event.setCancelled(true);
-                        if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.acaciawood);
+                        if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                            NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
+                            int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
+                            if (aletgucu > 6) {
+                                event.setDropItems(false);
+                                event.setExpToDrop(1);
+                                event.getBlock().setType(Material.AIR);
+                                event.setCancelled(true);
+                                ItemStack acaciawood = itemHandler.acaciawood;
+                                acaciawood.setAmount(1);
+                                if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
+                                    int logchance = ThreadLocalRandom.current().nextInt(30);
+                                    if(logchance<5) {
+                                        player.sendMessage(Painter.paint("&6Ekstra Odun Düşürdün!"));
+                                        if (player.getInventory().firstEmpty() == -1) {
+                                            world.dropItemNaturally(event.getBlock().getLocation(), acaciawood);
 
-                        } else {
-                            player.getInventory().addItem(itemHandler.acaciawood);
-                        }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.ACACIA_WOOD);
+                                        } else {
+                                            player.getInventory().addItem(acaciawood);
+
+                                        }
+                                    }
+                                }
+                                if (player.getInventory().firstEmpty() == -1) {
+                                    world.dropItemNaturally(player.getLocation(), acaciawood);
+
+                                } else {
+                                    player.getInventory().addItem(acaciawood);
+                                }
+
+                            } else {
+                                event.setCancelled(true);
+                                player.sendMessage(Painter.paint("&6Bu odun için gereken minimum alet gücü: 7"));
                             }
-                        }.runTaskLater(plugin, 200);
+                        }
                         break;
                     case STRIPPED_DARK_OAK_WOOD:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.DARK_OAK_PLANKS);
-                        event.setCancelled(true);
-                        if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.oldoakwood);
+                        if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                            NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
+                            int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
+                            if (aletgucu > 7) {
+                                event.setDropItems(false);
+                                event.setExpToDrop(1);
+                                event.getBlock().setType(Material.AIR);
+                                event.setCancelled(true);
+                                ItemStack oldoakwood = itemHandler.oldoakwood;
+                                oldoakwood.setAmount(1);
+                                if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
+                                    int logchance = ThreadLocalRandom.current().nextInt(30);
+                                    if(logchance<5) {
+                                        player.sendMessage(Painter.paint("&6Ekstra Odun Düşürdün!"));
+                                        if (player.getInventory().firstEmpty() == -1) {
+                                            world.dropItemNaturally(event.getBlock().getLocation(), oldoakwood);
 
-                        } else {
-                            player.getInventory().addItem(itemHandler.oldoakwood);
+                                        } else {
+                                            player.getInventory().addItem(oldoakwood);
+
+                                        }
+                                    }
+                                }
+                                if (player.getInventory().firstEmpty() == -1) {
+                                    world.dropItemNaturally(player.getLocation(),oldoakwood);
+
+                                } else {
+                                    player.getInventory().addItem(oldoakwood);
+                                }
+
+
+
+                            } else {
+                                event.setCancelled(true);
+                                player.sendMessage(Painter.paint("&6Bu odun için gereken minimum alet gücü: 8"));
+                            }
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.STRIPPED_DARK_OAK_WOOD);
-                            }
-                        }.runTaskLater(plugin, 200);
                         break;
-                    case GRASS:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.AIR);
-                        event.setCancelled(true);
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.GRASS);
-                            }
-                        }.runTaskLater(plugin, 800);
-                        break;
-                    case FERN:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.AIR);
-                        event.setCancelled(true);
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.FERN);
-                            }
-                        }.runTaskLater(plugin, 800);
-                        break;
-                    case LARGE_FERN:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.AIR);
-                        event.setCancelled(true);
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.LARGE_FERN);
-                            }
-                        }.runTaskLater(plugin, 800);
-                        break;
+
                     case OAK_LOG:
                         event.setDropItems(false);
                         event.setCancelled(true);
                         break;
                     case SPRUCE_LOG:
+                        event.setDropItems(false);
+                        event.setCancelled(true);
+                        break;
+                    case STRIPPED_BIRCH_WOOD:
+                        event.setDropItems(false);
+                        event.setCancelled(true);
+                        break;
+                    case STRIPPED_BIRCH_LOG:
                         event.setDropItems(false);
                         event.setCancelled(true);
                         break;
@@ -1558,44 +1769,84 @@ public class BlockRegenListener implements Listener {
                         event.setDropItems(false);
                         event.setCancelled(true);
                         break;
-                    case STRIPPED_SPRUCE_LOG:
-                        event.setDropItems(false);
-                        event.setCancelled(true);
-                        break;
                     case JUNGLE_WOOD:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.JUNGLE_PLANKS);
-                        event.setCancelled(true);
-                        if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.godwood);
+                        if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                            NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
+                            int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
+                            if (aletgucu > 9) {
+                                event.setDropItems(false);
+                                event.setExpToDrop(1);
+                                event.getBlock().setType(Material.AIR);
+                                event.setCancelled(true);
+                                ItemStack godwood = itemHandler.godwood;
+                                godwood.setAmount(1);
+                                if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
+                                    int logchance = ThreadLocalRandom.current().nextInt(30);
+                                    if(logchance<5) {
+                                        player.sendMessage(Painter.paint("&6Ekstra Odun Düşürdün!"));
+                                        if (player.getInventory().firstEmpty() == -1) {
+                                            world.dropItemNaturally(event.getBlock().getLocation(), godwood);
 
-                        } else {
-                            player.getInventory().addItem(itemHandler.godwood);
-                        }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.JUNGLE_WOOD);
+                                        } else {
+                                            player.getInventory().addItem(godwood);
+
+                                        }
+                                    }
+                                }
+                                if (player.getInventory().firstEmpty() == -1) {
+                                    world.dropItemNaturally(player.getLocation(), godwood);
+
+                                } else {
+                                    player.getInventory().addItem(godwood);
+                                }
+
+
+
+                            } else {
+                                event.setCancelled(true);
+                                player.sendMessage(Painter.paint("&6Bu odun için gereken minimum alet gücü: 10"));
                             }
-                        }.runTaskLater(plugin, 200);
+                        }
                         break;
+
                     case DARK_OAK_WOOD:
-                        event.setDropItems(false);
-                        event.getBlock().setType(Material.DARK_OAK_PLANKS);
-                        event.setCancelled(true);
-                        if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.darkoakwood);
+                        if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                            NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
+                            int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
+                            if (aletgucu > 8) {
+                                event.setDropItems(false);
+                                event.getBlock().setType(Material.AIR);
+                                event.setCancelled(true);
+                                ItemStack darkoakwood = itemHandler.darkoakwood;
+                                darkoakwood.setAmount(1);
+                                if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
+                                    int logchance = ThreadLocalRandom.current().nextInt(30);
+                                    if(logchance<5) {
+                                        player.sendMessage(Painter.paint("&6Ekstra Odun Düşürdün!"));
+                                        if (player.getInventory().firstEmpty() == -1) {
+                                            world.dropItemNaturally(event.getBlock().getLocation(), darkoakwood);
 
-                        } else {
-                            player.getInventory().addItem(itemHandler.darkoakwood);
-                        }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.DARK_OAK_WOOD);
+                                        } else {
+                                            player.getInventory().addItem(darkoakwood);
+
+                                        }
+                                    }
+                                }
+                                if (player.getInventory().firstEmpty() == -1) {
+                                    world.dropItemNaturally(player.getLocation(), darkoakwood);
+
+                                } else {
+                                    player.getInventory().addItem(darkoakwood);
+                                }
+
+
+                            } else {
+                                event.setCancelled(true);
+                                player.sendMessage(Painter.paint("&6Bu odun için gereken minimum alet gücü: 9"));
                             }
-                        }.runTaskLater(plugin, 200);
+                        }
                         break;
+
                     case ANCIENT_DEBRIS:
                         if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
                             if (MaterialTags.AXES.isTagged(item)) {
@@ -1605,18 +1856,14 @@ public class BlockRegenListener implements Listener {
                                     event.setDropItems(false);
                                     event.getBlock().setType(Material.BEDROCK);
                                     event.setCancelled(true);
+                                    ItemStack heavywood = itemHandler.heavywood;
+                                    heavywood.setAmount(1);
                                     if (player.getInventory().firstEmpty() == -1) {
-                                        world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.heavywood);
+                                        world.dropItemNaturally(event.getBlock().getLocation(), heavywood);
 
                                     } else {
-                                        player.getInventory().addItem(itemHandler.heavywood);
+                                        player.getInventory().addItem(heavywood);
                                     }
-                                    new BukkitRunnable() {
-                                        @Override
-                                        public void run() {
-                                            event.getBlock().setType(Material.ANCIENT_DEBRIS);
-                                        }
-                                    }.runTaskLater(plugin, 200);
                                 } else {
                                     event.setCancelled(true);
                                     player.sendMessage(Painter.paint("&6Bu maden için gereken minimum alet gücü: 6"));
@@ -1630,45 +1877,51 @@ public class BlockRegenListener implements Listener {
                         event.setDropItems(false);
                         event.getBlock().setType(Material.OAK_PLANKS);
                         event.setCancelled(true);
+                        ItemStack oakwood = itemHandler.oakwood;
+                        oakwood.setAmount(1);
+                        if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
+                            int logchance = ThreadLocalRandom.current().nextInt(30);
+                            if(logchance<5) {
+                                player.sendMessage(Painter.paint("&6Ekstra Odun Düşürdün!"));
+                                if (player.getInventory().firstEmpty() == -1) {
+                                    world.dropItemNaturally(event.getBlock().getLocation(), oakwood);
+
+                                } else {
+                                    player.getInventory().addItem(oakwood);
+
+                                }
+                            }
+                        }
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.oakwood);
+                            world.dropItemNaturally(event.getBlock().getLocation(), oakwood);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.oakwood);
+                            player.getInventory().addItem(oakwood);
+
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.OAK_WOOD);
-                            }
-                        }.runTaskLater(plugin, 200);
+
                         break;
                     case CALCITE:
                         event.setDropItems(false);
                         event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                         event.setCancelled(true);
                         event.setExpToDrop(1);
+                        ItemStack salt = itemHandler.salt;
+                        salt.setAmount(1);
                         if (player.getInventory().firstEmpty() == -1) {
-                            world.dropItemNaturally(event.getBlock().getLocation(), itemHandler.salt);
+                            world.dropItemNaturally(event.getBlock().getLocation(),salt);
 
                         } else {
-                            player.getInventory().addItem(itemHandler.salt);
+                            player.getInventory().addItem(salt);
                         }
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                event.getBlock().setType(Material.CALCITE);
-                            }
-                        }.runTaskLater(plugin, 200);
                         break;
-
                 }
             }
 
 
+
         }
     }
-
 
 
     @EventHandler
@@ -1683,4 +1936,5 @@ public class BlockRegenListener implements Listener {
         }
 
     }
+
 }

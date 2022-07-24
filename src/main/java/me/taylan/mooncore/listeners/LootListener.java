@@ -7,6 +7,7 @@ import com.comphenix.protocol.events.PacketContainer;
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.utils.Loots;
 import me.taylan.mooncore.utils.Painter;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.*;
 import org.bukkit.block.BlockState;
@@ -259,7 +260,7 @@ public class LootListener implements Listener {
         armorStand.setGravity(false);
         armorStand.setSmall(true);
         armorStand.setCustomNameVisible(true);
-        armorStand.customName(MiniMessage.miniMessage().deserialize(Painter.paint(Item.getAmount() + "x " + Item.getItemMeta().getDisplayName())));
+        armorStand.customName(Component.text(Item.getAmount() + " x").append(Item.getItemMeta().displayName()));
         plugin.getIndicators().put(armorStand, 80);
 
 

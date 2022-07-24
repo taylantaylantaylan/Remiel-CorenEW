@@ -7,6 +7,7 @@ import me.taylan.mooncore.utils.StatsManager;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.command.Command;
@@ -37,16 +38,68 @@ public class WarpCommand implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("liman")) {
                         if (stats.getLevel(p.getUniqueId()) > 2) {
-                            coneEffect(p);
+                            Location location = new Location(Bukkit.getWorld("world"),1520 ,71, 1939);
+                            if (p.hasPermission("mooncore.goldwarp")) {
+
+                                coneEffect2(p,location);
+                            } else {
+                                coneEffect(p,location);
+                            }
                         }
+
+                } else   if (args[0].equalsIgnoreCase("krallık")) {
+                    if (stats.getLevel(p.getUniqueId()) > 5) {
+                        Location location2 = new Location(Bukkit.getWorld("world"),1819 ,89, 1718);
+
+                        if (p.hasPermission("mooncore.goldwarp")) {
+                            coneEffect2(p,location2);
+                        } else {
+                            coneEffect(p,location2);
+                        }
+                    }
 
                 }
             }
         }
         return false;
     }
+    public void coneEffect2(final Player player,Location location) {
+        new BukkitRunnable() {
+            double phi = 0;
+            Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB((int) 239, (int) 239, (int) 13), 1);
 
-    public void coneEffect(final Player player) {
+            @Override
+            public void run() {
+                phi += Math.PI / 16;
+                double x;
+                double z;
+                double y;
+                Location loc = player.getLocation();
+                for (double t = 0; t <= Math.PI * 2; t += Math.PI / 16) {
+                    for (double i = 0; i <= 1; i += 1) {
+                        x = 0.15 * (2 * Math.PI - t) * Math.cos(t + phi + i * Math.PI);
+                        y = 0.5 * t;
+                        z = 0.15 * (2 * Math.PI - t) * Math.sin(t + phi + i * Math.PI);
+                        loc.add(x,y,z);
+
+                        player.spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, dust);
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                                new TextComponent(Painter.paint("&aIşınlanıyorsun, hareket etme!")));
+                        loc.subtract(x,y,z);
+
+                    }
+                }
+                if(phi >10*Math.PI) {
+                    this.cancel();
+
+                    player.teleport(location);
+                }
+            }
+        }.runTaskTimer(plugin,0,1);
+
+
+    }
+    public void coneEffect(final Player player,Location location) {
         new BukkitRunnable() {
             double phi = 0;
 
@@ -72,7 +125,6 @@ public class WarpCommand implements CommandExecutor {
                 }
                 if(phi >10*Math.PI) {
                     this.cancel();
-                    Location location = new Location(Bukkit.getWorld("world"),1520 ,71, 1939);
                     player.teleport(location);
                 }
             }

@@ -17,8 +17,10 @@ import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.animations.CookAnim;
+import me.taylan.mooncore.eco.Ekonomi;
 import me.taylan.mooncore.enchanting.Enchants;
 import me.taylan.mooncore.listeners.JoinListener;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
 import net.md_5.bungee.api.ChatColor;
@@ -52,6 +54,7 @@ public class GuiHandler {
     private ItemHandler itemHandler;
     private Enchants Enchants;
     private CookAnim cookAnim;
+    private Ekonomi ekonomi;
 
     public GuiHandler(MoonCore plugin) {
         this.plugin = plugin;
@@ -59,6 +62,7 @@ public class GuiHandler {
         this.itemHandler = plugin.getItemHandler();
         this.Enchants = plugin.getEnchants();
         this.stats = plugin.getStatsManager();
+        this.ekonomi = plugin.getEkonomi();
         initialize();
 
     }
@@ -108,12 +112,18 @@ public class GuiHandler {
     public Inventory inv21;
     public Inventory inv25;
     public Inventory inv26;
+    public Inventory inv27;
+    public Inventory inv28;
+    public Inventory inv29;
     public String inventory_name12;
+    public String inventory_name25;
     public String inventory_name18;
     public String inventory_name19;
     public String inventory_name20;
     public String inventory_name21;
     public String inventory_name23;
+    public String inventory_name24;
+    public String inventory_name26;
     public int inv_rows12 = 6 * 9;
 
     public int inv_rows = 6 * 9;
@@ -153,8 +163,10 @@ public class GuiHandler {
         inventory_name19 = Painter.paint(ChatColor.DARK_GRAY + "El Sanatları Masası -> Deri Dik");
         inventory_name20 = Painter.paint(ChatColor.DARK_GRAY + "El Sanatları Masası -> Olta Kur");
         inventory_name21 = Painter.paint(ChatColor.DARK_GRAY + "Maden Fırını");
+        inventory_name26 = Painter.paint(ChatColor.DARK_GRAY + "Babayani'nin Teklifleri");
         inventory_name22 = Painter.paint(ChatColor.DARK_GRAY + "Fırın");
         inventory_name23 = Painter.paint(("&8Bölge Bilgileri"));
+        inventory_name24 = Painter.paint(("&8Görev Defteri"));
         inv = Bukkit.createInventory(null, inv_rows);
         inv2 = Bukkit.createInventory(null, inv_rows2);
         inv3 = Bukkit.createInventory(null, inv_rows3);
@@ -181,6 +193,65 @@ public class GuiHandler {
         inv24 = Bukkit.createInventory(null, inv_rows3);
         inv25 = Bukkit.createInventory(null, inv_rows11);
         inv26 = Bukkit.createInventory(null, inv_rows11);
+        inv27 = Bukkit.createInventory(null, inv_rows10);
+        inv28 = Bukkit.createInventory(null, inv_rows8);
+        inv29 = Bukkit.createInventory(null, inv_rows8);
+    }
+
+    public Inventory tuccar1(Player p) {
+        int smithLevel = stats.getWorkLevel(p.getUniqueId());
+        Inventory toReturn = Bukkit.createInventory(null, inv_rows8, inventory_name26);
+
+        itemHandler.createItem(inv29, "white_stained_glass_pane", 1, 1, " ");
+        itemHandler.createItem(inv29, "white_stained_glass_pane", 1, 2, " ");
+        itemHandler.createItem(inv29, "white_stained_glass_pane", 1, 3, " ");
+        itemHandler.createItem(inv29, "white_stained_glass_pane", 1, 4, " ");
+        itemHandler.createItem(inv29, "emerald", 1, 5, ChatColor.WHITE + "Babayani'nin Teklifleri",
+                ChatColor.GRAY + "Burada elindeki malzemelerle", ChatColor.GRAY + "Bu tüccarla malzeme ekipman",
+                ChatColor.GRAY + "takaslayarak dinar kazanabilirsin.");
+        itemHandler.createItem(inv29, "white_stained_glass_pane", 1, 6, " ");
+        itemHandler.createItem(inv29, "white_stained_glass_pane", 1, 7, " ");
+        itemHandler.createItem(inv29, "white_stained_glass_pane", 1, 8, " ");
+        itemHandler.createItem(inv29, "white_stained_glass_pane", 1, 9, " ");
+        itemHandler.createItem(inv29, "black_stained_glass_pane", 1, 10, " ");
+        itemHandler.createItem(inv29, "black_stained_glass_pane", 1, 11, " ");
+        itemHandler.createItem(inv29, "black_stained_glass_pane", 1, 12, " ");
+        itemHandler.createItem(inv29, "black_stained_glass_pane", 1, 13, " ");
+        itemHandler.createItem(inv29, "black_stained_glass_pane", 1, 14, " ");
+        itemHandler.createItem(inv29, "black_stained_glass_pane", 1, 15, " ");
+        itemHandler.createItem(inv29, "black_stained_glass_pane", 1, 16, " ");
+        itemHandler.createItem(inv29, "black_stained_glass_pane", 1, 17, " ");
+        itemHandler.createItem(inv29, "black_stained_glass_pane", 1, 18, " ");
+        itemHandler.createItem(inv29, "bone", 1, 19, ChatColor.GOLD + "Kemik", "",
+                ChatColor.GRAY + " Satış Fiyatı: &61 Dinar", "",
+                ChatColor.GRAY + "Satmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem(inv29, "coal", 1, 20, ChatColor.GOLD + "Kömür", "",
+                ChatColor.GRAY + " Satış Fiyatı: &60.5 Dinar", "",
+                ChatColor.GRAY + "Satmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem(inv29, "bone", 1, 21, ChatColor.GOLD + "Solmuş Kemik", "",
+                ChatColor.GRAY + " Satış Fiyatı: &61.4 Dinar", "",
+                ChatColor.GRAY + "Satmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+
+        itemHandler.createItem(inv29, "oak_log", 1, 22, ChatColor.GOLD + "Meşe Odunu", "",
+                ChatColor.GRAY + " Satış Fiyatı: &60.4 Dinar", "",
+                ChatColor.GRAY + "Satmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem(inv29, "shears", 1, 23, ChatColor.GOLD + "Yün Kürken", "",
+                ChatColor.GRAY + " Alış Fiyatı: &6100 Dinar", "",
+                ChatColor.GRAY + "Almak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem(inv29, "apple", 1, 24, ChatColor.GOLD + "Elma", "",
+                ChatColor.GRAY + " Satış Fiyatı: &61 Dinar", "",
+                ChatColor.GRAY + "Satmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem(inv29, "leather_chestplate", 1, 25, ChatColor.GOLD + "Dövüşcü Tuniği", "",
+                ChatColor.GRAY + " Alış Fiyatı: &650 Dinar", "",
+                ChatColor.GRAY + "Almak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem(inv29, "stick", 1, 26, ChatColor.GOLD + "Az Kullanılmış Mızrak", "",
+                ChatColor.GRAY + " Alış Fiyatı: &6120 Dinar", "",
+                ChatColor.GRAY + "Almak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem(inv29, "potion", 1, 27, ChatColor.GOLD + "Geri Dönüş İksiri", "",
+                ChatColor.GRAY + " Alış Fiyatı: &6220 Dinar", "",
+                ChatColor.GRAY + "Almak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        toReturn.setContents(inv29.getContents());
+        return toReturn;
     }
 
     public Inventory leatherwork(Player p) {
@@ -217,7 +288,7 @@ public class GuiHandler {
                 ChatColor.GRAY + "Yapabileceğin ekipmanlara bakmak",
                 ChatColor.GRAY + "için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
         if (smithLevel > 2) {
-            itemHandler.createItem(inv20, "leather", 1, 21, ChatColor.GRAY + "Yaban Domuzu Derisi Ekipmanlar",
+            itemHandler.createItem(inv20, "leather", 1, 21, ChatColor.GRAY + "Yaban Domuzu Derisinden Ekipmanlar",
                     ChatColor.GRAY + "Yapabileceğin ekipmanlara bakmak",
                     ChatColor.GRAY + "için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
         } else {
@@ -281,6 +352,86 @@ public class GuiHandler {
         }
 
         toReturn.setContents(inv20.getContents());
+        return toReturn;
+    }
+
+    public Inventory questbook(Player p) {
+        int level = stats.getLevel(p.getUniqueId());
+        Inventory toReturn = Bukkit.createInventory(null, inv_rows10, inventory_name24);
+
+        itemHandler.createItem(inv26, "white_stained_glass_pane", 1, 1, " ");
+        itemHandler.createItem(inv26, "white_stained_glass_pane", 1, 2, " ");
+        itemHandler.createItem(inv26, "white_stained_glass_pane", 1, 3, " ");
+        itemHandler.createItem(inv26, "white_stained_glass_pane", 1, 4, " ");
+        itemHandler.createItem(inv26, "book", 1, 5, ChatColor.WHITE + "Görev Defteri",
+                ChatColor.GRAY + "Buradan görevleri takip edebilir,", ChatColor.GRAY + "ve yeni görevler keşfedebilirsin.");
+        itemHandler.createItem(inv26, "white_stained_glass_pane", 1, 6, " ");
+        itemHandler.createItem(inv26, "white_stained_glass_pane", 1, 7, " ");
+        itemHandler.createItem(inv26, "white_stained_glass_pane", 1, 8, " ");
+        itemHandler.createItem(inv26, "white_stained_glass_pane", 1, 9, " ");
+        itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 10, " ");
+        itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 11, " ");
+        itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 12, " ");
+        itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 13, " ");
+        itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 14, " ");
+        itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 15, " ");
+        itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 16, " ");
+        itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 17, " ");
+        itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 18, " ");
+        itemHandler.createItem(inv26, "book", 1, 19, ChatColor.GOLD + "&6Ogurus'un Görevleri",
+                ChatColor.GREEN + "Seviye 1", "", " &7Lokasyon: &eLiman", " &7Kordinatlar: &e1520, 71, 1932", " &7Görevler:", " &7- &3Keşfe Başlangıç");
+        itemHandler.createItem(inv26, "book", 1, 20, ChatColor.GOLD + "&6Yarin'in Görevleri",
+                ChatColor.GREEN + "Seviye 1", "", " &7Lokasyon: &eLiman", " &7Kordinatlar: &e1483, 76, 1956", " &7Görevler:", " &7- &3Temel Avcılık", " &7- &3İlk Balık Avı");
+        itemHandler.createItem(inv26, "book", 1, 21, ChatColor.GOLD + "&6Çulha'nın Görevleri",
+                ChatColor.GREEN + "Seviye 1", "", " &7Lokasyon: &eLiman", " &7Kordinatlar: &e1483, 76, 1956", " &7Görevler:", " &7- &3Liman Kenti Sakinleri");
+        itemHandler.createItem(inv26, "book", 1, 22, ChatColor.GOLD + "&6Talarus'un Görevleri",
+                ChatColor.GREEN + "Seviye 1", "", " &7Lokasyon: &eLiman", " &7Kordinatlar: &e1542, 74, 1919", " &7Görevler:", " &7- &3Odun Pazarlığı", " &7- &3Kıtlık");
+        if (level > 2) {
+            itemHandler.createItem(inv26, "book", 1, 23, ChatColor.GOLD + "&6Ahu'nun Görevleri",
+                    ChatColor.GREEN + "Seviye 3", "", " &7Lokasyon: &eKrallık", " &7Kordinatlar: &e1851, 92, 1664", " &7Görevler:", " &7- &3Aşçılık Dersi", " &7- &3Tuz Depozitosu");
+
+        } else {
+            itemHandler.createItem(inv26, "book", 1, 23, ChatColor.GOLD + "&6??? &7(Seviye Yetersiz)",
+                    ChatColor.RED + "Bu görevin bilgilerine ulaşabilmek için Seviye 3 veya üstü olmalısın.");
+
+        }
+        if (level > 2) {
+            itemHandler.createItem(inv26, "book", 1, 24, ChatColor.GOLD + "&6Yolsva'nın Görevleri",
+                    ChatColor.GREEN + "Seviye 3", "", " &7Lokasyon: &eKrallık", " &7Kordinatlar: &e1814, 91, 1639", " &7Görevler:", " &7- &3El Sanatları Başlangıç", " &7- &3Yay Talimi");
+
+        } else {
+            itemHandler.createItem(inv26, "book", 1, 24, ChatColor.GOLD + "&6??? &7(Seviye Yetersiz)",
+                    ChatColor.RED + "Bu görevin bilgilerine ulaşabilmek için Seviye 3 veya üstü olmalısın.");
+
+        }
+        if (level > 2) {
+            itemHandler.createItem(inv26, "book", 1, 25, ChatColor.GOLD + "&6Avdol'Un Görevleri",
+                    ChatColor.GREEN + "Seviye 3", "", " &7Lokasyon: &eKrallık", " &7Kordinatlar: &e1826, 92, 1614", " &7Görevler:", " &7- &3Demircilik");
+
+        } else {
+            itemHandler.createItem(inv26, "book", 1, 25, ChatColor.GOLD + "&6??? &7(Seviye Yetersiz)",
+                    ChatColor.RED + "Bu görevin bilgilerine ulaşabilmek için Seviye 3 veya üstü olmalısın.");
+
+        }
+        if (level > 4) {
+            itemHandler.createItem(inv26, "book", 1, 26, ChatColor.GOLD + "&dSaorin'in Görevleri",
+                    ChatColor.GREEN + "Seviye 5", "", " &7Lokasyon: &eKrallık", " &7Kordinatlar: &e1905, 76, 1593", " &7Görevler:", " &7- &3Büyücülüğe Adım (!)");
+
+        } else {
+            itemHandler.createItem(inv26, "book", 1, 26, ChatColor.GOLD + "&6??? &7(Seviye Yetersiz)",
+                    ChatColor.RED + "Bu görevin bilgilerine ulaşabilmek için Seviye 5 veya üstü olmalısın.");
+
+        }
+        if (level > 4) {
+            itemHandler.createItem(inv26, "book", 1, 27, ChatColor.GOLD + "&6Ofram'ın Görevleri",
+                    ChatColor.GREEN + "Seviye 5", "", " &7Lokasyon: &eKrallık", " &7Kordinatlar: &e1813, 92, 1562", " &7Görevler:", " &7- &3Simyacılık Dersi 1");
+
+        } else {
+            itemHandler.createItem(inv26, "book", 1, 27, ChatColor.GOLD + "&6??? &7(Seviye Yetersiz)",
+                    ChatColor.RED + "Bu görevin bilgilerine ulaşabilmek için Seviye 5 veya üstü olmalısın.");
+
+        }
+        toReturn.setContents(inv26.getContents());
         return toReturn;
     }
 
@@ -601,7 +752,7 @@ public class GuiHandler {
                     Painter.paint("&7Meslek: &6" + stats.getMeslek(profil.getUniqueId())),
                     Painter.paint("&7Seviye: &b" + stats.getLevel(profil.getUniqueId())),
                     Painter.paint("&7Seviye İlerlemesi: &b" + stats.getExp(profil.getUniqueId())) + " / " + stats.getRequiredExp(profil.getUniqueId()),
-                    Painter.paint("&7Şuanki Ağırlığı: &f") + stats.getAgirlik(profil.getUniqueId()), "",
+                    "",
                     Painter.paint(" &6❤ Dinçlik: &f") + stats.getCan(profil.getUniqueId()) + " &7/&f "
                             + stats.getCanYenileme(profil.getUniqueId()),
                     Painter.paint(" &8&oDinçlik = Can/Can Yenilenmesi."),
@@ -624,7 +775,7 @@ public class GuiHandler {
                     Painter.paint("&7Meslek: &6" + stats.getMeslek(p.getUniqueId())),
                     Painter.paint("&7Seviye: &b" + stats.getLevel(p.getUniqueId())),
                     Painter.paint("&7Seviye İlerlemesi: &b" + stats.getExp(p.getUniqueId())) + " / " + stats.getRequiredExp(p.getUniqueId()),
-                    Painter.paint("&7Şuanki Ağırlığı: &f") + stats.getAgirlik(p.getUniqueId()), "",
+                    "",
                     Painter.paint(" &6❤ Dinçlik: &f") + stats.getCan(p.getUniqueId()) + " &7/&f "
                             + stats.getCanYenileme(p.getUniqueId()),
                     Painter.paint(" &8&oDinçlik = Can/Can Yenilenmesi."),
@@ -1113,13 +1264,24 @@ public class GuiHandler {
                 ChatColor.GRAY + "Pişirmeye başlamak için ", ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
         itemHandler.createItem(inv3, "cooked_beef", 1, 25, ChatColor.YELLOW + "Biftek", ChatColor.GREEN + "Ustalık 2",
                 "", ChatColor.GRAY + " Gerekli Malzemeler:",
-                ChatColor.GRAY + " -" + ChatColor.WHITE + " 2 Çiğ Kırmızı Et",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 2 Çiğ Kırmızı Eti",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Kömür", "",
                 ChatColor.GRAY + "Pişirmeye başlamak için ", ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
         itemHandler.createItem(inv3, "cooked_chicken", 1, 26, ChatColor.YELLOW + "Pişmiş Tavuk Eti", ChatColor.GREEN + "Ustalık 2",
                 "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Çiğ Tavuk Eti",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Kömür", "",
+                ChatColor.GRAY + "Pişirmeye başlamak için ", ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem(inv3, "cooked_cod", 1, 27, ChatColor.YELLOW + "Pişmiş Gümüş Balığı", ChatColor.GREEN + "Ustalık 2",
+                "", ChatColor.GRAY + " Gerekli Malzemeler:",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Gümüş Balığı",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Kömür", "",
+                ChatColor.GRAY + "Pişirmeye başlamak için ", ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem(inv3, "cooked_beef", 1, 28, ChatColor.YELLOW + "Pişmiş Antrikot", ChatColor.GREEN + "Ustalık 2",
+                "", ChatColor.GRAY + " Gerekli Malzemeler:",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 2 Çiğ Kırmızı Et",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Kömür",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 2 Tuz", "",
                 ChatColor.GRAY + "Pişirmeye başlamak için ", ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
         toReturn.setContents(inv3.getContents());
         return toReturn;
@@ -1180,7 +1342,7 @@ public class GuiHandler {
         itemHandler.createItem(inv13, "black_stained_glass_pane", 1, 18, " ");
         itemHandler.createItem(inv13, "comparator", 1, 29, ChatColor.GRAY + "Ayarlar",
                 ChatColor.WHITE + "Açmak için " + ChatColor.YELLOW + "Sağ Tıkla.");
-        itemHandler.createItem(inv13, "book", 1, 32, ChatColor.YELLOW + "Görev Defteri",
+        itemHandler.createItem(inv13, "book", 1, 30, ChatColor.YELLOW + "Görev Defteri",
                 ChatColor.WHITE + "Buradan görevlerini takip edebilirsin. ", "",
                 ChatColor.GRAY + "Açmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
         itemHandler.createItem(inv13, "experience_bottle", 1, 31, ChatColor.RED + "Niteliklerin",
@@ -1426,52 +1588,57 @@ public class GuiHandler {
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Demir Cevheri",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 3 Kömür", "", ChatColor.GRAY + "Eritmeye başlamak için ",
                 ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv22, "gold_ingot", 1, 23, ChatColor.YELLOW + "Altın Külçesi",
+        itemHandler.createItem(inv22, "iron_ingot", 1, 23, ChatColor.GRAY + "Gümüş Külçesi",
+                "", ChatColor.GRAY + " Gerekli Malzemeler:",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Gümüş Cevheri",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 3 Kömür", "", ChatColor.GRAY + "Eritmeye başlamak için ",
+                ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem(inv22, "gold_ingot", 1, 24, ChatColor.YELLOW + "Altın Külçesi",
                 "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Altın Cevheri",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 3 Kömür", "", ChatColor.GRAY + "Eritmeye başlamak için ",
                 ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv22, "copper_ingot", 1, 24, ChatColor.DARK_PURPLE + "Obsidyen Külçesi",
+        itemHandler.createItem(inv22, "copper_ingot", 1, 25, ChatColor.DARK_PURPLE + "Obsidyen Külçesi",
                 "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Obsidyen Cevheri",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 2 Nikel Cevheri",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 4 Kömür", "", ChatColor.GRAY + "Eritmeye başlamak için ",
                 ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv22, "iron_ingot", 1, 25, ChatColor.AQUA + "Adamantium Külçesi",
+        itemHandler.createItem(inv22, "iron_ingot", 1, 26, ChatColor.AQUA + "Adamantium Külçesi",
                 "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Adamantium Cevheri",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 4 Kömür", "", ChatColor.GRAY + "Eritmeye başlamak için ",
                 ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv22, "netherite_ingot", 1, 26, ChatColor.DARK_GRAY + "Netherit Külçesi",
+        itemHandler.createItem(inv22, "netherite_ingot", 1, 27, ChatColor.DARK_GRAY + "Netherit Külçesi",
                 "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 2 Demir Cevheri",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 2 Netherit Cevheri",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 4 Kömür", "", ChatColor.GRAY + "Eritmeye başlamak için ",
                 ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv22, "copper_ingot", 1, 27, ChatColor.RED + "Kızıl Metal Külçesi",
+        itemHandler.createItem(inv22, "copper_ingot", 1, 28, ChatColor.RED + "Kızıl Metal Külçesi",
                 "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 2 Kızıl Metal Cevheri",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Netherit Cevheri",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Lav Kovası", "", ChatColor.GRAY + "Eritmeye başlamak için ",
                 ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv22, "iron_ingot", 1, 28, ChatColor.DARK_AQUA + "Mitril Külçesi",
+        itemHandler.createItem(inv22, "iron_ingot", 1, 29, ChatColor.DARK_AQUA + "Mitril Külçesi",
                 "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 3 Mitril Cevheri",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Lav Kovası", "", ChatColor.GRAY + "Eritmeye başlamak için ",
                 ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv22, "gold_ingot", 1, 29, ChatColor.DARK_PURPLE + "Hiçlik Külçesi",
+        itemHandler.createItem(inv22, "gold_ingot", 1, 30, ChatColor.DARK_PURPLE + "Hiçlik Külçesi",
                 "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 3 Hiçlik Taşı",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 2 Kızıl Metal Cevheri",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Lav Kovası", "", ChatColor.GRAY + "Eritmeye başlamak için ",
                 ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv22, "iron_ingot", 1, 30, ChatColor.RED + "Rodonit Külçesi",
+        itemHandler.createItem(inv22, "iron_ingot", 1, 31, ChatColor.RED + "Rodonit Külçesi",
                 "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 3 Rodonit Cevheri",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 2 Obsidyen Cevheri",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Lav Kovası", "", ChatColor.GRAY + "Eritmeye başlamak için ",
                 ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv22, "iron_ingot", 1, 31, ChatColor.AQUA + "Spektral Külçesi",
+        itemHandler.createItem(inv22, "iron_ingot", 1, 32, ChatColor.AQUA + "Spektral Külçesi",
                 "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 4 Rodonit Cevheri",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 2 Obsidyen Cevheri",
@@ -1563,7 +1730,7 @@ public class GuiHandler {
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 3 " + Maden + " Külçesi",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 10 Seviye", "", ChatColor.GRAY + "İşlemeye başlamak için ",
                 ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv21, "iron_hoe", 1, 29, ChatColor.YELLOW + Maden + " Tırpan",
+        itemHandler.createItem(inv21, "wooden_hoe", 1, 29, ChatColor.YELLOW + Maden + " Tırpan",
                 ChatColor.GREEN + "Ustalık 1", "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 3 " + cubuk + " Çubuk",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 3 " + Maden + " Külçesi",
@@ -1883,6 +2050,108 @@ public class GuiHandler {
         return toReturn;
     }
 
+    public Inventory Rod(Player p) {
+        int smithLevel = stats.getWorkLevel(p.getUniqueId());
+        Inventory toReturn = Bukkit.createInventory(null, inv_rows8, inventory_name20);
+
+        itemHandler.createItem(inv28, "white_stained_glass_pane", 1, 1, " ");
+        itemHandler.createItem(inv28, "white_stained_glass_pane", 1, 2, " ");
+        itemHandler.createItem(inv28, "white_stained_glass_pane", 1, 3, " ");
+        itemHandler.createItem(inv28, "white_stained_glass_pane", 1, 4, " ");
+        itemHandler.createItem(inv28, "fletching_table", 1, 5, ChatColor.WHITE + "El Sanatları Masası",
+                ChatColor.GRAY + "Burada elindeki malzemelerle", ChatColor.GRAY + "yapabileceğin ekipmanlara bakabilir",
+                ChatColor.GRAY + "ve onları yapabilirsin.", "",
+                ChatColor.GOLD + "El Sanatlarındaki Ustalığın: " + ChatColor.GREEN + smithLevel);
+        itemHandler.createItem(inv28, "white_stained_glass_pane", 1, 6, " ");
+        itemHandler.createItem(inv28, "white_stained_glass_pane", 1, 7, " ");
+        itemHandler.createItem(inv28, "white_stained_glass_pane", 1, 8, " ");
+        itemHandler.createItem(inv28, "chest", 1, 9, Painter.paint("&6El Sanatları Deposu"),
+                Painter.paint("&7Buradan yaptığın ekipmanları alabilirsin."),
+                Painter.paint("&7Açmak için &e&lSağ Tıkla."));
+        itemHandler.createItem(inv28, "black_stained_glass_pane", 1, 10, " ");
+        itemHandler.createItem(inv28, "black_stained_glass_pane", 1, 11, " ");
+        itemHandler.createItem(inv28, "black_stained_glass_pane", 1, 12, " ");
+        itemHandler.createItem(inv28, "black_stained_glass_pane", 1, 13, " ");
+        itemHandler.createItem(inv28, "black_stained_glass_pane", 1, 14, " ");
+        itemHandler.createItem(inv28, "black_stained_glass_pane", 1, 15, " ");
+        itemHandler.createItem(inv28, "black_stained_glass_pane", 1, 16, " ");
+        itemHandler.createItem(inv28, "black_stained_glass_pane", 1, 17, " ");
+        itemHandler.createItem(inv28, "black_stained_glass_pane", 1, 18, " ");
+        itemHandler.createItem2(inv28, "fishing_rod", 1, 19, ChatColor.YELLOW + "Meşe Olta",
+                8, ChatColor.GREEN + "Ustalık 1", "", ChatColor.GRAY + " Gerekli Malzemeler:",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 5 Meşe Çubuk",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 4 İp",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 4 Seviye", "", ChatColor.GRAY + "Yapmaya başlamak için ",
+                ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        if (smithLevel > 1) {
+            itemHandler.createItem2(inv28, "fishing_rod", 1, 20, ChatColor.YELLOW + "Huş Olta",
+                    3, ChatColor.GREEN + "Ustalık 2", "", ChatColor.GRAY + " Gerekli Malzemeler:",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 5 Huş Çubuk",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 4 İp",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 4 Seviye", "", ChatColor.GRAY + "Yapmaya başlamak için ",
+                    ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        } else {
+            itemHandler.createItem(inv28, "red_stained_glass_pane", 1, 20, ChatColor.RED + "??? " + ChatColor.RED + "(Ustalık Yetersiz)",
+                    ChatColor.GRAY + "Bu yayı gerebilmek için el sanatlarındaki",
+                    ChatColor.GRAY + "ustalığının 1. seviyeden yüksek olması gerekir.");
+
+        }
+        if (smithLevel > 2) {
+            itemHandler.createItem2(inv28, "fishing_rod", 1, 21, ChatColor.YELLOW + "Yaşlı Meşe Olta",
+                    2, ChatColor.GREEN + "Ustalık 3", "", ChatColor.GRAY + " Gerekli Malzemeler:",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 5 Yaşlı Meşe Çubuk",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 4 İp",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 5 Seviye", "", ChatColor.GRAY + "Yapmaya başlamak için ",
+                    ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        } else {
+            itemHandler.createItem(inv28, "red_stained_glass_pane", 1, 21, ChatColor.RED + "??? " + ChatColor.RED + "(Ustalık Yetersiz)",
+                    ChatColor.GRAY + "Bu yayı gerebilmek için el sanatlarındaki",
+                    ChatColor.GRAY + "ustalığının 2. seviyeden yüksek olması gerekir.");
+
+        }
+        if (smithLevel > 3) {
+            itemHandler.createItem(inv28, "fishing_rod", 1, 22, ChatColor.YELLOW + "Tuzlu Balık Manipülatörü",
+                    ChatColor.GREEN + "Ustalık 4", "", ChatColor.GRAY + " Gerekli Malzemeler:",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 4 Meşe Çubuk",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 6 Tuzlu İp ",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 4 Seviye", "", ChatColor.GRAY + "Yapmaya başlamak için ",
+                    ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        } else {
+            itemHandler.createItem(inv28, "red_stained_glass_pane", 1, 22, ChatColor.RED + "??? " + ChatColor.RED + "(Ustalık Yetersiz)",
+                    ChatColor.GRAY + "Bu yayı gerebilmek için el sanatlarındaki",
+                    ChatColor.GRAY + "ustalığının 3. seviyeden yüksek olması gerekir.");
+        }
+        if (smithLevel > 4) {
+            itemHandler.createItem(inv28, "fishing_rod", 1, 23, ChatColor.YELLOW + "Kesici",
+                    ChatColor.GREEN + "Ustalık 5", "", ChatColor.GRAY + " Gerekli Malzemeler:",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 5 Meşe Çubuk",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 4 Ilviyan Pençesi",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 4 Tuzlu İp",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 4 Seviye", "", ChatColor.GRAY + "Yapmaya başlamak için ",
+                    ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        } else {
+            itemHandler.createItem(inv28, "red_stained_glass_pane", 1, 23, ChatColor.RED + "??? " + ChatColor.RED + "(Ustalık Yetersiz)",
+                    ChatColor.GRAY + "Bu yayı gerebilmek için el sanatlarındaki",
+                    ChatColor.GRAY + "ustalığının 4. seviyeden yüksek olması gerekir.");
+        }
+        if (smithLevel > 5) {
+            itemHandler.createItem(inv28, "fishing_rod", 1, 24, ChatColor.YELLOW + "Denizlerin Oltası",
+                    ChatColor.GREEN + "Ustalık 6", "", ChatColor.GRAY + " Gerekli Malzemeler:",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 2 Meşe Çubuk",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 2 Denizin Kalbi",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 4 Lanetli İp",
+                    ChatColor.GRAY + " -" + ChatColor.WHITE + " 5 Seviye", "", ChatColor.GRAY + "Yapmaya başlamak için ",
+                    ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        } else {
+            itemHandler.createItem(inv28, "red_stained_glass_pane", 1, 24, ChatColor.RED + "??? " + ChatColor.RED + "(Ustalık Yetersiz)",
+                    ChatColor.GRAY + "Bu yayı gerebilmek için el sanatlarındaki",
+                    ChatColor.GRAY + "ustalığının 5. seviyeden yüksek olması gerekir.");
+        }
+
+        toReturn.setContents(inv28.getContents());
+        return toReturn;
+    }
+
     public Inventory t1Ekipman(Player p) {
         int smithLevel = stats.getSmithLevel(p.getUniqueId());
         Inventory toReturn = Bukkit.createInventory(null, inv_rows5, inventory_name5);
@@ -1952,7 +2221,7 @@ public class GuiHandler {
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 3 Bakır Külçesi",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 10 Seviye", "", ChatColor.GRAY + "İşlemeye başlamak için ",
                 ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv5, "wooden_pickaxe", 1, 27, ChatColor.YELLOW + "Bakır Kazma",
+        itemHandler.createItem(inv5, "golden_pickaxe", 1, 27, ChatColor.YELLOW + "Bakır Kazma",
                 ChatColor.GREEN + "Ustalık 1", "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Çubuk",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 3 Bakır Külçesi",
@@ -2230,6 +2499,10 @@ public class GuiHandler {
             }
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
+                && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "Görev Defteri")) {
+            p.openInventory(questbook(p));
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GRAY + "Ayarlar")) {
             p.openInventory(ayarmenu(p));
         }
@@ -2322,6 +2595,10 @@ public class GuiHandler {
             p.openInventory(Bow(p));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
+                && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.WHITE + "Olta Kur")) {
+            p.openInventory(Rod(p));
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "Çalışma Alanı")) {
             p.openWorkbench(p.getLocation(), true);
         }
@@ -2344,6 +2621,14 @@ public class GuiHandler {
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "Biftek")) {
             itemHandler.cooking2(p, itemHandler.rawbeef, itemHandler.cookedbeef, 2, 1, 1, itemHandler.coal, 7, 12, "Biftek");
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
+                && clicked.getItemMeta().getDisplayName().contains(ChatColor.YELLOW + "Antrikot")) {
+            itemHandler.cooking3(p, itemHandler.rawbeef, itemHandler.antrikot, 2, 1, 1, itemHandler.coal,itemHandler.salt,2, 10, 22, "Antrikot");
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
+                && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "Pişmiş Gümüş Balığı")) {
+            itemHandler.cooking2(p, itemHandler.silverfish, itemHandler.cookedsilverfish, 1, 1, 1, itemHandler.coal, 7, 20, "Pişmiş Gümüş Balığı");
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "Pişmiş Tavuk Eti")) {
@@ -2409,6 +2694,7 @@ public class GuiHandler {
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "Bizon Derisinden Ekipmanlar")) {
             p.openInventory(leatherSmith(p, "Bizon", "Deri Dik -> Bizon Derisinden Ekipmanlar", 101));
         }
+
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GRAY + "Yaban Domuzu Derisinden Ekipmanlar")) {
             p.openInventory(leatherSmith(p, "Yaban Domuzu", "Deri Dik -> Yaban Domuzu Derisinden Ekipmanlar", 103));
@@ -2444,47 +2730,77 @@ public class GuiHandler {
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "Olduğun Bölgeyi Sahiplen")) {
             if (p.getWorld().getName().equals("remielsurvival")) {
-                Chunk chunk = p.getLocation().getChunk();
-                String chunkID = chunk.getX() + "." + chunk.getZ();
-                if (!(stats.getChunkmap().containsValue(p.getUniqueId()))) {
+                ItemStack ingrident = itemHandler.oakwood;
+                ItemStack ingrident2 = itemHandler.ironingot;
+                ItemStack ingrident3 = itemHandler.bronzeingot;
+                ItemStack ingrident4 = itemHandler.cobblestone;
+                ItemStack ingrident5 = itemHandler.coal;
+
+                ingrident.setAmount(200);
+                ingrident2.setAmount(64);
+                ingrident3.setAmount(33);
+                ingrident4.setAmount(256);
+                ingrident5.setAmount(128);
+                if (p.getInventory().containsAtLeast(ingrident, 200) && p.getInventory().containsAtLeast(ingrident2, 64) && p.getInventory().containsAtLeast(ingrident3, 33) && p.getInventory().containsAtLeast(ingrident4, 256) && p.getInventory().containsAtLeast(ingrident5, 128)) {
+
+                    p.getInventory().removeItem(ingrident);
+                    p.getInventory().removeItem(ingrident2);
+                    p.getInventory().removeItem(ingrident3);
+                    p.getInventory().removeItem(ingrident4);
+                    p.getInventory().removeItem(ingrident5);
+
+                    Chunk chunk = p.getLocation().getChunk();
+                    String chunkID = chunk.getX() + "." + chunk.getZ();
+                    if (!(stats.getChunkmap().containsValue(p.getUniqueId()))) {
 
 
-                    if (stats.isChunk(chunkID)) {
-                        p.showTitle(
+                        if (stats.isChunk(chunkID)) {
+                            p.showTitle(
 
-                                Title.title(
-                                        MiniMessage.miniMessage().deserialize("<gold>[</gold><red>Bölge Alınmış!</red><gold>]</gold>"),
-                                         MiniMessage.miniMessage().deserialize("")));
-                    } else {
-                        File myfile = new File(plugin.getDataFolder().getAbsolutePath() + "/house.schem");
-                        ClipboardFormat format = ClipboardFormats.findByFile(myfile);
-                        try (ClipboardReader reader = format.getReader(new FileInputStream(myfile))) {
-                            Clipboard clipboard = reader.read();
-                            try (EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(new BukkitWorld(p.getWorld()), -1)) {
-                                Operation operation = new ClipboardHolder(clipboard)
-                                        .createPaste(editSession)
-                                        .to(BlockVector3.at(p.getChunk().getBlock(15, p.getWorld().getHighestBlockYAt(p.getLocation()), 0).getX(), p.getWorld().getHighestBlockYAt(p.getLocation()), p.getChunk().getBlock(15, p.getWorld().getHighestBlockYAt(p.getLocation()), 0).getZ()))
-                                        .ignoreAirBlocks(false)
-                                        .build();
-                                Operations.complete(operation);
+                                    Title.title(
+                                            MiniMessage.miniMessage().deserialize("<gold>[</gold><red>Bölge Alınmış!</red><gold>]</gold>"),
+                                            MiniMessage.miniMessage().deserialize("")));
+                        } else {
+                            File myfile = new File(plugin.getDataFolder().getAbsolutePath() + "/house.schem");
+                            ClipboardFormat format = ClipboardFormats.findByFile(myfile);
+                            try (ClipboardReader reader = format.getReader(new FileInputStream(myfile))) {
+                                Clipboard clipboard = reader.read();
+                                try (EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(new BukkitWorld(p.getWorld()), -1)) {
+                                    Operation operation = new ClipboardHolder(clipboard)
+                                            .createPaste(editSession)
+                                            .to(BlockVector3.at(p.getChunk().getBlock(15, p.getWorld().getHighestBlockYAt(p.getLocation()), 0).getX(), p.getWorld().getHighestBlockYAt(p.getLocation()), p.getChunk().getBlock(15, p.getWorld().getHighestBlockYAt(p.getLocation()), 0).getZ()))
+                                            .ignoreAirBlocks(false)
+                                            .build();
+                                    Operations.complete(operation);
+                                }
+                            } catch (FileNotFoundException e) {
+                                throw new RuntimeException(e);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
                             }
-                        } catch (FileNotFoundException e) {
-                            throw new RuntimeException(e);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
+
+                            stats.addChunk(chunkID, p.getUniqueId());
+                            p.showTitle(
+
+                                    Title.title(
+                                            MiniMessage.miniMessage().deserialize("<gold>[</gold><green>Bölge Artık Senin!</green><gold>]</gold>"),
+                                            MiniMessage.miniMessage().deserialize("")));
+
                         }
-
-                        stats.addChunk(chunkID, p.getUniqueId());
-                        p.showTitle(
-
-                                Title.title(
-                                        MiniMessage.miniMessage().deserialize("<gold>[</gold><green>Bölge Artık Senin!</green><gold>]</gold>"),
-                                         MiniMessage.miniMessage().deserialize("")));
-
+                    } else {
+                        p.closeInventory();
+                        p.sendMessage(Painter.paint("&c&lZaten bir bölgen var!"));
                     }
                 } else {
                     p.closeInventory();
-                    p.sendMessage(Painter.paint("&c&lZaten bir bölgen var!"));
+                    p.sendMessage(Painter.paint("&c&lMalzemelerin Eksik!"));
+                    p.sendMessage(Painter.paint(""));
+                    p.sendMessage(Painter.paint(" &7Gerekenler:"));
+                    p.sendMessage(Painter.paint(" &7 - &f200 Meşe Odunu:"));
+                    p.sendMessage(Painter.paint(" &7 - &f64 Demir:"));
+                    p.sendMessage(Painter.paint(" &7 - &f33 Bronz:"));
+                    p.sendMessage(Painter.paint(" &7 - &f256 Kırıktaş:"));
+                    p.sendMessage(Painter.paint(" &7 - &f128 Kömür:"));
                 }
             } else {
                 p.closeInventory();
@@ -3026,6 +3342,192 @@ public class GuiHandler {
 
                 getDisplayName().
 
+                equalsIgnoreCase(ChatColor.GOLD + "Kömür")) {
+            ItemStack coal = itemHandler.coal;
+            coal.setAmount(1);
+            if (p.getInventory().containsAtLeast(coal, 1)) {
+                p.getInventory().removeItem(coal);
+                ekonomi.depositPlayer(p.getName(),0.5);
+            } else {
+                p.closeInventory();
+                p.sendMessage(Painter.paint("&cMalzemen kalmadı!"));
+            }
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Kemik")) {
+            ItemStack bone = itemHandler.bone;
+            bone.setAmount(1);
+            if (p.getInventory().containsAtLeast(bone, 1)) {
+                p.getInventory().removeItem(bone);
+                ekonomi.depositPlayer(p.getName(),1);
+            } else {
+                p.closeInventory();
+                p.sendMessage(Painter.paint("&cMalzemen kalmadı!"));
+            }
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Solmuş Kemik")) {
+            ItemStack blackbone = itemHandler.blackbone;
+            blackbone.setAmount(1);
+            if (p.getInventory().containsAtLeast(blackbone, 1)) {
+                p.getInventory().removeItem(blackbone);
+                ekonomi.depositPlayer(p.getName(),1.4);
+            } else {
+                p.closeInventory();
+                p.sendMessage(Painter.paint("&cMalzemen kalmadı!"));
+            }
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Meşe Odunu")) {
+            ItemStack oakwood = itemHandler.oakwood;
+            oakwood.setAmount(1);
+            if (p.getInventory().containsAtLeast(oakwood, 1)) {
+                p.getInventory().removeItem(oakwood);
+                ekonomi.depositPlayer(p.getName(),0.4);
+            } else {
+                p.closeInventory();
+                p.sendMessage(Painter.paint("&cMalzemen kalmadı!"));
+            }
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Elma")) {
+            ItemStack apple = itemHandler.apple;
+            apple.setAmount(1);
+            if (p.getInventory().containsAtLeast(apple, 1)) {
+                p.getInventory().removeItem(apple);
+                ekonomi.depositPlayer(p.getName(),1);
+            } else {
+                p.closeInventory();
+                p.sendMessage(Painter.paint("&cMalzemen kalmadı!"));
+            }
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Yün Kürken")) {
+            ItemStack shears = itemHandler.yunkurken;
+            shears.setAmount(1);
+            if (ekonomi.has(p.getName(),100)) {
+                ekonomi.withdrawPlayer(p.getName(),100);
+                if (p.getInventory().firstEmpty() == -1) {
+                    p.closeInventory();
+                    p.sendMessage(Painter.paint("&cEnvanterin Dolu!"));
+
+                } else {
+                    p.getInventory().addItem(shears);
+                }
+            } else {
+                p.closeInventory();
+                p.sendMessage(Painter.paint("&cDinar'ın Eksik!"));
+            }
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Dövüşcü Tuniği")) {
+            ItemStack dovuscutunigi = itemHandler.dovuscutunigi;
+            dovuscutunigi.setAmount(1);
+            if (ekonomi.has(p.getName(),50)) {
+                ekonomi.withdrawPlayer(p.getName(),50);
+                if (p.getInventory().firstEmpty() == -1) {
+                    p.closeInventory();
+                    p.sendMessage(Painter.paint("&cEnvanterin Dolu!"));
+
+                } else {
+                    p.getInventory().addItem(dovuscutunigi);
+                }
+            } else {
+                p.closeInventory();
+                p.sendMessage(Painter.paint("&cDinar'ın Eksik!"));
+            }
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.GOLD + "Geri Dönüş İksiri")) {
+            ItemStack recallpotion = itemHandler.recallpotion;
+            recallpotion.setAmount(1);
+            if (ekonomi.has(p.getName(),220)) {
+                ekonomi.withdrawPlayer(p.getName(),220);
+                if (p.getInventory().firstEmpty() == -1) {
+                    p.closeInventory();
+                    p.sendMessage(Painter.paint("&cEnvanterin Dolu!"));
+
+                } else {
+                    p.getInventory().addItem(recallpotion);
+                }
+            } else {
+                p.closeInventory();
+                p.sendMessage(Painter.paint("&cDinar'ın Eksik!"));
+            }
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Az Kullanılmış Mızrak")) {
+            ItemStack azkullanilmismizrak = itemHandler.azkullanilmismizrak;
+            azkullanilmismizrak.setAmount(1);
+            if (ekonomi.has(p.getName(),120)) {
+                ekonomi.withdrawPlayer(p.getName(),120);
+                if (p.getInventory().firstEmpty() == -1) {
+                    p.closeInventory();
+                    p.sendMessage(Painter.paint("&cEnvanterin Dolu!"));
+
+                } else {
+                    p.getInventory().addItem(azkullanilmismizrak);
+                }
+            } else {
+                p.closeInventory();
+                p.sendMessage(Painter.paint("&cDinar'ın Eksik!"));
+            }
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
                 equalsIgnoreCase(Painter.paint("&4Niteliklerini Sıfırla!"))) {
             if (zerola.containsKey(p.getUniqueId())) {
                 List<Integer> statlist = new ArrayList<>();
@@ -3138,13 +3640,13 @@ public class GuiHandler {
                 p.closeInventory();
                 p.showTitle(
 
-                        Title.title( MiniMessage.miniMessage().deserialize("<red>Nitelikler</red>"),
+                        Title.title(MiniMessage.miniMessage().deserialize("<red>Nitelikler</red>"),
                                 MiniMessage.miniMessage().deserialize("<gray>Sıfırlandı!</gray>")));
-                stats.setNP(p.getUniqueId(), stats.getharcananNP(p.getUniqueId()) - 3);
+                stats.setNP(p.getUniqueId(), stats.getharcananNP(p.getUniqueId()));
                 stats.setharcananNP(p.getUniqueId(), -stats.getharcananNP(p.getUniqueId()));
                 stats.setKritikHasari(p.getUniqueId(), -stats.getKritikHasari(p.getUniqueId()) + 12 + statlist.get(6));
                 stats.setKritikSansi(p.getUniqueId(), -stats.getKritikSansi(p.getUniqueId()) + statlist.get(7));
-                stats.setCan(p, p.getUniqueId(), -stats.getCan(p.getUniqueId()) + 20 + statlist.get(0));
+                stats.setCan(p, p.getUniqueId(), -stats.getCan(p.getUniqueId()) + 100 + statlist.get(0));
                 stats.setCanYenileme(p, p.getUniqueId(), -stats.getCanYenileme(p.getUniqueId()) + 5 + statlist.get(1));
                 stats.setDoygunluk(p, p.getUniqueId(), -stats.getDoygunluk(p.getUniqueId()) + statlist.get(4));
                 stats.setGuc(p.getUniqueId(), -stats.getGuc(p.getUniqueId()) + 5 + statlist.get(2));
@@ -3181,7 +3683,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Cam")) {
-            itemHandler.realFurnaceSmelt(p, itemHandler.sand, itemHandler.glass, 1, 1, 1, itemHandler.coal, 2, itemHandler.glass.getItemMeta().getDisplayName());
+            itemHandler.realFurnaceSmelt(p, itemHandler.sand, itemHandler.glass, 1, 1, 1, itemHandler.coal, 2, Component.text(itemHandler.glass.getAmount() + " x").append(itemHandler.glass.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3191,7 +3693,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Kömür")) {
-            itemHandler.realFurnaceSmelt(p, itemHandler.oakwood, itemHandler.coal, 1, 1, 1, itemHandler.oakwood, 2, itemHandler.coal.getItemMeta().getDisplayName());
+            itemHandler.realFurnaceSmelt(p, itemHandler.oakwood, itemHandler.coal, 1, 1, 1, itemHandler.oakwood, 2, Component.text(itemHandler.coal.getAmount() + " x").append(itemHandler.coal.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3201,7 +3703,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Tuğla")) {
-            itemHandler.realFurnaceSmelt(p, itemHandler.clay, itemHandler.brick, 1, 1, 1, itemHandler.coal, 2, itemHandler.brick.getItemMeta().getDisplayName());
+            itemHandler.realFurnaceSmelt(p, itemHandler.clay, itemHandler.brick, 1, 1, 1, itemHandler.coal, 2, Component.text(itemHandler.brick.getAmount() + " x").append(itemHandler.brick.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3213,6 +3715,7 @@ public class GuiHandler {
                 equalsIgnoreCase(ChatColor.YELLOW + "Ekmek")) {
             itemHandler.cooking2(p, itemHandler.wheat, itemHandler.bread, 3, 1, 1, itemHandler.coal, 6, 10, itemHandler.bread.getItemMeta().getDisplayName());
         }
+
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
                 hasDisplayName()
@@ -3221,7 +3724,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.GOLD + "Bakır Külçesi")) {
-            itemHandler.Smelting(p, itemHandler.copperore, itemHandler.copperingot, 1, 1, 2, itemHandler.coal, 3, itemHandler.copperingot.getItemMeta().getDisplayName());
+            itemHandler.Smelting(p, itemHandler.copperore, itemHandler.copperingot, 1, 1, 2, itemHandler.coal, 3, Component.text(itemHandler.copperingot.getAmount() + " x").append(itemHandler.copperingot.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3231,7 +3734,17 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.GRAY + "Demir Külçesi")) {
-            itemHandler.Smelting(p, itemHandler.ironore, itemHandler.ironingot, 1, 1, 3, itemHandler.coal, 4, itemHandler.ironingot.getItemMeta().getDisplayName());
+            itemHandler.Smelting(p, itemHandler.ironore, itemHandler.ironingot, 1, 1, 3, itemHandler.coal, 4, Component.text(itemHandler.ironingot.getAmount() + " x").append(itemHandler.ironingot.displayName()));
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GRAY + "Gümüş Külçesi")) {
+            itemHandler.Smelting(p, itemHandler.silverore, itemHandler.silveringot, 1, 1, 3, itemHandler.coal, 6, Component.text(itemHandler.silveringot.getAmount() + " x").append(itemHandler.silveringot.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3241,7 +3754,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.WHITE + "Nikel Külçesi")) {
-            itemHandler.Smelting(p, itemHandler.nikelore, itemHandler.nikelingot, 1, 1, 2, itemHandler.coal, 4, itemHandler.nikelingot.getItemMeta().getDisplayName());
+            itemHandler.Smelting(p, itemHandler.nikelore, itemHandler.nikelingot, 1, 1, 2, itemHandler.coal, 4, Component.text(itemHandler.nikelingot.getAmount() + " x").append(itemHandler.nikelingot.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3251,7 +3764,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Külçesi")) {
-            itemHandler.Smelting(p, itemHandler.goldore, itemHandler.goldingot, 1, 1, 3, itemHandler.coal, 5, itemHandler.goldingot.getItemMeta().getDisplayName());
+            itemHandler.Smelting(p, itemHandler.goldore, itemHandler.goldingot, 1, 1, 3, itemHandler.coal, 5, Component.text(itemHandler.goldingot.getAmount() + " x").append(itemHandler.goldingot.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3261,7 +3774,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.DARK_AQUA + "Mitril Külçesi")) {
-            itemHandler.Smelting(p, itemHandler.mithrilore, itemHandler.mithrilingot, 3, 1, 1, itemHandler.lavabucket, 10, itemHandler.mithrilingot.getItemMeta().getDisplayName());
+            itemHandler.Smelting(p, itemHandler.mithrilore, itemHandler.mithrilingot, 3, 1, 1, itemHandler.lavabucket, 10, Component.text(itemHandler.mithrilingot.getAmount() + " x").append(itemHandler.mithrilingot.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3271,7 +3784,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.AQUA + "Adamantium Külçesi")) {
-            itemHandler.Smelting(p, itemHandler.adamantiumingot, itemHandler.adamantiumingot, 1, 1, 4, itemHandler.coal, 13, itemHandler.adamantiumingot.getItemMeta().getDisplayName());
+            itemHandler.Smelting(p, itemHandler.adamantiumingot, itemHandler.adamantiumingot, 1, 1, 4, itemHandler.coal, 13, Component.text(itemHandler.adamantiumingot.getAmount() + " x").append(itemHandler.mithrilingot.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3281,7 +3794,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.DARK_PURPLE + "Obsidyen Külçesi")) {
-            itemHandler.Smelting2(p, itemHandler.obsidianore, itemHandler.obsidianingot, 1, 1, 4, 2, itemHandler.coal, itemHandler.nikelore, 12, itemHandler.obsidianingot.getItemMeta().getDisplayName());
+            itemHandler.Smelting2(p, itemHandler.obsidianore, itemHandler.obsidianingot, 1, 1, 4, 2, itemHandler.coal, itemHandler.nikelore, 12, Component.text(itemHandler.obsidianingot.getAmount() + " x").append(itemHandler.obsidianingot.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3291,7 +3804,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.DARK_GRAY + "Netherit Külçesi")) {
-            itemHandler.Smelting2(p, itemHandler.netheriteore, itemHandler.netheriteingot, 2, 1, 4, 2, itemHandler.coal, itemHandler.ironore, 12, itemHandler.netheriteingot.getItemMeta().getDisplayName());
+            itemHandler.Smelting2(p, itemHandler.netheriteore, itemHandler.netheriteingot, 2, 1, 4, 2, itemHandler.coal, itemHandler.ironore, 12, Component.text(itemHandler.netheriteingot.getAmount() + " x").append(itemHandler.netheriteingot.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3301,7 +3814,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.RED + "Kızıl Metal Külçesi")) {
-            itemHandler.Smelting2(p, itemHandler.crimsonore, itemHandler.crimsoningot, 2, 1, 1, 1, itemHandler.lavabucket, itemHandler.netheriteore, 12, itemHandler.crimsoningot.getItemMeta().getDisplayName());
+            itemHandler.Smelting2(p, itemHandler.crimsonore, itemHandler.crimsoningot, 2, 1, 1, 1, itemHandler.lavabucket, itemHandler.netheriteore, 12, Component.text(itemHandler.crimsoningot.getAmount() + " x").append(itemHandler.crimsoningot.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3311,7 +3824,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.DARK_PURPLE + "Hiçlik Külçesi")) {
-            itemHandler.Smelting2(p, itemHandler.voidlore, itemHandler.voidingot, 3, 1, 1, 2, itemHandler.lavabucket, itemHandler.crimsonore, 12, itemHandler.voidingot.getItemMeta().getDisplayName());
+            itemHandler.Smelting2(p, itemHandler.voidlore, itemHandler.voidingot, 3, 1, 1, 2, itemHandler.lavabucket, itemHandler.crimsonore, 12, Component.text(itemHandler.voidingot.getAmount() + " x").append(itemHandler.voidingot.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3321,7 +3834,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.RED + "Rodonit Külçesi")) {
-            itemHandler.Smelting2(p, itemHandler.rodonitore, itemHandler.rodonitingot, 3, 1, 1, 2, itemHandler.lavabucket, itemHandler.obsidianore, 12, itemHandler.rodonitingot.getItemMeta().getDisplayName());
+            itemHandler.Smelting2(p, itemHandler.rodonitore, itemHandler.rodonitingot, 3, 1, 1, 2, itemHandler.lavabucket, itemHandler.obsidianore, 12, Component.text(itemHandler.rodonitingot.getAmount() + " x").append(itemHandler.rodonitingot.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3331,7 +3844,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.AQUA + "Spektral Külçesi")) {
-            itemHandler.Smelting3(p, itemHandler.spektralore, itemHandler.spektralingot, 1, 1, 4, 1, 2, 1, itemHandler.rodonitore, itemHandler.lavabucket, itemHandler.obsidianore, itemHandler.mithrilore, 12, itemHandler.spektralingot.getItemMeta().getDisplayName());
+            itemHandler.Smelting3(p, itemHandler.spektralore, itemHandler.spektralingot, 1, 1, 4, 1, 2, 1, itemHandler.rodonitore, itemHandler.lavabucket, itemHandler.obsidianore, itemHandler.mithrilore, 12, Component.text(itemHandler.spektralingot.getAmount() + " x").append(itemHandler.spektralingot.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3341,7 +3854,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 equalsIgnoreCase(ChatColor.GOLD + "Bronz Külçesi")) {
-            itemHandler.Smelting2(p, itemHandler.copperore, itemHandler.bronzeingot, 1, 1, 2, 1, itemHandler.coal, itemHandler.nikelore, 5, itemHandler.bronzeingot.getItemMeta().getDisplayName());
+            itemHandler.Smelting2(p, itemHandler.copperore, itemHandler.bronzeingot, 1, 1, 2, 1, itemHandler.coal, itemHandler.nikelore, 5, Component.text(itemHandler.bronzeingot.getAmount() + " x").append(itemHandler.bronzeingot.displayName()));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3352,8 +3865,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.copperingot, itemHandler.oakstick, 3, 2,
-                    new ItemStack(Material.WOODEN_SWORD), "&6Bakır Kılıç", 2, 6, 4, 2, 2, false, 2, 10, 6, "Düşük", 5,
-                    6, 10, 20, 5, "Kılıç", 200);
+                    new ItemStack(Material.WOODEN_SWORD), "<gold><i:false>Bakır Kılıç", 2, 6, 4, 2, 2, false, 2, 10, 6, "Düşük", 5,
+                    6, 10, 8, 10, "Kılıç", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3364,8 +3877,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Ağır Bakır Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.copperingot, itemHandler.oakstick, 5, 3,
-                    new ItemStack(Material.DIAMOND_SWORD), "&6Ağır Bakır Kılıç", 2, 8, 4, 2, 0, false, 2, 10, 6, "Orta", 5,
-                    6, 10, 20, 5, "Ağır Kılıç", 200);
+                    new ItemStack(Material.DIAMOND_SWORD), "<gold><i:false>Ağır Bakır Kılıç", 2, 8, 4, 2, 0, false, 2, 10, 6, "Orta", 5,
+                    6, 10, 8, 10, "Ağır Kılıç", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3376,8 +3889,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Hançer")) {
             itemHandler.createWeapon(p, itemHandler.copperingot, itemHandler.oakstick, 3, 1,
-                    new ItemStack(Material.SHEARS), "&6Bakır Hançer", 2, 6, 7, 5, 0, false, 2, 10, 5, "Düşük", 5, 6, 10,
-                    20, 5, "Hançer", 200);
+                    new ItemStack(Material.SHEARS), "<gold><i:false>Bakır Hançer", 2, 6, 7, 5, 0, false, 2, 10, 5, "Düşük", 5, 6, 10,
+                    8, 10, "Hançer", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3388,8 +3901,32 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Huş Yay")) {
             itemHandler.createWeaponWork(p, itemHandler.birchstick, itemHandler.string, 4, 3,
-                    3, new ItemStack(Material.BOW), "&eHuş Yay", 1, 8, 9, 6, 1, false, 4, 0, 3, "Düşük", 0, 6, 8,
-                    22, 2, "Yay", 250);
+                    3, new ItemStack(Material.BOW), "<white><i:false>Huş Yay", 1, 8, 9, 6, 1, false, 4, 0, 3, "Düşük", 0, 6, 8,
+                    12, 2, "Yay", 250, 2);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Meşe Olta")) {
+            itemHandler.createWeaponWork(p, itemHandler.oakstick, itemHandler.string, 5, 4,
+                    8, new ItemStack(Material.FISHING_ROD), "<gold><i:false>Meşe Olta", 1, 6, 0, 0, 0, false, 5, 4, 0, "Düşük", 5, 6, 10,
+                    10, 4, "Olta", 200, 2);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Huş Olta")) {
+            itemHandler.createWeaponWork(p, itemHandler.birchstick, itemHandler.string, 5, 4,
+                    8, new ItemStack(Material.FISHING_ROD), "<white<i:false>Huş Olta", 1, 7, 0, 0, 0, false, 5, 4, 0, "Düşük", 5, 6, 12,
+                    16, 4, "Olta", 400, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3400,8 +3937,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Meşe Yay")) {
             itemHandler.createWeaponWork(p, itemHandler.oakstick, itemHandler.string, 4, 3,
-                    8, new ItemStack(Material.BOW), "&eMeşe Yay", 1, 6, 7, 5, 0, false, 5, 0, 5, "Düşük", 0, 6, 10,
-                    20, 2, "Yay", 200);
+                    8, new ItemStack(Material.BOW), "<gold><i:false>Meşe Yay", 1, 6, 7, 5, 0, false, 5, 0, 5, "Düşük", 0, 6, 10,
+                    10, 2, "Yay", 200, 1);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3412,8 +3949,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Tırpan")) {
             itemHandler.createWeapon(p, itemHandler.copperingot, itemHandler.oakstick, 3, 3,
-                    new ItemStack(Material.IRON_HOE), "&6Bakır Tırpan", 2, 4, 7, 5, 0, false, 2, 10, 4, "Orta", 5, 6,
-                    10, 20, 5, "Tırpan", 200);
+                    new ItemStack(Material.WOODEN_HOE), "<gold><i:false>Bakır Tırpan", 2, 4, 7, 5, 0, false, 2, 10, 4, "Orta", 5, 6,
+                    10, 8, 10, "Tırpan", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3424,8 +3961,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Balta")) {
             itemHandler.createWeapon(p, itemHandler.copperingot, itemHandler.oakstick, 3, 2,
-                    new ItemStack(Material.GOLDEN_AXE), "&6Bakır Balta", 2, 7, 5, 3, 0, false, 1, 14, 3, "Düşük", 5, 6,
-                    10, 20, 5, "Balta", 200);
+                    new ItemStack(Material.GOLDEN_AXE), "<gold><i:false>Bakır Balta", 2, 7, 5, 3, 0, false, 1, 14, 3, "Düşük", 5, 6,
+                    10, 8, 10, "Balta", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3436,8 +3973,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Mızrak")) {
             itemHandler.createWeapon(p, itemHandler.copperingot, itemHandler.oakstick, 3, 2,
-                    new ItemStack(Material.STICK), "&6Bakır Mızrak", 2, 7, 5, 3, 4, false, 1, 14, 7, "Düşük", 6, 6, 10,
-                    20, 5, "Mızrak", 200);
+                    new ItemStack(Material.STICK), "<gold><i:false>Bakır Mızrak", 2, 7, 5, 3, 4, false, 1, 14, 7, "Düşük", 6, 6, 10,
+                    8, 10, "Mızrak", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3448,8 +3985,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Topuz")) {
             itemHandler.createWeapon(p, itemHandler.copperingot, itemHandler.oakstick, 3, 3,
-                    new ItemStack(Material.WOODEN_SHOVEL), "&6Bakır Topuz", 2, 7, 5, 3, 4, false, 1, 14, 7, "Düşük", 5, 6, 10,
-                    20, 5, "Topuz", 300);
+                    new ItemStack(Material.WOODEN_SHOVEL), "<gold><i:false>Bakır Topuz", 2, 7, 5, 3, 4, false, 1, 14, 7, "Düşük", 5, 6, 10,
+                    8, 10, "Topuz", 300, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3460,7 +3997,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Kürek")) {
             itemHandler.createTool(p, itemHandler.copperingot, 3, itemHandler.oakstick, 2,
-                    new ItemStack(Material.GOLDEN_SHOVEL), "&6Bakır Kürek", 2, 4, false, 3, 20, 6, 10, 4, "Kürek", 200);
+                    new ItemStack(Material.GOLDEN_SHOVEL), "<gold><i:false>Bakır Kürek", 2, 4, false, 3, 20, 6, 8, 10, "Kürek", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3471,7 +4008,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Kazma")) {
             itemHandler.createTool(p, itemHandler.copperingot, 3, itemHandler.oakstick, 3,
-                    new ItemStack(Material.GOLDEN_PICKAXE), "&6Bakır Kazma", 2, 5, false, 3, 20, 6, 10, 4, "Kazma", 200);
+                    new ItemStack(Material.GOLDEN_PICKAXE), "<gold><i:false>Bakır Kazma", 2, 5, false, 3, 20, 6, 8, 10, "Kazma", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3482,7 +4019,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Çapa")) {
             itemHandler.createTool(p, itemHandler.copperingot, 3, itemHandler.oakstick, 3,
-                    new ItemStack(Material.GOLDEN_HOE), "&6Bakır Çapa", 2, 5, false, 3, 20, 6, 10, 4, "Çapa", 200);
+                    new ItemStack(Material.GOLDEN_HOE), "<gold><i:false>Bakır Çapa", 2, 5, false, 3, 20, 6, 8, 10, "Çapa", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3493,8 +4030,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Göğüslük")) {
             itemHandler.createArmor(p, "Göğüslük", itemHandler.copperingot, 8,
-                    new ItemStack(Material.LEATHER_CHESTPLATE), "&6Bakır Göğüslük", 2, 4, 5, 5, 1, 0, 0, 0, 0, 0, 0,
-                    0, 4, 10, 8, 10, 8, 200);
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false>Bakır Göğüslük", 2, 4, 5, 5, 1, 0, 0, 0, 0, 0, 0,
+                    0, 4, 10, 8, 10, 8, 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3505,8 +4042,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "İnek Derisinden Kapüşon")) {
             itemHandler.createArmorWork(p, "Miğfer", itemHandler.cowleather, itemHandler.string, 5, 3,
-                    new ItemStack(Material.LEATHER_HELMET), "&6İnek Derisinden Kapüşon", 2, 2, 1, 0, 0, 0, 1, 1, 0, 0, 8,
-                    8, 4, 6, 12, 5, 103, 100);
+                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false>İnek Derisinden Kapüşon", 2, 2, 1, 0, 0, 0, 1, 1, 0, 0, 8,
+                    8, 4, 6, 12, 5, 103, 100, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3517,8 +4054,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "İnek Derisinden Göğüslük")) {
             itemHandler.createArmorWork(p, "Göğüslük", itemHandler.cowleather, itemHandler.string, 8, 6,
-                    new ItemStack(Material.LEATHER_CHESTPLATE), "&6İnek Derisinden Göğüslük", 2, 4, 3, 0, 0, 0, 2, 3, 0, 0, 12,
-                    8, 4, 7, 12, 5, 103, 120);
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false>İnek Derisinden Göğüslük", 2, 4, 3, 0, 0, 0, 2, 3, 0, 0, 12,
+                    8, 4, 7, 12, 5, 103, 120, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3529,8 +4066,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "İnek Derisinden Pantolon")) {
             itemHandler.createArmorWork(p, "Pantolon", itemHandler.cowleather, itemHandler.string, 7, 5,
-                    new ItemStack(Material.LEATHER_LEGGINGS), "&6İnek Derisinden Pantolon", 2, 4, 2, 0, 0, 0, 2, 3, 0, 0, 10,
-                    8, 4, 7, 12, 5, 103, 120);
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false>İnek Derisinden Pantolon", 2, 4, 2, 0, 0, 0, 2, 3, 0, 0, 10,
+                    8, 4, 7, 12, 5, 103, 120, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3541,8 +4078,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "İnek Derisinden Çizmeler")) {
             itemHandler.createArmorWork(p, "Botlar", itemHandler.cowleather, itemHandler.string, 4, 3,
-                    new ItemStack(Material.LEATHER_BOOTS), "&6İnek Derisinden Çizmeler", 2, 3, 1, 0, 0, 0, 2, 2, 0, 0, 8,
-                    8, 4, 7, 12, 5, 103, 100);
+                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false>İnek Derisinden Çizmeler", 2, 3, 1, 0, 0, 0, 2, 2, 0, 0, 8,
+                    8, 4, 7, 12, 5, 103, 100, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3553,7 +4090,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "İnek Derisinden Çanta")) {
             itemHandler.createBackpack(p, itemHandler.cowleather, 10
-                    , 2, new ItemStack(Material.LEATHER), "İnek Derisinden Çanta", 1, 9, 4, 12, 10, "Çanta");
+                    , 2, new ItemStack(Material.LEATHER), "<gold><i:false>İnek Derisinden Çanta", 1, 9, 4, 12, 10, "Çanta", 1);
 
         }
 
@@ -3566,8 +4103,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bizon Derisinden Kapüşon")) {
             itemHandler.createArmorWork(p, "Miğfer", itemHandler.bizoneleather, itemHandler.string, 5, 3,
-                    new ItemStack(Material.LEATHER_HELMET), "&6Bizon Derisinden Kapüşon", 2, 2, 2, 0, 0, 1, 1, 3, 0, 0, 11,
-                    8, 4, 6, 15, 5, 101, 100);
+                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false>Bizon Derisinden Kapüşon", 2, 2, 2, 0, 0, 1, 1, 3, 0, 0, 11,
+                    8, 4, 6, 15, 5, 101, 100, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3578,8 +4115,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bizon Derisinden Göğüslük")) {
             itemHandler.createArmorWork(p, "Göğüslük", itemHandler.bizoneleather, itemHandler.string, 8, 6,
-                    new ItemStack(Material.LEATHER_CHESTPLATE), "&6Bizon Derisinden Göğüslük", 2, 4, 4, 0, 0, 3, 2, 5, 0, 0, 15,
-                    8, 4, 7, 16, 5, 101, 120);
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false>Bizon Derisinden Göğüslük", 2, 4, 4, 0, 0, 3, 2, 5, 0, 0, 15,
+                    8, 4, 7, 16, 5, 101, 120, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3590,8 +4127,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bizon Derisinden Pantolon")) {
             itemHandler.createArmorWork(p, "Pantolon", itemHandler.bizoneleather, itemHandler.string, 7, 5,
-                    new ItemStack(Material.LEATHER_LEGGINGS), "&6Bizon Derisinden Pantolon", 2, 4, 3, 0, 0, 2, 2, 5, 0, 0, 13,
-                    8, 4, 7, 16, 5, 101, 120);
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false>Bizon Derisinden Pantolon", 2, 4, 3, 0, 0, 2, 2, 5, 0, 0, 13,
+                    8, 4, 7, 16, 5, 101, 120, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3602,8 +4139,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bizon Derisinden Çizmeler")) {
             itemHandler.createArmorWork(p, "Botlar", itemHandler.bizoneleather, itemHandler.string, 4, 3,
-                    new ItemStack(Material.LEATHER_BOOTS), "&6Bizon Derisinden Çizmeler", 2, 4, 2, 0, 0, 4, 2, 4, 0, 0, 10,
-                    8, 4, 7, 16, 5, 101, 100);
+                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false>Bizon Derisinden Çizmeler", 2, 4, 2, 0, 0, 4, 2, 4, 0, 0, 10,
+                    8, 4, 7, 16, 5, 101, 100, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3614,7 +4151,67 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bizon Derisinden Çanta")) {
             itemHandler.createBackpack(p, itemHandler.bizoneleather, 10
-                    , 2, new ItemStack(Material.LEATHER), "&6Bizon Derisinden Çanta", 1, 18, 5, 16, 10, "Çanta");
+                    , 2, new ItemStack(Material.LEATHER), "<gold><i:false>Bizon Derisinden Çanta", 1, 18, 5, 16, 10, "Çanta", 1);
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Yaban Domuzu Derisinden Kapüşon")) {
+            itemHandler.createArmorWork(p, "Miğfer", itemHandler.pigleather, itemHandler.string, 5, 3,
+                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false>Yaban Domuzu Derisinden Kapüşon", 3, 2, 2, 0, 0, 1, 1, 5, 0, 0, 14,
+                    10, 4, 8, 25, 5, 103, 200, 6);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Yaban Domuzu Derisinden Göğüslük")) {
+            itemHandler.createArmorWork(p, "Göğüslük", itemHandler.pigleather, itemHandler.string, 8, 6,
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false>Yaban Domuzu Derisinden Göğüslük", 3, 4, 4, 2, 0, 5, 4, 5, 0, 0, 16,
+                    10, 4, 8, 25, 5, 103, 220, 6);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Yaban Domuzu Derisinden Pantolon")) {
+            itemHandler.createArmorWork(p, "Pantolon", itemHandler.pigleather, itemHandler.string, 7, 5,
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false>Yaban Domuzu Derisinden Pantolon", 3, 4, 3, 1, 0, 2, 4, 6, 0, 0, 15,
+                    10, 4, 8, 25, 5, 103, 220, 6);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Yaban Domuzu Derisinden Çizmeler")) {
+            itemHandler.createArmorWork(p, "Botlar", itemHandler.pigleather, itemHandler.string, 4, 3,
+                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false>Yaban Domuzu Derisinden Çizmeler", 3, 4, 2, 0, 0, 7, 4, 5, 0, 0, 13,
+                    11, 4, 8, 25, 5, 103, 200, 6);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Yaban Domuzu Derisinden Çanta")) {
+            itemHandler.createBackpack(p, itemHandler.pigleather, 10
+                    , 2, new ItemStack(Material.LEATHER), "<gold><i:false>Yaban Domuzu Derisinden Çanta", 1, 27, 10, 20, 10, "Çanta", 3);
 
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -3626,8 +4223,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Pantolon")) {
             itemHandler.createArmor(p, "Pantolon", itemHandler.copperingot, 7,
-                    new ItemStack(Material.LEATHER_LEGGINGS), "&6Bakır Pantolon", 2, 3, 4, 5, 1, 0, 0, 0, 0, 0, 0, 0,
-                    4, 10, 8, 10, 8, 200);
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false>Bakır Pantolon", 2, 3, 4, 5, 1, 0, 0, 0, 0, 0, 0, 0,
+                    4, 10, 8, 10, 8, 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3638,8 +4235,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Miğfer")) {
             itemHandler.createArmor(p, "Miğfer", itemHandler.copperingot, 5,
-                    new ItemStack(Material.LEATHER_HELMET), "&6Bakır Miğfer", 2, 2, 4, 5, 1, 0, 0, 0, 0, 0, 0, 0, 4,
-                    10, 8, 10, 8, 200);
+                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false>Bakır Miğfer", 2, 2, 4, 5, 1, 0, 0, 0, 0, 0, 0, 0, 4,
+                    10, 8, 10, 8, 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3650,8 +4247,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Botlar")) {
             itemHandler.createArmor(p, "Botlar", itemHandler.copperingot, 4,
-                    new ItemStack(Material.LEATHER_BOOTS), "&6Bakır Botlar", 2, 2, 4, 5, 1, 0, 0, 0, 0, 0, 0, 0, 4,
-                    12, 8, 10, 8, 200);
+                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false>Bakır Botlar", 2, 2, 4, 5, 1, 0, 0, 0, 0, 0, 0, 0, 4,
+                    12, 8, 10, 8, 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3662,8 +4259,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.bronzeingot, itemHandler.oakstick, 3, 2,
-                    new ItemStack(Material.WOODEN_SWORD), "&6Bronz Kılıç", 2, 6, 4, 3, 2, false, 3, 16, 6, "Düşük", 5,
-                    6, 12, 12, 10, "Kılıç", 400);
+                    new ItemStack(Material.WOODEN_SWORD), "<gold><i:false>Bronz Kılıç", 2, 6, 4, 3, 2, false, 3, 16, 6, "Düşük", 5,
+                    6, 12, 12, 10, "Kılıç", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3674,8 +4271,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Savaş Baltası")) {
             itemHandler.createWeapon(p, itemHandler.bronzeingot, itemHandler.oakstick, 6, 3,
-                    new ItemStack(Material.WOODEN_AXE), "&6Bronz Savaş Baltası", 2, 10, 4, 0, 0, false, 1, 20, 0, "Orta", 5,
-                    6, 12, 12, 10, "Savaş Baltası", 400);
+                    new ItemStack(Material.WOODEN_AXE), "<gold><i:false>Bronz Savaş Baltası", 2, 10, 4, 0, 0, false, 1, 20, 0, "Orta", 5,
+                    6, 12, 12, 10, "Savaş Baltası", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3686,8 +4283,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Ağır Bronz Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.bronzeingot, itemHandler.oakstick, 5, 3,
-                    new ItemStack(Material.DIAMOND_SWORD), "&6Ağır Bronz Kılıç", 2, 9, 4, 3, 2, false, 1, 18, 0, "Yüksek", 5,
-                    6, 12, 12, 10, "Ağır Kılıç", 400);
+                    new ItemStack(Material.DIAMOND_SWORD), "<gold><i:false>Ağır Bronz Kılıç", 2, 9, 4, 3, 2, false, 1, 18, 0, "Yüksek", 5,
+                    6, 12, 12, 10, "Ağır Kılıç", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3698,8 +4295,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Hançer")) {
             itemHandler.createWeapon(p, itemHandler.bronzeingot, itemHandler.oakstick, 3, 1,
-                    new ItemStack(Material.SHEARS), "&6Bronz Hançer", 2, 6, 8, 2, 3, false, 3, 12, 5, "Düşük", 5, 6, 12,
-                    10, 10, "Hançer", 400);
+                    new ItemStack(Material.SHEARS), "<gold><i:false>Bronz Hançer", 2, 6, 8, 2, 3, false, 3, 12, 5, "Düşük", 5, 6, 12,
+                    10, 10, "Hançer", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3710,8 +4307,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Tırpan")) {
             itemHandler.createWeapon(p, itemHandler.bronzeingot, itemHandler.oakstick, 3, 3,
-                    new ItemStack(Material.IRON_HOE), "&6Bronz Tırpan", 2, 4, 4, 5, 0, false, 2, 14, 0, "Yüksek", 5, 6,
-                    12, 12, 10, "Tırpan", 400);
+                    new ItemStack(Material.WOODEN_HOE), "<gold><i:false>Bronz Tırpan", 2, 4, 4, 5, 0, false, 2, 14, 0, "Yüksek", 5, 6,
+                    12, 12, 10, "Tırpan", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3722,7 +4319,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Balta")) {
             itemHandler.createTool(p, itemHandler.bronzeingot, 3, itemHandler.oakstick, 2,
-                    new ItemStack(Material.GOLDEN_AXE), "&6Bronz Balta", 2, 7, false, 4, 4, 10, 10, 10, "Balta", 400);
+                    new ItemStack(Material.GOLDEN_AXE), "<gold><i:false>Bronz Balta", 2, 7, false, 4, 4, 10, 10, 10, "Balta", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3733,8 +4330,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Mızrak")) {
             itemHandler.createWeapon(p, itemHandler.bronzeingot, itemHandler.oakstick, 3, 3,
-                    new ItemStack(Material.STICK), "&6Bronz Mızrak", 2, 11, 3, 2, 4, false, 2, 14, 0, "Düşük", 6, 6, 12,
-                    12, 10, "Mızrak", 400);
+                    new ItemStack(Material.STICK), "<gold><i:false>Bronz Mızrak", 2, 11, 3, 2, 4, false, 2, 14, 0, "Düşük", 6, 6, 12,
+                    12, 10, "Mızrak", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3745,8 +4342,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Topuz")) {
             itemHandler.createWeapon(p, itemHandler.bronzeingot, itemHandler.oakstick, 3, 3,
-                    new ItemStack(Material.WOODEN_SHOVEL), "&6Bronz Topuz", 2, 12, 4, 3, 1, false, 2, 17, 0, "Düşük", 5, 6, 12,
-                    12, 10, "Topuz", 400);
+                    new ItemStack(Material.WOODEN_SHOVEL), "<gold><i:false>Bronz Topuz", 2, 12, 4, 3, 1, false, 2, 17, 0, "Düşük", 5, 6, 12,
+                    12, 10, "Topuz", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3757,7 +4354,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Kürek")) {
             itemHandler.createTool(p, itemHandler.bronzeingot, 3, itemHandler.oakstick, 2,
-                    new ItemStack(Material.GOLDEN_SHOVEL), "&6Bronz Kürek", 2, 4, false, 3, 4, 10, 10, 10, "Kürek", 400);
+                    new ItemStack(Material.GOLDEN_SHOVEL), "<gold><i:false>Bronz Kürek", 2, 4, false, 3, 4, 10, 10, 10, "Kürek", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3768,7 +4365,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Kazma")) {
             itemHandler.createTool(p, itemHandler.bronzeingot, 3, itemHandler.oakstick, 3,
-                    new ItemStack(Material.GOLDEN_PICKAXE), "&6Bronz Kazma", 2, 5, false, 4, 4, 10, 10, 10, "Kazma", 400);
+                    new ItemStack(Material.GOLDEN_PICKAXE), "<gold><i:false>Bronz Kazma", 2, 5, false, 4, 4, 10, 10, 10, "Kazma", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3779,7 +4376,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Çapa")) {
             itemHandler.createTool(p, itemHandler.bronzeingot, 3, itemHandler.oakstick, 3,
-                    new ItemStack(Material.GOLDEN_HOE), "&6Bronz Çapa", 2, 5, false, 4, 4, 10, 10, 10, "Çapa", 400);
+                    new ItemStack(Material.GOLDEN_HOE), "<gold><i:false>Bronz Çapa", 2, 5, false, 4, 4, 10, 10, 10, "Çapa", 400, 4);
         }
 
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -3791,8 +4388,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Göğüslük")) {
             itemHandler.createArmor(p, "Göğüslük", itemHandler.bronzeingot, 8,
-                    new ItemStack(Material.LEATHER_CHESTPLATE), "&6Bronz Göğüslük", 2, 5, 5, 7, 0, 0, 1, 0, 0, 0, 0,
-                    0, 4, 15, 12, 10, 8, 400);
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false>Bronz Göğüslük", 2, 5, 5, 7, 0, 0, 1, 0, 0, 0, 0,
+                    0, 4, 15, 12, 10, 8, 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3803,8 +4400,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Pantolon")) {
             itemHandler.createArmor(p, "Pantolon", itemHandler.bronzeingot, 7,
-                    new ItemStack(Material.LEATHER_LEGGINGS), "&6Bronz Pantolon", 2, 5, 4, 6, 0, 0, 1, 0, 0, 0, 0, 0,
-                    4, 15, 10, 10, 8, 400);
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false>Bronz Pantolon", 2, 5, 4, 6, 0, 0, 1, 0, 0, 0, 0, 0,
+                    4, 15, 10, 10, 8, 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3815,8 +4412,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Miğfer")) {
             itemHandler.createArmor(p, "Miğfer", itemHandler.bronzeingot, 5,
-                    new ItemStack(Material.LEATHER_HELMET), "&6Bronz Miğfer", 2, 4, 4, 6, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-                    15, 10, 10, 8, 400);
+                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false>Bronz Miğfer", 2, 4, 4, 6, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+                    15, 10, 10, 8, 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3827,8 +4424,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Botlar")) {
             itemHandler.createArmor(p, "Botlar", itemHandler.bronzeingot, 4,
-                    new ItemStack(Material.LEATHER_BOOTS), "&6Bronz Botlar", 2, 4, 4, 6, 0, 0, 1, 0, 0, 0, 0, 0, 0,
-                    15, 10, 10, 8, 400);
+                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false>Bronz Botlar", 2, 4, 4, 6, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+                    15, 10, 10, 8, 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3839,8 +4436,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Kalkan")) {
             itemHandler.createShield(1, p, itemHandler.bronzeingot, itemHandler.oakplanks, 6, 4,
-                    new ItemStack(Material.SHIELD), "&6Bronz Kalkan", 2, 5, 0, 0, 0, false, 0, 2, 0, "Düşük", 2,
-                    6, 15, 10, 10, "Kalkan", 400);
+                    new ItemStack(Material.SHIELD), "<gold><i:false>Bronz Kalkan", 2, 5, 0, 0, 0, false, 0, 2, 0, "Düşük", 2,
+                    6, 15, 10, 10, "Kalkan", 400, 4);
         }
 
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -3852,8 +4449,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.ironingot, itemHandler.birchstick, 3, 1,
-                    new ItemStack(Material.WOODEN_SWORD), "&7Demir Kılıç", 3, 10, 4, 3, 2, false, 3, 22, 3, "Düşük", 5,
-                    6, 15, 15, 10, "Kılıç", 500);
+                    new ItemStack(Material.WOODEN_SWORD), "<gray><i:false>Demir Kılıç", 3, 10, 4, 3, 2, false, 3, 22, 3, "Düşük", 5,
+                    6, 15, 15, 10, "Kılıç", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3864,8 +4461,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Savaş Baltası")) {
             itemHandler.createWeapon(p, itemHandler.ironingot, itemHandler.birchstick, 6, 2,
-                    new ItemStack(Material.WOODEN_AXE), "&7Demir Savaş Baltası", 3, 16, 4, 2, 0, false, 1, 25, 0, "Orta", 5,
-                    6, 15, 15, 10, "Savaş Baltası", 500);
+                    new ItemStack(Material.WOODEN_AXE), "<gray><i:false>Demir Savaş Baltası", 3, 16, 4, 2, 0, false, 1, 25, 0, "Orta", 5,
+                    6, 15, 15, 10, "Savaş Baltası", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3876,8 +4473,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Ağır Demir Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.ironingot, itemHandler.birchstick, 5, 1,
-                    new ItemStack(Material.DIAMOND_SWORD), "&7Ağır Demir Kılıç", 2, 12, 5, 4, 2, false, 1, 20, 0, "Yüksek", 5,
-                    6, 15, 15, 10, "Ağır Kılıç", 500);
+                    new ItemStack(Material.DIAMOND_SWORD), "<gray><i:false>Ağır Demir Kılıç", 2, 12, 5, 4, 2, false, 1, 20, 0, "Yüksek", 5,
+                    6, 15, 15, 10, "Ağır Kılıç", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3888,8 +4485,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Hançer")) {
             itemHandler.createWeapon(p, itemHandler.ironingot, itemHandler.birchstick, 3, 1,
-                    new ItemStack(Material.SHEARS), "&7Demir Hançer", 2, 7, 8, 3, 4, false, 3, 13, 5, "Düşük", 5, 6, 15,
-                    15, 10, "Hançer", 500);
+                    new ItemStack(Material.SHEARS), "<gray><i:false>Demir Hançer", 2, 7, 8, 3, 4, false, 3, 13, 5, "Düşük", 5, 6, 15,
+                    15, 10, "Hançer", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3900,8 +4497,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Tırpan")) {
             itemHandler.createWeapon(p, itemHandler.ironingot, itemHandler.birchstick, 3, 3,
-                    new ItemStack(Material.IRON_HOE), "&7Demir Tırpan", 2, 4, 4, 5, 0, false, 2, 14, 0, "Yüksek", 5, 6,
-                    15, 15, 10, "Tırpan", 500);
+                    new ItemStack(Material.WOODEN_HOE), "<gray><i:false>Demir Tırpan", 2, 4, 4, 5, 0, false, 2, 14, 0, "Yüksek", 5, 6,
+                    15, 15, 10, "Tırpan", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3912,7 +4509,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Balta")) {
             itemHandler.createTool(p, itemHandler.ironingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_AXE), "&7Demir Balta", 2, 7, false, 5, 4, 15, 15, 10, "Balta", 500);
+                    new ItemStack(Material.GOLDEN_AXE), "<gray><i:false>Demir Balta", 2, 7, false, 5, 4, 15, 15, 10, "Balta", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3923,8 +4520,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Mızrak")) {
             itemHandler.createWeapon(p, itemHandler.ironingot, itemHandler.birchstick, 3, 2,
-                    new ItemStack(Material.STICK), "&7Demir Mızrak", 2, 12, 4, 3, 4, false, 2, 18, 0, "Düşük", 6, 6, 15,
-                    15, 10, "Mızrak", 500);
+                    new ItemStack(Material.STICK), "<gray><i:false>Demir Mızrak", 2, 12, 4, 3, 4, false, 2, 18, 0, "Düşük", 6, 6, 15,
+                    15, 10, "Mızrak", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3935,8 +4532,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Topuz")) {
             itemHandler.createWeapon(p, itemHandler.ironingot, itemHandler.oakstick, 3, 2,
-                    new ItemStack(Material.WOODEN_SHOVEL), "&7Demir Topuz", 2, 14, 7, 3, 1, false, 2, 19, 0, "Düşük", 5, 6, 15,
-                    15, 10, "Topuz", 500);
+                    new ItemStack(Material.WOODEN_SHOVEL), "<gray><i:false>Demir Topuz", 2, 14, 7, 3, 1, false, 2, 19, 0, "Düşük", 5, 6, 15,
+                    15, 10, "Topuz", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3947,7 +4544,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Kürek")) {
             itemHandler.createTool(p, itemHandler.ironingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_SHOVEL), "&7Demir Kürek", 2, 4, false, 4, 4, 15, 15, 10, "Kürek", 500);
+                    new ItemStack(Material.GOLDEN_SHOVEL), "<gray><i:false>Demir Kürek", 2, 4, false, 4, 4, 15, 15, 10, "Kürek", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3958,7 +4555,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Kazma")) {
             itemHandler.createTool(p, itemHandler.ironingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_PICKAXE), "&7Demir Kazma", 2, 5, false, 5, 4, 15, 15, 10, "Kazma", 500);
+                    new ItemStack(Material.GOLDEN_PICKAXE), "<gray><i:false>Demir Kazma", 2, 5, false, 5, 4, 15, 15, 10, "Kazma", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3969,7 +4566,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Çapa")) {
             itemHandler.createTool(p, itemHandler.ironingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_HOE), "&7Demir Çapa", 2, 5, false, 5, 4, 15, 15, 10, "Çapa", 500);
+                    new ItemStack(Material.GOLDEN_HOE), "<gray><i:false>Demir Çapa", 2, 5, false, 5, 4, 15, 15, 10, "Çapa", 500, 6);
         }
 
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -3981,8 +4578,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Göğüslük")) {
             itemHandler.createArmor(p, "Göğüslük", itemHandler.ironingot, 8,
-                    new ItemStack(Material.LEATHER_CHESTPLATE), "&7Demir Göğüslük", 2, 6, 6, 8, 2, 0, 1, 0, 0, 0, 0,
-                    0, 4, 20, 15, 10, 2, 500);
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gray><i:false>Demir Göğüslük", 2, 6, 6, 8, 2, 0, 1, 0, 0, 0, 0,
+                    0, 4, 20, 15, 10, 2, 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -3993,8 +4590,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Pantolon")) {
             itemHandler.createArmor(p, "Pantolon", itemHandler.ironingot, 7,
-                    new ItemStack(Material.LEATHER_LEGGINGS), "&7Demir Pantolon", 2, 6, 4, 8, 2, 0, 1, 0, 0, 0, 0, 0,
-                    4, 20, 10, 10, 2, 500);
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<gray><i:false>Demir Pantolon", 2, 6, 4, 8, 2, 0, 1, 0, 0, 0, 0, 0,
+                    4, 20, 10, 10, 2, 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4005,8 +4602,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Miğfer")) {
             itemHandler.createArmor(p, "Miğfer", itemHandler.ironingot, 5,
-                    new ItemStack(Material.LEATHER_HELMET), "&7Demir Miğfer", 2, 6, 5, 8, 2, 0, 0, 0, 0, 0, 0, 0, 4,
-                    20, 15, 10, 2, 500);
+                    new ItemStack(Material.LEATHER_HELMET), "<gray><i:false>Demir Miğfer", 2, 6, 5, 8, 2, 0, 0, 0, 0, 0, 0, 0, 4,
+                    20, 15, 10, 2, 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4017,8 +4614,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Botlar")) {
             itemHandler.createArmor(p, "Botlar", itemHandler.ironingot, 4,
-                    new ItemStack(Material.LEATHER_BOOTS), "&7Demir Botlar", 2, 6, 5, 8, 2, 0, 1, 0, 0, 0, 0, 0, 0,
-                    20, 10, 10, 2, 500);
+                    new ItemStack(Material.LEATHER_BOOTS), "<gray><i:false>Demir Botlar", 2, 6, 5, 8, 2, 0, 1, 0, 0, 0, 0, 0, 0,
+                    20, 10, 10, 2, 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4029,8 +4626,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Kalkan")) {
             itemHandler.createShield(2, p, itemHandler.ironingot, itemHandler.birchplanks, 6, 1,
-                    new ItemStack(Material.SHIELD), "&7Demir Kalkan", 2, 5, 0, 0, 0, false, 0, 2, 0, "Düşük", 2,
-                    6, 20, 15, 10, "Kalkan", 500);
+                    new ItemStack(Material.SHIELD), "<gray><i:false>Demir Kalkan", 2, 5, 0, 0, 0, false, 0, 2, 0, "Düşük", 2,
+                    6, 20, 15, 10, "Kalkan", 500, 6);
         }
 
 
@@ -4043,8 +4640,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.goldingot, itemHandler.birchstick, 3, 1,
-                    new ItemStack(Material.WOODEN_SWORD), "&eAltın Kılıç", 3, 13, 5, 3, 4, false, 3, 24, 3, "Düşük", 5,
-                    6, 20, 20, 10, "Kılıç", 600);
+                    new ItemStack(Material.WOODEN_SWORD), "<yellow><i:false>Altın Kılıç", 3, 13, 5, 3, 4, false, 3, 24, 3, "Düşük", 5,
+                    6, 20, 20, 10, "Kılıç", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4055,8 +4652,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Savaş Baltası")) {
             itemHandler.createWeapon(p, itemHandler.goldingot, itemHandler.birchstick, 6, 2,
-                    new ItemStack(Material.WOODEN_AXE), "&eAltın Savaş Baltası", 3, 18, 5, 3, 0, false, 1, 28, 0, "Orta", 5,
-                    6, 20, 20, 10, "Savaş Baltası", 600);
+                    new ItemStack(Material.WOODEN_AXE), "<yellow><i:false>Altın Savaş Baltası", 3, 18, 5, 3, 0, false, 1, 28, 0, "Orta", 5,
+                    6, 20, 20, 10, "Savaş Baltası", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4067,8 +4664,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Ağır Altın Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.goldingot, itemHandler.birchstick, 5, 1,
-                    new ItemStack(Material.DIAMOND_SWORD), "&eAğır Altın Kılıç", 2, 17, 7, 6, 2, false, 1, 24, 0, "Yüksek", 5,
-                    6, 20, 20, 10, "Ağır Kılıç", 600);
+                    new ItemStack(Material.DIAMOND_SWORD), "<yellow><i:false>Ağır Altın Kılıç", 2, 17, 7, 6, 2, false, 1, 24, 0, "Yüksek", 5,
+                    6, 20, 20, 10, "Ağır Kılıç", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4079,8 +4676,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Hançer")) {
             itemHandler.createWeapon(p, itemHandler.goldingot, itemHandler.birchstick, 3, 1,
-                    new ItemStack(Material.SHEARS), "&eAltın Hançer", 2, 8, 9, 3, 5, false, 3, 15, 5, "Düşük", 5, 6, 20,
-                    20, 10, "Hançer", 600);
+                    new ItemStack(Material.SHEARS), "<yellow><i:false>Altın Hançer", 2, 8, 9, 3, 5, false, 3, 15, 5, "Düşük", 5, 6, 20,
+                    20, 10, "Hançer", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4091,8 +4688,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Tırpan")) {
             itemHandler.createWeapon(p, itemHandler.goldingot, itemHandler.birchstick, 3, 3,
-                    new ItemStack(Material.IRON_HOE), "&eAltın Tırpan", 2, 12, 6, 5, 0, false, 2, 20, 0, "Yüksek", 5, 6,
-                    20, 20, 10, "Tırpan", 600);
+                    new ItemStack(Material.WOODEN_HOE), "<yellow><i:false>Altın Tırpan", 2, 12, 6, 5, 0, false, 2, 20, 0, "Yüksek", 5, 6,
+                    20, 20, 10, "Tırpan", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4103,7 +4700,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Balta")) {
             itemHandler.createTool(p, itemHandler.goldingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_AXE), "&eAltın Balta", 2, 7, false, 6, 4, 20, 20, 10, "Balta", 600);
+                    new ItemStack(Material.GOLDEN_AXE), "<yellow><i:false>Altın Balta", 2, 7, false, 6, 4, 20, 20, 10, "Balta", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4114,8 +4711,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Mızrak")) {
             itemHandler.createWeapon(p, itemHandler.goldingot, itemHandler.birchstick, 3, 2,
-                    new ItemStack(Material.STICK), "&eAltın Mızrak", 2, 15, 6, 3, 4, false, 2, 22, 0, "Düşük", 6, 6, 20,
-                    20, 10, "Mızrak", 600);
+                    new ItemStack(Material.STICK), "<yellow><i:false>Altın Mızrak", 2, 15, 6, 3, 4, false, 2, 22, 0, "Düşük", 6, 6, 20,
+                    20, 10, "Mızrak", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4126,8 +4723,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Topuz")) {
             itemHandler.createWeapon(p, itemHandler.goldingot, itemHandler.oakstick, 3, 2,
-                    new ItemStack(Material.WOODEN_SHOVEL), "&eAltın Topuz", 2, 13, 7, 4, 1, false, 2, 23, 0, "Düşük", 5, 6, 20,
-                    20, 10, "Topuz", 600);
+                    new ItemStack(Material.WOODEN_SHOVEL), "<yellow><i:false>Altın Topuz", 2, 13, 7, 4, 1, false, 2, 23, 0, "Düşük", 5, 6, 20,
+                    20, 10, "Topuz", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4138,7 +4735,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Kürek")) {
             itemHandler.createTool(p, itemHandler.goldingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_SHOVEL), "&eAltın Kürek", 2, 4, false, 5, 4, 20, 20, 10, "Kürek", 600);
+                    new ItemStack(Material.GOLDEN_SHOVEL), "<yellow><i:false>Altın Kürek", 2, 4, false, 5, 4, 20, 20, 10, "Kürek", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4149,7 +4746,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Kazma")) {
             itemHandler.createTool(p, itemHandler.goldingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_PICKAXE), "&eAltın Kazma", 2, 5, false, 6, 4, 25, 15, 10, "Kazma", 600);
+                    new ItemStack(Material.GOLDEN_PICKAXE), "<yellow><i:false>Altın Kazma", 2, 5, false, 6, 4, 25, 15, 10, "Kazma", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4160,7 +4757,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Çapa")) {
             itemHandler.createTool(p, itemHandler.goldingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_HOE), "&eAltın Çapa", 2, 5, false, 6, 4, 25, 15, 10, "Çapa", 600);
+                    new ItemStack(Material.GOLDEN_HOE), "<yellow><i:false>Altın Çapa", 2, 5, false, 6, 4, 25, 15, 10, "Çapa", 600, 8);
         }
 
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -4172,8 +4769,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Göğüslük")) {
             itemHandler.createArmor(p, "Göğüslük", itemHandler.goldingot, 8,
-                    new ItemStack(Material.LEATHER_CHESTPLATE), "&eAltın Göğüslük", 2, 7, 6, 9, 3, 1, 1, 0, 0, 0, 0,
-                    0, 4, 25, 20, 10, 9, 600);
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<yellow><i:false>Altın Göğüslük", 2, 7, 6, 9, 3, 1, 1, 0, 0, 0, 0,
+                    0, 4, 25, 20, 10, 9, 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4184,8 +4781,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Pantolon")) {
             itemHandler.createArmor(p, "Pantolon", itemHandler.goldingot, 7,
-                    new ItemStack(Material.LEATHER_LEGGINGS), "&eAltın Pantolon", 2, 7, 4, 9, 3, 1, 1, 0, 0, 0, 0, 0,
-                    4, 25, 20, 10, 9, 600);
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<yellow><i:false>Altın Pantolon", 2, 7, 4, 9, 3, 1, 1, 0, 0, 0, 0, 0,
+                    4, 25, 20, 10, 9, 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4196,8 +4793,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Miğfer")) {
             itemHandler.createArmor(p, "Miğfer", itemHandler.goldingot, 5,
-                    new ItemStack(Material.LEATHER_HELMET), "&eAltın Miğfer", 2, 6, 5, 9, 3, 1, 0, 0, 0, 0, 0, 0, 4,
-                    25, 20, 10, 9, 600);
+                    new ItemStack(Material.LEATHER_HELMET), "<yellow><i:false>Altın Miğfer", 2, 6, 5, 9, 3, 1, 0, 0, 0, 0, 0, 0, 4,
+                    25, 20, 10, 9, 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4208,8 +4805,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Botlar")) {
             itemHandler.createArmor(p, "Botlar", itemHandler.goldingot, 4,
-                    new ItemStack(Material.LEATHER_BOOTS), "&eAltın Botlar", 2, 6, 5, 8, 3, 1, 1, 0, 0, 0, 0, 0, 0,
-                    25, 20, 10, 9, 600);
+                    new ItemStack(Material.LEATHER_BOOTS), "<yellow><i:false>Altın Botlar", 2, 6, 5, 8, 3, 1, 1, 0, 0, 0, 0, 0, 0,
+                    25, 20, 10, 9, 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4220,8 +4817,8 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Kalkan")) {
             itemHandler.createShield(9, p, itemHandler.goldingot, itemHandler.birchplanks, 6, 1,
-                    new ItemStack(Material.SHIELD), "&eAltın Kalkan", 2, 5, 0, 0, 0, false, 0, 2, 0, "Düşük", 2,
-                    6, 25, 20, 10, "Kalkan", 600);
+                    new ItemStack(Material.SHIELD), "<yellow><i:false>Altın Kalkan", 2, 5, 0, 0, 0, false, 0, 2, 0, "Düşük", 2,
+                    6, 25, 20, 10, "Kalkan", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4237,19 +4834,19 @@ public class GuiHandler {
                     itemHandler.createItem(inv, "iron_sword", 1, 12,
                             Painter.paint("&3Avcılık &8[&7Meslek Bilgileri&8]"), "",
                             Painter.paint(" &fMeslek Avantajları:"),
-                            Painter.paint("&7 - Yaratıklardan düşen ganimet artar."), Painter.paint(" &7- Yok.."), "",
+                            Painter.paint("&7 - Yaratıklardan ekstra tecrübe puanı düşer."), Painter.paint(" &7- Yok.."), "",
                             Painter.paint("&7Bu mesleği seçmek için &e&lSağ Tıkla."));
                 } else {
                     itemHandler.createItem(inv, "iron_sword", 1, 12,
                             Painter.paint("&3Avcılık &8[&7Meslek Bilgileri&8]"), "",
                             Painter.paint(" &fMeslek Avantajları:"),
-                            Painter.paint("&7 - Yaratıklardan düşen ganimet artar."), Painter.paint(" &7- Yok.."), "",
+                            Painter.paint("&7 - Yaratıklardan ekstra tecrübe puanı düşer."), Painter.paint(" &7- Yok.."), "",
                             Painter.paint("&cBu mesleği seçebilmek için Avcılıkta 5. seviye olman gerek."));
                 }
             } else {
                 itemHandler.createItem(inv, "iron_sword", 1, 12, Painter.paint("&cAvcılık &8[&7Meslek Bilgileri&8]"),
                         "", Painter.paint(" &fMeslek Avantajları:"),
-                        Painter.paint("&7 - Yaratıklardan düşen ganimet artar."), Painter.paint(" &7- Yok.."), "",
+                        Painter.paint("&7 - Yaratıklardan ekstra tecrübe puanı düşer."), Painter.paint(" &7- Yok.."), "",
                         Painter.paint("&cZaten bir meslek seçmişsin!"));
 
             }
@@ -4365,20 +4962,22 @@ public class GuiHandler {
                     itemHandler.createItem(inv, "smithing_table", 1, 16,
                             Painter.paint("&3Demircilik &8[&7Meslek Bilgileri&8]"), "",
                             Painter.paint(" &fMeslek Avantajları:"),
-                            Painter.paint("&7 - İşlenen ekipmanların kalitesi artar."), Painter.paint(" &7- Yok.."), "",
+                            Painter.paint("&7 - Bir ekipman işlediğinde ya ekstra ya da ekstra demircilik puanı kazanırsın."), Painter.paint(" &7- Yok.."), "",
                             Painter.paint("&7Bu mesleği seçmek için &e&lSağ Tıkla."));
                 } else {
                     itemHandler.createItem(inv, "smithing_table", 1, 16,
                             Painter.paint("&3Demircilik &8[&7Meslek Bilgileri&8]"), "",
                             Painter.paint(" &fMeslek Avantajları:"),
-                            Painter.paint("&7 - İşlenen ekipmanların kalitesi artar."), Painter.paint(" &7- Yok.."), "",
+                            Painter.paint("&7 - Bir ekipman işlediğinde ya ekstra ya da ekstra demircilik puanı kazanırsın."), Painter.paint(" &7- Yok.."), ""
+                            , Painter.paint(" &7- Yok.."), "",
                             Painter.paint("&cBu mesleği seçebilmek için Demircilikte 5. seviye olman gerek."));
                 }
             } else {
                 itemHandler.createItem(inv, "smithing_table", 1, 16,
                         Painter.paint("&cDemircilik &8[&7Meslek Bilgileri&8]"), "",
                         Painter.paint(" &fMeslek Avantajları:"),
-                        Painter.paint("&7 - İşlenen ekipmanların kalitesi artar."), Painter.paint(" &7- Yok.."), "",
+                        Painter.paint("&7 - Bir ekipman işlediğinde ya ekstra ya da ekstra demircilik puanı kazanırsın."), Painter.paint(" &7- Yok.."), ""
+                        , Painter.paint(" &7- Yok.."), "",
                         Painter.paint("&cZaten bir meslek seçmişsin!"));
             }
         }
@@ -4517,19 +5116,19 @@ public class GuiHandler {
             int mininglevel = stats.getFarmingLevel(p.getUniqueId());
             if ((stats.getMeslek(p.getUniqueId()).equals("Yok.."))) {
                 if (mininglevel >= 5) {
-                    itemHandler.createItem(inv, "wheat", 1, 32, Painter.paint("&3Çiftçilik &8[&7Meslek Bilgileri&8]"),
+                    itemHandler.createItem(inv, "wheat", 1, 31, Painter.paint("&3Çiftçilik &8[&7Meslek Bilgileri&8]"),
                             "", Painter.paint(" &fMeslek Avantajları:"),
                             Painter.paint("&7 - Hasat yaparken ekinlerden ekstra ürün düşer."),
                             Painter.paint(" &7- Yok.."), "", Painter.paint("&7Bu mesleği seçmek için &e&lSağ Tıkla."));
                 } else {
-                    itemHandler.createItem(inv, "wheat", 1, 32, Painter.paint("&3Çiftçilik &8[&7Meslek Bilgileri&8]"),
+                    itemHandler.createItem(inv, "wheat", 1, 31, Painter.paint("&3Çiftçilik &8[&7Meslek Bilgileri&8]"),
                             "", Painter.paint(" &fMeslek Avantajları:"),
                             Painter.paint("&7 - Hasat yaparken ekinlerden ekstra ürün düşer."),
                             Painter.paint(" &7- Yok.."), "",
                             Painter.paint("&cBu mesleği seçebilmek için Çiftçilikte 5. seviye olman gerek."));
                 }
             } else {
-                itemHandler.createItem(inv, "wheat", 1, 32, Painter.paint("&cÇiftçilik &8[&7Meslek Bilgileri&8]"), "",
+                itemHandler.createItem(inv, "wheat", 1, 31, Painter.paint("&cÇiftçilik &8[&7Meslek Bilgileri&8]"), "",
                         Painter.paint(" &fMeslek Avantajları:"),
                         Painter.paint("&7 - Hasat yaparken ekinlerden ekstra ürün düşer."), Painter.paint(" &7- Yok.."),
                         "", Painter.paint("&cZaten bir meslek seçmişsin!"));
@@ -4548,7 +5147,7 @@ public class GuiHandler {
             if (combatlevel >= 5) {
                 itemHandler.createItem(inv, "iron_sword", 1, 12, Painter.paint("&3Avcılık &8[&7Meslek Bilgileri&8]"),
                         "", Painter.paint(" &fMeslek Avantajları:"),
-                        Painter.paint("&7 - Yaratıklardan düşen ganimet artar."), Painter.paint(" &7- Yok.."), "",
+                        Painter.paint("&7 - Yaratıklardan ekstra tecrübe puanı düşer."), Painter.paint(" &7- Yok.."), "",
                         Painter.paint("&cEğer bu mesleği seçersen uzun bir süre"),
                         Painter.paint("&cmesleğini değişteremeyeceksin. Bu mesleği seçmeyi"),
                         Painter.paint("&conaylıyorsan tekrar &e&lSağ Tıkla."));
@@ -4652,7 +5251,8 @@ public class GuiHandler {
                 itemHandler.createItem(inv, "smithing_table", 1, 16,
                         Painter.paint("&3Demircilik &8[&7Meslek Bilgileri&8]"), "",
                         Painter.paint(" &fMeslek Avantajları:"),
-                        Painter.paint("&7 - İşlenen ekipmanların kalitesi artar."), Painter.paint(" &7- Yok.."), "",
+                        Painter.paint("&7 - Bir ekipman işlediğinde ya ekstra ya da ekstra demircilik puanı kazanırsın."), Painter.paint(" &7- Yok.."), ""
+                        , Painter.paint(" &7- Yok.."), "",
                         Painter.paint("&cEğer bu mesleği seçersen uzun bir süre"),
                         Painter.paint("&cmesleğini değişteremeyeceksin. Bu mesleği seçmeyi"),
                         Painter.paint("&conaylıyorsan tekrar &e&lSağ Tıkla."));
@@ -4746,7 +5346,7 @@ public class GuiHandler {
                 equalsIgnoreCase(Painter.paint("&3Çiftçilik &8[&7Meslek Bilgileri&8]"))) {
             int mininglevel = stats.getFarmingLevel(p.getUniqueId());
             if (mininglevel >= 5) {
-                itemHandler.createItem(inv, "wheat", 1, 32, Painter.paint("&3Çiftçilik &8[&7Meslek Bilgileri&8]"), "",
+                itemHandler.createItem(inv, "wheat", 1, 31, Painter.paint("&3Çiftçilik &8[&7Meslek Bilgileri&8]"), "",
                         Painter.paint(" &fMeslek Avantajları:"),
                         Painter.paint("&7 - Hasat yaparken ekinlerden ekstra ürün düşer."), Painter.paint(" &7- Yok.."),
                         "", Painter.paint("&cEğer bu mesleği seçersen uzun bir süre"),
@@ -4954,7 +5554,7 @@ public class GuiHandler {
 
                     Title.title(
                             MiniMessage.miniMessage().deserialize("<gold>[</gold><yellow>Meslek Seçildi!</yellow><gold>]</gold>"),
-                             MiniMessage.miniMessage().deserialize("<gray>" + meslek + "</gray>")));
+                            MiniMessage.miniMessage().deserialize("<gray>" + meslek + "</gray>")));
             job.remove(p.getUniqueId());
         } else {
             job.put(p.getUniqueId(), "job");

@@ -149,8 +149,15 @@ public class SeviyeCommand implements CommandExecutor {
             p.discoverRecipe(NamespacedKey.minecraft("black_helmet"));
             p.discoverRecipe(NamespacedKey.minecraft("oksidat_pant"));
         }else if (seviye2 + 1 == 5) {
-            p.discoverRecipe(NamespacedKey.minecraft("mistik_bow"));
+            p.discoverRecipe(NamespacedKey.minecraft("king_killer"));
             p.discoverRecipe(NamespacedKey.minecraft("experience_bottle_lapis"));
+            p.discoverRecipe(NamespacedKey.minecraft("ancient_silver_spear"));
+        } else if (seviye2 + 1 == 6) {
+            p.discoverRecipe(NamespacedKey.minecraft("hellfire_dagger"));
+            p.discoverRecipe(NamespacedKey.minecraft("mistik_bow"));
+            p.discoverRecipe(NamespacedKey.minecraft("silver_block"));
+        } else if (seviye2 + 1 == 7) {
+            p.discoverRecipe(NamespacedKey.minecraft("magma_sword"));
         }
 
     }

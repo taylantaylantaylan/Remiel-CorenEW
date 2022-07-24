@@ -21,6 +21,8 @@ import me.taylan.mooncore.utils.Painter;
 import me.taylan.mooncore.utils.StatsManager;
 import net.md_5.bungee.api.ChatColor;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class SmithAnim {
     private MoonCore plugin;
     private StatsManager stats;
@@ -88,7 +90,17 @@ public class SmithAnim {
                                 ChatColor.GOLD + "Ekipmanın Hazır Olmasına: " + ChatColor.WHITE + remain + " Saniye");
                         if (timer >= smithTime) {
                             levels.giveSmithLevel(p, exp);
+                            if (stats.getMeslek(p.getUniqueId()).contains("Demirci")) {
+                                int random = ThreadLocalRandom.current().nextInt(10);
+                                        if(random <4) {
+                                            levels.giveSmithLevel(p, 10);
+                                            p.sendMessage(Painter.paint("Ekstra Demircilik Ustalığı Tecrübe Puanı Kazandın!"));
+                                        } else {
+                                            p.giveExp(50);
+                                            p.sendMessage(Painter.paint("Ekstra Tecrübe Puanı Kazandın!"));
 
+                                        }
+                            }
                             armorStand.setCustomName(ChatColor.GREEN + "✔");
 
                             JoinListener.getMenu().get(p.getUniqueId()).addItem(result);

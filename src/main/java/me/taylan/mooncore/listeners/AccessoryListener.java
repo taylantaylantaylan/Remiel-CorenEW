@@ -3,6 +3,7 @@ package me.taylan.mooncore.listeners;
 import com.destroystokyo.paper.MaterialTags;
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import me.taylan.mooncore.MoonCore;
+import me.taylan.mooncore.utils.Painter;
 import me.taylan.mooncore.utils.StatsManager;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.NamespacedKey;
@@ -26,6 +27,7 @@ public class AccessoryListener implements Listener {
     private MoonCore plugin;
     private StatsManager stats;
     private JoinListener joinListener;
+
 
     public AccessoryListener(MoonCore plugin) {
         this.plugin = plugin;
@@ -254,6 +256,25 @@ public class AccessoryListener implements Listener {
         Player p = event.getPlayer();
         ItemStack item2 = event.getOldItem();
         ItemStack item = event.getNewItem();
+        NamespacedKey lvlrequirement = new NamespacedKey(plugin, "lvlrequirement");
+        if(item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+            if(item.getItemMeta().getPersistentDataContainer().has(lvlrequirement)) {
+                if(!(stats.getLevel(p.getUniqueId()) >= item.getItemMeta().getPersistentDataContainer().get(lvlrequirement, PersistentDataType.INTEGER))) {
+                    p.sendMessage(Painter.paint("&cSeviyen ekipmanı kullanmak için gereken seviyeden düşük!"));
+                    return;
+
+                }
+            }
+        }
+        if(item2 != null && item2.hasItemMeta() && item2.getItemMeta().getPersistentDataContainer() != null) {
+            if(item2.getItemMeta().getPersistentDataContainer().has(lvlrequirement)) {
+                if(!(stats.getLevel(p.getUniqueId()) >= item2.getItemMeta().getPersistentDataContainer().get(lvlrequirement, PersistentDataType.INTEGER))) {
+                    p.sendMessage(Painter.paint("&cSeviyen ekipmanı kullanmak için gereken seviyeden düşük!"));
+                    return;
+
+                }
+            }
+        }
         if (joinListener.getArmor().containsKey(p.getUniqueId())) {
 
             for (ItemStack armoritem : joinListener.getArmor().get(p.getUniqueId())) {

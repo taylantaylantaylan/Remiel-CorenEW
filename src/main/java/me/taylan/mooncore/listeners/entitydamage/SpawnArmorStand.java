@@ -208,6 +208,7 @@ public class SpawnArmorStand implements Listener {
 			armorStand.setInvulnerable(true);
 			armorStand.setCustomNameVisible(true);
 			armorStand.customName(MiniMessage.miniMessage().deserialize(name));
+			Location rotateloc = new Location(armorStand.getWorld(),armorStand.getLocation().getX(),armorStand.getLocation().getY(),armorStand.getLocation().getZ(),armorStand.getLocation().getYaw(),2);
 
 		});
 		return armorStand2;

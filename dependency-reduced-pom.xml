@@ -178,7 +178,7 @@
       <artifactId>CrazyAdvancementsAPI</artifactId>
       <version>2.1.9</version>
       <scope>system</scope>
-      <systemPath>C:/Users/HP/Downloads/CrazyAdvancementsAPI.jar</systemPath>
+      <systemPath>C:/Users/90553/Downloads/CrazyAdvancementsAPI.jar</systemPath>
     </dependency>
   </dependencies>
   <properties>

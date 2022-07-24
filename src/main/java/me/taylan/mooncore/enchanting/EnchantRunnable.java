@@ -11,6 +11,8 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Damageable;
@@ -58,9 +60,6 @@ public class EnchantRunnable extends BukkitRunnable {
 		alpha += Math.PI / 32;
 
 		for (Player player : plugin.getServer().getOnlinePlayers()) {
-			int agirlik = stats.getAgirlik(player.getUniqueId());
-			int maxagirlik = stats.getMaxAgirlik(player.getUniqueId());
-
 			if (player.getInventory().getLeggings() == null) {
 				if (creeper.get(player.getUniqueId()) != null) {
 					creeper.get(player.getUniqueId()).remove();
@@ -74,7 +73,7 @@ public class EnchantRunnable extends BukkitRunnable {
 			int RequiredExp = stats.getRequiredExp(player.getUniqueId());
 			if (Exp >= RequiredExp) {
 				seviyeCommand.seviyeAtlat(player, 1);
-				stats.setRequiredExp(player.getUniqueId(), RequiredExp*2);
+				stats.setRequiredExp(player.getUniqueId(), RequiredExp);
 				stats.setExp0(player.getUniqueId(), 0);
 
 			}
@@ -95,9 +94,36 @@ public class EnchantRunnable extends BukkitRunnable {
 					}
 				}
 			}
+			if (stats.getHepsi(player.getUniqueId()).get(1).hasItemMeta() && stats.getHepsi(player.getUniqueId()).get(1).getItemMeta().getDisplayName().contains("Madenci")) {
+				PotionEffect effect = new PotionEffect(PotionEffectType.FAST_DIGGING, 60,
+						1, false, false, false);
+				PotionEffect effect2 = player.getPotionEffect(PotionEffectType.FAST_DIGGING);
+				if (effect2 == null) {
+					player.addPotionEffect(effect);
+				}
+			} else {
+
+			}
+			if(stats.getCan(player.getUniqueId()) <=0) {
+				stats.setCan1(player.getUniqueId());
+			}
+			if(stats.getDirenc(player.getUniqueId()) <=0) {
+				stats.setDirenc1(player.getUniqueId());
+			}
 			if(stats.getKritikSansi(player.getUniqueId()) >100) {
 				stats.setKritikSansiCap(player.getUniqueId());
 			}
+			Location loc2 = player.getLocation().add(0, -1, 0);
+			Block block = loc2.getBlock().getRelative(BlockFace.DOWN);
+			if(block.getType() == Material.DIRT_PATH) {
+				PotionEffect effect = new PotionEffect(PotionEffectType.SPEED, 120,
+						0, false, false, false);
+				PotionEffect effect2 = player.getPotionEffect(PotionEffectType.SPEED);
+				if (effect2 == null) {
+					player.addPotionEffect(effect);
+				}
+			}
+
 			if(stats.getHiz(player.getUniqueId()) >100) {
 				stats.setSpeedCap(player.getUniqueId());
 			}

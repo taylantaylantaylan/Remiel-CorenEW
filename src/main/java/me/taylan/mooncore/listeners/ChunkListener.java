@@ -1,5 +1,6 @@
 package me.taylan.mooncore.listeners;
 
+import com.destroystokyo.paper.MaterialTags;
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.utils.GuiHandler;
 import me.taylan.mooncore.utils.Painter;
@@ -31,20 +32,29 @@ public class ChunkListener implements Listener {
     public void ChunkInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() != null) {
             Player player = event.getPlayer();
-            Chunk chunk = event.getClickedBlock().getChunk();
-            String chunkID = chunk.getX() + "." + chunk.getZ();
-            if ((statsManager.getChunkmap().containsValue(player.getUniqueId()))) {
-                if (statsManager.isChunk(chunkID)) {
+            if (player.getWorld().getName().equalsIgnoreCase("remielsurvival")) {
+                Chunk chunk = event.getClickedBlock().getChunk();
+                String chunkID = chunk.getX() + "." + chunk.getZ();
+                if ((statsManager.getChunkmap().containsValue(player.getUniqueId()))) {
+                    if (statsManager.isChunk(chunkID)) {
 
-                    if (!statsManager.getOwner(chunkID).equals(player.getUniqueId())) {
-                        if (!player.isOp()) {
-                            player.sendMessage(Painter.paint("&cİnşa etmeye çalıştığın bölge &6" + Bukkit.getPlayer(statsManager.getOwner(chunkID)).getName() + " &cisimli oyuncuya ait!"));
-                            event.setCancelled(true);
+                        if (!statsManager.getOwner(chunkID).equals(player.getUniqueId())) {
+                            if (!player.isOp()) {
+                                player.sendMessage(Painter.paint("&cİnşa etmeye çalıştığın bölge &6" + Bukkit.getPlayer(statsManager.getOwner(chunkID)).getName() + " &cisimli oyuncuya ait!"));
+                                event.setCancelled(true);
+                            }
+                        } else {
+                            event.setCancelled(false);
+                            if ((event.getClickedBlock().getType() == Material.BEDROCK)) {
+                                player.openInventory(guiHandler.claimBilgi(player));
+                            }
+                            if(MaterialTags.BEDS.isTagged(event.getClickedBlock().getType())) {
+                                event.setCancelled(false);
+                            }
                         }
                     } else {
-                        event.setCancelled(false);
-                        if((event.getClickedBlock().getType() == Material.BEDROCK)) {
-                            player.openInventory(guiHandler.claimBilgi(player));
+                        if (!player.isOp()) {
+                            event.setCancelled(true);
                         }
                     }
                 } else {
@@ -53,7 +63,7 @@ public class ChunkListener implements Listener {
                     }
                 }
             } else {
-                if (!player.isOp()) {
+                if(MaterialTags.BEDS.isTagged(event.getClickedBlock().getType())) {
                     event.setCancelled(true);
                 }
             }
@@ -94,27 +104,29 @@ public class ChunkListener implements Listener {
 
         if (event.getBlock() != null) {
             Player player = event.getPlayer();
-            Chunk chunk = event.getBlock().getChunk();
-            String chunkID = chunk.getX() + "." + chunk.getZ();
-            if ((statsManager.getChunkmap().containsValue(player.getUniqueId()))) {
-                if (statsManager.isChunk(chunkID)) {
+            if (player.getWorld().getName().equalsIgnoreCase("remielsurvival")) {
+                Chunk chunk = event.getBlock().getChunk();
+                String chunkID = chunk.getX() + "." + chunk.getZ();
+                if ((statsManager.getChunkmap().containsValue(player.getUniqueId()))) {
+                    if (statsManager.isChunk(chunkID)) {
 
-                    if (!statsManager.getOwner(chunkID).equals(player.getUniqueId())) {
-                        if (!player.isOp()) {
-                            player.sendMessage(Painter.paint("&cKırmaya çalıştığın bölge &6" + player.getName() + " &cisimli oyuncuya ait!"));
-                            event.setCancelled(true);
+                        if (!statsManager.getOwner(chunkID).equals(player.getUniqueId())) {
+                            if (!player.isOp()) {
+                                player.sendMessage(Painter.paint("&cKırmaya çalıştığın bölge &6" + player.getName() + " &cisimli oyuncuya ait!"));
+                                event.setCancelled(true);
+                            }
+                        } else {
+                            event.setCancelled(false);
                         }
                     } else {
-                        event.setCancelled(false);
+                        if (!player.isOp()) {
+                            event.setCancelled(true);
+                        }
                     }
                 } else {
                     if (!player.isOp()) {
                         event.setCancelled(true);
                     }
-                }
-            } else {
-                if (!player.isOp()) {
-                    event.setCancelled(true);
                 }
             }
         }

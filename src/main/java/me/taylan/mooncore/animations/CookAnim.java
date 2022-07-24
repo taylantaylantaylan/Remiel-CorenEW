@@ -43,9 +43,8 @@ public class CookAnim {
                     Location loc = block.getLocation().add(0.5, 1, 0.5);
                     Location loc2 = block.getLocation().add(0.5, 1.2, 0.5);
                     World world = Bukkit.getWorld("world");
-                    Material type = block.getType();
                     BlockState state = block.getState();
-                    Smoker smok = (Smoker) state;
+
                     BlockData data = block.getState().getBlockData();
                     Lightable lit = (Lightable) data;
                     new BukkitRunnable() {

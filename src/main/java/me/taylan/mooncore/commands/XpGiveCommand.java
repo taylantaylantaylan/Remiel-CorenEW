@@ -1,6 +1,7 @@
 package me.taylan.mooncore.commands;
 
 import me.taylan.mooncore.MoonCore;
+import me.taylan.mooncore.listeners.JoinListener;
 import me.taylan.mooncore.utils.ItemHandler;
 import me.taylan.mooncore.utils.Painter;
 import me.taylan.mooncore.utils.StatsManager;
@@ -16,10 +17,12 @@ public class XpGiveCommand implements CommandExecutor {
 
     private MoonCore plugin;
     private StatsManager stats;
+    private JoinListener joinListener;
 
     public XpGiveCommand(MoonCore plugin) {
         this.plugin = plugin;
         this.stats = plugin.getStatsManager();
+        this.joinListener = plugin.getJoinListener();
         plugin.getCommand("xpadd").setExecutor(this);
     }
 
@@ -96,6 +99,18 @@ public class XpGiveCommand implements CommandExecutor {
                         p.sendMessage(Painter.paint("&a+" + doygunluk + " EXP"));
 
                         break;
+                    case "level":
+                        int level = Integer.valueOf(args[2]);
+                        stats.setLevel(p.getUniqueId(), level);
+                        p.sendMessage(Painter.paint("&a+" + level + " level"));
+
+                        break;
+                    case "QP":
+                        int qp = Integer.valueOf(args[2]);
+                        joinListener.getQuestmap().put(p.getUniqueId(),joinListener.getQuestmap().get(p.getUniqueId())+qp);
+                        p.sendMessage(Painter.paint("&a+" + qp + " Quest Puanı"));
+
+                        break;
                 }
 
 
@@ -165,6 +180,18 @@ public class XpGiveCommand implements CommandExecutor {
                         int doygunluk = Integer.valueOf(args[2]);
                         stats.setExp(play.getUniqueId(), doygunluk);
                         p.sendMessage(Painter.paint("&a+" + doygunluk + " EXP"));
+
+                        break;
+                    case "level":
+                        int level = Integer.valueOf(args[2]);
+                        stats.setLevel(play.getUniqueId(), level);
+                        p.sendMessage(Painter.paint("&a+" + level + " level"));
+
+                        break;
+                    case "QP":
+                        int qp = Integer.valueOf(args[2]);
+                        joinListener.getQuestmap().put(p.getUniqueId(),joinListener.getQuestmap().get(p.getUniqueId())+qp);
+                        p.sendMessage(Painter.paint("&a+" + qp + " Quest Puanı"));
 
                         break;
                 }
@@ -242,6 +269,18 @@ public class XpGiveCommand implements CommandExecutor {
                         int doygunluk = Integer.valueOf(args[2]);
                         stats.setExp(p.getUniqueId(), doygunluk);
                         p.sendMessage(Painter.paint("&a+" + doygunluk + " EXP"));
+
+                        break;
+                    case "level":
+                        int level = Integer.valueOf(args[2]);
+                        stats.setLevel(p.getUniqueId(), level);
+                        p.sendMessage(Painter.paint("&a+" + level + " level"));
+
+                        break;
+                    case "QP":
+                        int qp = Integer.valueOf(args[2]);
+                        joinListener.getQuestmap().put(p.getUniqueId(),joinListener.getQuestmap().get(p.getUniqueId())+qp);
+                        p.sendMessage(Painter.paint("&a+" + qp + " Quest Puanı"));
 
                         break;
                 }

@@ -27,6 +27,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class SkillListener implements Listener {
     private final PersistentDataType<?, HashMap<String, Integer>> Enchants = DataTypes
@@ -57,81 +58,7 @@ public class SkillListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void crateplace(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            ItemStack item = player.getInventory().getItemInMainHand();
-            ItemStack item2 = player.getInventory().getItemInOffHand();
-            NamespacedKey kutu = new NamespacedKey(plugin, "kutu");
-            if (item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(kutu)) {
-                event.setCancelled(true);
-            } else if (item2 != null && item2.hasItemMeta()
-                    && item2.getItemMeta().getPersistentDataContainer().has(kutu)) {
-                event.setCancelled(true);
-            }
-        } else if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_AIR) {
-            NamespacedKey kutu = new NamespacedKey(plugin, "kutu");
-            ItemStack item = player.getInventory().getItemInMainHand();
-            ItemStack item2 = player.getInventory().getItemInOffHand();
-            if (item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(kutu)) {
-                player.sendMessage("knk");
-            } else if (item2 != null && item2.hasItemMeta()
-                    && item2.getItemMeta().getPersistentDataContainer().has(kutu)) {
-                player.sendMessage("knk");
-            }
 
-        }
-    }
-
-    @EventHandler
-    public void onPlayerFish(PlayerFishEvent event) {
-
-        Player player = event.getPlayer();
-
-        if (event.getState() == org.bukkit.event.player.PlayerFishEvent.State.CAUGHT_FISH) {
-
-            if (event.getCaught() != null) {
-                if (player.getInventory().getItemInMainHand().getItemMeta() != null) {
-                    ItemMeta meta = player.getInventory().getItemInMainHand().getItemMeta();
-                    Item d = (Item) event.getCaught();
-                    Random rand = new Random();
-                    int chance = rand.nextInt(30 - meta.getEnchantLevel(Enchantment.LUCK));
-                    switch (chance) {
-                        case 1:
-                            d.setItemStack(itemHandler.woodKutu());
-                            break;
-                        case 2:
-                            d.setItemStack(itemHandler.ironKutu());
-                            break;
-                        case 3:
-                            d.setItemStack(itemHandler.goldKutu());
-                            break;
-                        case 4:
-                            d.setItemStack(itemHandler.mistikKutu());
-                            break;
-                    }
-                    ItemStack item = d.getItemStack();
-
-                    levels.giveFishingExp(player, item);
-
-                    NamespacedKey key = new NamespacedKey(plugin, "Enchants");
-                    if (meta.getPersistentDataContainer() != null) {
-                        int fishingExp = stats.getFishingExp(player.getUniqueId());
-                        PersistentDataContainer container = meta.getPersistentDataContainer();
-                        if (container.has(key, Enchants)) {
-                            if (container.get(key, Enchants).containsKey("ustalık")) {
-                                int level = container.get(key, Enchants).get("ustalık");
-                                stats.setFishingExp(player.getUniqueId(), level);
-                            }
-                        }
-                    }
-                }
-
-            }
-
-        }
-    }
 
     @EventHandler
     public void onWoodBreak(BlockBreakEvent event) {
@@ -179,7 +106,7 @@ public class SkillListener implements Listener {
         if (!(block.getType() == Material.STONE || block.getType() == Material.IRON_ORE
                 || block.getType() == Material.COAL_ORE || block.getType() == Material.GOLD_ORE
                 || block.getType() == Material.REDSTONE_ORE || block.getType() == Material.LAPIS_ORE
-                || block.getType() == Material.ANDESITE || block.getType() == Material.GRANITE
+                || block.getType() == Material.ANDESITE || block.getType() == Material.GRANITE || block.getType() == Material.COPPER_ORE
                 || block.getType() == Material.DIORITE || block.getType() == Material.ANCIENT_DEBRIS
                 || block.getType() == Material.DIAMOND_ORE || block.getType() == Material.NETHER_QUARTZ_ORE || block.getType() == Material.RAW_COPPER_BLOCK || block.getType() == Material.OBSIDIAN || block.getType() == Material.RAW_IRON_BLOCK)) {
             return;
@@ -187,7 +114,7 @@ public class SkillListener implements Listener {
         if ((block.getType() == Material.STONE || block.getType() == Material.IRON_ORE
                 || block.getType() == Material.COAL_ORE || block.getType() == Material.GOLD_ORE
                 || block.getType() == Material.REDSTONE_ORE || block.getType() == Material.LAPIS_ORE
-                || block.getType() == Material.ANDESITE || block.getType() == Material.GRANITE
+                || block.getType() == Material.ANDESITE || block.getType() == Material.GRANITE|| block.getType() == Material.COPPER_ORE
                 || block.getType() == Material.DIORITE || block.getType() == Material.ANCIENT_DEBRIS
                 || block.getType() == Material.DIAMOND_ORE || block.getType() == Material.NETHER_QUARTZ_ORE || block.getType() == Material.RAW_COPPER_BLOCK || block.getType() == Material.OBSIDIAN || block.getType() == Material.RAW_IRON_BLOCK)) {
 

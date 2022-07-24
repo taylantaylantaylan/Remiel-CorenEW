@@ -49,7 +49,7 @@ public class AttackDamage implements Listener {
         Entity entity = event.getDamager();
         Entity entity2 = event.getEntity();
         final Set<EntityType> SKIPPED_TYPES = EnumSet.of(EntityType.ITEM_FRAME, EntityType.GLOW_ITEM_FRAME,
-                EntityType.AREA_EFFECT_CLOUD);
+                EntityType.AREA_EFFECT_CLOUD,EntityType.FIREBALL);
         if (SKIPPED_TYPES.contains(entity2.getType())) {
             return;
         }
@@ -77,6 +77,7 @@ public class AttackDamage implements Listener {
         }
 
         if (entity instanceof Player) {
+
             Player player = (Player) entity;
             NamespacedKey hasar = new NamespacedKey(plugin, "damage");
             NamespacedKey guc = new NamespacedKey(plugin, "guc");
@@ -86,10 +87,24 @@ public class AttackDamage implements Listener {
                     && player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(hasar)
                     && player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(guc)) {
                 ItemStack item = player.getInventory().getItemInMainHand();
+                NamespacedKey lvlrequirement = new NamespacedKey(plugin, "lvlrequirement");
+                if(item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                    if(item.getItemMeta().getPersistentDataContainer().has(lvlrequirement)) {
+                        if(stats.getLevel(player.getUniqueId()) >= item.getItemMeta().getPersistentDataContainer().get(lvlrequirement, PersistentDataType.INTEGER)) {
+                            event.setCancelled(false);
+                        } else {
+                            event.setCancelled(true);
+                            player.sendMessage(Painter.paint("&cSeviyen ekipmanı kullanmak için gereken seviyeden düşük!"));
+                        }
+                    }
+                }
                 if (item.getType() == Material.BLAZE_ROD) {
                     EntityDamageEvent event2 = new EntityDamageEvent(damaged, DamageCause.VOID, 1);
                     player.setLastDamageCause(event2);
                     Bukkit.getServer().getPluginManager().callEvent(event2);
+                }
+                if (item.getType() == Material.BOW) {
+                   event.setCancelled(true);
                 }
 
 
@@ -100,14 +115,12 @@ public class AttackDamage implements Listener {
                             + item.getItemMeta().getPersistentDataContainer().get(guc, PersistentDataType.INTEGER);
                     int chance = ThreadLocalRandom.current().nextInt(102 - stats.getKritikSansi(player.getUniqueId()));
                     NamespacedKey hit = new NamespacedKey(plugin, "bonehit");
-<<<<<<< HEAD
+
+
+
                     if (item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Kemik Kılıç")) {
-                        player.sendMessage("oldkemik"+"");
-=======
-                    player.sendMessage("oldkemik"+"");
-                    if (item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Kemik Kılıç")) {
-                        player.sendMessage("aga"+"");
->>>>>>> c82b554 (initial commit)
+
+
 
                         if (item.getItemMeta().getPersistentDataContainer().has(hit)) {
                             ItemMeta meta = item.getItemMeta();
@@ -115,7 +128,7 @@ public class AttackDamage implements Listener {
                             hitdetect++;
                             item.getItemMeta().getPersistentDataContainer().set(hit, PersistentDataType.INTEGER, hitdetect);
                             item.setItemMeta(meta);
-                            player.sendMessage(hitdetect+"");
+
                             if (hitdetect >= 4) {
                                 crit.put(player.getUniqueId(), "crit");
                                 event.setDamage(stats.getKritikHasari(player.getUniqueId()) / 5 + 3 * realDamage
@@ -129,7 +142,7 @@ public class AttackDamage implements Listener {
                                 item.setItemMeta(meta);
                             }
                         } else {
-                            player.sendMessage("oldu"+"");
+
                             ItemMeta meta = item.getItemMeta();
                             int hitdetect = 0;
                             item.getItemMeta().getPersistentDataContainer().set(hit, PersistentDataType.INTEGER, hitdetect);

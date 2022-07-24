@@ -21,12 +21,62 @@ import java.util.UUID;
 
 public class ItemDrop {
     private MoonCore plugin;
+
+    public Map<ArmorStand, UUID> getDropmap() {
+        return dropmap;
+    }
+
     private Map<ArmorStand, UUID> dropmap = new HashMap<ArmorStand, UUID>();
 
     public ItemDrop(MoonCore plugin) {
         this.plugin = plugin;
     }
+    public void itemDrop(Player player, Location loc2, ItemStack item, EquipmentSlot equip) {
+        World world = player.getWorld();
+        world.spawn(loc2, ArmorStand.class, armorStand -> {
+            armorStand.setVisible(false);
+            armorStand.setGravity(false);
+            armorStand.setSmall(false);
+            armorStand.setInvulnerable(true);
+            armorStand.setItem(equip, item);
+            armorStand.customName(item.getItemMeta().displayName());
+            armorStand.setCustomNameVisible(true);
+            for (Player player2 : Bukkit.getOnlinePlayers()) {
+                if (world.getName().equals("dungeonworld") || world.getName().equals("world")) {
+                    if (player2 == player) continue;
+                    player2.hideEntity(plugin, armorStand);
+                }
+            }
+            dropmap.put(armorStand, player.getUniqueId());
+            new BukkitRunnable() {
 
+                @Override
+                public void run() {
+                    Location location = armorStand.getLocation();
+                    location.setYaw(location.getYaw() - 1);
+                    armorStand.teleportAsync(location);
+                    for (Entity entity : armorStand.getNearbyEntities(0.1, 0.1, 0.1)) {
+                        if (entity.getUniqueId().equals(dropmap.get(armorStand))) {
+                            Player playerdrop = Bukkit.getPlayer(dropmap.get(armorStand));
+                            if(playerdrop.getInventory().firstEmpty() == -1) {
+                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                                        new TextComponent(Painter.paint("&cEnvanterin Dolu!")));
+                            } else {
+                                playerdrop.getInventory().addItem(item);
+                                playerdrop.sendMessage(
+                                        Painter.paint("&7Yerden bir eşya alındı: " + item.getItemMeta().getDisplayName()));
+                                playerdrop.playSound(playerdrop, Sound.ENTITY_ITEM_PICKUP, 0.5F, 1.3F);
+                                plugin.getIndicators2().put(armorStand, 100);
+                                armorStand.remove();
+                                this.cancel();
+                            }
+                        }
+                    }
+
+                }
+            }.runTaskTimer(plugin, 0, 1L);
+        });
+    }
     public void itemDrop(Player player, Entity entity, ItemStack item, EquipmentSlot equip) {
         World world = player.getWorld();
         Location loc = entity.getLocation();

@@ -35,7 +35,6 @@ public class KnowledgeCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
-			if (p.hasPermission("mooncore.book")) {
 				ItemStack star = new ItemStack(Material.KNOWLEDGE_BOOK);
 				NamespacedKey key = new NamespacedKey(plugin, "star");
 				List<String> lore = new ArrayList<>();
@@ -51,7 +50,7 @@ public class KnowledgeCommand implements CommandExecutor {
 				meta.setLore(lore);
 				star.setItemMeta(meta);
 				p.getInventory().setItem(8, star);
-			}
+
 		}
 		return false;
 	}

@@ -19,8 +19,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockCookEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -361,6 +364,23 @@ public class InventoryClickListener implements Listener {
 
             guiHandler.clicked((Player) event.getWhoClicked(), event.getSlot(), event.getCurrentItem(),
                     event.getInventory());
+
+        }
+    }
+
+    @EventHandler
+    public void questclic(InventoryClickEvent event) {
+        String title = event.getView().getTitle();
+        if (title.equals(guiHandler.inventory_name24)) {
+            event.setCancelled(true);
+            if (event.getCurrentItem() == null) {
+                return;
+            }
+
+            guiHandler.clicked((Player) event.getWhoClicked(), event.getSlot(), event.getCurrentItem(),
+                    event.getInventory());
+            Player player = (Player) event.getWhoClicked();
+            player.playSound(player, Sound.UI_LOOM_SELECT_PATTERN, 2, 1.1f);
 
         }
     }
@@ -815,6 +835,22 @@ public class InventoryClickListener implements Listener {
     }
 
     @EventHandler
+    public void onrod(InventoryClickEvent event) {
+        String title = event.getView().getTitle();
+        if (title.equals(guiHandler.inventory_name20)) {
+            event.setCancelled(true);
+            if (event.getCurrentItem() == null) {
+                return;
+            }
+
+            guiHandler.clicked((Player) event.getWhoClicked(), event.getSlot(), event.getCurrentItem(),
+                    event.getInventory());
+
+        }
+
+    }
+
+    @EventHandler
     public void onClick62(InventoryClickEvent event) {
         String title = event.getView().getTitle();
         if (title.equals(guiHandler.inventory_name8)) {
@@ -830,6 +866,21 @@ public class InventoryClickListener implements Listener {
 
     }
 
+    @EventHandler
+    public void onClick6212(InventoryClickEvent event) {
+        String title = event.getView().getTitle();
+        if (title.equals(guiHandler.inventory_name26)) {
+            event.setCancelled(true);
+            if (event.getCurrentItem() == null) {
+                return;
+            }
+
+            guiHandler.clicked((Player) event.getWhoClicked(), event.getSlot(), event.getCurrentItem(),
+                    event.getInventory());
+
+        }
+
+    }
 
     @EventHandler
     public void onClickEnv(InventoryClickEvent event) {
@@ -853,15 +904,31 @@ public class InventoryClickListener implements Listener {
     @EventHandler
     public void ench(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+        if (event.getClickedBlock() != null) {
             if (event.getClickedBlock().getType() == Material.ENCHANTING_TABLE) {
-                Block block = event.getClickedBlock();
+                if (player.hasPermission("mooncore.ench")) {
 
-                event.setCancelled(true);
-                player.openInventory(guiHandler.GUIENCH(player));
+                    event.setCancelled(true);
+                    player.openInventory(guiHandler.GUIENCH(player));
 
+
+                } else {
+                    player.sendMessage(Painter.paint("&cBüyü masasını kullanabilmek için &dSaorin'in &cgörevlerini bitirmen gerek."));
+                }
             }
         }
+
+    }
+
+    @EventHandler
+    public void camp(BlockCookEvent event) {
+        Block block = event.getBlock();
+        if (event.getBlock().getType() == Material.CAMPFIRE) {
+
+            event.setCancelled(true);
+
+        }
+
     }
 
     @EventHandler
@@ -894,41 +961,54 @@ public class InventoryClickListener implements Listener {
         if (!(entity instanceof Player)) {
             return;
         }
-        Player clickedplayer = (Player) entity;
-        if (player.isSneaking()) {
-            player.openInventory(guiHandler.profil(player, clickedplayer));
-            ArrayList<ItemStack> list = (ArrayList<ItemStack>) stats.getHepsi(clickedplayer.getUniqueId());
-            if (clickedplayer.getInventory().getHelmet() != null) {
-                player.getOpenInventory().getTopInventory().setItem(13, clickedplayer.getInventory().getHelmet());
-            }
-            if (clickedplayer.getInventory().getChestplate() != null) {
-                player.getOpenInventory().getTopInventory().setItem(22, clickedplayer.getInventory().getChestplate());
-            }
-            if (clickedplayer.getInventory().getLeggings() != null) {
-                player.getOpenInventory().getTopInventory().setItem(31, clickedplayer.getInventory().getLeggings());
-            }
-            if (clickedplayer.getInventory().getBoots() != null) {
-                player.getOpenInventory().getTopInventory().setItem(40, clickedplayer.getInventory().getBoots());
-            }
-            if (clickedplayer.getInventory().getItemInMainHand() != null) {
-                player.getOpenInventory().getTopInventory().setItem(39, clickedplayer.getInventory().getItemInMainHand());
-            }
-            if (clickedplayer.getInventory().getItemInOffHand() != null) {
-                player.getOpenInventory().getTopInventory().setItem(41, clickedplayer.getInventory().getItemInOffHand());
-            }
-            if (!(stats.getKolye(clickedplayer.getUniqueId()).equals("Yok.."))) {
-                player.getOpenInventory().getTopInventory().setItem(21, list.get(2));
-            }
-            if (!(stats.getTilsim(clickedplayer.getUniqueId()).equals("Yok.."))) {
-                player.getOpenInventory().getTopInventory().setItem(23, list.get(0));
-            }
-            if (!(stats.getEldiven(clickedplayer.getUniqueId()).equals("Yok.."))) {
-                player.getOpenInventory().getTopInventory().setItem(30, list.get(1));
-            }
-            if (!(stats.getYuzuk(clickedplayer.getUniqueId()).equals("Yok.."))) {
-                player.getOpenInventory().getTopInventory().setItem(32, list.get(3));
-            }
 
+        Player clickedplayer = (Player) entity;
+        if (stats.hasPlayedBefore(clickedplayer.getUniqueId())) {
+
+
+            if (player.isSneaking()) {
+                player.openInventory(guiHandler.profil(player, clickedplayer));
+                ArrayList<ItemStack> list = (ArrayList<ItemStack>) stats.getHepsi(clickedplayer.getUniqueId());
+                if (clickedplayer.getInventory().getHelmet() != null) {
+                    player.getOpenInventory().getTopInventory().setItem(13, clickedplayer.getInventory().getHelmet());
+                }
+                if (clickedplayer.getInventory().getChestplate() != null) {
+                    player.getOpenInventory().getTopInventory().setItem(22, clickedplayer.getInventory().getChestplate());
+                }
+                if (clickedplayer.getInventory().getLeggings() != null) {
+                    player.getOpenInventory().getTopInventory().setItem(31, clickedplayer.getInventory().getLeggings());
+                }
+                if (clickedplayer.getInventory().getBoots() != null) {
+                    player.getOpenInventory().getTopInventory().setItem(40, clickedplayer.getInventory().getBoots());
+                }
+                if (clickedplayer.getInventory().getItemInMainHand() != null) {
+                    player.getOpenInventory().getTopInventory().setItem(39, clickedplayer.getInventory().getItemInMainHand());
+                }
+                if (clickedplayer.getInventory().getItemInOffHand() != null) {
+                    player.getOpenInventory().getTopInventory().setItem(41, clickedplayer.getInventory().getItemInOffHand());
+                }
+                if (!(stats.getKolye(clickedplayer.getUniqueId()).equals("Yok.."))) {
+                    player.getOpenInventory().getTopInventory().setItem(21, list.get(2));
+                }
+                if (!(stats.getTilsim(clickedplayer.getUniqueId()).equals("Yok.."))) {
+                    player.getOpenInventory().getTopInventory().setItem(23, list.get(0));
+                }
+                if (!(stats.getEldiven(clickedplayer.getUniqueId()).equals("Yok.."))) {
+                    player.getOpenInventory().getTopInventory().setItem(30, list.get(1));
+                }
+                if (!(stats.getYuzuk(clickedplayer.getUniqueId()).equals("Yok.."))) {
+                    player.getOpenInventory().getTopInventory().setItem(32, list.get(3));
+                }
+            }
+        }
+
+    }
+
+    @EventHandler
+    public void RealFurnaceaga(InventoryOpenEvent event) {
+        Player player = (Player) event.getPlayer();
+        if (event.getInventory().getType() == InventoryType.ANVIL || event.getInventory().getType() == InventoryType.FURNACE || event.getInventory().getType() == InventoryType.BLAST_FURNACE || event.getInventory().getType() == InventoryType.SMOKER || event.getInventory().getType() == InventoryType.SMITHING) {
+            event.setCancelled(true);
         }
 
     }
@@ -995,9 +1075,16 @@ public class InventoryClickListener implements Listener {
                 if (hasScaffold(event.getClickedBlock())) {
                     Block block = event.getClickedBlock();
                     ElSanatBlock.put(player.getUniqueId(), block);
-                    event.setCancelled(true);
-                    player.openInventory(guiHandler.Fletching(player));
+                    int timer = stats.getWorkProduction(player.getUniqueId());
+                    if (timer <= 0) {
+                        event.setCancelled(true);
+                        player.openInventory(guiHandler.Fletching(player));
 
+                    } else {
+                        event.setCancelled(true);
+                        player.openInventory(guiHandler.elsanatproduct(player));
+
+                    }
 
                 } else {
                     player.sendMessage(Painter.paint("&cAhşaplarla çalışabilmen için bir masa gerek."));
@@ -1655,7 +1742,7 @@ public class InventoryClickListener implements Listener {
 
                             }
                             itemHandler.createItem(player.getOpenInventory().getTopInventory(), "arrow", 1, 50, "&aSonraki Sayfa", "&7Sonraki sayfaya geçmek için &e&lSağ Tıkla.");
-                        }  else if (item.getType() == Material.GOLDEN_AXE) {
+                        } else if (item.getType() == Material.GOLDEN_AXE) {
 
 
                             itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Verimlilik", "&aUstalık 1", "", " &7Büyüyü barındıran ekipmanın kazma hızı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
@@ -1764,7 +1851,7 @@ public class InventoryClickListener implements Listener {
 
                             }
                             if (enchLevel > 2) {
-                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6Deprem", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile yere yapılan saldırılar", " &7bir yeryüzü parçasını havaya fırlatır.","&7Bu parça bir süre sonra yere düşer","&7ve etrafındakilere hasar verir.", " &7arttıkça ekstra hasar ve saldırı hızı kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6Deprem", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile yere yapılan saldırılar", " &7bir yeryüzü parçasını havaya fırlatır.", "&7Bu parça bir süre sonra yere düşer", "&7ve etrafındakilere hasar verir.", " &7arttıkça ekstra hasar ve saldırı hızı kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
                             } else {
                                 itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
 
@@ -1797,10 +1884,10 @@ public class InventoryClickListener implements Listener {
                         } else if (item.getType() == Material.FISHING_ROD) {
 
 
-                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Denizin Şansı", "&aUstalık 1", "", " &7Büyüyü barındıran olta ile iyi bir","&7yakalama yapma şansını arttırır.", " &7eklembacaklılara ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 31, "&6Denizin Şansı", "&aUstalık 1", "", " &7Büyüyü barındıran olta ile iyi bir", "&7yakalama yapma şansını arttırır.", " &7eklembacaklılara ekstra hasar verir.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
                             itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 30, "&6Ayartma", "&aUstalık 1", "", " &7Büyüyü barındıran oltanın yakalama hızını arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
-                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Siftah", "&aUstalık 1", "", " &7Büyüyü barındıran olta kullanıcıya çifte","&7yakalama yapma şansı ekler.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
-                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 33, "&6Ustalık Desteği", "&aUstalık 1", "", " &7Büyüyü barındıran oltanın verdiği &6Ustalık EXP'si &7artar.",  "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 29, "&6Siftah", "&aUstalık 1", "", " &7Büyüyü barındıran olta kullanıcıya çifte", "&7yakalama yapma şansı ekler.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                            itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 33, "&6Ustalık Desteği", "&aUstalık 1", "", " &7Büyüyü barındıran oltanın verdiği &6Ustalık EXP'si &7artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
                             itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 32, "&6Dikenli Kanca", "&aUstalık 1", "", " &7Büyüyü barındıran oltanın verdiği hasarı arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
                             if (enchLevel > 1) {
                                 itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 34, "&6Hünerli Avcı", "&aUstalık 2", "", " &7Büyüyü barındıran ekipmanın", " &7kritik hasarı artar.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
@@ -1809,7 +1896,7 @@ public class InventoryClickListener implements Listener {
 
                             }
                             if (enchLevel > 1) {
-                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6Deniz Çöplüğü Avcısı", "&aUstalık 2", "", " &7Kullanıcının denizden balık dışında"," &7diğer şeyleri tutma şansını arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6Deniz Çöplüğü Avcısı", "&aUstalık 2", "", " &7Kullanıcının denizden balık dışında", " &7diğer şeyleri tutma şansını arttırır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
                             } else {
                                 itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 35, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 1. seviyeden yüksek olması gerekir.");
                             }
@@ -1826,7 +1913,7 @@ public class InventoryClickListener implements Listener {
 
                             }
                             if (enchLevel > 2) {
-                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6Deprem", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile yere yapılan saldırılar", " &7bir yeryüzü parçasını havaya fırlatır.","&7Bu parça bir süre sonra yere düşer","&7ve etrafındakilere hasar verir.", " &7arttıkça ekstra hasar ve saldırı hızı kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
+                                itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6Deprem", "&aUstalık 3", "", " &7Büyüyü barındıran ekipman ile yere yapılan saldırılar", " &7bir yeryüzü parçasını havaya fırlatır.", "&7Bu parça bir süre sonra yere düşer", "&7ve etrafındakilere hasar verir.", " &7arttıkça ekstra hasar ve saldırı hızı kazanır.", "", "&7Ekipmanı büyülemek için &e&lSağ Tıkla.");
                             } else {
                                 itemHandler.createItem(player.getOpenInventory().getTopInventory(), "enchanted_book", 1, 40, "&6??? &c(Ustalık Yetersiz)", "&7Bu büyüye erişim sağlayabilmek için büyücülükteki", "&7ustalığının 2. seviyeden yüksek olması gerekir.");
 

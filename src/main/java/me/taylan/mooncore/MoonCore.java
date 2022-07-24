@@ -19,6 +19,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -158,6 +159,8 @@ public class MoonCore extends JavaPlugin {
         new ProfileCommand(this);
         new SkillCommand(this);
         new PlaytimeCommand(this);
+        new RequirementListener(this);
+        new FurnaceResetCommand(this);
         new BackCommand(this);
         new StatsCommand(this);
         new NpcCommand(this);
@@ -171,6 +174,9 @@ public class MoonCore extends JavaPlugin {
         new XpGiveCommand(this);
         new MapCommand(this);
         new SkillGetCommand(this);
+        new ScrollListener(this);
+        new BroadcastCommand(this);
+        new QuestMapCommand(this);
         new EnchantRunnable(this).runTaskTimer(this, 0, 2L);
         if (!statsManager.hasClaimFile()) {
             try {
@@ -234,6 +240,9 @@ public class MoonCore extends JavaPlugin {
     }
 
     public void onDisable() {
+        for(ArmorStand stand:itemDrop.getDropmap().keySet()) {
+            stand.remove();
+        }
         Set<Entity> stands = indicators2.keySet();
 
         List<Entity> removal = new ArrayList<>();

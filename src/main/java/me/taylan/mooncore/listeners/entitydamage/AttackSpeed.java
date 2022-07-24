@@ -42,7 +42,7 @@ public class AttackSpeed implements Listener {
 		Entity entity = event.getDamager();
 		Entity entity2 = event.getEntity();
 		final Set<EntityType> SKIPPED_TYPES = EnumSet.of(EntityType.ITEM_FRAME, EntityType.GLOW_ITEM_FRAME,
-				EntityType.AREA_EFFECT_CLOUD);
+				EntityType.AREA_EFFECT_CLOUD,EntityType.FIREBALL);
 		if (SKIPPED_TYPES.contains(entity2.getType())) {
 			return;
 		}

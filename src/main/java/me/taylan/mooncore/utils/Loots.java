@@ -46,7 +46,7 @@ public class Loots {
 			list.add(loot5);
 		}
 		if(chance2==5) {
-			ItemStack loot6 = itemHandler.woodKutu();
+			ItemStack loot6 = itemHandler.woodkutu;
 			list.add(loot6);
 		}
 		list.add(itemHandler.silverore);
