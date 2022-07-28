@@ -34,7 +34,6 @@ public class RealFurnaceAnim {
 
     public void furnaceAgaAnimation(Player p, int cookTime, ItemStack result) {
         if (JoinListener.getRealfurnacemenu().get(p.getUniqueId()).firstEmpty() != -1) {
-            int timer = stats.getRealFurnaceProduction(p.getUniqueId());
             int amount = stats.getRealFurnaceAmount(p.getUniqueId());
             stats.setRealFurnaceAmount(p.getUniqueId(), cookTime);
             new BukkitRunnable() {
@@ -44,23 +43,6 @@ public class RealFurnaceAnim {
                     Location loc = block.getLocation().add(0.5, 1, 0.5);
                     Location loc2 = block.getLocation().add(0.5, 1.2, 0.5);
                     World world = Bukkit.getWorld("world");
-                    BlockState state = block.getState();
-                    BlockData data = block.getState().getBlockData();
-                    Lightable lit = (Lightable) data;
-                    new BukkitRunnable() {
-
-                        @Override
-                        public void run() {
-                            Material type = block.getType();
-                            BlockState state = block.getState();
-                            BlockData data = block.getState().getBlockData();
-                            Lightable lit = (Lightable) data;
-                            lit.setLit(true);
-                            state.setBlockData((BlockData) data);
-                            state.update();
-                        }
-
-                    }.runTaskLater(plugin, 1L);
                     world.spawn(loc2, ArmorStand.class, armorStand2 -> {
                         armorStand2.setMarker(true);
                         armorStand2.setVisible(false);
@@ -101,10 +83,9 @@ public class RealFurnaceAnim {
                                     if (timer >= cookTime) {
 
                                         armorStand.setCustomName(ChatColor.GREEN + "✔");
-                                        lit.setLit(false);
-                                        state.setBlockData((BlockData) data);
-                                        state.update();
+
                                         stats.setRealFurnaceAmount(p.getUniqueId(), -cookTime);
+                                        result.setAmount(1);
                                         JoinListener.getRealfurnacemenu().get(p.getUniqueId()).addItem(result);
                                         new BukkitRunnable() {
 

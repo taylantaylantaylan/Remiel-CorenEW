@@ -24,7 +24,7 @@ public class Enchants extends EnchantConstructor {
 	}
 
 	public void addEnchantBow(ItemStack item, Player p, int lvl) {
-
+/*
 		for (int ench = 0; ench < 1;) {
 			 
 			int chance = ThreadLocalRandom.current().nextInt(9);
@@ -1045,5 +1045,7 @@ public class Enchants extends EnchantConstructor {
 
 	public void getEnchantType(ItemStack item) {
 
+	}
+	*/
 	}
 }

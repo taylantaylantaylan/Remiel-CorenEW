@@ -1,9 +1,12 @@
 package me.taylan.mooncore.listeners;
 
 import com.destroystokyo.paper.MaterialTags;
+import com.manya.pdc.DataTypes;
 import me.taylan.mooncore.MoonCore;
+import me.taylan.mooncore.listeners.entitydamage.SpawnArmorStand;
 import me.taylan.mooncore.utils.Painter;
 import me.taylan.mooncore.utils.StatsManager;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
@@ -18,6 +21,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -25,9 +29,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
+import javax.swing.*;
 import java.util.*;
 
 public class PlayerAttackListener implements Listener {
+    private PersistentDataType<?, HashMap<String, Integer>> Enchants = DataTypes.hashMap(PersistentDataType.STRING,
+            PersistentDataType.INTEGER);
 
     private MoonCore plugin;
     private StatsManager statsManager;
@@ -38,6 +45,7 @@ public class PlayerAttackListener implements Listener {
     private Map<UUID, Integer> topuzStack = new HashMap<UUID, Integer>();
     private Map<UUID, Integer> sword = new HashMap<UUID, Integer>();
     private Map<UUID, Integer> axeStack = new HashMap<UUID, Integer>();
+    private Map<UUID, Integer> bowStack = new HashMap<UUID, Integer>();
     private Map<UUID, Integer> bleed = new HashMap<UUID, Integer>();
     private static Map<UUID, Integer> wand = new HashMap<UUID, Integer>();
 
@@ -69,12 +77,12 @@ public class PlayerAttackListener implements Listener {
                 .has(saldirihizi2)) {
             ItemStack item = player.getInventory().getItemInMainHand();
             NamespacedKey lvlrequirement = new NamespacedKey(plugin, "lvlrequirement");
-            if(item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
-                if(item.getItemMeta().getPersistentDataContainer().has(lvlrequirement)) {
-                    if(!(statsManager.getLevel(player.getUniqueId()) >= item.getItemMeta().getPersistentDataContainer().get(lvlrequirement, PersistentDataType.INTEGER))) {
+            if (item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                if (item.getItemMeta().getPersistentDataContainer().has(lvlrequirement)) {
+                    if (!(statsManager.getLevel(player.getUniqueId()) >= item.getItemMeta().getPersistentDataContainer().get(lvlrequirement, PersistentDataType.INTEGER))) {
 
-                            event.setCancelled(true);
-                            player.sendMessage(Painter.paint("&cSeviyen ekipmanı kullanmak için gereken seviyeden düşük!"));
+                        event.setCancelled(true);
+                        player.sendMessage(Painter.paint("&cSeviyen ekipmanı kullanmak için gereken seviyeden düşük!"));
 
                     }
                 }
@@ -131,45 +139,32 @@ public class PlayerAttackListener implements Listener {
                             1);
 
                 } else {
-                    /*
-                     * ProtocolLibrary.getProtocolManager().addPacketListener( new
-                     * PacketAdapter(plugin, ListenerPriority.NORMAL,
-                     * PacketType.Play.Server.NAMED_SOUND_EFFECT) {
-                     *
-                     * @Override public void onPacketSending(PacketEvent event) { if
-                     * (event.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT) { if
-                     * (event.getPacket().getStrings().read(0)
-                     * .equalsIgnoreCase("entity.player.attack.strong")) { event.setCancelled(true);
-                     * } } } });
-                     */
+
                     player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.2f, 1.1f);
 
                 }
             }
-            if (item.getType() == Material.GOLDEN_HOE) {
+            if (item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Kral Katili")) {
                 if (!(player.hasCooldown(item.getType()))) {
-                    player.setCooldown(item.getType(),45);
 
-                    player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0.2f);
-                } else {
-                    /*
-                     * ProtocolLibrary.getProtocolManager().addPacketListener( new
-                     * PacketAdapter(plugin, ListenerPriority.NORMAL,
-                     * PacketType.Play.Server.NAMED_SOUND_EFFECT) {
-                     *
-                     * @Override public void onPacketSending(PacketEvent event) { if
-                     * (event.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT) { if
-                     * (event.getPacket().getStrings().read(0)
-                     * .equalsIgnoreCase("entity.player.attack.strong")) { event.setCancelled(true);
-                     * // The sound will no longer be played } } } });
-                     */
-                    player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.2f, 1.1f);
+                    Vector pDir = player.getLocation().getDirection();
+                    Vector eDir = damaged.getLocation().getDirection();
+                    double xv = pDir.getX() * eDir.getZ() - pDir.getZ() * eDir.getX();
+                    double zv = pDir.getX() * eDir.getX() + pDir.getZ() * eDir.getZ();
+                    double angle = Math.atan2(xv, zv); // Value between -π and +π
+                    double angleInDegrees = (angle * 180) / Math.PI;
 
+                    if (angleInDegrees <= 60 && angleInDegrees >= -32) {
+                        ((LivingEntity) damaged).damage(4);
+                        spawnArmorStandaGA(damaged.getLocation().add(0, 2, 1), "<red>-4🗡");
+
+                    }
                 }
             }
+
             if (item.getType() == Material.DIAMOND_SWORD) {
                 if (!(player.hasCooldown(item.getType()))) {
-                    player.setCooldown(item.getType(),45);
+                    player.setCooldown(item.getType(), 45);
                     player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1f);
                 } else {
                     /*
@@ -235,7 +230,7 @@ public class PlayerAttackListener implements Listener {
             }
             if (item.getType() == Material.GOLDEN_PICKAXE) {
                 if (!(player.hasCooldown(item.getType()))) {
-                    player.setCooldown(item.getType(), (int) 60 - saldirihizi);
+                    player.setCooldown(item.getType(), (int) 60);
                     player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1f);
                 } else {
 
@@ -305,47 +300,8 @@ public class PlayerAttackListener implements Listener {
 
                 }
             }
-            if (item.getType() == Material.GOLDEN_AXE) {
-                if (!(player.hasCooldown(item.getType()))) {
-                    player.setCooldown(item.getType(), (int) 45 - saldirihizi);
-                    player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1.2f);
-                    for (ItemStack item2 : player.getInventory().getContents()) {
-                        if (item2 != null) {
-                            if (item2 == item) continue;
-                            if (item2 != null && item2.hasItemMeta() && item2.getItemMeta().hasLore()) {
-                                if (item2.getLore().contains("Kılıç") || item2.getLore().contains("Hançer") || item2.getLore().contains("Balta") || item2.getLore().contains("Yay") || item2.getLore().contains("Arbalet") || item2.getLore().contains("Asa") || item2.getLore().contains("Topuz") || item2.getLore().contains("Kitabı") || item2.getLore().contains("Mızrak") || item2.getLore().contains("Tırpan")) {
-                                    player.setCooldown(item2.getType(), (int) 999);
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    /*
-                     * ProtocolLibrary.getProtocolManager().addPacketListener( new
-                     * PacketAdapter(plugin, ListenerPriority.NORMAL,
-                     * PacketType.Play.Server.NAMED_SOUND_EFFECT) {
-                     *
-                     * @Override public void onPacketSending(PacketEvent event) { if
-                     * (event.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT) { if
-                     * (event.getPacket().getStrings().read(0)
-                     * .equalsIgnoreCase("entity.player.attack.strong")) { event.setCancelled(true);
-                     * } } } });
-                     */
-                    player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.2f, 1.1f);
 
-                }
-            }
-            if (item.getType() == Material.GOLDEN_SHOVEL) {
-                if (!(player.hasCooldown(item.getType()))) {
-                    player.setCooldown(item.getType(), (int) 25 - saldirihizi);
-                    player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1.2f);
 
-                } else {
-
-                    player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.2f, 1.1f);
-
-                }
-            }
             if (item.getType() == Material.STICK) {
                 if (!(player.hasCooldown(item.getType()))) {
                     world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1.1f);
@@ -521,11 +477,33 @@ public class PlayerAttackListener implements Listener {
                                                 this.cancel();
                                             }
                                             hancer += 1;
+                                            NamespacedKey key = new NamespacedKey(plugin, "Enchants");
+                                            if (meta.getPersistentDataContainer() == null)
+                                                return;
+                                            ;
+                                            PersistentDataContainer container = meta.getPersistentDataContainer();
+                                            if (container.has(key, Enchants)) {
 
-                                            ldamaged.damage(4);
-                                            ldamaged.setNoDamageTicks(0);
-                                            player.playSound(player, Sound.ENTITY_WITHER_SHOOT, 0.1f, 2f);
-                                            particleslash(player);
+                                                if (container.get(key, Enchants).containsKey("akuapunktur")) {
+                                                    int level = container.get(key, Enchants).get("akuapunktur");
+                                                    ldamaged.damage(5+level);
+                                                    ldamaged.setNoDamageTicks(0);
+                                                    player.playSound(player, Sound.ENTITY_WITHER_SHOOT, 0.1f, 2f);
+                                                    particleslash(player);
+
+                                                } else {
+                                                    ldamaged.damage(3);
+                                                    ldamaged.setNoDamageTicks(0);
+                                                    player.playSound(player, Sound.ENTITY_WITHER_SHOOT, 0.1f, 2f);
+                                                    particleslash(player);
+                                                }
+
+                                            } else {
+                                                ldamaged.damage(3);
+                                                ldamaged.setNoDamageTicks(0);
+                                                player.playSound(player, Sound.ENTITY_WITHER_SHOOT, 0.1f, 2f);
+                                                particleslash(player);
+                                            }
 
                                         }
                                     }.runTaskTimer(plugin, 0, 5);
@@ -548,7 +526,50 @@ public class PlayerAttackListener implements Listener {
                 }
             }
         } else {
-            return;
+            ItemStack item = player.getInventory().getItemInMainHand();
+            NamespacedKey lvlrequirement = new NamespacedKey(plugin, "lvlrequirement");
+            if (item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                if (item.getItemMeta().getPersistentDataContainer().has(lvlrequirement)) {
+                    if (!(statsManager.getLevel(player.getUniqueId()) >= item.getItemMeta().getPersistentDataContainer().get(lvlrequirement, PersistentDataType.INTEGER))) {
+
+                        event.setCancelled(true);
+                        player.sendMessage(Painter.paint("&cSeviyen ekipmanı kullanmak için gereken seviyeden düşük!"));
+
+                    }
+                }
+            }
+            if (item.getType() == Material.GOLDEN_HOE) {
+                if (!(player.hasCooldown(item.getType()))) {
+                    player.setCooldown(item.getType(), 45);
+
+                    player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0.2f);
+                } else {
+                    player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.2f, 1.1f);
+
+                }
+            }
+            if (item.getType() == Material.GOLDEN_AXE) {
+                if (!(player.hasCooldown(item.getType()))) {
+                    player.setCooldown(item.getType(), 45);
+                    player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1.2f);
+                } else {
+
+                    player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.2f, 1.1f);
+
+                }
+            }
+
+            if (item.getType() == Material.GOLDEN_SHOVEL) {
+                if (!(player.hasCooldown(item.getType()))) {
+                    player.setCooldown(item.getType(),  25);
+                    player.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1.2f);
+
+                } else {
+
+                    player.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.2f, 1.1f);
+
+                }
+            }
         }
 
     }
@@ -570,9 +591,9 @@ public class PlayerAttackListener implements Listener {
                         .get(saldirihizi2, PersistentDataType.INTEGER);
                 int saldirihizi = statsManager.getSaldiriHizi(player.getUniqueId()) / 10 + realhiz;
                 ItemStack item = player.getInventory().getItemInMainHand();
-                if(item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
-                    if(item.getItemMeta().getPersistentDataContainer().has(lvlrequirement)) {
-                        if(!(statsManager.getLevel(player.getUniqueId()) >= item.getItemMeta().getPersistentDataContainer().get(lvlrequirement, PersistentDataType.INTEGER))) {
+                if (item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer() != null) {
+                    if (item.getItemMeta().getPersistentDataContainer().has(lvlrequirement)) {
+                        if (!(statsManager.getLevel(player.getUniqueId()) >= item.getItemMeta().getPersistentDataContainer().get(lvlrequirement, PersistentDataType.INTEGER))) {
 
                             event.setCancelled(true);
                             player.sendMessage(Painter.paint("&cSeviyen ekipmanı kullanmak için gereken seviyeden düşük!"));
@@ -589,7 +610,7 @@ public class PlayerAttackListener implements Listener {
                 if (item.getType() == Material.GOLDEN_HOE) {
                     if (!(player.hasCooldown(item.getType()))) {
                         world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0.1f);
-                        player.setCooldown(item.getType(), (int) 55 - saldirihizi);
+                        player.setCooldown(item.getType(), (int) 55);
                     }
                 }
                 if (item.getType() == Material.DIAMOND_SWORD) {
@@ -615,21 +636,21 @@ public class PlayerAttackListener implements Listener {
                     if (!(player.hasCooldown(item.getType()))) {
                         world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0.1f);
                         world.playSound(player, Sound.ITEM_AXE_SCRAPE, 0.25f, 0.8f);
-                        player.setCooldown(item.getType(), (int) 50 - saldirihizi);
+                        player.setCooldown(item.getType(), (int) 50);
                     }
                 }
                 if (item.getType() == Material.GOLDEN_AXE) {
                     if (!(player.hasCooldown(item.getType()))) {
                         world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0.1f);
                         world.playSound(player, Sound.ITEM_AXE_SCRAPE, 0.25f, 0.8f);
-                        player.setCooldown(item.getType(), (int) 45 - saldirihizi);
+                        player.setCooldown(item.getType(), 45);
                     }
                 }
                 if (item.getType() == Material.GOLDEN_SHOVEL) {
                     if (!(player.hasCooldown(item.getType()))) {
                         world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 0.1f);
                         world.playSound(player, Sound.ITEM_AXE_SCRAPE, 0.25f, 0.8f);
-                        player.setCooldown(item.getType(), (int) 40 - saldirihizi);
+                        player.setCooldown(item.getType(), 40);
                     }
                 }
                 if (item.getType() == Material.STICK) {
@@ -710,6 +731,7 @@ public class PlayerAttackListener implements Listener {
 
                     }
                 }
+
                 if (item.getType() == Material.SHEARS) {
                     if (!(player.hasCooldown(item.getType()))) {
                         world.playSound(player, Sound.ITEM_TRIDENT_THROW, 0.25f, 1.9f);
@@ -722,8 +744,23 @@ public class PlayerAttackListener implements Listener {
                 if (player.getInventory().containsAtLeast(quiver, 1) && item.getType() == Material.BOW) {
 
                     if (!(player.hasCooldown(item.getType()))) {
-                        if (!(item.hasItemMeta())) {
-                            return;
+                        if (item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Mistik")) {
+
+                            if (bowStack.containsKey(player.getUniqueId())) {
+                                int axestacklendi = bowStack.get(player.getUniqueId());
+                                if (axestacklendi <= 5) {
+                                    bowStack.put(player.getUniqueId(), axestacklendi + 1);
+                                } else {
+                                    bowStack.remove(player.getUniqueId());
+                                    particleBeam(player);
+
+                                }
+
+                            } else {
+                                int axestacklendi = 0;
+                                bowStack.put(player.getUniqueId(), axestacklendi);
+                            }
+
                         }
                         player.getInventory().removeItem(quiver);
                         ovalparticles(Particle.CRIT, player, 1);
@@ -755,15 +792,13 @@ public class PlayerAttackListener implements Listener {
                             arrow.setBounce(false);
                         }
                         if (meta.hasEnchant(Enchantment.ARROW_DAMAGE)) {
-                            arrow.setDamage(10);
+                            arrow.setDamage(6+meta.getEnchantLevel(Enchantment.ARROW_DAMAGE));
                         } else {
                             arrow.setDamage(3);
                         }
 
                     }
                 }
-            } else {
-                return;
             }
         } else if (event.getAction() == Action.RIGHT_CLICK_AIR) {
             NamespacedKey saldirihizi2 = new NamespacedKey(plugin, "attackspeed");
@@ -781,16 +816,7 @@ public class PlayerAttackListener implements Listener {
                         wand.put(player.getUniqueId(), 0);
                         world.playSound(player, Sound.ENTITY_ENDER_DRAGON_HURT, 0.15f, 1.4f);
                         player.setCooldown(item.getType(), (int) 45 - saldirihizi);
-                        for (ItemStack item2 : player.getInventory().getContents()) {
-                            if (item2 != null) {
-                                if (item2 == item) continue;
-                                if (item2 != null && item2.hasItemMeta() && item2.getItemMeta().hasLore()) {
-                                    if (item2.getLore().contains("Kılıç") || item2.getLore().contains("Hançer") || item2.getLore().contains("Balta") || item2.getLore().contains("Yay") || item2.getLore().contains("Arbalet") || item2.getLore().contains("Asa") || item2.getLore().contains("Topuz") || item2.getLore().contains("Kitabı") || item2.getLore().contains("Mızrak") || item2.getLore().contains("Tırpan")) {
-                                        player.setCooldown(item2.getType(), (int) 999);
-                                    }
-                                }
-                            }
-                        }
+
                         particleTutorial(player);
 
                     }
@@ -840,15 +866,23 @@ public class PlayerAttackListener implements Listener {
                     ovalparticles(Particle.SMOKE_NORMAL, shooter, 2);
                     ovalparticles(Particle.CRIT, shooter, 1);
                     shooter.setCooldown(item.getType(), (int) 70 - saldirihizi);
-                    for (ItemStack item2 : shooter.getInventory().getContents()) {
-                        if (item2 != null) {
-                            if (item2 == item) continue;
-                            if (item2 != null && item2.hasItemMeta() && item2.getItemMeta().hasLore()) {
-                                if (item2.getLore().contains("Kılıç") || item2.getLore().contains("Hançer") || item2.getLore().contains("Balta") || item2.getLore().contains("Yay") || item2.getLore().contains("Arbalet") || item2.getLore().contains("Asa") || item2.getLore().contains("Topuz") || item2.getLore().contains("Kitabı") || item2.getLore().contains("Mızrak") || item2.getLore().contains("Tırpan")) {
-                                    shooter.setCooldown(item2.getType(), (int) 999);
-                                }
+                    if (item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Mistik")) {
+
+                        if (bowStack.containsKey(shooter.getUniqueId())) {
+                            int axestacklendi = bowStack.get(shooter.getUniqueId());
+                            if (axestacklendi <= 5) {
+                                bowStack.put(shooter.getUniqueId(), axestacklendi + 1);
+                            } else {
+                                bowStack.remove(shooter.getUniqueId());
+                                particleBeam(shooter);
+
                             }
+
+                        } else {
+                            int axestacklendi = 0;
+                            bowStack.put(shooter.getUniqueId(), axestacklendi);
                         }
+
                     }
                     shooter.playSound(shooter, Sound.ENTITY_WITHER_SHOOT, 0.25f, 1.9f);
                     shooter.playSound(shooter, Sound.ENTITY_SKELETON_SHOOT, 0.25f, 1.2f);
@@ -870,7 +904,7 @@ public class PlayerAttackListener implements Listener {
                         item.setItemMeta(damagemeta);
                     }
                     if (meta.hasEnchant(Enchantment.ARROW_DAMAGE)) {
-                        arrow.setDamage(20);
+                        arrow.setDamage(10+meta.getEnchantLevel(Enchantment.ARROW_DAMAGE));
                     } else {
                         arrow.setDamage(8);
                     }
@@ -1387,6 +1421,23 @@ public class PlayerAttackListener implements Listener {
 
     public void buyuHasari(LivingEntity entity, Player player, int Damage) {
         entity.damage(Damage, player);
+
+    }
+
+    public void spawnArmorStandaGA(Location loc, String name) {
+        ArmorStand armorStand2 = loc.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
+            armorStand.setMarker(true);
+            armorStand.setVisible(false);
+            armorStand.setGravity(false);
+            armorStand.setSmall(false);
+            armorStand.setInvulnerable(true);
+            armorStand.setCustomNameVisible(true);
+            armorStand.customName(MiniMessage.miniMessage().deserialize(name));
+            Location rotateloc = new Location(armorStand.getWorld(), armorStand.getLocation().getX(), armorStand.getLocation().getY(), armorStand.getLocation().getZ(), armorStand.getLocation().getYaw(), 2);
+            plugin.getIndicators().put(armorStand, 2);
+
+        });
+
 
     }
 }

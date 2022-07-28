@@ -102,7 +102,7 @@ public class SmithAnim {
                                         }
                             }
                             armorStand.setCustomName(ChatColor.GREEN + "✔");
-
+                            result.setAmount(1);
                             JoinListener.getMenu().get(p.getUniqueId()).addItem(result);
                             new BukkitRunnable() {
 

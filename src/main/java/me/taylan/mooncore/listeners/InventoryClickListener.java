@@ -33,11 +33,15 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class InventoryClickListener implements Listener {
     private static HashMap<UUID, Block> SmithBlock = new HashMap<UUID, Block>();
     private static HashMap<UUID, Block> CookBlock = new HashMap<UUID, Block>();
     private static HashMap<UUID, Block> FurnaceBlock = new HashMap<UUID, Block>();
+    private HashSet<String> enchplayer = new HashSet<>();
+    private final Pattern DIGITS_PATTERN = Pattern.compile("\\d+");
 
     public static HashMap<UUID, Block> getRealFurnaceBlock() {
         return RealFurnaceBlock;
@@ -326,7 +330,7 @@ public class InventoryClickListener implements Listener {
     @EventHandler
     public void onClickench(InventoryClickEvent event) {
         String title = event.getView().getTitle();
-        if (title.equals(guiHandler.inventory_name7)) {
+        if (title.contains("Büyü")) {
             event.setCancelled(true);
             if (event.getCurrentItem() == null) {
                 return;
@@ -849,7 +853,21 @@ public class InventoryClickListener implements Listener {
         }
 
     }
+    @EventHandler
+    public void onClickSa(InventoryClickEvent event) {
+        String title = event.getView().getTitle();
+        if (title.equals(guiHandler.inventory_name28)) {
+            event.setCancelled(true);
+            if (event.getCurrentItem() == null) {
+                return;
+            }
 
+            guiHandler.clicked((Player) event.getWhoClicked(), event.getSlot(), event.getCurrentItem(),
+                    event.getInventory());
+
+        }
+
+    }
     @EventHandler
     public void onClick62(InventoryClickEvent event) {
         String title = event.getView().getTitle();
@@ -914,6 +932,7 @@ public class InventoryClickListener implements Listener {
 
                 } else {
                     player.sendMessage(Painter.paint("&cBüyü masasını kullanabilmek için &dSaorin'in &cgörevlerini bitirmen gerek."));
+                    event.setCancelled(true);
                 }
             }
         }
@@ -1132,7 +1151,130 @@ public class InventoryClickListener implements Listener {
             }
         }
     }*/
+    @EventHandler
+    public void onClickTamir(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
+        String title = event.getView().getTitle();
+        if (title.equals(guiHandler.inventory_name28)) {
+            if (event.getClickedInventory() != null && event.getClickedInventory().equals(player.getInventory())) {
+                event.setCancelled(true);
+                if (event.getWhoClicked().getItemOnCursor() != null && event.getCurrentItem() != null) {
+                    ItemStack item = event.getCurrentItem();
+                    ItemStack item2 = event.getCurrentItem().clone();
 
+                    if (MaterialTags.SWORDS.isTagged(item) || MaterialTags.AXES.isTagged(item)
+                            || MaterialTags.BOWS.isTagged(item) || MaterialTags.PICKAXES.isTagged(item)
+                            || MaterialTags.HOES.isTagged(item) || MaterialTags.HELMETS.isTagged(item)
+                            || MaterialTags.CHESTPLATES.isTagged(item) || MaterialTags.LEGGINGS.isTagged(item)
+                            || MaterialTags.BOOTS.isTagged(item) || MaterialTags.SHOVELS.isTagged(item)
+                            || item.getType() == Material.FISHING_ROD || item.getType() == Material.STICK || item.getType() == Material.SHEARS) {
+                        int enchLevel = stats.getEnchLevel(player.getUniqueId());
+                        if (event.getView().getItem(31) == null) {
+                            int amount = item.getAmount();
+                            item2.setAmount(1);
+                            player.getInventory().removeItem(item2);
+                            event.getView().setItem(31, item2);
+
+                            String input = String.join(" ", item.getItemMeta().getDisplayName());
+                            Matcher matcher = DIGITS_PATTERN.matcher(input);
+                            if (matcher.find()) {
+                                String firstDigits = matcher.group();
+
+                                itemHandler.createItem(event.getView().getTopInventory(), "anvil", 1, 41, "&6Tamir Et", "&8Bu ekipmanı tamir etmek","&8için gereken malzemeler:","", " &7- &f"+Integer.valueOf(firstDigits)*3+" Tane Hurda"," &7- &f"+Integer.valueOf(firstDigits)*4+" Seviye","","&8Bu ekipmanı tamir etmek istiyorsan &e&lSağ Tıkla.");
+
+                                 }
+                        }
+                    }
+                }
+            } else {
+                event.setCancelled(true);
+                if (event.getWhoClicked().getItemOnCursor() != null && event.getCurrentItem() != null) {
+                    ItemStack item = event.getCurrentItem();
+
+                    if (MaterialTags.SWORDS.isTagged(item) || MaterialTags.AXES.isTagged(item)
+                            || MaterialTags.BOWS.isTagged(item) || MaterialTags.PICKAXES.isTagged(item)
+                            || MaterialTags.HOES.isTagged(item) || MaterialTags.HELMETS.isTagged(item)
+                            || MaterialTags.CHESTPLATES.isTagged(item) || MaterialTags.LEGGINGS.isTagged(item)
+                            || MaterialTags.BOOTS.isTagged(item) || MaterialTags.SHOVELS.isTagged(item)
+                            || item.getType() == Material.FISHING_ROD|| item.getType() == Material.STICK || item.getType() == Material.SHEARS) {
+                        if (player.getInventory().firstEmpty() == -1) {
+
+                            player.getWorld().dropItemNaturally(player.getLocation(), item);
+                            event.getView().setItem(31, null);
+                            event.getView().setItem(40, new ItemStack(Material.ANVIL));
+
+                        } else {
+                            player.getInventory().addItem(item);
+                            event.getView().setItem(31, null);
+                            event.getView().setItem(40, new ItemStack(Material.ANVIL));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @EventHandler
+    public void onClickhurda(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
+        String title = event.getView().getTitle();
+        if (title.equals(guiHandler.inventory_name8)) {
+            if (event.getClickedInventory() != null && event.getClickedInventory().equals(player.getInventory())) {
+                event.setCancelled(true);
+                if (event.getWhoClicked().getItemOnCursor() != null && event.getCurrentItem() != null) {
+                    ItemStack item = event.getCurrentItem();
+                    ItemStack item2 = event.getCurrentItem().clone();
+
+                    if (MaterialTags.SWORDS.isTagged(item) || MaterialTags.AXES.isTagged(item)
+                            || MaterialTags.BOWS.isTagged(item) || MaterialTags.PICKAXES.isTagged(item)
+                            || MaterialTags.HOES.isTagged(item) || MaterialTags.HELMETS.isTagged(item)
+                            || MaterialTags.CHESTPLATES.isTagged(item) || MaterialTags.LEGGINGS.isTagged(item)
+                            || MaterialTags.BOOTS.isTagged(item) || MaterialTags.SHOVELS.isTagged(item)
+                            || item.getType() == Material.FISHING_ROD || item.getType() == Material.STICK || item.getType() == Material.SHEARS) {
+                        int enchLevel = stats.getEnchLevel(player.getUniqueId());
+                        if (event.getView().getItem(31) == null) {
+                            int amount = item.getAmount();
+                            item2.setAmount(1);
+                            player.getInventory().removeItem(item2);
+                            event.getView().setItem(31, item2);
+
+                            String input = String.join(" ", item.getItemMeta().getDisplayName());
+                            Matcher matcher = DIGITS_PATTERN.matcher(input);
+                            if (matcher.find()) {
+                                String firstDigits = matcher.group();
+                                player.sendMessage(firstDigits);
+                                itemHandler.createItem(event.getView().getTopInventory(), "stonecutter", 1, 41, "&6Hurdaya Çevir", "&8Bu ekipmanı hurdaya çevirmek sana","", " &7- &f"+Integer.valueOf(firstDigits)*2+" Tane Hurda","","&8kazandıracak. Hurdaya çevirmek için &e&lSağ Tıkla.");
+
+                            }
+                        }
+                    }
+                }
+            } else {
+                event.setCancelled(true);
+                if (event.getWhoClicked().getItemOnCursor() != null && event.getCurrentItem() != null) {
+                    ItemStack item = event.getCurrentItem();
+
+                    if (MaterialTags.SWORDS.isTagged(item) || MaterialTags.AXES.isTagged(item)
+                            || MaterialTags.BOWS.isTagged(item) || MaterialTags.PICKAXES.isTagged(item)
+                            || MaterialTags.HOES.isTagged(item) || MaterialTags.HELMETS.isTagged(item)
+                            || MaterialTags.CHESTPLATES.isTagged(item) || MaterialTags.LEGGINGS.isTagged(item)
+                            || MaterialTags.BOOTS.isTagged(item) || MaterialTags.SHOVELS.isTagged(item)
+                            || item.getType() == Material.FISHING_ROD|| item.getType() == Material.STICK || item.getType() == Material.SHEARS) {
+                        if (player.getInventory().firstEmpty() == -1) {
+
+                            player.getWorld().dropItemNaturally(player.getLocation(), item);
+                            event.getView().setItem(31, null);
+                            event.getView().setItem(40, new ItemStack(Material.STONECUTTER));
+
+                        } else {
+                            player.getInventory().addItem(item);
+                            event.getView().setItem(31, null);
+                            event.getView().setItem(40, new ItemStack(Material.STONECUTTER));
+                        }
+                    }
+                }
+            }
+        }
+    }
     @EventHandler
     public void onClickEncha(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
@@ -1149,7 +1291,7 @@ public class InventoryClickListener implements Listener {
                             || MaterialTags.HOES.isTagged(item) || MaterialTags.HELMETS.isTagged(item)
                             || MaterialTags.CHESTPLATES.isTagged(item) || MaterialTags.LEGGINGS.isTagged(item)
                             || MaterialTags.BOOTS.isTagged(item) || MaterialTags.SHOVELS.isTagged(item)
-                            || item.getType() == Material.FISHING_ROD || item.getType() == Material.BOOK
+                            || item.getType() == Material.FISHING_ROD || item.getType() == Material.BOOK || item.getType() == Material.STICK || item.getType() == Material.SHEARS
                             && (item.getItemMeta().getLore().contains(Painter.paint("&8<Boş Büyü Bölmesi>")))) {
                         int enchLevel = stats.getEnchLevel(player.getUniqueId());
                         if (event.getView().getItem(22) == null) {
@@ -1956,7 +2098,7 @@ public class InventoryClickListener implements Listener {
                             || MaterialTags.HOES.isTagged(item) || MaterialTags.HELMETS.isTagged(item)
                             || MaterialTags.CHESTPLATES.isTagged(item) || MaterialTags.LEGGINGS.isTagged(item)
                             || MaterialTags.BOOTS.isTagged(item) || MaterialTags.SHOVELS.isTagged(item)
-                            || item.getType() == Material.FISHING_ROD || item.getType() == Material.BOOK
+                            || item.getType() == Material.FISHING_ROD || item.getType() == Material.BOOK || item.getType() == Material.STICK || item.getType() == Material.SHEARS
                             && (item.getItemMeta().getLore().contains(Painter.paint("&8<Boş Büyü Bölmesi>")))) {
                         if (player.getInventory().firstEmpty() == -1) {
 
@@ -2006,20 +2148,63 @@ public class InventoryClickListener implements Listener {
         }
 
     }
+    @EventHandler
+    public void tamirclose(InventoryCloseEvent event) {
+        Player player = (Player) event.getPlayer();
+        if (event.getInventory() != null & event.getView().getTitle().equals(guiHandler.inventory_name28)) {
+            if (event.getInventory().getItem(31) != null) {
+                if (player.getInventory().firstEmpty() == -1) {
+                    ItemStack item = event.getInventory().getItem(31);
+                    player.getWorld().dropItemNaturally(player.getLocation(), item);
+
+                } else {
+                    ItemStack item = event.getInventory().getItem(31);
+                    player.getInventory().addItem(item);
+                }
+            }
+        }
+    }
+    @EventHandler
+    public void hurdaclose(InventoryCloseEvent event) {
+        Player player = (Player) event.getPlayer();
+        if (event.getInventory() != null & event.getView().getTitle().equals(guiHandler.inventory_name8)) {
+            if (event.getInventory().getItem(31) != null) {
+                    if (player.getInventory().firstEmpty() == -1) {
+                        ItemStack item = event.getInventory().getItem(31);
+                        player.getWorld().dropItemNaturally(player.getLocation(), item);
+
+                    } else {
+                        ItemStack item = event.getInventory().getItem(31);
+                        player.getInventory().addItem(item);
+                    }
+            }
+        }
+    }
 
     @EventHandler
     public void enchclose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
         if (event.getInventory() != null & event.getView().getTitle().equals(guiHandler.inventory_name7)) {
             if (event.getInventory().getItem(22) != null) {
-                if (player.getInventory().firstEmpty() == -1) {
-                    ItemStack item = event.getInventory().getItem(22);
-                    player.getWorld().dropItemNaturally(player.getLocation(), item);
+                if (event.getReason() != InventoryCloseEvent.Reason.OPEN_NEW) {
+                    if (player.getInventory().firstEmpty() == -1) {
+                        ItemStack item = event.getInventory().getItem(22);
+                        player.getWorld().dropItemNaturally(player.getLocation(), item);
 
-                } else {
-                    ItemStack item = event.getInventory().getItem(22);
-                    player.getInventory().addItem(item);
+                    } else {
+                        ItemStack item = event.getInventory().getItem(22);
+                        player.getInventory().addItem(item);
+                    }
                 }
+            }
+        } else if (event.getInventory() != null & event.getView().getTitle().contains("Büyü Masası ->")) {
+            if (player.getInventory().firstEmpty() == -1) {
+                ItemStack item = event.getInventory().getItem(22);
+                player.getWorld().dropItemNaturally(player.getLocation(), item);
+
+            } else {
+                ItemStack item = event.getInventory().getItem(22);
+                player.getInventory().addItem(item);
             }
         }
     }
@@ -2068,7 +2253,7 @@ public class InventoryClickListener implements Listener {
                                     || MaterialTags.HOES.isTagged(item) || MaterialTags.HELMETS.isTagged(item)
                                     || MaterialTags.CHESTPLATES.isTagged(item) || MaterialTags.LEGGINGS.isTagged(item)
                                     || MaterialTags.BOOTS.isTagged(item) || MaterialTags.SHOVELS.isTagged(item)
-                                    || item.getType() == Material.FISHING_ROD) {
+                                    || item.getType() == Material.FISHING_ROD || item.getType() == Material.STICK || item.getType() == Material.SHEARS) {
                                 item2.setAmount(1);
                                 player.getInventory().removeItem(item2);
 

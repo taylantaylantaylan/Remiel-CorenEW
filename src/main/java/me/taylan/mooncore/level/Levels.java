@@ -1,5 +1,6 @@
 package me.taylan.mooncore.level;
 
+import com.manya.pdc.DataTypes;
 import eu.endercentral.crazy_advancements.advancement.AdvancementDisplay.AdvancementFrame;
 import eu.endercentral.crazy_advancements.advancement.ToastNotification;
 import fr.mrmicky.fastboard.FastBoard;
@@ -10,15 +11,20 @@ import me.taylan.mooncore.utils.ItemHandler;
 import me.taylan.mooncore.utils.StatsManager;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class Levels {
@@ -28,6 +34,8 @@ public class Levels {
     private StatsManager stats;
     private Ekonomi ekonomi;
     private ItemHandler itemHandler;
+    private final PersistentDataType<?, HashMap<String, Integer>> Enchants = DataTypes
+            .hashMap(PersistentDataType.STRING, PersistentDataType.INTEGER);
     private BukkitRunnable r;
     private DecimalFormat df = new DecimalFormat("#,###.##");
 
@@ -233,6 +241,20 @@ public class Levels {
 
             int exep = ExpList.getExpMap().get(Entity.getType().toString());
             stats.setExp(uuid, exep);
+            if (player.getInventory().getItemInMainHand().getItemMeta() != null) {
+                ItemMeta meta = player.getInventory().getItemInMainHand().getItemMeta();
+                NamespacedKey key = new NamespacedKey(plugin, "Enchants");
+                if (meta.getPersistentDataContainer() != null) {
+
+                    PersistentDataContainer container = meta.getPersistentDataContainer();
+                    if (container.has(key, Enchants)) {
+                        if (container.get(key, Enchants).containsKey("ustalık")) {
+                            int level = container.get(key, Enchants).get("ustalık");
+                            stats.setMadencilikExp(player.getUniqueId(), level);
+                        }
+                    }
+                }
+            }
         }
 
         int prog = 100 * combatExp / combatRequiredExp;
@@ -284,6 +306,20 @@ public class Levels {
             int exp = ExpList.getExpMap().get(block.getType().toString());
             stats.setOdunculukExp(uuid, exp);
             stats.setExp(uuid, exp - 1);
+            if (player.getInventory().getItemInMainHand().getItemMeta() != null) {
+                ItemMeta meta = player.getInventory().getItemInMainHand().getItemMeta();
+                NamespacedKey key = new NamespacedKey(plugin, "Enchants");
+                if (meta.getPersistentDataContainer() != null) {
+
+                    PersistentDataContainer container = meta.getPersistentDataContainer();
+                    if (container.has(key, Enchants)) {
+                        if (container.get(key, Enchants).containsKey("ustalık")) {
+                            int level = container.get(key, Enchants).get("ustalık");
+                            stats.setMadencilikExp(player.getUniqueId(), level);
+                        }
+                    }
+                }
+            }
         }
 
         int prog = 100 * odunculukExp / odunculukRequiredExp;
@@ -332,6 +368,20 @@ public class Levels {
             int exp = ExpList.getExpMap().get(item.getType().toString());
             stats.setFarmingExp(uuid, exp);
             stats.setExp(uuid, exp - 1);
+            if (player.getInventory().getItemInMainHand().getItemMeta() != null) {
+                ItemMeta meta = player.getInventory().getItemInMainHand().getItemMeta();
+                NamespacedKey key = new NamespacedKey(plugin, "Enchants");
+                if (meta.getPersistentDataContainer() != null) {
+
+                    PersistentDataContainer container = meta.getPersistentDataContainer();
+                    if (container.has(key, Enchants)) {
+                        if (container.get(key, Enchants).containsKey("ustalık")) {
+                            int level = container.get(key, Enchants).get("ustalık");
+                            stats.setMadencilikExp(player.getUniqueId(), level);
+                        }
+                    }
+                }
+            }
         }
 
         int prog = 100 * farmingExp / farmingRequiredExp;
@@ -410,6 +460,52 @@ public class Levels {
 
     }
 
+    public void giveEnchantExp(Player player, int aga) {
+        ToastNotification notification = new ToastNotification(Material.ENCHANTING_TABLE,
+                ChatColor.YELLOW + "Büyücülükte ustalığın yükseldi!", AdvancementFrame.CHALLENGE);
+        UUID uuid = player.getUniqueId();
+        int miningLevel = stats.getEnchLevel(uuid);
+        int miningExp = stats.getEnchExp(uuid);
+        int miningRequiredExp = stats.getEnchRequiredExp(uuid);
+        FastBoard board = new FastBoard(player);
+
+        board.updateTitle(ChatColor.AQUA + "Moon Network");
+
+
+            stats.setEnchExp(uuid, aga*10);
+            stats.setExp(uuid, aga*10 - 5*aga);
+
+
+        int prog = 100 * miningExp / miningRequiredExp;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date(System.currentTimeMillis());
+        double para = ekonomi.getBalance(player);
+        board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "        Remiel", " ",
+                ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + df.format(para), "   ",
+
+                ChatColor.YELLOW + "Büyücülük " + ChatColor.WHITE + "Ustalık " + miningLevel,
+                ChatColor.GREEN + "EXP " + ChatColor.WHITE + miningExp + ChatColor.GRAY + "/" + ChatColor.WHITE
+                        + miningRequiredExp + ChatColor.GRAY + " (" + ChatColor.GREEN + "%" + prog + ChatColor.GRAY
+                        + ")",
+                "     ", ChatColor.GRAY + player.getName(), ChatColor.DARK_GRAY + formatter.format(date),
+                ChatColor.AQUA + "mc.moonnw.xyz"
+
+        );
+        if (miningExp >= miningRequiredExp) {
+            stats.setİlham(player.getUniqueId(), 1);
+            int Exp = stats.getExp(uuid);
+            int RequiredExp = stats.getRequiredExp(uuid);
+            int Level = stats.getLevel(uuid);
+            stats.setExp(uuid, miningLevel * 2);
+
+            miningLevel++;
+            stats.setMadencilikLevel(uuid, 1);
+            stats.setMadencilikRequiredExp(uuid, miningLevel * 60);
+            stats.setMadencilikExp(uuid, -miningExp);
+            notification.send(player);
+        }
+
+    }
 
     public void giveMiningExp(Player player, Block block) {
         ToastNotification notification = new ToastNotification(Material.IRON_PICKAXE,
@@ -425,7 +521,23 @@ public class Levels {
             int exp = ExpList.getExpMap().get(block.getType().toString());
             stats.setMadencilikExp(uuid, exp);
             stats.setExp(uuid, exp - 1);
+            if (player.getInventory().getItemInMainHand().getItemMeta() != null) {
+                ItemMeta meta = player.getInventory().getItemInMainHand().getItemMeta();
+                NamespacedKey key = new NamespacedKey(plugin, "Enchants");
+                if (meta.getPersistentDataContainer() != null) {
+
+                    PersistentDataContainer container = meta.getPersistentDataContainer();
+                    if (container.has(key, Enchants)) {
+                        if (container.get(key, Enchants).containsKey("ustalık")) {
+                            int level = container.get(key, Enchants).get("ustalık");
+                            stats.setMadencilikExp(player.getUniqueId(), level);
+                        }
+                    }
+                }
+            }
         }
+
+
 
         int prog = 100 * miningExp / miningRequiredExp;
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

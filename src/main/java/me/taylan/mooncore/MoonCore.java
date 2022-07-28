@@ -4,6 +4,7 @@ import me.taylan.mooncore.animations.*;
 import me.taylan.mooncore.commands.*;
 import me.taylan.mooncore.eco.Ekonomi;
 import me.taylan.mooncore.eco.VaultHook;
+import me.taylan.mooncore.enchanting.EnchantConstructor;
 import me.taylan.mooncore.enchanting.EnchantRunnable;
 import me.taylan.mooncore.enchanting.Enchants;
 import me.taylan.mooncore.level.ExpList;
@@ -69,13 +70,16 @@ public class MoonCore extends JavaPlugin {
     }
 
     private ItemDrop itemDrop;
+    public EnchantConstructor getEnchantConstructor() {
+        return enchantConstructor;
+    }
 
     public Ekonomi getEkonomi() {
         return ekonomi;
     }
 
     private Ekonomi ekonomi;
-
+private EnchantConstructor enchantConstructor;
     private Configuration configuration;
 
     public Configuration getConfiguration() {
@@ -117,7 +121,7 @@ public class MoonCore extends JavaPlugin {
         realFurnaceAnim = new RealFurnaceAnim(this);
         loots = new Loots(this);
         itemDrop = new ItemDrop(this);
-
+        enchantConstructor = new EnchantConstructor(this);
         enchants = new Enchants(this);
         guiHandler = new GuiHandler(this);
 
@@ -127,6 +131,7 @@ public class MoonCore extends JavaPlugin {
         enchantRunnable = new EnchantRunnable(this);
         playerFishListener = new PlayerFishListener(this);
         joinListener = new JoinListener(this);
+
         File playerData = new File(this.getDataFolder(), "playerdata");
         if (!playerData.exists()) {
             playerData.mkdirs();
@@ -145,7 +150,6 @@ public class MoonCore extends JavaPlugin {
         new AccessoryListener(this);
         new ProjectileHitListener(this);
         new QuitListener(this);
-        new SkillListener(this);
         new BlockRegenListener(this);
         new PlayerAttackListener(this);
         new MobSpawnListener(this);
@@ -177,6 +181,7 @@ public class MoonCore extends JavaPlugin {
         new ScrollListener(this);
         new BroadcastCommand(this);
         new QuestMapCommand(this);
+        new DuraCommand(this);
         new EnchantRunnable(this).runTaskTimer(this, 0, 2L);
         if (!statsManager.hasClaimFile()) {
             try {
@@ -249,7 +254,6 @@ public class MoonCore extends JavaPlugin {
         for (Entity stand : stands) {
             stand.remove();
             removal.add(stand);
-            continue;
         }
         stands.removeAll(removal);
         vaultHook.unhook();

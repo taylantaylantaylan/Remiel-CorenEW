@@ -136,7 +136,7 @@ public class SeviyeCommand implements CommandExecutor {
         p.sendMessage(Painter.paint("       &6Yeni Tarifler Açıldı!"));
         p.sendMessage(Painter.paint("&8-----------------------------------------------------"));
         stats.setNP(p.getUniqueId(), 3);
-        if (seviye2 + 1 == 2) {
+           if (seviye2 + 1 == 2) {
             p.discoverRecipe(NamespacedKey.minecraft("farmer_hoe"));
             p.discoverRecipe(NamespacedKey.minecraft("bone_helmet"));
             p.discoverRecipe(NamespacedKey.minecraft("wither_rose_talisman"));
@@ -158,6 +158,8 @@ public class SeviyeCommand implements CommandExecutor {
             p.discoverRecipe(NamespacedKey.minecraft("silver_block"));
         } else if (seviye2 + 1 == 7) {
             p.discoverRecipe(NamespacedKey.minecraft("magma_sword"));
+            p.discoverRecipe(NamespacedKey.minecraft("golem_gaunlet"));
+            p.discoverRecipe(NamespacedKey.minecraft("golem_chestplate"));
         }
 
     }

@@ -43,26 +43,7 @@ public class CookAnim {
                     Location loc = block.getLocation().add(0.5, 1, 0.5);
                     Location loc2 = block.getLocation().add(0.5, 1.2, 0.5);
                     World world = Bukkit.getWorld("world");
-                    BlockState state = block.getState();
 
-                    BlockData data = block.getState().getBlockData();
-                    Lightable lit = (Lightable) data;
-                    new BukkitRunnable() {
-
-                        @Override
-                        public void run() {
-                            Material type = block.getType();
-                            BlockState state = block.getState();
-                            Smoker smok = (Smoker) state;
-                            BlockData data = block.getState().getBlockData();
-                            Lightable lit = (Lightable) data;
-                            lit.setLit(true);
-                            state.setBlockData((BlockData) data);
-                            state.update();
-
-                        }
-
-                    }.runTaskLater(plugin, 1L);
                     world.spawn(loc2, ArmorStand.class, armorStand2 -> {
                         armorStand2.setMarker(true);
                         armorStand2.setVisible(false);
@@ -104,10 +85,8 @@ public class CookAnim {
                                         Levels.giveCookLevel(p, result);
 
                                         armorStand.setCustomName(ChatColor.GREEN + "✔");
-                                        lit.setLit(false);
-                                        state.setBlockData((BlockData) data);
-                                        state.update();
                                         stats.setCookAmount(p.getUniqueId(), -cookTime);
+                                        result.setAmount(1);
                                         JoinListener.getOcakMenu().get(p.getUniqueId()).addItem(result);
                                         new BukkitRunnable() {
 

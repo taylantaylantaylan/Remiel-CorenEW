@@ -18,6 +18,7 @@ import com.sk89q.worldedit.world.World;
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.animations.CookAnim;
 import me.taylan.mooncore.eco.Ekonomi;
+import me.taylan.mooncore.enchanting.EnchantConstructor;
 import me.taylan.mooncore.enchanting.Enchants;
 import me.taylan.mooncore.listeners.JoinListener;
 import net.kyori.adventure.text.Component;
@@ -25,15 +26,14 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
 import net.md_5.bungee.api.ChatColor;
 import org.apache.commons.lang.ArrayUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -45,6 +45,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class GuiHandler {
@@ -52,6 +54,7 @@ public class GuiHandler {
 
     private StatsManager stats;
     private ItemHandler itemHandler;
+    private EnchantConstructor enchantConstructor;
     private Enchants Enchants;
     private CookAnim cookAnim;
     private Ekonomi ekonomi;
@@ -60,6 +63,7 @@ public class GuiHandler {
         this.plugin = plugin;
         this.cookAnim = plugin.getCookAnim();
         this.itemHandler = plugin.getItemHandler();
+        this.enchantConstructor = plugin.getEnchantConstructor();
         this.Enchants = plugin.getEnchants();
         this.stats = plugin.getStatsManager();
         this.ekonomi = plugin.getEkonomi();
@@ -69,6 +73,7 @@ public class GuiHandler {
 
     public Inventory inv;
     public Inventory inv2;
+    private final Pattern DIGITS_PATTERN = Pattern.compile("\\d+");
     public Inventory inv3;
     public Inventory inv4;
     public Inventory inv5;
@@ -115,6 +120,10 @@ public class GuiHandler {
     public Inventory inv27;
     public Inventory inv28;
     public Inventory inv29;
+    public Inventory inv30;
+    public Inventory inv31;
+    public Inventory inv32;
+    public Inventory inv33;
     public String inventory_name12;
     public String inventory_name25;
     public String inventory_name18;
@@ -124,6 +133,8 @@ public class GuiHandler {
     public String inventory_name23;
     public String inventory_name24;
     public String inventory_name26;
+    public String inventory_name28;
+    public String inventory_name27;
     public int inv_rows12 = 6 * 9;
 
     public int inv_rows = 6 * 9;
@@ -167,6 +178,8 @@ public class GuiHandler {
         inventory_name22 = Painter.paint(ChatColor.DARK_GRAY + "Fırın");
         inventory_name23 = Painter.paint(("&8Bölge Bilgileri"));
         inventory_name24 = Painter.paint(("&8Görev Defteri"));
+        inventory_name27 = Painter.paint(("&8Yapabileceğin Seyehatler"));
+        inventory_name28 = Painter.paint(ChatColor.DARK_GRAY + "Demirci Masası -> Tamir Et");
         inv = Bukkit.createInventory(null, inv_rows);
         inv2 = Bukkit.createInventory(null, inv_rows2);
         inv3 = Bukkit.createInventory(null, inv_rows3);
@@ -196,6 +209,10 @@ public class GuiHandler {
         inv27 = Bukkit.createInventory(null, inv_rows10);
         inv28 = Bukkit.createInventory(null, inv_rows8);
         inv29 = Bukkit.createInventory(null, inv_rows8);
+        inv30 = Bukkit.createInventory(null, inv_rows7);
+        inv31 = Bukkit.createInventory(null, inv_rows);
+        inv32 = Bukkit.createInventory(null, inv_rows6);
+        inv33 = Bukkit.createInventory(null, inv_rows);
     }
 
     public Inventory tuccar1(Player p) {
@@ -248,7 +265,7 @@ public class GuiHandler {
                 ChatColor.GRAY + " Alış Fiyatı: &6120 Dinar", "",
                 ChatColor.GRAY + "Almak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
         itemHandler.createItem(inv29, "potion", 1, 27, ChatColor.GOLD + "Geri Dönüş İksiri", "",
-                ChatColor.GRAY + " Alış Fiyatı: &6220 Dinar", "",
+                ChatColor.GRAY + " Alış Fiyatı: &6420 Dinar", "",
                 ChatColor.GRAY + "Almak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
         toReturn.setContents(inv29.getContents());
         return toReturn;
@@ -562,6 +579,102 @@ public class GuiHandler {
         return toReturn;
     }
 
+    public Inventory GUIENCH2(Player p, String enchname, String malzemename2, String malzemename1) {
+        int enchLevel = stats.getEnchLevel(p.getUniqueId());
+        Inventory toReturn = Bukkit.createInventory(null, inv_rows7, "Büyü Masası -> " + enchname);
+
+        itemHandler.createItem(inv30, "arrow", 1, 1, "&eGeri Dön.");
+        itemHandler.createItem(inv30, "white_stained_glass_pane", 1, 2, " ");
+        itemHandler.createItem(inv30, "white_stained_glass_pane", 1, 3, " ");
+        itemHandler.createItem(inv30, "white_stained_glass_pane", 1, 4, " ");
+        itemHandler.createItem(inv30, "enchanting_table", 1, 5, ChatColor.WHITE + "Büyü Masası",
+                ChatColor.GRAY + "Burada elindeki ekipmanları büyüleyebilirsin.",
+                ChatColor.GRAY + "Ekipmanları büyülemek büyülenen",
+                ChatColor.GRAY + "ekipmanın kullanılırlığını arttırır.", "",
+                ChatColor.GOLD + "Büyücülükte Ustalığın: " + ChatColor.GREEN + enchLevel);
+        itemHandler.createItem(inv30, "white_stained_glass_pane", 1, 6, " ");
+        itemHandler.createItem(inv30, "white_stained_glass_pane", 1, 7, " ");
+        itemHandler.createItem(inv30, "white_stained_glass_pane", 1, 8, " ");
+        itemHandler.createItem(inv30, "white_stained_glass_pane", 1, 9, " ");
+
+        itemHandler.createItem(inv30, "black_stained_glass_pane", 1, 10, " ");
+        itemHandler.createItem(inv30, "black_stained_glass_pane", 1, 11, " ");
+        itemHandler.createItem(inv30, "black_stained_glass_pane", 1, 12, " ");
+        itemHandler.createItem(inv30, "black_stained_glass_pane", 1, 13, " ");
+        itemHandler.createItem(inv30, "black_stained_glass_pane", 1, 14, " ");
+        itemHandler.createItem(inv30, "black_stained_glass_pane", 1, 15, " ");
+        itemHandler.createItem(inv30, "black_stained_glass_pane", 1, 16, " ");
+        itemHandler.createItem(inv30, "black_stained_glass_pane", 1, 17, " ");
+        itemHandler.createItem(inv30, "black_stained_glass_pane", 1, 18, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 19, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 20, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 21, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 22, " ");
+        inv30.setItem(22, p.getOpenInventory().getTopInventory().getItem(22));
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 24, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 25, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 26, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 27, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 28, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 29, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 30, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 31, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 32, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 33, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 34, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 35, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 36, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 37, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 38, " ");
+        itemHandler.createItem(inv30, "enchanted_book", 1, 39, ChatColor.DARK_AQUA + enchname + " 1",
+                "", ChatColor.GRAY + " Gerekli Malzemeler:",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 15 " + malzemename1,
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 15 " + malzemename2,
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 20 Seviye", "", ChatColor.GRAY + "Büyüyü ekipmana işlemek için ",
+                ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem(inv30, "enchanted_book", 1, 40, ChatColor.DARK_AQUA + enchname + " 2",
+                "", ChatColor.GRAY + " Gerekli Malzemeler:",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 30 " + malzemename1,
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 30 " + malzemename2,
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 30 Seviye", "", ChatColor.GRAY + "Büyüyü ekipmana işlemek için ",
+                ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem(inv30, "enchanted_book", 1, 41, ChatColor.DARK_AQUA + enchname + " 3",
+                "", ChatColor.GRAY + " Gerekli Malzemeler:",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 45 " + malzemename1,
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 45 " + malzemename2,
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 40 Seviye", "", ChatColor.GRAY + "Büyüyü ekipmana işlemek için ",
+                ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem(inv30, "enchanted_book", 1, 42,
+                ChatColor.DARK_AQUA + enchname + " 4",
+                "", ChatColor.GRAY + " Gerekli Malzemeler:",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 60 " + malzemename1,
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 60 " + malzemename2,
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 50 Seviye", "", ChatColor.GRAY + "Büyüyü ekipmana işlemek için ",
+                ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem(inv30, "enchanted_book", 1, 43,
+                ChatColor.DARK_AQUA + enchname + " 5",
+                "", ChatColor.GRAY + " Gerekli Malzemeler:",
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 75 " + malzemename1,
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 75 " + malzemename2,
+                ChatColor.GRAY + " -" + ChatColor.WHITE + " 60 Seviye", "", ChatColor.GRAY + "Büyüyü ekipmana işlemek için ",
+                ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 44, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 45, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 46, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 47, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 48, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 49, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 50, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 51, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 52, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 53, " ");
+        itemHandler.createItem(inv30, "gray_stained_glass_pane", 1, 54, " ");
+
+        toReturn.setContents(inv30.getContents());
+        return toReturn;
+    }
+
     public Inventory GUIENCH(Player p) {
         int enchLevel = stats.getEnchLevel(p.getUniqueId());
         Inventory toReturn = Bukkit.createInventory(null, inv_rows7, inventory_name7);
@@ -717,13 +830,13 @@ public class GuiHandler {
             int harcanannp = stats.getharcananNP(p.getUniqueId()) - 3;
             itemHandler.createItem(inv14, "barrier", 1, 23, Painter.paint("&4Niteliklerini Sıfırla!"),
                     Painter.paint("&7Niteliklerini sıfırlamak harcadığın puanları sana geri"),
-                    Painter.paint("&7kazandırır. Fakat nitelik puanlarının birazı yok olur."), "",
+                    Painter.paint("&7kazandırır. Fakat 50 Seviyen yok olur."), "",
                     Painter.paint("&fKazanılacak Nitelik Puanları: &a" + harcanannp), "",
                     Painter.paint("&7Niteliklerini sıfırlamak için &e&lSağ Tıkla."));
         } else {
             itemHandler.createItem(inv14, "barrier", 1, 23, Painter.paint("&4Niteliklerini Sıfırla!"),
                     Painter.paint("&7Niteliklerini sıfırlamak harcadığın puanları sana geri"),
-                    Painter.paint("&7kazandırır. Fakat nitelik puanlarının birazı yok olur."), "",
+                    Painter.paint("&7kazandırır. Fakat 50 Seviyen yok olur."), "",
                     Painter.paint("&fKazanılacak Nitelik Puanları: &a" + 0), "",
                     Painter.paint("&7Niteliklerini sıfırlamak için &e&lSağ Tıkla."));
         }
@@ -1503,20 +1616,20 @@ public class GuiHandler {
         itemHandler.createItem(inv19, "black_stained_glass_pane", 1, 16, " ");
         itemHandler.createItem(inv19, "black_stained_glass_pane", 1, 17, " ");
         itemHandler.createItem(inv19, "black_stained_glass_pane", 1, 18, " ");
-        itemHandler.createItem(inv19, "leather_helmet", 1, 19, ChatColor.YELLOW + Maden + " Derisinden Kapüşon",
-                ChatColor.GREEN + "Ustalık 1", "", ChatColor.GRAY + " Gerekli Malzemeler:",
+        itemHandler.createItem2(inv19, "leather_helmet", 1, 19, ChatColor.YELLOW + Maden + " Derisinden Kapüşon",
+                zirhmodel, ChatColor.GREEN + "Ustalık 1", "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 3 İp",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 5 " + Maden + " Postu",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 5 Seviye", "", ChatColor.GRAY + "İşlemeye başlamak için ",
                 ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv19, "leather_chestplate", 1, 20, ChatColor.YELLOW + Maden + " Derisinden Göğüslük",
-                ChatColor.GREEN + "Ustalık 1", "", ChatColor.GRAY + " Gerekli Malzemeler:",
+        itemHandler.createItem2(inv19, "leather_chestplate", 1, 20, ChatColor.YELLOW + Maden + " Derisinden Göğüslük",
+                zirhmodel, ChatColor.GREEN + "Ustalık 1", "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 6 İp",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 8 " + Maden + " Postu",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 5 Seviye", "", ChatColor.GRAY + "İşlemeye başlamak için ",
                 ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv19, "leather_leggings", 1, 21, ChatColor.YELLOW + Maden + " Derisinden Pantolon",
-                ChatColor.GREEN + "Ustalık 1", "", ChatColor.GRAY + " Gerekli Malzemeler:",
+        itemHandler.createItem2(inv19, "leather_leggings", 1, 21, ChatColor.YELLOW + Maden + " Derisinden Pantolon",
+                zirhmodel, ChatColor.GREEN + "Ustalık 1", "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 5 İp",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 7 " + Maden + " Postu",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 5 Seviye", "", ChatColor.GRAY + "İşlemeye başlamak için ",
@@ -2258,6 +2371,136 @@ public class GuiHandler {
         return toReturn;
     }
 
+    public Inventory hurda(Player p) {
+        Inventory toReturn = Bukkit.createInventory(null, inv_rows, inventory_name8);
+
+        itemHandler.createItem(inv31, "arrow", 1, 1, "&eGeri Dön.");
+        itemHandler.createItem(inv31, "white_stained_glass_pane", 1, 2, " ");
+        itemHandler.createItem(inv31, "white_stained_glass_pane", 1, 3, " ");
+        itemHandler.createItem(inv31, "white_stained_glass_pane", 1, 4, " ");
+        itemHandler.createItem(inv31, "stonecutter", 1, 5, ChatColor.WHITE + "Hurdaya Çevir",
+                ChatColor.GRAY + "Elindeki ekipmanı burada hurdaya çevirebilirsin.",
+                ChatColor.GRAY + "Ekipmanın ana malzemelerinin bir kısmı sana geri döner.");
+        itemHandler.createItem(inv31, "white_stained_glass_pane", 1, 6, " ");
+        itemHandler.createItem(inv31, "white_stained_glass_pane", 1, 7, " ");
+        itemHandler.createItem(inv31, "white_stained_glass_pane", 1, 8, " ");
+        itemHandler.createItem(inv31, "white_stained_glass_pane", 1, 9, " ");
+        itemHandler.createItem(inv31, "black_stained_glass_pane", 1, 10, " ");
+        itemHandler.createItem(inv31, "black_stained_glass_pane", 1, 11, " ");
+        itemHandler.createItem(inv31, "black_stained_glass_pane", 1, 12, " ");
+        itemHandler.createItem(inv31, "black_stained_glass_pane", 1, 13, " ");
+        itemHandler.createItem(inv31, "black_stained_glass_pane", 1, 14, " ");
+        itemHandler.createItem(inv31, "black_stained_glass_pane", 1, 15, " ");
+        itemHandler.createItem(inv31, "black_stained_glass_pane", 1, 16, " ");
+        itemHandler.createItem(inv31, "black_stained_glass_pane", 1, 17, " ");
+        itemHandler.createItem(inv31, "black_stained_glass_pane", 1, 18, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 19, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 20, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 21, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 22, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 23, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 24, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 25, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 26, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 27, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 28, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 29, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 30, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 31, " ");
+
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 33, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 34, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 35, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 36, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 37, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 38, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 39, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 40, " ");
+        itemHandler.createItem(inv31, "stonecutter", 1, 41, "");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 42, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 43, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 44, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 45, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 46, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 47, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 48, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 49, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 50, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 51, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 52, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 53, " ");
+        itemHandler.createItem(inv31, "gray_stained_glass_pane", 1, 54, " ");
+
+
+        toReturn.setContents(inv31.getContents());
+        return toReturn;
+    }
+
+    public Inventory tamir(Player p) {
+        Inventory toReturn = Bukkit.createInventory(null, inv_rows, inventory_name28);
+
+        itemHandler.createItem(inv33, "arrow", 1, 1, "&eGeri Dön.");
+        itemHandler.createItem(inv33, "white_stained_glass_pane", 1, 2, " ");
+        itemHandler.createItem(inv33, "white_stained_glass_pane", 1, 3, " ");
+        itemHandler.createItem(inv33, "white_stained_glass_pane", 1, 4, " ");
+        itemHandler.createItem(inv33, "anvil", 1, 5, ChatColor.WHITE + "Tamir Et",
+                ChatColor.GRAY + "Elindeki ekipmanı burada tamir edebilirsin.",
+                ChatColor.GRAY + "Ama tamir etmek için biraz da olsa hurdan olması gerek!");
+        itemHandler.createItem(inv33, "white_stained_glass_pane", 1, 6, " ");
+        itemHandler.createItem(inv33, "white_stained_glass_pane", 1, 7, " ");
+        itemHandler.createItem(inv33, "white_stained_glass_pane", 1, 8, " ");
+        itemHandler.createItem(inv33, "white_stained_glass_pane", 1, 9, " ");
+        itemHandler.createItem(inv33, "black_stained_glass_pane", 1, 10, " ");
+        itemHandler.createItem(inv33, "black_stained_glass_pane", 1, 11, " ");
+        itemHandler.createItem(inv33, "black_stained_glass_pane", 1, 12, " ");
+        itemHandler.createItem(inv33, "black_stained_glass_pane", 1, 13, " ");
+        itemHandler.createItem(inv33, "black_stained_glass_pane", 1, 14, " ");
+        itemHandler.createItem(inv33, "black_stained_glass_pane", 1, 15, " ");
+        itemHandler.createItem(inv33, "black_stained_glass_pane", 1, 16, " ");
+        itemHandler.createItem(inv33, "black_stained_glass_pane", 1, 17, " ");
+        itemHandler.createItem(inv33, "black_stained_glass_pane", 1, 18, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 19, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 20, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 21, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 22, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 23, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 24, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 25, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 26, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 27, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 28, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 29, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 30, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 31, " ");
+
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 33, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 34, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 35, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 36, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 37, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 38, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 39, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 40, " ");
+        itemHandler.createItem(inv33, "anvil", 1, 41, "");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 42, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 43, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 44, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 45, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 46, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 47, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 48, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 49, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 50, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 51, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 52, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 53, " ");
+        itemHandler.createItem(inv33, "gray_stained_glass_pane", 1, 54, " ");
+
+
+        toReturn.setContents(inv33.getContents());
+        return toReturn;
+    }
+
     public Inventory elsanatproduct(Player p) {
         Inventory toReturn = Bukkit.createInventory(null, inv_rows11, "El Sanatları Masası -> Üretimler");
 
@@ -2371,6 +2614,51 @@ public class GuiHandler {
         return toReturn;
     }
 
+    public Inventory seyehat(Player p) {
+        Inventory toReturn = Bukkit.createInventory(null, inv_rows6, inventory_name27);
+
+        itemHandler.createItem(inv32, "red_stained_glass_pane", 1, 1, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 2, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 3, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 4, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 5, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 6, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 7, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 8, " ");
+        itemHandler.createItem(inv32, "red_stained_glass_pane", 1, 9, " ");
+        itemHandler.createItem(inv32, "red_stained_glass_pane", 1, 10, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 11, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 13, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 15, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 14, " ");
+        itemHandler.createItem(inv32, "smithing_table", 1, 12, ChatColor.WHITE + "Ekipman İşle",
+                ChatColor.GRAY + "Burada elindeki malzemelerle neler yapabileceğine",
+                ChatColor.GRAY + "bakıp yeni ekipmanlar işleyebilirsin.", Painter.paint("&7Açmak için &e&lSağ Tıkla!"));
+        itemHandler.createItem(inv32, "anvil", 1, 14, ChatColor.WHITE + "Tamir Et",
+                ChatColor.GRAY + "Elindeki ekipmanı burada tamir edebilirsin.",
+                ChatColor.GRAY + "Ama tamir etmek için biraz da olsa hurdan olması gerek!",
+                Painter.paint("&7Açmak için &e&lSağ Tıkla!"));
+        itemHandler.createItem(inv32, "stonecutter", 1, 16, ChatColor.WHITE + "Hurdaya Çevir",
+                ChatColor.GRAY + "Elindeki ekipmanı burada hurdaya çevirebilirsin.",
+                ChatColor.GRAY + "Ekipmanın ana malzemelerinin bir kısmı sana geri döner.",
+                Painter.paint("&7Açmak için &e&lSağ Tıkla!"));
+
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 17, " ");
+        itemHandler.createItem(inv32, "red_stained_glass_pane", 1, 18, " ");
+        itemHandler.createItem(inv32, "red_stained_glass_pane", 1, 19, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 20, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 21, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 22, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 23, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 24, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 25, " ");
+        itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 26, " ");
+        itemHandler.createItem(inv32, "red_stained_glass_pane", 1, 27, " ");
+        toReturn.setContents(inv32.getContents());
+        return toReturn;
+    }
+
+
     public Inventory demircimasasasas(Player p) {
         Inventory toReturn = Bukkit.createInventory(null, inv_rows9, inventory_name9);
 
@@ -2391,6 +2679,10 @@ public class GuiHandler {
         itemHandler.createItem(inv9, "smithing_table", 1, 12, ChatColor.WHITE + "Ekipman İşle",
                 ChatColor.GRAY + "Burada elindeki malzemelerle neler yapabileceğine",
                 ChatColor.GRAY + "bakıp yeni ekipmanlar işleyebilirsin.", Painter.paint("&7Açmak için &e&lSağ Tıkla!"));
+        itemHandler.createItem(inv9, "anvil", 1, 14, ChatColor.WHITE + "Tamir Et",
+                ChatColor.GRAY + "Elindeki ekipmanı burada tamir edebilirsin.",
+                ChatColor.GRAY + "Ama tamir etmek için biraz da olsa hurdan olması gerek!",
+                Painter.paint("&7Açmak için &e&lSağ Tıkla!"));
         itemHandler.createItem(inv9, "stonecutter", 1, 16, ChatColor.WHITE + "Hurdaya Çevir",
                 ChatColor.GRAY + "Elindeki ekipmanı burada hurdaya çevirebilirsin.",
                 ChatColor.GRAY + "Ekipmanın ana malzemelerinin bir kısmı sana geri döner.",
@@ -2510,10 +2802,7 @@ public class GuiHandler {
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.WHITE + "Deri Dik")) {
             p.openInventory(leatherwork(p));
         }
-        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
-                && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.WHITE + "Hurdaya Çevir")) {
-            p.openInventory(GUI2(p));
-        }
+
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(Painter.paint("&6Depo"))) {
             Inventory baba = JoinListener.getMenu().get(p.getUniqueId());
@@ -2623,8 +2912,8 @@ public class GuiHandler {
             itemHandler.cooking2(p, itemHandler.rawbeef, itemHandler.cookedbeef, 2, 1, 1, itemHandler.coal, 7, 12, "Biftek");
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
-                && clicked.getItemMeta().getDisplayName().contains(ChatColor.YELLOW + "Antrikot")) {
-            itemHandler.cooking3(p, itemHandler.rawbeef, itemHandler.antrikot, 2, 1, 1, itemHandler.coal,itemHandler.salt,2, 10, 22, "Antrikot");
+                && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "Pişmiş Antrikot")) {
+            itemHandler.cooking3(p, itemHandler.rawbeef, itemHandler.antrikot, 2, 1, 1, itemHandler.coal, itemHandler.salt, 2, 10, 22, "Antrikot");
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "Pişmiş Gümüş Balığı")) {
@@ -2688,7 +2977,7 @@ public class GuiHandler {
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "İnek Derisinden Ekipmanlar")) {
-            p.openInventory(leatherSmith(p, "İnek", "Deri Dik -> İnek Derisinden Ekipmanlar", 110));
+            p.openInventory(leatherSmith(p, "İnek", "Deri Dik -> İnek Derisinden Ekipmanlar", 104));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "Bizon Derisinden Ekipmanlar")) {
@@ -2701,7 +2990,7 @@ public class GuiHandler {
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GRAY + "Kurt Postundan Ekipmanlar")) {
-            p.openInventory(leatherSmith(p, "Kurt", "Deri Dik -> Kurt Derisinden Ekipmanlar", 106));
+            p.openInventory(leatherSmith(p, "Kurt", "Deri Dik -> Kurt Derisinden Ekipmanlar", 107));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "Tavşan Derisinden Ekipmanlar")) {
@@ -2721,7 +3010,7 @@ public class GuiHandler {
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.WHITE + "Zefir Postundan Ekipmanlar")) {
-            p.openInventory(leatherSmith(p, "Zefir", "Deri Dik -> Zefir Derisinden Ekipmanlar", 107));
+            p.openInventory(leatherSmith(p, "Zefir", "Deri Dik -> Zefir Derisinden Ekipmanlar", 109));
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.RED + "Niteliklerin")) {
@@ -2818,11 +3107,21 @@ public class GuiHandler {
             if (p.getOpenInventory().getTitle().equals(inventory_name6)) {
                 p.openInventory(GUI2(p));
             }
+            if (p.getOpenInventory().getTitle().contains("Demirci Masası ->")) {
+                p.openInventory(demircimasasasas(p));
+            }
             if (p.getOpenInventory().getTitle().equals(inventory_name11)) {
                 p.openInventory(cookGui(p));
             }
             if (p.getOpenInventory().getTitle().contains("Fırın ->")) {
                 p.openInventory(realFurnaceGui(p));
+            }
+            if (p.getOpenInventory().getTitle().contains("El Sanatları Masası ->")) {
+                p.openInventory(Fletching(p));
+            }
+            if (p.getOpenInventory().getTitle().contains("Büyü Masası ->")) {
+                p.openInventory(GUIENCH(p));
+
             }
             if (p.getOpenInventory().getTitle().contains("Maden Fırını ->")) {
                 p.openInventory(Furnace(p));
@@ -3347,7 +3646,7 @@ public class GuiHandler {
             coal.setAmount(1);
             if (p.getInventory().containsAtLeast(coal, 1)) {
                 p.getInventory().removeItem(coal);
-                ekonomi.depositPlayer(p.getName(),0.5);
+                ekonomi.depositPlayer(p.getName(), 0.5);
             } else {
                 p.closeInventory();
                 p.sendMessage(Painter.paint("&cMalzemen kalmadı!"));
@@ -3365,7 +3664,7 @@ public class GuiHandler {
             bone.setAmount(1);
             if (p.getInventory().containsAtLeast(bone, 1)) {
                 p.getInventory().removeItem(bone);
-                ekonomi.depositPlayer(p.getName(),1);
+                ekonomi.depositPlayer(p.getName(), 1);
             } else {
                 p.closeInventory();
                 p.sendMessage(Painter.paint("&cMalzemen kalmadı!"));
@@ -3383,7 +3682,7 @@ public class GuiHandler {
             blackbone.setAmount(1);
             if (p.getInventory().containsAtLeast(blackbone, 1)) {
                 p.getInventory().removeItem(blackbone);
-                ekonomi.depositPlayer(p.getName(),1.4);
+                ekonomi.depositPlayer(p.getName(), 1.4);
             } else {
                 p.closeInventory();
                 p.sendMessage(Painter.paint("&cMalzemen kalmadı!"));
@@ -3401,7 +3700,7 @@ public class GuiHandler {
             oakwood.setAmount(1);
             if (p.getInventory().containsAtLeast(oakwood, 1)) {
                 p.getInventory().removeItem(oakwood);
-                ekonomi.depositPlayer(p.getName(),0.4);
+                ekonomi.depositPlayer(p.getName(), 0.4);
             } else {
                 p.closeInventory();
                 p.sendMessage(Painter.paint("&cMalzemen kalmadı!"));
@@ -3419,7 +3718,7 @@ public class GuiHandler {
             apple.setAmount(1);
             if (p.getInventory().containsAtLeast(apple, 1)) {
                 p.getInventory().removeItem(apple);
-                ekonomi.depositPlayer(p.getName(),1);
+                ekonomi.depositPlayer(p.getName(), 1);
             } else {
                 p.closeInventory();
                 p.sendMessage(Painter.paint("&cMalzemen kalmadı!"));
@@ -3432,11 +3731,113 @@ public class GuiHandler {
 
                 getDisplayName().
 
+                equalsIgnoreCase(ChatColor.GOLD + "Tamir Et")) {
+            ItemStack item = inv.getItem(31);
+            String input = String.join(" ", item.getItemMeta().getDisplayName());
+            Matcher matcher = DIGITS_PATTERN.matcher(input);
+            NamespacedKey durabi = new NamespacedKey(plugin, "durability");
+            if (matcher.find()) {
+                String firstDigits = matcher.group();
+                ItemStack hurda = itemHandler.hurda;
+                int amount = Integer.valueOf(firstDigits) * 3;
+                hurda.setAmount(amount);
+                int level = p.getLevel();
+                if (p.getInventory().containsAtLeast(hurda, amount) && level >= Integer.valueOf(firstDigits) * 4) {
+                    Damageable meta = (Damageable) item.getItemMeta();
+                    meta.setDamage(0);
+                    item.setItemMeta(meta);
+
+                    for (int i = 0; i < meta.getLore().size(); i++) {
+                        String lValue = meta.getLore().get(i);
+                        if (lValue.contains("⦾")) {
+                            String input2 = String.join(" ", lValue);
+                            Matcher matcher2 = DIGITS_PATTERN.matcher(input2);
+                            if (matcher2.find()) {
+                                String firstDigits2 = matcher2.group();
+                                ItemMeta meta2 = item.getItemMeta();
+                                meta2.getPersistentDataContainer().set(durabi, PersistentDataType.INTEGER, Integer.valueOf(firstDigits2));
+                                item.setItemMeta(meta2);
+                            }
+                            break;
+                        }
+                    }
+
+                    if (p.getInventory().firstEmpty() == -1) {
+                        p.getWorld().dropItemNaturally(p.getLocation(), item);
+                    } else {
+                        p.getInventory().addItem(item);
+                    }
+                    p.playSound(p, Sound.BLOCK_ANVIL_USE, 2f, 0.5f);
+                    p.sendMessage(Painter.paint("&6Ekipmanı Tamir Etme Başarılı!"));
+                    p.closeInventory();
+                }
+            }
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Hurdaya Çevir")) {
+            ItemStack item = inv.getItem(31);
+            String input = String.join(" ", item.getItemMeta().getDisplayName());
+            Matcher matcher = DIGITS_PATTERN.matcher(input);
+            if (matcher.find()) {
+                String firstDigits = matcher.group();
+                ItemStack hurda = itemHandler.hurda;
+                int amount = Integer.valueOf(firstDigits) * 2;
+                hurda.setAmount(amount);
+
+                if (p.getInventory().firstEmpty() == -1) {
+                    p.getWorld().dropItemNaturally(p.getLocation(), hurda);
+                } else {
+                    p.getInventory().addItem(hurda);
+                }
+                inv.setItem(31, null);
+                p.playSound(p, Sound.UI_STONECUTTER_TAKE_RESULT, 2f, 0.7f);
+                p.sendMessage(Painter.paint("&6Hurdaya Çevirme Başarılı! Ekipmandan Çıkan Hurda Sayısı: &f" + amount));
+                p.closeInventory();
+
+            }
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.WHITE + "Hurdaya Çevir")) {
+            p.openInventory(hurda(p));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.WHITE + "Tamir Et")) {
+            p.openInventory(tamir(p));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
                 equalsIgnoreCase(ChatColor.GOLD + "Yün Kürken")) {
             ItemStack shears = itemHandler.yunkurken;
             shears.setAmount(1);
-            if (ekonomi.has(p.getName(),100)) {
-                ekonomi.withdrawPlayer(p.getName(),100);
+            if (ekonomi.has(p.getName(), 100)) {
+                ekonomi.withdrawPlayer(p.getName(), 100);
                 if (p.getInventory().firstEmpty() == -1) {
                     p.closeInventory();
                     p.sendMessage(Painter.paint("&cEnvanterin Dolu!"));
@@ -3459,8 +3860,8 @@ public class GuiHandler {
                 equalsIgnoreCase(ChatColor.GOLD + "Dövüşcü Tuniği")) {
             ItemStack dovuscutunigi = itemHandler.dovuscutunigi;
             dovuscutunigi.setAmount(1);
-            if (ekonomi.has(p.getName(),50)) {
-                ekonomi.withdrawPlayer(p.getName(),50);
+            if (ekonomi.has(p.getName(), 50)) {
+                ekonomi.withdrawPlayer(p.getName(), 50);
                 if (p.getInventory().firstEmpty() == -1) {
                     p.closeInventory();
                     p.sendMessage(Painter.paint("&cEnvanterin Dolu!"));
@@ -3483,8 +3884,8 @@ public class GuiHandler {
                 contains(ChatColor.GOLD + "Geri Dönüş İksiri")) {
             ItemStack recallpotion = itemHandler.recallpotion;
             recallpotion.setAmount(1);
-            if (ekonomi.has(p.getName(),220)) {
-                ekonomi.withdrawPlayer(p.getName(),220);
+            if (ekonomi.has(p.getName(), 420)) {
+                ekonomi.withdrawPlayer(p.getName(), 420);
                 if (p.getInventory().firstEmpty() == -1) {
                     p.closeInventory();
                     p.sendMessage(Painter.paint("&cEnvanterin Dolu!"));
@@ -3507,8 +3908,8 @@ public class GuiHandler {
                 equalsIgnoreCase(ChatColor.GOLD + "Az Kullanılmış Mızrak")) {
             ItemStack azkullanilmismizrak = itemHandler.azkullanilmismizrak;
             azkullanilmismizrak.setAmount(1);
-            if (ekonomi.has(p.getName(),120)) {
-                ekonomi.withdrawPlayer(p.getName(),120);
+            if (ekonomi.has(p.getName(), 120)) {
+                ekonomi.withdrawPlayer(p.getName(), 120);
                 if (p.getInventory().firstEmpty() == -1) {
                     p.closeInventory();
                     p.sendMessage(Painter.paint("&cEnvanterin Dolu!"));
@@ -3643,6 +4044,7 @@ public class GuiHandler {
                         Title.title(MiniMessage.miniMessage().deserialize("<red>Nitelikler</red>"),
                                 MiniMessage.miniMessage().deserialize("<gray>Sıfırlandı!</gray>")));
                 stats.setNP(p.getUniqueId(), stats.getharcananNP(p.getUniqueId()));
+                p.setLevel(p.getLevel() - 50);
                 stats.setharcananNP(p.getUniqueId(), -stats.getharcananNP(p.getUniqueId()));
                 stats.setKritikHasari(p.getUniqueId(), -stats.getKritikHasari(p.getUniqueId()) + 12 + statlist.get(6));
                 stats.setKritikSansi(p.getUniqueId(), -stats.getKritikSansi(p.getUniqueId()) + statlist.get(7));
@@ -3656,19 +4058,26 @@ public class GuiHandler {
                 zerola.remove(p.getUniqueId());
             } else {
                 if (stats.getharcananNP(p.getUniqueId()) > 3) {
-                    int harcanannp = stats.getharcananNP(p.getUniqueId()) - 3;
-                    itemHandler.createItem(inv, "barrier", 1, 23, Painter.paint("&4Niteliklerini Sıfırla!"),
-                            Painter.paint("&7Niteliklerini sıfırlamak harcadığın puanları sana geri"),
-                            Painter.paint("&7kazandırır. Fakat nitelik puanlarının birazı yok olur."), "",
-                            Painter.paint("&fKazanılacak Nitelik Puanları: &a" + harcanannp), "",
-                            Painter.paint("&C&lEmin misin? Eminsen bir daha tıkla."));
-                    zerola.put(p.getUniqueId(), p.getName());
-
+                    if (p.getLevel() >= 50) {
+                        int harcanannp = stats.getharcananNP(p.getUniqueId());
+                        itemHandler.createItem(inv, "barrier", 1, 23, Painter.paint("&4Niteliklerini Sıfırla!"),
+                                Painter.paint("&7Niteliklerini sıfırlamak harcadığın puanları sana geri"),
+                                Painter.paint("&7kazandırır. Fakat 50 Seviyen yok olur."), "",
+                                Painter.paint("&fKazanılacak Nitelik Puanları: &a" + harcanannp), "",
+                                Painter.paint("&C&lEmin misin? Eminsen bir daha tıkla."));
+                        zerola.put(p.getUniqueId(), p.getName());
+                    } else {
+                        itemHandler.createItem(inv, "barrier", 1, 23, Painter.paint("&4Niteliklerini Sıfırla!"),
+                                Painter.paint("&7Niteliklerini sıfırlamak harcadığın puanları sana geri"),
+                                Painter.paint("&7kazandırır. Fakat 50 Seviyen yok olur."), "",
+                                Painter.paint("&fKazanılacak Nitelik Puanları: &a" + 0), "",
+                                Painter.paint("&CYeterli Seviyen Yok!"));
+                    }
                 } else {
-                    int harcanannp = stats.getharcananNP(p.getUniqueId()) - 3;
+                    int harcanannp = stats.getharcananNP(p.getUniqueId());
                     itemHandler.createItem(inv, "barrier", 1, 23, Painter.paint("&4Niteliklerini Sıfırla!"),
                             Painter.paint("&7Niteliklerini sıfırlamak harcadığın puanları sana geri"),
-                            Painter.paint("&7kazandırır. Fakat nitelik puanlarının birazı yok olur."), "",
+                            Painter.paint("&7kazandırır. Fakat 50 Seviyen yok olur."), "",
                             Painter.paint("&fKazanılacak Nitelik Puanları: &a" + 0), "",
                             Painter.paint("&CYeterince Nitelik Puanı Kullanmamışsın!"));
                 }
@@ -3947,6 +4356,18 @@ public class GuiHandler {
 
                 getDisplayName().
 
+                equalsIgnoreCase(ChatColor.YELLOW + "Yaşlı Meşe Yay")) {
+            itemHandler.createWeaponWork(p, itemHandler.oldoakstick, itemHandler.string, 4, 3,
+                    3, new ItemStack(Material.BOW), "<white><i:false>Yaşlı Meşe Yay", 1, 8, 9, 6, 1, false, 4, 0, 3, "Düşük", 0, 6, 8,
+                    17, 2, "Yay", 250, 2);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Tırpan")) {
             itemHandler.createWeapon(p, itemHandler.copperingot, itemHandler.oakstick, 3, 3,
                     new ItemStack(Material.WOODEN_HOE), "<gold><i:false>Bakır Tırpan", 2, 4, 7, 5, 0, false, 2, 10, 4, "Orta", 5, 6,
@@ -3959,10 +4380,792 @@ public class GuiHandler {
 
                 getDisplayName().
 
+                contains(ChatColor.DARK_AQUA + "Savurma")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.coal;
+            ItemStack item2 = itemHandler.pigleather;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "knockback", "&4Büyü ▏ &7Savurma: &f",
+                    Enchantment.KNOCKBACK, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Tecrübe Desteği")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.coal;
+            ItemStack item2 = itemHandler.pigleather;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "xp", "&4Büyü ▏ &7Tecrübe Desteği: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Hünerli Avcı")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.bone;
+            ItemStack item2 = itemHandler.wolfteeth;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "hunerliavci", "&4Büyü ▏ &7Hünerli Avcı: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Alevden Çehre")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.ash;
+            ItemStack item2 = itemHandler.magmaball;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "fireaspect", "&4Büyü ▏ &7Alevden Çehre: &f",
+                    Enchantment.FIRE_ASPECT, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Alevden Çehre")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.ash;
+            ItemStack item2 = itemHandler.magmaball;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "fireaspect", "&4Büyü ▏ &7Alevden Çehre: &f",
+                    Enchantment.FIRE_ASPECT, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Öfke")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.magmaball;
+            ItemStack item2 = itemHandler.blackbone;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "rage", "&4Büyü ▏ &7Öfke: &f"
+                    , item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "İnfaz")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.gianttoe;
+            ItemStack item2 = itemHandler.wolfteeth;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "giant2", "&4Büyü ▏ &7İnfaz: &f"
+                    , item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Eklembacaklılar'ın Kıyameti")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.spidereye;
+            ItemStack item2 = itemHandler.string;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "bane", "&4Büyü ▏ &7Eklembacaklılar'ın Kıyameti: &f", "smite", "sharpness",
+                    Enchantment.DAMAGE_ARTHROPODS, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Aşırı Yükleme")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.blackdust;
+            ItemStack item2 = itemHandler.magmaball;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "overload", "&4Büyü ▏ &7Aşırı Yükleme: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Keskin Görüş")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.glass;
+            ItemStack item2 = itemHandler.ironingot;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "keskingorus", "&4Büyü ▏ &7Keskin Görüş: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Alev Koruması")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.fireoz;
+            ItemStack item2 = itemHandler.gravel;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "slayer", "&4Büyü ▏ &7Dev Yarma: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Dev Yarma")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.gianteye;
+            ItemStack item2 = itemHandler.wolfteeth;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "slayer", "&4Büyü ▏ &7Dev Yarma: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Statik Yükleme")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.lightningesans;
+            ItemStack item2 = itemHandler.silverfish;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "statik", "&4Büyü ▏ &7Statik Yükleme: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Hafif Düşüş")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.feather;
+            ItemStack item2 = itemHandler.wool;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "featherfall", "&4Büyü ▏ &7Hafif Düşüş: &f",
+                    Enchantment.PROTECTION_FALL, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Dikenli Taban")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.cactus;
+            ItemStack item2 = itemHandler.bronzeingot;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "dikenlitaban", "&4Büyü ▏ &7Dikenli Taban: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Sihirli Pabuçlar")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.feather;
+            ItemStack item2 = itemHandler.salt;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "fast", "&4Büyü ▏ &7Sihirli Pabuçlar: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Mutlak Sıfır")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.iceesans;
+            ItemStack item2 = itemHandler.rotten;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "ice", "&4Büyü ▏ &7Mutlak Sıfır: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "İntikam")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.blackbone;
+            ItemStack item2 = itemHandler.rotten;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "revenge", "&4Büyü ▏ &7İntikam: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Karşı Saldırı")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.shieldfrag;
+            ItemStack item2 = itemHandler.ironingot;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "shield", "&4Büyü ▏ &7Karşı Saldırı: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Ruh Koruması")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.spektralore;
+            ItemStack item2 = itemHandler.tear;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "soul", "&4Büyü ▏ &7Ruh Koruması: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Kutsanmış")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.spektralore;
+            ItemStack item2 = itemHandler.aralit;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "yenilen", "&4Büyü ▏ &7Kutsanmış: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Bağışıklık")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.glowstone;
+            ItemStack item2 = itemHandler.aralit;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "kutsal", "&4Büyü ▏ &7Bağışıklık: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Obsidyen Kaplama")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.magmaball;
+            ItemStack item2 = itemHandler.obsidianore;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "fireres", "&4Büyü ▏ &7Obsidyen Kaplama: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Sıvışma")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.wool;
+            ItemStack item2 = itemHandler.feather;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "dodgerate", "&4Büyü ▏ &7Sıvışma: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Barbar Gücü")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.gianttoe;
+            ItemStack item2 = itemHandler.pufferfish;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "barbarian", "&4Büyü ▏ &7Barbar Gücü: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Solungaç")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.rawsalmon;
+            ItemStack item2 = itemHandler.pufferfish;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "waterwork", "&4Büyü ▏ &7Solungaç: &f",
+                    Enchantment.OXYGEN, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Potansiyel")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.gunpowder;
+            ItemStack item2 = itemHandler.blackdust;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "potansiyel", "&4Büyü ▏ &7Potansiyel: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Dinçleştirme")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.glowstone;
+            ItemStack item2 = itemHandler.apple;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "rejuv", "&4Büyü ▏ &7Dinçleştirme: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Tam İsabet")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.blackbone;
+            ItemStack item2 = itemHandler.feather;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "isabetw", "&4Büyü ▏ &7Tam İsabet: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Güç")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.bone;
+            ItemStack item2 = itemHandler.arrow;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "power", "&4Büyü ▏ &7Güç: &f",
+                    Enchantment.ARROW_DAMAGE, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Aleve Ver")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.fireoz;
+            ItemStack item2 = itemHandler.magmaball;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "flame", "&4Büyü ▏ &7Aleve Ver: &f",
+                    Enchantment.ARROW_FIRE, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Servet")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.goldingot;
+            ItemStack item2 = itemHandler.silveringot;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "servet", "&4Büyü ▏ &7Servet: &f",
+                    Enchantment.LOOT_BONUS_BLOCKS, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Ustalık Desteği")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.birchwood;
+            ItemStack item2 = itemHandler.nikelingot;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "ustalık", "&4Büyü ▏ &7Ustalık Desteği: &f"
+                    , item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Verimlilik")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.coal;
+            ItemStack item2 = itemHandler.paper;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "efficiency", "&4Büyü ▏ &7Verimlilik: &f",
+                    Enchantment.DIG_SPEED, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Şölen")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.feather;
+            ItemStack item2 = itemHandler.wolfleather;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "solen", "&4Büyü ▏ &7Şölen: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Şişleme")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.rawsalmon;
+            ItemStack item2 = itemHandler.tridentfrag;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "impaling", "&4Büyü ▏ &7Şişleme: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Yıldırım Oku")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.wawebreakerfish;
+            ItemStack item2 = itemHandler.feather;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "loku", "&4Büyü ▏ &7Yıldırım Oku: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Aşırı Büyüme")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.gianttoe;
+            ItemStack item2 = itemHandler.pufferfish;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "growth", "&4Büyü ▏ &7Aşırı Büyüme: &f",
+                    item1, item2);
+
+
+        }
+
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Dikenler")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.cactus;
+            ItemStack item2 = itemHandler.kezicicek;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "thorns", "&4Büyü ▏ &7Dikenler: &f",
+                    Enchantment.THORNS, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Koruma")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.ironingot;
+            ItemStack item2 = itemHandler.cowleather;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "prot", "&4Büyü ▏ &7Koruma: &f",
+                    Enchantment.PROTECTION_ENVIRONMENTAL, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Patlama Koruması")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.wool;
+            ItemStack item2 = itemHandler.copperingot;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "exploprot", "&4Büyü ▏ &7Patlama Koruması: &f",
+                    Enchantment.PROTECTION_EXPLOSIONS, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Süpürücü Kenar")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.ilviyanpencesi;
+            ItemStack item2 = itemHandler.ironingot;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "sweeep", "&4Büyü ▏ &7Süpürücü Kenar: &f",
+                    Enchantment.SWEEPING_EDGE, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Keskinlik")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.gravel;
+            ItemStack item2 = itemHandler.ironore;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "sharpness", "&4Büyü ▏ &7Keskinlik: &f", "smite", "bane",
+                    Enchantment.DAMAGE_ALL, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Akuapunktur")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.ilviyanpencesi;
+            ItemStack item2 = itemHandler.wolfteeth;
+
+            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[2]), "akuapunktur", "&4Büyü ▏ &7Akuapunktur Ustası: &f",
+                    item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Darbe")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.blackbone;
+            ItemStack item2 = itemHandler.rotten;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "smite", "&4Büyü ▏ &7Darbe: &f", "sharpness", "bane",
+                    Enchantment.DAMAGE_UNDEAD, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                contains(ChatColor.DARK_AQUA + "Kırılmazlık")) {
+            String[] chance2 = clicked.getItemMeta().getDisplayName().split(" ");
+            ItemStack item1 = itemHandler.silverfish;
+            ItemStack item2 = itemHandler.nikelingot;
+
+            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "unbreaking", "&4Büyü ▏ &7Kırılmazlık: &f",
+                    Enchantment.DURABILITY, item1, item2);
+
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Balta")) {
-            itemHandler.createWeapon(p, itemHandler.copperingot, itemHandler.oakstick, 3, 2,
-                    new ItemStack(Material.GOLDEN_AXE), "<gold><i:false>Bakır Balta", 2, 7, 5, 3, 0, false, 1, 14, 3, "Düşük", 5, 6,
-                    10, 8, 10, "Balta", 200, 2);
+            itemHandler.createTool(p, itemHandler.bronzeingot, 3, itemHandler.oakstick, 2,
+                    new ItemStack(Material.GOLDEN_AXE), "<gold><i:false>Bakır Balta", 1, 5, false, 3, 4, 7, 8, 10, "Balta", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4043,7 +5246,7 @@ public class GuiHandler {
                 equalsIgnoreCase(ChatColor.YELLOW + "İnek Derisinden Kapüşon")) {
             itemHandler.createArmorWork(p, "Miğfer", itemHandler.cowleather, itemHandler.string, 5, 3,
                     new ItemStack(Material.LEATHER_HELMET), "<gold><i:false>İnek Derisinden Kapüşon", 2, 2, 1, 0, 0, 0, 1, 1, 0, 0, 8,
-                    8, 4, 6, 12, 5, 103, 100, 2);
+                    8, 4, 6, 12, 5, 104, 100, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4055,7 +5258,7 @@ public class GuiHandler {
                 equalsIgnoreCase(ChatColor.YELLOW + "İnek Derisinden Göğüslük")) {
             itemHandler.createArmorWork(p, "Göğüslük", itemHandler.cowleather, itemHandler.string, 8, 6,
                     new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false>İnek Derisinden Göğüslük", 2, 4, 3, 0, 0, 0, 2, 3, 0, 0, 12,
-                    8, 4, 7, 12, 5, 103, 120, 2);
+                    8, 4, 7, 12, 5, 104, 120, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4067,7 +5270,7 @@ public class GuiHandler {
                 equalsIgnoreCase(ChatColor.YELLOW + "İnek Derisinden Pantolon")) {
             itemHandler.createArmorWork(p, "Pantolon", itemHandler.cowleather, itemHandler.string, 7, 5,
                     new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false>İnek Derisinden Pantolon", 2, 4, 2, 0, 0, 0, 2, 3, 0, 0, 10,
-                    8, 4, 7, 12, 5, 103, 120, 2);
+                    8, 4, 7, 12, 5, 104, 120, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4079,7 +5282,7 @@ public class GuiHandler {
                 equalsIgnoreCase(ChatColor.YELLOW + "İnek Derisinden Çizmeler")) {
             itemHandler.createArmorWork(p, "Botlar", itemHandler.cowleather, itemHandler.string, 4, 3,
                     new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false>İnek Derisinden Çizmeler", 2, 3, 1, 0, 0, 0, 2, 2, 0, 0, 8,
-                    8, 4, 7, 12, 5, 103, 100, 2);
+                    8, 4, 7, 12, 5, 104, 100, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4214,6 +5417,68 @@ public class GuiHandler {
                     , 2, new ItemStack(Material.LEATHER), "<gold><i:false>Yaban Domuzu Derisinden Çanta", 1, 27, 10, 20, 10, "Çanta", 3);
 
         }
+
+
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Kurt Derisinden Kapüşon")) {
+            itemHandler.createArmorWork(p, "Miğfer", itemHandler.wolfleather, itemHandler.string, 5, 3,
+                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false>Yaban Domuzu Derisinden Kapüşon", 3, 2, 2, 0, 0, 1, 1, 5, 0, 0, 14,
+                    10, 4, 8, 25, 5, 103, 200, 6);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Kurt Derisinden Göğüslük")) {
+            itemHandler.createArmorWork(p, "Göğüslük", itemHandler.wolfleather, itemHandler.string, 8, 6,
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false>Kurt Derisinden Göğüslük", 3, 4, 5, 2, 0, 7, 5, 6, 0, 0, 16,
+                    12, 4, 11, 30, 5, 107, 420, 7);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Kurt Derisinden Pantolon")) {
+            itemHandler.createArmorWork(p, "Pantolon", itemHandler.wolfleather, itemHandler.string, 7, 5,
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false>Kurt Derisinden Pantolon", 3, 4, 5, 2, 0, 4, 5, 7, 0, 0, 15,
+                    13, 4, 11, 30, 5, 107, 420, 7);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Kurt Derisinden Çizmeler")) {
+            itemHandler.createArmorWork(p, "Botlar", itemHandler.wolfleather, itemHandler.string, 4, 3,
+                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false>Kurt Derisinden Çizmeler", 3, 4, 4, 0, 0, 9, 5, 7, 0, 0, 13,
+                    14, 4, 11, 30, 5, 107, 400, 7);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Yaban Domuzu Derisinden Çanta")) {
+            itemHandler.createBackpack(p, itemHandler.wolfleather, 10
+                    , 2, new ItemStack(Material.LEATHER), "<gray><i:false>Kurt Derisinden Çanta", 1, 36, 12, 25, 10, "Çanta", 5);
+
+        }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
                 hasDisplayName()
@@ -4273,6 +5538,585 @@ public class GuiHandler {
             itemHandler.createWeapon(p, itemHandler.bronzeingot, itemHandler.oakstick, 6, 3,
                     new ItemStack(Material.WOODEN_AXE), "<gold><i:false>Bronz Savaş Baltası", 2, 10, 4, 0, 0, false, 1, 20, 0, "Orta", 5,
                     6, 12, 12, 10, "Savaş Baltası", 400, 4);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Güç")) {
+            p.openInventory(GUIENCH2(p, "Güç", "Ok", "Kemik"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Tam İsabet")) {
+            p.openInventory(GUIENCH2(p, "Tam İsabet", "Solmuş Kemik", "Tüy"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Alev")) {
+            p.openInventory(GUIENCH2(p, "Alev", "Alev Özütü", "Magmarit"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Servet")) {
+            p.openInventory(GUIENCH2(p, "Servet", "Altın Külçesi", "Gümüş Külçesi"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Ustalık Desteği")) {
+            p.openInventory(GUIENCH2(p, "Ustalık Desteği", "Huş Odunu", "Nikel Külçesi"));
+
+        }
+
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Verimlilik")) {
+            p.openInventory(GUIENCH2(p, "Verimlilik", "Kömür", "Kağıt"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Şölen")) {
+            p.openInventory(GUIENCH2(p, "Şölen", "Tüy", "Kurt Postu"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Nişangah")) {
+            p.openInventory(GUIENCH2(p, "Nişangah", "Kemik", "Obsidyen Cevheri"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Şişleme")) {
+            p.openInventory(GUIENCH2(p, "Şişleme", "Somon", "Üç Başlı Mızrak Kalıntısı"));
+
+        }
+
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Yıldırım Oku")) {
+            p.openInventory(GUIENCH2(p, "Yıldırım Oku", "Dalgakıran Balığı", "Tüy"));
+
+        }
+
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Aşırı Yükleme")) {
+            p.openInventory(GUIENCH2(p, "Aşırı Yükleme", "Kara Toz", "Magmarit"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Keskin Görüş")) {
+            p.openInventory(GUIENCH2(p, "Keskin Görüş", "Cam", "Demir Külçesi"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Yumruk")) {
+            p.openInventory(GUIENCH2(p, "Yumruk", "Balçık Topu", "Meşe Odunu"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Alev Koruması")) {
+            p.openInventory(GUIENCH2(p, "Alev Koruması", "Alev Özütü", "Çakıl Taşı"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Barbar Gücü")) {
+            p.openInventory(GUIENCH2(p, "Barbar Gücü", "Solmüş Kemik", "Büyülü Kemik"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Dev Yarma")) {
+            p.openInventory(GUIENCH2(p, "Dev Yarma", "Dev Gözü", "Kurt Dişi"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Statik Yükleme")) {
+            p.openInventory(GUIENCH2(p, "Statik Yükleme", "Yıldırım Özütü", "Gümüş Balığı"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Sağlam Duruş")) {
+            p.openInventory(GUIENCH2(p, "Sağlam Duruş", "Balçık Topu", "Savaşçı Ruhu"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Hafif Düşüş")) {
+            p.openInventory(GUIENCH2(p, "Hafif Düşüş", "Tüy", "Yün"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Dikenli Taban")) {
+            p.openInventory(GUIENCH2(p, "Dikenli Taban", "Kaktüs", "Bronz Külçesi"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Sihirli Pabuçlar")) {
+            p.openInventory(GUIENCH2(p, "Sihirli Pabuçlar", "Tüy", "Tuz"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Mutlak Sıfır")) {
+            p.openInventory(GUIENCH2(p, "Mutlak Sıfır", "Kara Buz", "Gerçek Buz Özütü"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Akuapunktur Ustası")) {
+            p.openInventory(GUIENCH2(p, "Akuapunktur Ustası", "Kurt Dişi", "İlviyan Pençesi"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Kaplama Darbesi")) {
+            p.openInventory(GUIENCH2(p, "Kalkan Darbesi", "Kalkan Parçası", "Büyülü Kemik"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "İntikam")) {
+            p.openInventory(GUIENCH2(p, "İntikam", "Solmuş Kemik", "Çürük Et"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Karşı Saldırı")) {
+            p.openInventory(GUIENCH2(p, "Karşı Saldırı", "Kalkan Parçası", "Demir Külçesi"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Ruh Koruması")) {
+            p.openInventory(GUIENCH2(p, "Ruh Koruması", "Ektoplazma", "Gözyaşı"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Kutsanmış")) {
+            p.openInventory(GUIENCH2(p, "Kutsanmış", "Ektoplazma", "Aralit Çiçeği"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Bağışıklık")) {
+            p.openInventory(GUIENCH2(p, "Bağışıklık", "Işık Tozu", "Aralit Çiçeği"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Obsidyen Kaplama")) {
+            p.openInventory(GUIENCH2(p, "Obsidyen Kaplama", "Obsidyen Külçesi", "Magmarit"));
+
+        }
+
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Sıvışma")) {
+            p.openInventory(GUIENCH2(p, "Sıvışma", "Yün", "Tüy"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Potansiyel")) {
+            p.openInventory(GUIENCH2(p, "Potansiyel", "Barut", "Kara Toz"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Dinçleştirme")) {
+            p.openInventory(GUIENCH2(p, "Dinçleştirme", "Işık Tozu", "Elma"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Solungaç")) {
+            p.openInventory(GUIENCH2(p, "Solungaç", "Somon", "Balon Balığı"));
+
+        }
+
+
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Aşırı Büyüme")) {
+            p.openInventory(GUIENCH2(p, "Aşırı Büyüme", "Dev Tırnağı", "Balon Balığı"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Büyülü Kaplama")) {
+            p.openInventory(GUIENCH2(p, "Büyülü Kaplama", "Büyülü Kemik", "Nikel Cevheri"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Dikenler")) {
+            p.openInventory(GUIENCH2(p, "Dikenler", "Kaktüs", "Kezi Çiçeği"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Koruma")) {
+            p.openInventory(GUIENCH2(p, "Koruma", "Demir Külçesi", "İnek Derisi"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Patlama Koruması")) {
+            p.openInventory(GUIENCH2(p, "Patlama Koruması", "Yün", "Bakır Külçesi"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Darbe")) {
+            p.openInventory(GUIENCH2(p, "Darbe", "Çürük Et", "Solmuş Kemik"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Keskinlik")) {
+            p.openInventory(GUIENCH2(p, "Keskinlik", "Çakıl Taşı", "Demir Cevheri"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Eklembacaklılar'ın Kıyameti")) {
+            p.openInventory(GUIENCH2(p, "Eklembacaklılar'ın Kıyameti", "Örümcek Gözü", "İp"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Sömürü")) {
+            p.openInventory(GUIENCH2(p, "Sömürü", "İblis Kanı", "Tuz"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "İnfaz")) {
+            p.openInventory(GUIENCH2(p, "Ganimet", "Dev Tırnağı", "Kurt Dişi"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Süpürücü Kenar")) {
+            p.openInventory(GUIENCH2(p, "Süpürücü Kenar", "Ilviyan Pençesi", "Demir Külçesi"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Öfke")) {
+            p.openInventory(GUIENCH2(p, "Öfke", "Solmuş Kemik", "Magmarit"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Tecrübe Desteği")) {
+            p.openInventory(GUIENCH2(p, "Tecrübe Desteği", "Lapis Lazuli", "Cam"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Kırılmazlık")) {
+            p.openInventory(GUIENCH2(p, "Kırılmazlık", "Nikel Külçesi", "Gümüş Balığı"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Zehirli Kesik")) {
+            p.openInventory(GUIENCH2(p, "Zehirli Kesik", "Solmuş Kemik", "Kezi Çiçeği"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Hünerli Avcı")) {
+            p.openInventory(GUIENCH2(p, "Hünerli Avcı", "Kemik", "Kurt Dişi"));
+
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Alevden Çehre")) {
+            p.openInventory(GUIENCH2(p, "Alevden Çehre", "Kara Kül", "Magmarit"));
+
+        }
+
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.GOLD + "Savurma")) {
+            p.openInventory(GUIENCH2(p, "Savurma", "Yaban Domuzu Derisi", "Kömür"));
+
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -4819,6 +6663,195 @@ public class GuiHandler {
             itemHandler.createShield(9, p, itemHandler.goldingot, itemHandler.birchplanks, 6, 1,
                     new ItemStack(Material.SHIELD), "<yellow><i:false>Altın Kalkan", 2, 5, 0, 0, 0, false, 0, 2, 0, "Düşük", 2,
                     6, 25, 20, 10, "Kalkan", 600, 8);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Kılıç")) {
+            itemHandler.createWeapon(p, itemHandler.obsidianingot, itemHandler.heavystick, 3, 1,
+                    new ItemStack(Material.WOODEN_SWORD), "<dark_purple><i:false>Obsidyen Kılıç", 3, 16, 8, 6, 5, false, 3, 25, 3, "Düşük", 5,
+                    6, 30, 30, 10, "Kılıç", 800, 10);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Savaş Baltası")) {
+            itemHandler.createWeapon(p, itemHandler.obsidianingot, itemHandler.heavystick, 6, 2,
+                    new ItemStack(Material.WOODEN_AXE), "<dark_purple><i:false>Obsidyen Savaş Baltası", 3, 23, 8, 5, 0, false, 1, 32, 0, "Orta", 5,
+                    6, 30, 30, 10, "Savaş Baltası", 800, 10);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Ağır Obsidyen Kılıç")) {
+            itemHandler.createWeapon(p, itemHandler.obsidianingot, itemHandler.heavystick, 5, 1,
+                    new ItemStack(Material.DIAMOND_SWORD), "<dark_purple><i:false>Ağır Obsidyen Kılıç", 3, 23, 10, 8, 0, false, 1, 29, 0, "Yüksek", 5,
+                    6, 30, 30, 10, "Ağır Kılıç", 800, 10);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Hançer")) {
+            itemHandler.createWeapon(p, itemHandler.obsidianingot, itemHandler.heavystick, 3, 1,
+                    new ItemStack(Material.SHEARS), "<dark_purple><i:false>Obsidyen Hançer", 3, 11, 9, 4, 6, false, 3, 20, 5, "Düşük", 5, 6, 30,
+                    30, 10, "Hançer", 800, 10);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Tırpan")) {
+            itemHandler.createWeapon(p, itemHandler.obsidianingot, itemHandler.heavystick, 3, 3,
+                    new ItemStack(Material.WOODEN_HOE), "<dark_purple><i:false>Obsidyen Tırpan", 2, 17, 10, 7, 0, false, 2, 20, 0, "Yüksek", 5, 6,
+                    30, 30, 10, "Tırpan", 800, 10);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Balta")) {
+            itemHandler.createTool(p, itemHandler.obsidianingot, 3, itemHandler.heavystick, 2,
+                    new ItemStack(Material.GOLDEN_AXE), "<dark_purple><i:false>Obsidyen Balta", 3, 8, false, 7, 4, 30, 30, 10, "Balta", 800, 10);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Mızrak")) {
+            itemHandler.createWeapon(p, itemHandler.obsidianingot, itemHandler.heavystick, 3, 2,
+                    new ItemStack(Material.STICK), "<dark_purple><i:false>Obsidyen Mızrak", 3, 17, 20, 6, 7, false, 2, 27, 0, "Düşük", 6, 6, 30,
+                    30, 10, "Mızrak", 800, 10);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Topuz")) {
+            itemHandler.createWeapon(p, itemHandler.obsidianingot, itemHandler.heavystick, 3, 2,
+                    new ItemStack(Material.WOODEN_SHOVEL), "<dark_purple><i:false>Obsidyen Topuz", 3, 16, 20, 5, 1, false, 2, 33, 0, "Düşük", 5, 6, 26,
+                    30, 10, "Topuz", 800, 10);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Kürek")) {
+            itemHandler.createTool(p, itemHandler.obsidianingot, 3, itemHandler.heavystick, 2,
+                    new ItemStack(Material.GOLDEN_SHOVEL), "<dark_purple><i:false>Obsidyen Kürek", 3, 6, false, 7, 4, 20, 20, 10, "Kürek", 800, 10);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Kazma")) {
+            itemHandler.createTool(p, itemHandler.obsidianingot, 3, itemHandler.heavystick, 2,
+                    new ItemStack(Material.GOLDEN_PICKAXE), "<dark_purple><i:false>Obsidyen Kazma", 3, 6, false, 7, 4, 25, 20, 10, "Kazma", 800, 10);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Çapa")) {
+            itemHandler.createTool(p, itemHandler.obsidianingot, 3, itemHandler.heavystick, 2,
+                    new ItemStack(Material.GOLDEN_HOE), "<dark_purple><i:false>Obsidyen Çapa", 3, 6, false, 7, 4, 25, 20, 10, "Çapa", 800, 10);
+        }
+
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Göğüslük")) {
+            itemHandler.createArmor(p, "Göğüslük", itemHandler.obsidianingot, 8,
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<dark_purple><i:false>Obsidyen Göğüslük", 3, 7, 10, 12, 6, 0, 3, 0, 5, 0, 0,
+                    0, 4, 33, 34, 10, 7, 800, 10);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Pantolon")) {
+            itemHandler.createArmor(p, "Pantolon", itemHandler.obsidianingot, 7,
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<dark_purple><i:false>Obsidyen Pantolon", 3, 7, 8, 11, 6, 0, 2, 0, 6, 0, 0, 0,
+                    4, 32, 33, 10, 7, 800, 10);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Miğfer")) {
+            itemHandler.createArmor(p, "Miğfer", itemHandler.obsidianingot, 5,
+                    new ItemStack(Material.LEATHER_HELMET), "<dark_purple><i:false>Obsidyen Miğfer", 3, 7, 6, 10, 6, 0, 2, 0, 4, 0, 0, 0, 4,
+                    30, 32, 10, 7, 800, 10);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Botlar")) {
+            itemHandler.createArmor(p, "Botlar", itemHandler.obsidianingot, 4,
+                    new ItemStack(Material.LEATHER_BOOTS), "<dark_purple><i:false>Obsidyen Botlar", 3, 7, 6, 10, 5, 0, 3, 0, 4, 0, 0, 0, 0,
+                    30, 32, 10, 7, 800, 10);
+        }
+        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
+
+                hasDisplayName()
+                && clicked.getItemMeta().
+
+                getDisplayName().
+
+                equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Kalkan")) {
+            itemHandler.createShield(9, p, itemHandler.obsidianingot, itemHandler.heavyplanks, 6, 1,
+                    new ItemStack(Material.SHIELD), "<dark_purple><i:false>Obsidyen Kalkan", 3, 5, 0, 0, 0, false, 0, 2, 0, "Düşük", 2,
+                    6, 27, 26, 10, "Kalkan", 800, 10);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -5388,101 +7421,6 @@ public class GuiHandler {
 
         }
 
-        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
-
-                hasDisplayName()
-                && clicked.getItemMeta().
-
-                getDisplayName().
-
-                equalsIgnoreCase(Painter.paint("&e5. Seviye Büyü"))) {
-            ItemStack item = p.getOpenInventory().getItem(31);
-            if (item != null && item.getItemMeta() != null) {
-                if (p.getLevel() >= 5) {
-
-                    if (item.getType() == Material.BOW) {
-                        Enchants.addEnchantBow(item, p, 5);
-
-                    }
-                    if (item.getType() == Material.CROSSBOW) {
-                        Enchants.addEnchantCrossbow(item, p, 5);
-                    }
-                    if (MaterialTags.CHESTPLATES.isTagged(item)) {
-                        Enchants.addEnchantChestplate(item, p, 5);
-
-                    }
-                    if (MaterialTags.LEGGINGS.isTagged(item)) {
-                        Enchants.addEnchantLeg(item, p, 5);
-
-                    }
-                    if (MaterialTags.HELMETS.isTagged(item)) {
-                        Enchants.addEnchantHelmet(item, p, 5);
-                    }
-                    if (MaterialTags.BOOTS.isTagged(item)) {
-                        Enchants.addEnchantBoots(item, p, 5);
-                    }
-                    if (MaterialTags.PICKAXES.isTagged(item)) {
-                        Enchants.addEnchantPickaxe(item, p, 5);
-                    }
-                    if (MaterialTags.SHOVELS.isTagged(item)) {
-                        Enchants.addEnchantShovel(item, p, 5);
-                    }
-                    if (MaterialTags.AXES.isTagged(item)) {
-                        Enchants.addEnchantAxe(item, p, 5);
-                    }
-                    if (item.getType() == Material.FISHING_ROD) {
-                        Enchants.addEnchantFishingRod(item, p, 5);
-                    }
-                    if (item.getType() == Material.BOOK) {
-                        Random random = new Random();
-                        int enchchance = random.nextInt(11);
-                        switch (enchchance) {
-                            case 0:
-                                Enchants.addEnchantBow(item, p, 5);
-                                break;
-                            case 1:
-                                Enchants.addEnchantCrossbow(item, p, 5);
-                                break;
-                            case 2:
-                                Enchants.addEnchantAxe(item, p, 5);
-                                break;
-                            case 3:
-                                Enchants.addEnchantToSword(item, p, 5);
-                                break;
-                            case 4:
-                                Enchants.addEnchantChestplate(item, p, 5);
-                                break;
-                            case 5:
-                                Enchants.addEnchantShovel(item, p, 5);
-                                break;
-                            case 6:
-                                Enchants.addEnchantLeg(item, p, 5);
-                                break;
-                            case 7:
-                                Enchants.addEnchantBoots(item, p, 5);
-                                break;
-                            case 8:
-                                Enchants.addEnchantHelmet(item, p, 5);
-                                break;
-                            case 9:
-                                Enchants.addEnchantPickaxe(item, p, 5);
-                                break;
-                            case 10:
-                                Enchants.addEnchantFishingRod(item, p, 5);
-                                break;
-
-                        }
-
-                    }
-                    if (item.getType() == Material.IRON_SWORD || item.getType() == Material.STONE_SWORD
-                            || item.getType() == Material.GOLDEN_SWORD || item.getType() == Material.WOODEN_SWORD
-                            || item.getType() == Material.DIAMOND_SWORD || item.getType() == Material.NETHERITE_SWORD) {
-                        Enchants.addEnchantToSword(item, p, 5);
-
-                    }
-                }
-            }
-        }
 
     }
 

@@ -75,7 +75,7 @@ public class WorkAnim {
 							levels.giveWorkLevel(p, exp);
 
 							armorStand.setCustomName(ChatColor.GREEN + "✔");
-
+							result.setAmount(1);
 							JoinListener.getElsanatmenu().get(p.getUniqueId()).addItem(result);
 							new BukkitRunnable() {
 

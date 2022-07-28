@@ -25,10 +25,11 @@ public class ExpList {
 		expMap.put("IRON_ORE", 3);
 		expMap.put("GOLD_ORE", 4);
 		expMap.put("REDSTONE_ORE", 2);
+		expMap.put("COPPER_ORE", 2);
 		expMap.put("NETHER_QUARTZ_ORE", 2);
 		expMap.put("OBSIDIAN", 3);
 		expMap.put("GRANITE", 1);
-		expMap.put("COAL_ORE", 2);
+		expMap.put("COAL_ORE", 1);
 		expMap.put("ANCIENT_DEBRIS", 10);
 		expMap.put("STONE", 1);
 		expMap.put("COBBLESTONE", 1);
@@ -37,6 +38,7 @@ public class ExpList {
 		expMap.put("DEEPSLATE_REDSTONE_ORE", 5);
 		expMap.put("NETHER_QUARTZ_ORE", 5);
 		expMap.put("LAPIS_ORE", 3);
+		expMap.put("CALCITE", 1);
 		// COMBAT
 		expMap.put("WITHER_SKELETON", 3);
 		expMap.put("SKELETON", 2);
@@ -73,6 +75,7 @@ public class ExpList {
 		expMap.put("JUNGLE_WOOD", 5);
 		expMap.put("DARK_OAK_WOOD", 3);
 		expMap.put("STRIPPED_DARK_OAK_WOOD", 4);
+		expMap.put("WARPED_HYPHAE", 4);
 		expMap.put("ACACIA_WOOD", 5);
 		expMap.put("OAK_WOOD", 1);
 		//COOKING

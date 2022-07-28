@@ -61,7 +61,7 @@ public class PlayerFishListener implements Listener {
 
         } else {
 
-            int chanceminer = ThreadLocalRandom.current().nextInt(30);
+            int chanceminer = ThreadLocalRandom.current().nextInt(20);
             switch (chanceminer) {
                 case 0:
                     if (event.getState() == PlayerFishEvent.State.BITE) {
@@ -317,6 +317,7 @@ public class PlayerFishListener implements Listener {
                                 catcher.spigot().sendMessage(ChatMessageType.ACTION_BAR,
                                         new TextComponent(Painter.paint("&cEnvanterin Dolu!")));
                             } else {
+                                item.setAmount(1);
                                 catcher.getInventory().addItem(item);
                                 giveFishingExp(catcher, item);
                                 catcher.sendMessage(Painter.paint("&6Bir balık tutuldu."));

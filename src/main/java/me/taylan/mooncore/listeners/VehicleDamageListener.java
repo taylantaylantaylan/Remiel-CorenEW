@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleDamageEvent;
+import org.bukkit.event.vehicle.VehicleEnterEvent;
 
 import java.util.EnumSet;
 import java.util.Set;
@@ -34,5 +35,13 @@ public class VehicleDamageListener implements Listener {
                 }
             }
         }
+    }
+    @EventHandler
+    public void vagon(VehicleEnterEvent event) {
+        Entity entity = event.getEntered();
+        if (!(entity instanceof Player)) {
+            event.setCancelled(true);
+        }
+
     }
 }

@@ -18,6 +18,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
+import org.bukkit.util.Vector;
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -118,37 +119,7 @@ public class AttackDamage implements Listener {
 
 
 
-                    if (item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Kemik Kılıç")) {
 
-
-
-                        if (item.getItemMeta().getPersistentDataContainer().has(hit)) {
-                            ItemMeta meta = item.getItemMeta();
-                            int hitdetect = item.getItemMeta().getPersistentDataContainer().get(hit, PersistentDataType.INTEGER);
-                            hitdetect++;
-                            item.getItemMeta().getPersistentDataContainer().set(hit, PersistentDataType.INTEGER, hitdetect);
-                            item.setItemMeta(meta);
-
-                            if (hitdetect >= 4) {
-                                crit.put(player.getUniqueId(), "crit");
-                                event.setDamage(stats.getKritikHasari(player.getUniqueId()) / 5 + 3 * realDamage
-                                        + 20 * realStrhg / 100 + 1);
-                                if (stats.getKritikAyar(player.getUniqueId())) {
-                                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 0.2f, 0.8f);
-                                    player.spawnParticle(Particle.EXPLOSION_LARGE, damaged.getLocation().add(0, 1.2, 0), 1, 0,
-                                            0, 0, 1);
-                                }
-                                item.getItemMeta().getPersistentDataContainer().set(hit, PersistentDataType.INTEGER, 0);
-                                item.setItemMeta(meta);
-                            }
-                        } else {
-
-                            ItemMeta meta = item.getItemMeta();
-                            int hitdetect = 0;
-                            item.getItemMeta().getPersistentDataContainer().set(hit, PersistentDataType.INTEGER, hitdetect);
-                            item.setItemMeta(meta);
-                        }
-                    }
                     if (chance <= 4) {
 
                         crit.put(player.getUniqueId(), "crit");
@@ -185,7 +156,11 @@ public class AttackDamage implements Listener {
         } else if (entity instanceof Arrow) {
 
             Arrow arrow = (Arrow) entity;
+            if(!(arrow.getShooter() instanceof Player)) {
+                return;
+            }
             Player player = (Player) arrow.getShooter();
+
             NamespacedKey hasar = new NamespacedKey(plugin, "damage");
 
             ItemStack item = player.getInventory().getItemInMainHand();

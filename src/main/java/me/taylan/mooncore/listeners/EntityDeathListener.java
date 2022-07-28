@@ -197,6 +197,30 @@ public class EntityDeathListener implements Listener {
                 rawbeef.setAmount(1);
                 player.getInventory().addItem(rawbeef);
             }
+        } else if (name.contains("Ayı")) {
+            stats.setExp(player.getUniqueId(), 50);
+            int chance5 = ThreadLocalRandom.current().nextInt(15);
+            int chanceamount4 = ThreadLocalRandom.current().nextInt(1) + 1;
+            if (chance5 < 3) {
+                ItemStack item = itemHandler.bearleather;
+                item.setAmount(chanceamount4);
+                if (player.getInventory().firstEmpty() == -1) {
+                    world.dropItemNaturally(entity.getLocation(), item);
+
+                } else {
+                    player.getInventory().addItem(item);
+                }
+            }
+            if (player.getInventory().firstEmpty() == -1) {
+                ItemStack rawbeef = itemHandler.rawbeef;
+                rawbeef.setAmount(1);
+                world.dropItemNaturally(entity.getLocation(), rawbeef);
+
+            } else {
+                ItemStack rawbeef = itemHandler.rawbeef;
+                rawbeef.setAmount(1);
+                player.getInventory().addItem(rawbeef);
+            }
         } else if (name.contains("Örümcek")) {
             stats.setExp(player.getUniqueId(), 50);
             int chancespider = ThreadLocalRandom.current().nextInt(30);
@@ -471,7 +495,7 @@ public class EntityDeathListener implements Listener {
                 }
             }
         } else if (name.contains("Kararmış Şövalye")) {
-            stats.setExp(player.getUniqueId(), 70);
+            stats.setExp(player.getUniqueId(), 65);
             int chanceamountspider = ThreadLocalRandom.current().nextInt(1) + 1;
             int chanceminer = ThreadLocalRandom.current().nextInt(60);
             if (chanceminer < 30) {
@@ -485,22 +509,29 @@ public class EntityDeathListener implements Listener {
                 }
             }
             if (chanceminer == 2) {
-                ItemStack item = itemHandler.createWeaponItem(new ItemStack(Material.DIAMOND_SWORD), "<gray>Paslanmış Ağır Demir Kılıç", 3, 10, 12, 10, 0, false, 1, 32, 0, "Yüksek", 2, "Kılıç", 500, 6);
+                ItemStack item = itemHandler.password;
+                item.setAmount(1);
+                item.setAmount(1);
                 itemDrop.itemDrop(player, entity, item, EquipmentSlot.HAND);
             } else if (chanceminer == 4) {
-                ItemStack item = itemHandler.createArmorItem("Miğfer", new ItemStack(Material.GOLDEN_HELMET), "<gray>Ağır Gardiyan Miğferi", 3, 5, 3, 2, 4, 0, 2, 0, 0, 0, 14, 0, 2, 2, 400, 4);
+                ItemStack item = itemHandler.paskask;
+                item.setAmount(1);
                 itemDrop.itemDrop(player, entity, item, EquipmentSlot.HEAD);
             } else if (chanceminer == 5) {
-                ItemStack item = itemHandler.createArmorItem("Botlar", new ItemStack(Material.GOLDEN_BOOTS), "<gray>Ağır Gardiyan Botlar", 3, 4, 5, 3, 4, 2, 2, 0, 0, 0, 14, 5, 2, 2, 400, 4);
+                ItemStack item = itemHandler.pasbot;
+                item.setAmount(1);
                 itemDrop.itemDrop(player, entity, item, EquipmentSlot.FEET);
             } else if (chanceminer == 7) {
-                ItemStack item = itemHandler.createArmorItem("Göğüslük", new ItemStack(Material.GOLDEN_CHESTPLATE), "<gray>Ağır Gardiyan Göğüslüğü", 3, 4, 5, 5, 6, 2, 2, 0, 0, 0, 14, 5, 2, 2, 400, 4);
+                ItemStack item = itemHandler.paschest;
+                item.setAmount(1);
                 itemDrop.itemDrop(player, entity, item, EquipmentSlot.CHEST);
             } else if (chanceminer == 8) {
-                ItemStack item = itemHandler.createArmorItem("Pantolon", new ItemStack(Material.GOLDEN_LEGGINGS), "<gray>Ağır Gardiyan Dizliği", 3, 4, 5, 4, 6, 2, 2, 0, 0, 0, 14, 5, 2, 2, 400, 4);
+                ItemStack item = itemHandler.paspant;
+                item.setAmount(1);
                 itemDrop.itemDrop(player, entity, item, EquipmentSlot.LEGS);
             } else if (chanceminer == 6) {
                 ItemStack item = itemHandler.witherrose;
+                item.setAmount(1);
                 itemDrop.itemDrop(player, entity, item, EquipmentSlot.HAND);
             }
             ItemStack item = itemHandler.blackbone;
@@ -512,28 +543,28 @@ public class EntityDeathListener implements Listener {
                 player.getInventory().addItem(item);
             }
         } else if (name.contains("İskeletor")) {
-            stats.setExp(player.getUniqueId(), 70);
+            stats.setExp(player.getUniqueId(), 60);
             int chanceminer = ThreadLocalRandom.current().nextInt(60);
             if (chanceminer == 2) {
                 itemDrop.itemDrop(player, entity, itemHandler.eklemeldiven, EquipmentSlot.HAND);
             } else if (chanceminer == 4) {
                 itemDrop.itemDrop(player, entity, itemHandler.kemikgogusluk, EquipmentSlot.CHEST);
             } else if (chanceminer == 5) {
-                itemDrop.itemDrop(player, entity, itemHandler.bone, EquipmentSlot.HAND);
+                itemDrop.itemDrop(player, entity, itemHandler.enchbone, EquipmentSlot.HAND);
             } else if (chanceminer == 6) {
                 itemDrop.itemDrop(player, entity, itemHandler.kemikcariklar, EquipmentSlot.FEET);
             } else if (chanceminer == 7) {
                 itemDrop.itemDrop(player, entity, itemHandler.kivilcimtopuz, EquipmentSlot.HAND);
             }
         } else if (name.contains("İskelet Avcı")) {
-            stats.setExp(player.getUniqueId(), 70);
+            stats.setExp(player.getUniqueId(), 60);
             int chanceminer = ThreadLocalRandom.current().nextInt(60);
             if (chanceminer == 2) {
                 itemDrop.itemDrop(player, entity, itemHandler.kemiklesmisyay, EquipmentSlot.HAND);
             } else if (chanceminer == 4) {
                 itemDrop.itemDrop(player, entity, itemHandler.kemikdizlik, EquipmentSlot.LEGS);
             } else if (chanceminer == 5) {
-                itemDrop.itemDrop(player, entity, itemHandler.bone, EquipmentSlot.HAND);
+                itemDrop.itemDrop(player, entity, itemHandler.enchbone, EquipmentSlot.HAND);
             } else if (chanceminer == 6) {
                 itemDrop.itemDrop(player, entity, itemHandler.kemikcariklar, EquipmentSlot.FEET);
             }
@@ -547,7 +578,7 @@ public class EntityDeathListener implements Listener {
             } else if (chanceminer == 5) {
                 itemDrop.itemDrop(player, entity, itemHandler.kemikeldiven, EquipmentSlot.HAND);
             } else if (chanceminer == 6) {
-                itemDrop.itemDrop(player, entity, itemHandler.bone, EquipmentSlot.HAND);
+                itemDrop.itemDrop(player, entity, itemHandler.enchbone, EquipmentSlot.HAND);
             } else if (chanceminer == 7) {
                 itemDrop.itemDrop(player, entity, itemHandler.metanet, EquipmentSlot.HAND);
             }
@@ -587,7 +618,7 @@ public class EntityDeathListener implements Listener {
                 }
             }
         } else if (name.contains("Korsan")) {
-            stats.setExp(player.getUniqueId(), 90);
+            stats.setExp(player.getUniqueId(), 60);
             int chance4 = ThreadLocalRandom.current().nextInt(40);
             int chanceamount3 = ThreadLocalRandom.current().nextInt(1) + 1;
             ItemStack silverfish = itemHandler.silverfish;
@@ -641,33 +672,120 @@ public class EntityDeathListener implements Listener {
                 itemDrop.itemDrop(player, entity, gold, EquipmentSlot.HAND);
 
             }
-        } else if (name.contains("Magmaw Ruhu")) {
+        } else if (name.contains("Magmaw Ruh")) {
             stats.setExp(player.getUniqueId(), 110);
             int chance4 = ThreadLocalRandom.current().nextInt(70);
-            if(chance4 == 4) {
+            if (chance4 == 4) {
                 ItemStack magmacore = itemHandler.magmacore;
                 Location loc = entity.getLocation().add(getRandomOffset(), 0, getRandomOffset());
                 magmacore.setAmount(1);
                 itemDrop.itemDrop(player, loc, magmacore, EquipmentSlot.HEAD);
-                Bukkit.getServer().broadcast(MiniMessage.miniMessage().deserialize("&e"+player.getName()+" &7 bir malzeme buldu: "+magmacore.getItemMeta().getDisplayName()));
+                Bukkit.getServer().broadcast(MiniMessage.miniMessage().deserialize("&e" + player.getName() + " &7 bir malzeme buldu: " + magmacore.getItemMeta().getDisplayName()));
 
             }
-            for(Entity lootplayer:entity.getNearbyEntities(30,30,30)) {
-                if(!(lootplayer instanceof Player)) {
+            for (Entity lootplayer : entity.getNearbyEntities(30, 30, 30)) {
+                if (!(lootplayer instanceof Player)) {
                     continue;
                 }
                 ItemStack lootcanta = itemHandler.magmaloot;
                 ItemStack magma2 = itemHandler.fireoz;
                 lootcanta.setAmount(1);
                 magma2.setAmount(1);
-                Location loc = entity.getLocation().add(getRandomOffset(), 0, getRandomOffset());
+                Location loc = entity.getLocation().add(getRandomOffset(), 1, getRandomOffset());
                 itemDrop.itemDrop((Player) lootplayer, loc, magma2, EquipmentSlot.HAND);
                 itemDrop.itemDrop((Player) lootplayer, entity, lootcanta, EquipmentSlot.HAND);
 
             }
+        } else if (name.contains("Golem")) {
+            stats.setExp(player.getUniqueId(), 300);
+            int chance4 = ThreadLocalRandom.current().nextInt(70);
+            if (chance4 == 4) {
+                ItemStack golemheart = itemHandler.golemheart;
+                Location loc = entity.getLocation().add(getRandomOffset(), 0, getRandomOffset());
+                golemheart.setAmount(1);
+                itemDrop.itemDrop(player, loc, golemheart, EquipmentSlot.HEAD);
+                Bukkit.getServer().broadcast(MiniMessage.miniMessage().deserialize("&e" + player.getName() + " &7 bir malzeme buldu: " + golemheart.getItemMeta().getDisplayName()));
+
+            }
+            if (chance4 < 10) {
+                ItemStack golemhand = itemHandler.golemhand;
+                Location loc = entity.getLocation().add(getRandomOffset(), 0, getRandomOffset());
+                golemhand.setAmount(1);
+                itemDrop.itemDrop(player, loc, golemhand, EquipmentSlot.HEAD);
+                Bukkit.getServer().broadcast(MiniMessage.miniMessage().deserialize("&e" + player.getName() + " &7 bir malzeme buldu: " + golemhand.getItemMeta().getDisplayName()));
+
+            }
+            for (Entity lootplayer : entity.getNearbyEntities(30, 30, 30)) {
+                if (!(lootplayer instanceof Player)) {
+                    continue;
+                }
+                ItemStack ironingot = itemHandler.ironingot;
+                ItemStack magma2 = itemHandler.redmushroom;
+                ironingot.setAmount(30);
+                magma2.setAmount(60);
+                stats.setExp(lootplayer.getUniqueId(), 200);
+                ((Player) lootplayer).giveExp(700);
+                Location loc = entity.getLocation().add(getRandomOffset(), 1, getRandomOffset());
+                itemDrop.itemDrop((Player) lootplayer, loc, magma2, EquipmentSlot.HAND);
+                itemDrop.itemDrop((Player) lootplayer, entity, ironingot, EquipmentSlot.HAND);
+
+            }
+        } else if (name.contains("Lanetli Kırmızı")) {
+            stats.setExp(player.getUniqueId(), 120);
+            int chance4 = ThreadLocalRandom.current().nextInt(30);
+            ItemStack redmushroom = itemHandler.redmushroom;
+            redmushroom.setAmount(1);
+            if (player.getInventory().firstEmpty() == -1) {
+                world.dropItemNaturally(entity.getLocation(), redmushroom);
+
+            } else {
+                player.getInventory().addItem(redmushroom);
+            }
+            if (chance4 == 3) {
+                ItemStack item = itemHandler.cursedstring;
+                itemDrop.itemDrop(player, entity, item, EquipmentSlot.HAND);
+
+            } else if (chance4 == 4) {
+                ItemStack gold = itemHandler.asindirici;
+                itemDrop.itemDrop(player, entity, gold, EquipmentSlot.HAND);
+
+            } else if (chance4 == 5) {
+                ItemStack item = itemHandler.createAccessoryItem("Tılsım", new ItemStack(Material.RED_MUSHROOM), "<red>Kırmızı Mantar Özü Tılsımı", 2, 2, 0, 0, 0, 8, 0, 0, 0, 10, 3, 2000, 7);
+
+                itemDrop.itemDrop(player, entity, item, EquipmentSlot.HAND);
+
+            }
+        } else if (name.contains("Lanetli Kahverengi")) {
+            stats.setExp(player.getUniqueId(), 100);
+            int chance4 = ThreadLocalRandom.current().nextInt(30);
+
+            ItemStack brownmushroom = itemHandler.brownmushroom;
+            brownmushroom.setAmount(1);
+            if (player.getInventory().firstEmpty() == -1) {
+                world.dropItemNaturally(entity.getLocation(), brownmushroom);
+
+            } else {
+                player.getInventory().addItem(brownmushroom);
+            }
+            if (chance4 == 3) {
+                ItemStack item = itemHandler.cursedstring;
+                itemDrop.itemDrop(player, entity, item, EquipmentSlot.HAND);
+
+            } else if (chance4 == 4) {
+                ItemStack gold = itemHandler.rotten;
+                itemDrop.itemDrop(player, entity, gold, EquipmentSlot.HAND);
+
+            } else if (chance4 == 5) {
+                ItemStack item = itemHandler.createAccessoryItem("Kolye", new ItemStack(Material.BROWN_MUSHROOM), "<red>Kahverengi Mantar Özü Kolyesi", 2, 0, 6, -3, -2, 5, 0, 0, 0, 0, 4, 2000, 6);
+
+                itemDrop.itemDrop(player, entity, item, EquipmentSlot.HAND);
+
+            }
         }
 
+
     }
+
     public double getRandomOffset() {
         double random = Math.random();
         if (Math.random() > 0.5)

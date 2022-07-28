@@ -9,6 +9,7 @@ me\taylan\mooncore\listeners\EntityHealthListener$6$5.class
 me\taylan\mooncore\listeners\PlayerFishListener.class
 me\taylan\mooncore\commands\XpGiveCommand.class
 me\taylan\mooncore\listeners\BlockRegenListener$20.class
+me\taylan\mooncore\animations\FurnaceAnim$1$1$1.class
 me\taylan\mooncore\listeners\EntityHealthListener$1.class
 me\taylan\mooncore\listeners\MobSpawnListener.class
 me\taylan\mooncore\listeners\PlayerFishListener$2.class
@@ -48,12 +49,10 @@ me\taylan\mooncore\CoreProtectApi.class
 me\taylan\mooncore\listeners\EntityHealthListener$3$17.class
 me\taylan\mooncore\listeners\EntityHealthListener$7$2.class
 me\taylan\mooncore\listeners\BlockRegenListener$18.class
-me\taylan\mooncore\animations\CookAnim$1$2$1.class
 me\taylan\mooncore\commands\LootCrateCommand.class
 me\taylan\mooncore\alchemy\Spells.class
 me\taylan\mooncore\listeners\BlockRegenListener$41.class
 me\taylan\mooncore\listeners\EnchantListener$4.class
-me\taylan\mooncore\animations\FurnaceAnim$1$2.class
 me\taylan\mooncore\listeners\EntityHealthListener$5$6.class
 me\taylan\mooncore\listeners\EntityHealthListener$1$10.class
 me\taylan\mooncore\animations\SwingAnimation$Motion.class
@@ -63,7 +62,6 @@ me\taylan\mooncore\listeners\EnchantListener$12.class
 me\taylan\mooncore\listeners\BrewListener.class
 me\taylan\mooncore\listeners\EntityHealthListener$3$11.class
 me\taylan\mooncore\listeners\EntityHealthListener$5$3.class
-me\taylan\mooncore\listeners\SkillListener.class
 me\taylan\mooncore\listeners\EntityHealthListener$8.class
 me\taylan\mooncore\animations\SwingAnimation.class
 me\taylan\mooncore\commands\FurnaceResetCommand.class
@@ -90,7 +88,6 @@ me\taylan\mooncore\listeners\PlayerCraftListener.class
 me\taylan\mooncore\listeners\EntityHealthListener$1$8.class
 me\taylan\mooncore\listeners\EntityHealthListener$2$3.class
 me\taylan\mooncore\listeners\LootListener$3.class
-me\taylan\mooncore\animations\RealFurnaceAnim$1$2.class
 me\taylan\mooncore\listeners\EnchantListener$2.class
 me\taylan\mooncore\listeners\BlockRegenListener$1.class
 me\taylan\mooncore\listeners\EnchantListener$17.class
@@ -98,6 +95,7 @@ me\taylan\mooncore\listeners\EntityHealthListener$3$5.class
 me\taylan\mooncore\listeners\PlayerFishListener$4.class
 me\taylan\mooncore\listeners\BlockRegenListener$32.class
 me\taylan\mooncore\listeners\PlayerAttackListener.class
+me\taylan\mooncore\animations\RealFurnaceAnim$1$1$1.class
 me\taylan\mooncore\listeners\EntityHealthListener$6$6.class
 me\taylan\mooncore\enchanting\EnchantConstructor.class
 me\taylan\mooncore\listeners\EnchantListener$16.class
@@ -142,10 +140,10 @@ me\taylan\mooncore\listeners\BlockRegenListener$10.class
 me\taylan\mooncore\listeners\EntityHealthListener$1$12.class
 me\taylan\mooncore\listeners\EntityHealthListener$1$7.class
 me\taylan\mooncore\listeners\EntityHealthListener$4.class
-me\taylan\mooncore\animations\CookAnim$1$2.class
 me\taylan\mooncore\listeners\ItemDamageListener.class
 me\taylan\mooncore\commands\QuestMapCommand.class
 me\taylan\mooncore\listeners\BlockRegenListener$23.class
+me\taylan\mooncore\listeners\BlockRegenListener$43.class
 me\taylan\mooncore\animations\RealFurnaceAnim$1.class
 me\taylan\mooncore\listeners\EntityHealthListener$6$2.class
 me\taylan\mooncore\listeners\EntityHealthListener$9.class
@@ -168,7 +166,6 @@ me\taylan\mooncore\listeners\BlockRegenListener$42.class
 me\taylan\mooncore\listeners\EntityHealthListener$3$18.class
 me\taylan\mooncore\listeners\EntityHealthListener$3$8.class
 me\taylan\mooncore\listeners\ScrollListener$1.class
-me\taylan\mooncore\animations\FurnaceAnim$1$2$1.class
 me\taylan\mooncore\listeners\BlockRegenListener$35.class
 me\taylan\mooncore\listeners\EntityHealthListener$3$2.class
 me\taylan\mooncore\listeners\entitydamage\SpawnArmorStand$1.class
@@ -182,6 +179,7 @@ me\taylan\mooncore\listeners\PlayerAttackListener$1.class
 me\taylan\mooncore\listeners\EntityHealthListener$1$6.class
 me\taylan\mooncore\listeners\RequirementListener.class
 me\taylan\mooncore\listeners\EntityHealthListener$3$9.class
+me\taylan\mooncore\commands\DuraCommand.class
 me\taylan\mooncore\listeners\BlockRegenListener$36.class
 me\taylan\mooncore\listeners\LootListener$1.class
 me\taylan\mooncore\listeners\EntityHealthListener$4$1.class
@@ -205,7 +203,6 @@ me\taylan\mooncore\listeners\ItemDropListener.class
 me\taylan\mooncore\commands\LoreCommand.class
 me\taylan\mooncore\listeners\EnchantListener$11.class
 me\taylan\mooncore\listeners\EnchantListener$8.class
-me\taylan\mooncore\animations\RealFurnaceAnim$1$2$1.class
 me\taylan\mooncore\listeners\BlockRegenListener$7.class
 me\taylan\mooncore\listeners\EntityHealthListener$3$12.class
 me\taylan\mooncore\animations\WorkAnim.class
@@ -228,6 +225,7 @@ me\taylan\mooncore\listeners\BlockRegenListener$16.class
 me\taylan\mooncore\listeners\BlockRegenListener$8.class
 me\taylan\mooncore\listeners\EntityHealthListener$1$2.class
 me\taylan\mooncore\commands\ClaimSetterCommand.class
+me\taylan\mooncore\animations\CookAnim$1$1$1.class
 me\taylan\mooncore\alchemy\Spells$1.class
 me\taylan\mooncore\listeners\EntityHealthListener$3$15.class
 me\taylan\mooncore\listeners\EntityHealthListener$9$1.class
@@ -249,6 +247,7 @@ me\taylan\mooncore\listeners\EntityHealthListener$2.class
 me\taylan\mooncore\listeners\EntityHealthListener$3$14.class
 me\taylan\mooncore\listeners\EntityDeathListener.class
 me\taylan\mooncore\custommining\BrokenBlocksService.class
+me\taylan\mooncore\listeners\BlockRegenListener$44.class
 me\taylan\mooncore\listeners\EnchantListener$7.class
 me\taylan\mooncore\utils\ItemDrop$1.class
 me\taylan\mooncore\listeners\BlockRegenListener$9.class

@@ -75,7 +75,32 @@ public class EnchantRunnable extends BukkitRunnable {
 				seviyeCommand.seviyeAtlat(player, 1);
 				stats.setRequiredExp(player.getUniqueId(), RequiredExp);
 				stats.setExp0(player.getUniqueId(), 0);
-
+				int seviye2 = stats.getLevel(player.getUniqueId()) - 2;
+				if (seviye2 + 1 == 2) {
+					player.discoverRecipe(NamespacedKey.minecraft("farmer_hoe"));
+					player.discoverRecipe(NamespacedKey.minecraft("bone_helmet"));
+					player.discoverRecipe(NamespacedKey.minecraft("wither_rose_talisman"));
+				} else if (seviye2 + 1 == 3) {
+					player.discoverRecipe(NamespacedKey.minecraft("brew_gaunlet"));
+					player.discoverRecipe(NamespacedKey.minecraft("wolf_gaunlet"));
+					player.discoverRecipe(NamespacedKey.minecraft("bone_sword"));
+				} else if (seviye2 + 1 == 4) {
+					player.discoverRecipe(NamespacedKey.minecraft("spider_bow"));
+					player.discoverRecipe(NamespacedKey.minecraft("black_helmet"));
+					player.discoverRecipe(NamespacedKey.minecraft("oksidat_pant"));
+				}else if (seviye2 + 1 == 5) {
+					player.discoverRecipe(NamespacedKey.minecraft("king_killer"));
+					player.discoverRecipe(NamespacedKey.minecraft("experience_bottle_lapis"));
+					player.discoverRecipe(NamespacedKey.minecraft("ancient_silver_spear"));
+				} else if (seviye2 + 1 == 6) {
+					player.discoverRecipe(NamespacedKey.minecraft("hellfire_dagger"));
+					player.discoverRecipe(NamespacedKey.minecraft("mistik_bow"));
+					player.discoverRecipe(NamespacedKey.minecraft("silver_block"));
+				} else if (seviye2 + 1 == 7) {
+					player.discoverRecipe(NamespacedKey.minecraft("magma_sword"));
+					player.discoverRecipe(NamespacedKey.minecraft("golem_gaunlet"));
+					player.discoverRecipe(NamespacedKey.minecraft("golem_chestplate"));
+				}
 			}
 			if(player.getInventory().getItemInMainHand() != null && player.getInventory().getItemInMainHand().hasItemMeta() && player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() != null) {
 				if(player.getInventory().getItemInMainHand().getType() == Material.WOODEN_SHOVEL || player.getInventory().getItemInMainHand().getType() == Material.WOODEN_HOE|| player.getInventory().getItemInMainHand().getType() == Material.DIAMOND_SWORD || player.getInventory().getItemInMainHand().getType() == Material.STICK) {
@@ -124,27 +149,27 @@ public class EnchantRunnable extends BukkitRunnable {
 				}
 			}
 
-			if(stats.getHiz(player.getUniqueId()) >100) {
+			if(stats.getHiz(player.getUniqueId()) >81) {
 				stats.setSpeedCap(player.getUniqueId());
 			}
 			switch (stats.getHiz(player.getUniqueId()))   {
+				case -10:
+					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.05);
+					break;
 				case 0:
 					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
 					break;
 				case 20:
-					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.2);
+					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.15);
 					break;
 				case 40:
-					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.2);
 					break;
 				case 60:
-					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
+					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.25);
 					break;
 				case 80:
-					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.5);
-					break;
-				case 100:
-					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.6);
+					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.30);
 					break;
 
 			}

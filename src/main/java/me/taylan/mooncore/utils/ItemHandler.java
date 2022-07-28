@@ -214,6 +214,7 @@ public class ItemHandler {
     public ItemStack cactus;
     public ItemStack sand;
     public ItemStack glass;
+    public ItemStack hurda;
     public ItemStack bottle;
     public ItemStack lapislazuliblock;
     public ItemStack experiencebottle;
@@ -285,7 +286,22 @@ public class ItemHandler {
     public ItemStack recallpotion;
     public ItemStack cookedsilverfish;
     public ItemStack antrikot;
-
+    public ItemStack enchbone;
+    public ItemStack aralit;
+    public ItemStack tear;
+    public ItemStack shieldfrag;
+    public ItemStack tridentfrag;
+    public ItemStack redmushroom;
+    public ItemStack brownmushroom;
+    public ItemStack golemheart;
+    public ItemStack golemhand;
+    public ItemStack golemgaunlet;
+    public ItemStack golemchestplate;
+    public ItemStack password;
+    public ItemStack paspant;
+    public ItemStack paschest;
+    public ItemStack pasbot;
+    public ItemStack paskask;
     public void init() {
         createOakWood();
         createDarkOakWood();
@@ -324,6 +340,7 @@ public class ItemHandler {
         createBearLeather();
         createKozCubuk();
         createCowLeather();
+        createHurda();
         createRawSalmon();
         createRawCod();
         createBizoneLeather();
@@ -417,6 +434,7 @@ public class ItemHandler {
         createEktoplazma();
         createGoldIngot();
         createGoldOre();
+        createShieldFrag();
         createSilverIngot();
         createSilverOre();
         createCoal();
@@ -517,7 +535,23 @@ public class ItemHandler {
         createMiningGaunlet();
         createRecallPotion();
         createAntrikot();
+        createYanmazString();
         createCookedSilverFish();
+        createEnchBone();
+        createAralitFlower();
+        createTear();
+        createTridentFrag();
+        createRedMushroom();
+        createBrownMushroom();
+        createGolemHearth();
+        createGolemHand();
+        createGolemGaunlet();
+        createGolemChestplate();
+        createPasSword();
+        createPasBot();
+        createPasKask();
+        createPasChest();
+        createPasPant();
     }
 
     @SuppressWarnings("deprecation")
@@ -2793,14 +2827,15 @@ public class ItemHandler {
         }
 
     }
-    public void cooking3(Player player, ItemStack ingrident, ItemStack product, int malzemeSayi, int productsayi, int malzemeSayi2, ItemStack ingrident2,ItemStack ingrident3, int malzemeSayi3,
+
+    public void cooking3(Player player, ItemStack ingrident, ItemStack product, int malzemeSayi, int productsayi, int malzemeSayi2, ItemStack ingrident2, ItemStack ingrident3, int malzemeSayi3,
                          int cookTime, int exp, String name) {
 
         ingrident.setAmount(malzemeSayi);
         product.setAmount(productsayi);
         ingrident2.setAmount(malzemeSayi2);
         ingrident3.setAmount(malzemeSayi3);
-        if (player.getInventory().containsAtLeast(ingrident, malzemeSayi) && player.getInventory().containsAtLeast(ingrident2, malzemeSayi2)&&player.getInventory().containsAtLeast(ingrident3,malzemeSayi3)) {
+        if (player.getInventory().containsAtLeast(ingrident, malzemeSayi) && player.getInventory().containsAtLeast(ingrident2, malzemeSayi2) && player.getInventory().containsAtLeast(ingrident3, malzemeSayi3)) {
 
             player.getInventory().removeItem(ingrident);
             player.getInventory().removeItem(ingrident2);
@@ -2823,6 +2858,7 @@ public class ItemHandler {
         }
 
     }
+
     public void cooking2(Player player, ItemStack ingrident, ItemStack product, int malzemeSayi, int productsayi, int malzemeSayi2, ItemStack ingrident2,
                          int cookTime, int exp, String name) {
 
@@ -3059,7 +3095,7 @@ public class ItemHandler {
     }
 
     public void createHeavyWood() {
-        ItemStack stick = new ItemStack(Material.BASALT);
+        ItemStack stick = new ItemStack(Material.WARPED_HYPHAE);
         ItemMeta meta = stick.getItemMeta();
         meta.displayName((MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ağır Odun <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
@@ -3148,6 +3184,16 @@ public class ItemHandler {
         darkoakplanks = stick;
         itemStackMap.put("darkoakplanks", stick);
     }
+    public void createTridentFrag() {
+        ItemStack stick = new ItemStack(Material.GHAST_TEAR);
+        ItemMeta meta = stick.getItemMeta();
+        meta.displayName((MiniMessage.miniMessage().deserialize("<dark_aqua><i:false>Üç Başlı Mızrak Kalıntısı <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        stick.setItemMeta(meta);
+        tridentfrag = stick;
+        itemStackMap.put("tridentfrag", stick);
+
+
+    }
 
     public void createOldOakPlanks() {
         ItemStack stick = new ItemStack(Material.DARK_OAK_PLANKS);
@@ -3218,6 +3264,17 @@ public class ItemHandler {
         itemStackMap.put("bone", stick);
     }
 
+    public void createEnchBone() {
+        ItemStack stick = new ItemStack(Material.BONE);
+        ItemMeta meta = stick.getItemMeta();
+        stick.addUnsafeEnchantment(Enchantment.WATER_WORKER, 1);
+        stick.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta.displayName((MiniMessage.miniMessage().deserialize("<white><i:false>Büyülü Kemik <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        stick.setItemMeta(meta);
+        enchbone = stick;
+        itemStackMap.put("enchbone", stick);
+    }
+
     public void createSalt() {
         ItemStack stick = new ItemStack(Material.SUGAR);
         ItemMeta meta = stick.getItemMeta();
@@ -3239,15 +3296,12 @@ public class ItemHandler {
     }
 
     public void createHeavyPlanks() {
-        ItemStack stick = new ItemStack(Material.POLISHED_BASALT);
+        ItemStack stick = new ItemStack(Material.WARPED_PLANKS);
         ItemMeta meta = stick.getItemMeta();
         meta.displayName((MiniMessage.miniMessage().deserialize("<dark_gray><i:false>Ağır Tahta <dark_aqua>[<aqua>T3<dark_aqua>]")));
         stick.setItemMeta(meta);
         heavyplanks = stick;
 
-        ShapelessRecipe recipe = new ShapelessRecipe(NamespacedKey.minecraft("heavy_planks"), stick);
-        recipe.addIngredient(1, heavywood);
-        Bukkit.getServer().addRecipe(recipe);
         itemStackMap.put("heavyplanks", stick);
     }
 
@@ -3327,7 +3381,40 @@ public class ItemHandler {
         arrow = stick;
         itemStackMap.put("arrow", stick);
     }
+    public void createGolemHearth() {
+        ItemStack stick = PlayerHeads.getSkull("https://textures.minecraft.net/texture/18514d8230b75511a5a5a69ca93dcb2d3e7cd1a28c48dc38087f158d283b7fa7");
+        ItemMeta meta = stick.getItemMeta();
+        meta.displayName(MiniMessage.miniMessage().deserialize("<red><i:false>Golem Kalbi <dark_aqua>[<aqua>T5<dark_aqua>]"));
+        stick.setItemMeta(meta);
+        golemheart = stick;
+        itemStackMap.put("golemheart", stick);
+    }
 
+    public void createGolemHand() {
+        ItemStack stick = PlayerHeads.getSkull("https://textures.minecraft.net/texture/a965df7377e6f2daa9ed272d0331eb96f18d84003829637755522c21921f7b55");
+        ItemMeta meta = stick.getItemMeta();
+        meta.displayName(MiniMessage.miniMessage().deserialize("<gray><i:false>Golem Eli <dark_aqua>[<aqua>T3<dark_aqua>]"));
+        stick.setItemMeta(meta);
+        golemhand = stick;
+        itemStackMap.put("golemhand", stick);
+    }
+
+    public void createBrownMushroom() {
+        ItemStack stick = new ItemStack(Material.BROWN_MUSHROOM);
+        ItemMeta meta = stick.getItemMeta();
+        meta.displayName((MiniMessage.miniMessage().deserialize("<white><i:false>Kahverengi Mantar <dark_aqua>[<aqua>T1<dark_aqua>]")));
+        stick.setItemMeta(meta);
+        brownmushroom = stick;
+        itemStackMap.put("brownmushroom", stick);
+    }
+    public void createRedMushroom() {
+        ItemStack stick = new ItemStack(Material.RED_MUSHROOM);
+        ItemMeta meta = stick.getItemMeta();
+        meta.displayName((MiniMessage.miniMessage().deserialize("<red><i:false>Kırmızı Mantar <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        stick.setItemMeta(meta);
+        redmushroom = stick;
+        itemStackMap.put("redmushroom", stick);
+    }
     public void createMagmaFrag() {
         ItemStack stick = new ItemStack(Material.BLAZE_POWDER);
         ItemMeta meta = stick.getItemMeta();
@@ -3408,6 +3495,14 @@ public class ItemHandler {
         kozstick = stick;
         itemStackMap.put("kozcubuk", stick);
     }
+    public void createShieldFrag() {
+        ItemStack stick = new ItemStack(Material.IRON_NUGGET);
+        ItemMeta meta = stick.getItemMeta();
+        meta.displayName((MiniMessage.miniMessage().deserialize("<dark_red><i:false>Kalkan Parçası <dark_aqua>[<aqua>T3<dark_aqua>]")));
+        stick.setItemMeta(meta);
+        shieldfrag = stick;
+        itemStackMap.put("shieldfrag", stick);
+    }
 
     public void createGodCubuk() {
         ItemStack stick = new ItemStack(Material.STICK);
@@ -3443,6 +3538,14 @@ public class ItemHandler {
         stick.setItemMeta(meta);
         bizoneleather = stick;
         itemStackMap.put("bizoneleather", stick);
+    }
+    public void createHurda() {
+        ItemStack stick = new ItemStack(Material.NETHERITE_SCRAP);
+        ItemMeta meta = stick.getItemMeta();
+        meta.displayName((MiniMessage.miniMessage().deserialize("<gray><i:false>Hurda <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        stick.setItemMeta(meta);
+        hurda = stick;
+        itemStackMap.put("hurda", stick);
     }
 
     public void createWildPigLeather() {
@@ -3527,7 +3630,7 @@ public class ItemHandler {
     }
 
     public void createKeziCicek() {
-        ItemStack stick = new ItemStack(Material.ALLIUM);
+        ItemStack stick = new ItemStack(Material.CORNFLOWER);
         ItemMeta meta = stick.getItemMeta();
         meta.displayName((MiniMessage.miniMessage().deserialize("<aqua><i:false>Kezi Çiçeği <dark_aqua>[<aqua>T2<dark_aqua>]")));
         stick.setItemMeta(meta);
@@ -3772,6 +3875,14 @@ public class ItemHandler {
         tripwire = stick;
         itemStackMap.put("tripwire", stick);
     }
+    public void createTear() {
+        ItemStack stick = new ItemStack(Material.GHAST_TEAR);
+        ItemMeta meta = stick.getItemMeta();
+        meta.displayName((MiniMessage.miniMessage().deserialize("<red><i:false>Gözyaşı <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        stick.setItemMeta(meta);
+        tear = stick;
+        itemStackMap.put("tear", stick);
+    }
 
     public void createCopperIngot() {
         ItemStack stick = new ItemStack(Material.COPPER_INGOT);
@@ -3862,6 +3973,14 @@ public class ItemHandler {
         adamantiumingot = stick;
         itemStackMap.put("adamantiumingot", stick);
     }
+    public void createAralitFlower() {
+        ItemStack stick = new ItemStack(Material.ALLIUM);
+        ItemMeta meta = stick.getItemMeta();
+        meta.displayName((MiniMessage.miniMessage().deserialize("<light_purple><i:false>Aralit Çiçeği <dark_aqua>[<aqua>T2<dark_aqua>]")));
+        stick.setItemMeta(meta);
+        aralit = stick;
+        itemStackMap.put("aralit", stick);
+    }
 
     public void createBrick() {
         ItemStack stick = new ItemStack(Material.BRICK);
@@ -3880,6 +3999,7 @@ public class ItemHandler {
         sand = stick;
         itemStackMap.put("sand", stick);
     }
+
     public void createAntrikot() {
         ItemStack stick = new ItemStack(Material.COOKED_BEEF);
         ItemMeta meta = stick.getItemMeta();
@@ -3888,6 +4008,7 @@ public class ItemHandler {
         antrikot = stick;
         itemStackMap.put("antrikot", stick);
     }
+
     public void createCookedSilverFish() {
         ItemStack stick = new ItemStack(Material.COOKED_COD);
         ItemMeta meta = stick.getItemMeta();
@@ -3896,6 +4017,7 @@ public class ItemHandler {
         cookedsilverfish = stick;
         itemStackMap.put("cookedsilverfish", stick);
     }
+
     public void createTerracotta() {
         ItemStack stick = new ItemStack(Material.TERRACOTTA);
         ItemMeta meta = stick.getItemMeta();
@@ -3975,6 +4097,32 @@ public class ItemHandler {
         stick.setItemMeta(meta);
         redsand = stick;
         itemStackMap.put("redsand", stick);
+    }
+    public void createPasSword() {
+        ItemStack stick = createWeaponItem(new ItemStack(Material.DIAMOND_SWORD), "<gray>Paslanmış Ağır Demir Kılıç", 3, 10, 12, 10, 0, false, 1, 32, 0, "Yüksek", 2, "Kılıç", 500, 6);
+        password = stick;
+        itemStackMap.put("paskilic", stick);
+    }
+    public void createPasKask() {
+        ItemStack stick =  createArmorItem("Miğfer", new ItemStack(Material.GOLDEN_HELMET), "<gray>Ağır Gardiyan Miğferi", 3, 5, 3, 2, 4, 0, 2, 0, 0, 0, 14, 0, 2, 2, 400, 4);
+        paskask = stick;
+        itemStackMap.put("paskask", stick);
+    }
+
+    public void createPasBot() {
+        ItemStack stick =  createArmorItem("Botlar", new ItemStack(Material.GOLDEN_BOOTS), "<gray>Ağır Gardiyan Botlar", 3, 4, 5, 3, 4, 2, 2, 0, 0, 0, 14, 5, 2, 2, 400, 4);
+        pasbot = stick;
+        itemStackMap.put("pasbot", stick);
+    }
+    public void createPasChest() {
+        ItemStack stick = createArmorItem("Göğüslük", new ItemStack(Material.GOLDEN_CHESTPLATE), "<gray>Ağır Gardiyan Göğüslüğü", 3, 4, 5, 5, 6, 2, 2, 0, 0, 0, 14, 5, 2, 2, 400, 4);
+        paschest = stick;
+        itemStackMap.put("paschest", stick);
+    }
+    public void createPasPant() {
+        ItemStack stick = createArmorItem("Pantolon", new ItemStack(Material.GOLDEN_LEGGINGS), "<gray>Ağır Gardiyan Dizliği", 3, 4, 5, 4, 6, 2, 2, 0, 0, 0, 14, 5, 2, 2, 400, 4);
+        paspant = stick;
+        itemStackMap.put("paspant", stick);
     }
 
     public void createBok() {
@@ -4608,7 +4756,34 @@ public class ItemHandler {
         Bukkit.getServer().addRecipe(shapedRecipe);
         itemStackMap.put("brewgaunlet", stick);
     }
+    public void createGolemChestplate() {
+        ItemStack stick = createArmorItem("Göğüslük", new ItemStack(Material.IRON_CHESTPLATE), "<red><i:false>Golem Göğüslüğü", 4, 12, 10, 16, 0, -3, 0, 0, 0, 0, 30, 0, 2, 0, 2000, 3, "<color:#4a320a><i:false>[<color:#c48c2b><i:false>Ekipman Özelliği<color:#4a320a><i:false>]", "<color:#ad7617><i:false>Kullanıcı hasar aldığında etrafına hasar verir.");
+        golemchestplate = stick;
+        ItemStack gold = golemheart;
+        ItemStack deri = ironblock;
+        ShapedRecipe shapedRecipe = new ShapedRecipe(NamespacedKey.minecraft("golem_chestplate"), stick);
+        shapedRecipe.shape("D D", "DAD", "DDD");
+        shapedRecipe.setIngredient('A', new RecipeChoice.ExactChoice(gold));
+        shapedRecipe.setIngredient('D', new RecipeChoice.ExactChoice(deri));
+        Bukkit.getServer().addRecipe(shapedRecipe);
+        itemStackMap.put("golemchestplate", stick);
 
+    }
+    public void createGolemGaunlet() {
+        ItemStack stick = createAccessoryItem("Eldiven", PlayerHeads.getSkull("https://textures.minecraft.net/texture/a965df7377e6f2daa9ed272d0331eb96f18d84003829637755522c21921f7b55"),
+       "<white><i:false>Golem Eldiveni", 4, 20, 17, 35, -4, -1, 0, 0, 0, 34, 0, 200, 10);
+        setUnstackable(stick, "akse");
+        golemgaunlet = stick;
+        ItemStack gold = golemhand;
+        ItemStack deri = ironblock;
+        ShapedRecipe shapedRecipe = new ShapedRecipe(NamespacedKey.minecraft("golem_gaunlet"), stick);
+        shapedRecipe.shape("ADA", "DDD", "DDA");
+        shapedRecipe.setIngredient('A', new RecipeChoice.ExactChoice(gold));
+        shapedRecipe.setIngredient('D', new RecipeChoice.ExactChoice(deri));
+        Bukkit.getServer().addRecipe(shapedRecipe);
+        itemStackMap.put("golemgaunlet", stick);
+
+    }
     public void createWolfGaunlet() {
         ItemStack stick = createAccessoryItem("Eldiven", new ItemStack(Material.NAUTILUS_SHELL), "<white><i:false>Kurt Pençesi", 2, -2, 0, 0, 2, 10, 0, 0, 0, 0, 0, 200, 3);
         setUnstackable(stick, "akse");
@@ -4878,7 +5053,7 @@ public class ItemHandler {
     }
 
     public void createKararmisKasket() {
-        ItemStack stick = createArmorItem("Miğfer", new ItemStack(Material.LEATHER_HELMET), "<black><i:false>Kararmış Kasket", 3, 1, 1, 0, 0, 1, 5, 0, 0, 0, 15, 5, 2, 0, 300, 5);
+        ItemStack stick = createArmorItem("Miğfer", new ItemStack(Material.LEATHER_HELMET), "<gray><i:false>Kararmış Kasket", 3, 1, 1, 0, 0, 1, 5, 0, 0, 0, 15, 5, 2, 0, 300, 5);
         LeatherArmorMeta meta = (LeatherArmorMeta) stick.getItemMeta();
         meta.setColor(Color.BLACK);
         stick.setItemMeta(meta);

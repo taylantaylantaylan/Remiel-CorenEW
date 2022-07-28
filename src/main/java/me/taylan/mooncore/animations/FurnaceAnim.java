@@ -44,24 +44,6 @@ public class FurnaceAnim {
                     Location loc = block.getLocation().add(0.5, 1, 0.5);
                     Location loc2 = block.getLocation().add(0.5, 1.2, 0.5);
                     World world = Bukkit.getWorld("world");
-                    Material type = block.getType();
-                    BlockState state = block.getState();
-                    BlockData data = block.getState().getBlockData();
-                    Lightable lit = (Lightable) data;
-                    new BukkitRunnable() {
-
-                        @Override
-                        public void run() {
-                            Material type = block.getType();
-                            BlockState state = block.getState();
-                            BlockData data = block.getState().getBlockData();
-                            Lightable lit = (Lightable) data;
-                            lit.setLit(true);
-                            state.setBlockData((BlockData) data);
-                            state.update();
-                        }
-
-                    }.runTaskLater(plugin, 1L);
                     world.spawn(loc2, ArmorStand.class, armorStand2 -> {
                         armorStand2.setMarker(true);
                         armorStand2.setVisible(false);
@@ -102,10 +84,8 @@ public class FurnaceAnim {
                                     if (timer >= cookTime) {
 
                                         armorStand.setCustomName(ChatColor.GREEN + "✔");
-                                        lit.setLit(false);
-                                        state.setBlockData((BlockData) data);
-                                        state.update();
                                         stats.setFurnaceAmount(p.getUniqueId(), -cookTime);
+                                        result.setAmount(1);
                                         JoinListener.getFurnacemenu().get(p.getUniqueId()).addItem(result);
                                         p.giveExp(1);
                                         stats.setExp(p.getUniqueId(), 1);

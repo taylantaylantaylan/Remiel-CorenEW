@@ -41,6 +41,7 @@ public class ItemDrop {
             armorStand.setItem(equip, item);
             armorStand.customName(item.getItemMeta().displayName());
             armorStand.setCustomNameVisible(true);
+            plugin.getIndicators().put(armorStand,180);
             for (Player player2 : Bukkit.getOnlinePlayers()) {
                 if (world.getName().equals("dungeonworld") || world.getName().equals("world")) {
                     if (player2 == player) continue;
@@ -52,6 +53,11 @@ public class ItemDrop {
 
                 @Override
                 public void run() {
+                    if(armorStand.isDead()) {
+                        dropmap.remove(armorStand);
+                        Bukkit.getPlayer(dropmap.get(armorStand)).sendMessage("aga");
+                        this.cancel();
+                    }
                     Location location = armorStand.getLocation();
                     location.setYaw(location.getYaw() - 1);
                     armorStand.teleportAsync(location);
@@ -66,7 +72,6 @@ public class ItemDrop {
                                 playerdrop.sendMessage(
                                         Painter.paint("&7Yerden bir eşya alındı: " + item.getItemMeta().getDisplayName()));
                                 playerdrop.playSound(playerdrop, Sound.ENTITY_ITEM_PICKUP, 0.5F, 1.3F);
-                                plugin.getIndicators2().put(armorStand, 100);
                                 armorStand.remove();
                                 this.cancel();
                             }
@@ -88,6 +93,7 @@ public class ItemDrop {
             armorStand.setItem(equip, item);
             armorStand.customName(item.getItemMeta().displayName());
             armorStand.setCustomNameVisible(true);
+            plugin.getIndicators().put(armorStand,180);
             for (Player player2 : Bukkit.getOnlinePlayers()) {
                 if (world.getName().equals("dungeonworld") || world.getName().equals("world")) {
                     if (player2 == player) continue;
@@ -99,6 +105,11 @@ public class ItemDrop {
 
                 @Override
                 public void run() {
+                    if(armorStand.isDead()) {
+                        dropmap.remove(armorStand);
+                        Bukkit.getPlayer(dropmap.get(armorStand)).sendMessage("aga");
+                        this.cancel();
+                    }
                     Location location = armorStand.getLocation();
                     location.setYaw(location.getYaw() - 1);
                     armorStand.teleportAsync(location);
@@ -113,7 +124,6 @@ public class ItemDrop {
                                 playerdrop.sendMessage(
                                         Painter.paint("&7Yerden bir eşya alındı: " + item.getItemMeta().getDisplayName()));
                                 playerdrop.playSound(playerdrop, Sound.ENTITY_ITEM_PICKUP, 0.5F, 1.3F);
-                                plugin.getIndicators2().put(armorStand, 100);
                                 armorStand.remove();
                                 this.cancel();
                             }
