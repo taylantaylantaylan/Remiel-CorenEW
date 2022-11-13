@@ -3,7 +3,7 @@ main: me.taylan.mooncore.MoonCore
 version: 1.0.0
 api-version: 1.18
 author: Taylan
-depend: [CrazyAdvancementsAPI, CoreProtect, ProtocolLib, Vault]
+depend: [CrazyAdvancementsAPI, CoreProtect, ProtocolLib, Vault, RealisticSeasons]
 load: STARTUP
 
 commands:

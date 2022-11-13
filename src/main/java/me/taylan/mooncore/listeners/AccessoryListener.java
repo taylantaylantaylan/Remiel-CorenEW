@@ -1,4 +1,4 @@
-package me.taylan.mooncore.listeners;
+ package me.taylan.mooncore.listeners;
 
 import com.destroystokyo.paper.MaterialTags;
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
@@ -77,7 +77,7 @@ public class AccessoryListener implements Listener {
 
                     switch (aksesuartype) {
                         case "Tılsım":
-                            if(stats.getTilsim(player.getUniqueId()).equals("Yok..")) {
+                            if(stats.getTilsim(player.getUniqueId()).equals("<dark_gray>Yok..")) {
                                 stats.setTilsim(uuid, aksesuarname);
                                 list.set(0, player.getInventory().getItemInMainHand());
                                 stats.setHepsi(uuid, list);
@@ -118,7 +118,7 @@ public class AccessoryListener implements Listener {
                             }
                             break;
                         case "Eldiven":
-                            if(stats.getEldiven(player.getUniqueId()).equals("Yok..")) {
+                            if(stats.getEldiven(player.getUniqueId()).equals("<dark_gray>Yok..")) {
                                 stats.setEldiven(uuid, aksesuarname);
                                 list.set(1, player.getInventory().getItemInMainHand());
                                 stats.setHepsi(uuid, list);
@@ -160,7 +160,7 @@ public class AccessoryListener implements Listener {
                             }
                             break;
                         case "Kolye":
-                            if(stats.getKolye(player.getUniqueId()).equals("Yok..")) {
+                            if(stats.getKolye(player.getUniqueId()).equals("<dark_gray>Yok..")) {
                                 stats.setKolye(uuid, aksesuarname);
                                 list.set(2, player.getInventory().getItemInMainHand());
                                 stats.setHepsi(uuid, list);
@@ -202,7 +202,7 @@ public class AccessoryListener implements Listener {
                             }
                             break;
                         case "Yüzük":
-                            if(stats.getYuzuk(player.getUniqueId()).equals("Yok..")) {
+                            if(stats.getYuzuk(player.getUniqueId()).equals("<dark_gray>Yok..")) {
                                 stats.setYuzuk(uuid, aksesuarname);
                                 list.set(3, player.getInventory().getItemInMainHand());
                                 stats.setHepsi(uuid, list);

@@ -919,13 +919,13 @@ public class GuiHandler {
         itemHandler.createItem(inv12, "gray_stained_glass_pane", 1, 19, " ");
         itemHandler.createItem(inv12, "red_stained_glass_pane", 1, 20, " ");
         itemHandler.createItem(inv12, "gray_stained_glass_pane", 1, 21, " ");
-        if (stats.getKolye(profil.getUniqueId()).equals("Yok..")) {
+        if (stats.getKolye(profil.getUniqueId()).equals("<dark_gray>Yok..")) {
             itemHandler.createItem(inv12, "red_stained_glass_pane", 1, 22, Painter.paint("&eBoş Kolye Bölmesi"));
         }
         if (profil.getInventory().getChestplate() == null) {
             itemHandler.createItem(inv12, "red_stained_glass_pane", 1, 23, Painter.paint("&eBoş Göğüslük Bölmesi"));
         }
-        if (stats.getTilsim(profil.getUniqueId()).equals("Yok..")) {
+        if (stats.getTilsim(profil.getUniqueId()).equals("<dark_gray>Yok..")) {
             itemHandler.createItem(inv12, "red_stained_glass_pane", 1, 24,
                     Painter.paint("&eBoş Tılsım/Ok Kılıfı Bölmesi"));
         }
@@ -935,13 +935,13 @@ public class GuiHandler {
         itemHandler.createItem(inv12, "gray_stained_glass_pane", 1, 28, " ");
         itemHandler.createItem(inv12, "red_stained_glass_pane", 1, 29, " ");
         itemHandler.createItem(inv12, "gray_stained_glass_pane", 1, 30, " ");
-        if (stats.getEldiven(profil.getUniqueId()).equals("Yok..")) {
+        if (stats.getEldiven(profil.getUniqueId()).equals("<dark_gray>Yok..")) {
             itemHandler.createItem(inv12, "red_stained_glass_pane", 1, 31, Painter.paint("&eBoş Eldiven Bölmesi"));
         }
         if (profil.getInventory().getLeggings() == null) {
             itemHandler.createItem(inv12, "red_stained_glass_pane", 1, 32, Painter.paint("&eBoş Pantolon Bölmesi"));
         }
-        if (stats.getYuzuk(profil.getUniqueId()).equals("Yok..")) {
+        if (stats.getYuzuk(profil.getUniqueId()).equals("<dark_gray>Yok..")) {
             itemHandler.createItem(inv12, "red_stained_glass_pane", 1, 33, Painter.paint("&eBoş Yüzük Bölmesi"));
         }
         itemHandler.createItem(inv12, "gray_stained_glass_pane", 1, 34, " ");
@@ -1065,19 +1065,19 @@ public class GuiHandler {
         itemHandler.createItem(inv16, "black_stained_glass_pane", 1, 16, " ");
         itemHandler.createItem(inv16, "black_stained_glass_pane", 1, 17, " ");
         itemHandler.createItem(inv16, "black_stained_glass_pane", 1, 18, " ");
-        if ((stats.getTilsim(p.getUniqueId()).equals("Yok.."))) {
+        if ((stats.getTilsim(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
             itemHandler.createItem(inv16, "magenta_stained_glass_pane", 1, 29,
                     ChatColor.LIGHT_PURPLE + "Tılsım/Ok Kılıfı", ChatColor.DARK_GRAY + "Yok..");
         }
-        if ((stats.getEldiven(p.getUniqueId()).equals("Yok.."))) {
+        if ((stats.getEldiven(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
             itemHandler.createItem(inv16, "blue_stained_glass_pane", 1, 31, ChatColor.BLUE + "Eldiven",
                     ChatColor.DARK_GRAY + "Yok..");
         }
-        if ((stats.getKolye(p.getUniqueId()).equals("Yok.."))) {
+        if ((stats.getKolye(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
             itemHandler.createItem(inv16, "yellow_stained_glass_pane", 1, 33, ChatColor.YELLOW + "Kolye",
                     ChatColor.DARK_GRAY + "Yok..");
         }
-        if ((stats.getYuzuk(p.getUniqueId()).equals("Yok.."))) {
+        if ((stats.getYuzuk(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
             itemHandler.createItem(inv16, "orange_stained_glass_pane", 1, 35, ChatColor.GOLD + "Yüzük",
                     ChatColor.DARK_GRAY + "Yok..");
         }
@@ -1466,15 +1466,14 @@ public class GuiHandler {
         itemHandler.createItem(inv13, "crafting_table", 1, 32, ChatColor.YELLOW + "Çalışma Alanı",
                 ChatColor.WHITE + "Buradan eşya üretebilirsin. ", "",
                 ChatColor.GRAY + "Açmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv13, "item_frame", 1, 33, ChatColor.GOLD + "Aksesuarların",
-                ChatColor.WHITE + "Buradan aksesuarlarını ve ekipmanlarını", ChatColor.WHITE + "yönetebilirsin.", "",
-                Painter.paint("&7Aksesuarlar kullanıcısına belirli"),
-                Painter.paint("&7özellikler bahşeden ekipmanlardır."), "", Painter.paint("&fKullanılan Aksesuarlar:"),
-                Painter.paint(" &dTılsım/Ok Kılıfı: &8") + stats.getTilsim(p.getUniqueId()),
-                Painter.paint(" &9Eldiven: &8") + stats.getEldiven(p.getUniqueId()),
-                Painter.paint(" &eKolye: &8") + stats.getKolye(p.getUniqueId()),
-                Painter.paint(" &6Yüzük: &8") + stats.getYuzuk(p.getUniqueId()), "", ChatColor.GRAY
-                        + "Aksesuarlarını çıkarmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
+        itemHandler.createItem3(inv13, "item_frame", 1, 33, ChatColor.GOLD + "Aksesuarların",
+                MiniMessage.miniMessage().deserialize("<white><i:false>Buradan aksesuarlarını ve ekipmanlarını"), MiniMessage.miniMessage().deserialize("<white><i:false>yönetebilirsin."), MiniMessage.miniMessage().deserialize(""),
+                MiniMessage.miniMessage().deserialize("<gray><i:false>Aksesuarlar kullanıcısına belirli"),
+                MiniMessage.miniMessage().deserialize("<gray><i:false>özellikler bahşeden ekipmanlardır."), MiniMessage.miniMessage().deserialize(""), MiniMessage.miniMessage().deserialize("<white><i:false>Kullanılan Aksesuarlar:"),
+                MiniMessage.miniMessage().deserialize(" <light_purple><i:false>Tılsım/Ok Kılıfı: <dark_gray><i:false>").append(MiniMessage.miniMessage().deserialize(stats.getTilsim(p.getUniqueId()))),
+                MiniMessage.miniMessage().deserialize(" <blue><i:false>Eldiven: <dark_gray><i:false>").append(MiniMessage.miniMessage().deserialize(stats.getEldiven(p.getUniqueId()))),
+                MiniMessage.miniMessage().deserialize(" <yellow><i:false>Kolye: <dark_gray><i:false>").append(MiniMessage.miniMessage().deserialize(stats.getKolye(p.getUniqueId()))),
+                MiniMessage.miniMessage().deserialize(" <gold><i:false>Yüzük: <dark_gray><i:false>").append(MiniMessage.miniMessage().deserialize(stats.getYuzuk(p.getUniqueId()))), MiniMessage.miniMessage().deserialize(""), MiniMessage.miniMessage().deserialize("<gray><i:false>Aksesuarlarını çıkarmak için <yellow><bold><i:false>Sağ Tıkla."));
         itemHandler.createItem(inv13, "campfire", 1, 34, ChatColor.YELLOW + "Olduğun Bölgeyi Sahiplen",
                 ChatColor.WHITE + "Buradan gerekli malzemeleri vererek", "",
                 ChatColor.GRAY + "olduğun bögleyi sahiplenebilirsin. Açmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
@@ -2756,7 +2755,7 @@ public class GuiHandler {
                 && clicked.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "Aksesuarların")) {
             p.openInventory(accessorymenu(p));
             ArrayList<ItemStack> list = (ArrayList<ItemStack>) stats.getHepsi(p.getUniqueId());
-            if (!(stats.getKolye(p.getUniqueId()).equals("Yok.."))) {
+            if (!(stats.getKolye(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                 ItemStack Kolye = list.get(2).clone();
                 ItemMeta meta = Kolye.getItemMeta();
                 meta.setDisplayName(ChatColor.YELLOW + "Kolye" + ChatColor.GRAY + " ("
@@ -2765,7 +2764,7 @@ public class GuiHandler {
                 p.getOpenInventory().getTopInventory().setItem(32, Kolye);
 
             }
-            if (!(stats.getTilsim(p.getUniqueId()).equals("Yok.."))) {
+            if (!(stats.getTilsim(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                 ItemStack tilsim = list.get(0).clone();
                 ItemMeta meta = tilsim.getItemMeta();
                 meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Tılsım/Ok Kılıfı" + ChatColor.GRAY + " ("
@@ -2773,7 +2772,7 @@ public class GuiHandler {
                 tilsim.setItemMeta(meta);
                 p.getOpenInventory().getTopInventory().setItem(28, tilsim);
             }
-            if (!(stats.getEldiven(p.getUniqueId()).equals("Yok.."))) {
+            if (!(stats.getEldiven(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                 ItemStack eldiven = list.get(1).clone();
                 ItemMeta meta = eldiven.getItemMeta();
                 meta.setDisplayName(ChatColor.BLUE + "Eldiven" + ChatColor.GRAY + " ("
@@ -2781,7 +2780,7 @@ public class GuiHandler {
                 eldiven.setItemMeta(meta);
                 p.getOpenInventory().getTopInventory().setItem(30, eldiven);
             }
-            if (!(stats.getYuzuk(p.getUniqueId()).equals("Yok.."))) {
+            if (!(stats.getYuzuk(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                 ItemStack yuzuk = list.get(3).clone();
                 ItemMeta meta = yuzuk.getItemMeta();
                 meta.setDisplayName(ChatColor.GOLD + "Yüzük" + ChatColor.GRAY + " ("
@@ -3178,7 +3177,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 contains(ChatColor.LIGHT_PURPLE + "Tılsım")) {
-            if (!(stats.getTilsim(p.getUniqueId()).equals("Yok.."))) {
+            if (!(stats.getTilsim(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                 FileConfiguration fc = stats.getStatfile().get(p.getUniqueId());
                 ArrayList<ItemStack> akselist = (ArrayList<ItemStack>) stats.getStatfile().get(p.getUniqueId())
                         .get("Aksesuar." + "Hepsi");
@@ -3190,7 +3189,7 @@ public class GuiHandler {
                     ItemStack item = akselist.get(0);
                     p.getInventory().addItem(item);
                     akselist.set(0, new ItemStack(Material.AIR));
-                    stats.setTilsim(p.getUniqueId(), "Yok..");
+                    stats.setTilsim(p.getUniqueId(), "<dark_gray>Yok..");
                     stats.getStatfile().put(p.getUniqueId(), fc);
                     itemHandler.createItem(inv, "magenta_stained_glass_pane", 1, 29,
                             ChatColor.LIGHT_PURPLE + "Tılsım/Ok Kılıfı", ChatColor.DARK_GRAY + "Yok..");
@@ -3250,7 +3249,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 contains(ChatColor.BLUE + "Eldiven")) {
-            if (!(stats.getEldiven(p.getUniqueId()).equals("Yok.."))) {
+            if (!(stats.getEldiven(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                 FileConfiguration fc = stats.getStatfile().get(p.getUniqueId());
                 ArrayList<ItemStack> akselist = (ArrayList<ItemStack>) stats.getStatfile().get(p.getUniqueId())
                         .get("Aksesuar." + "Hepsi");
@@ -3262,7 +3261,7 @@ public class GuiHandler {
                     ItemStack item = akselist.get(1);
                     p.getInventory().addItem(item);
                     akselist.set(1, new ItemStack(Material.AIR));
-                    stats.setEldiven(p.getUniqueId(), "Yok..");
+                    stats.setEldiven(p.getUniqueId(), "<dark_gray>Yok..");
                     stats.getStatfile().put(p.getUniqueId(), fc);
                     itemHandler.createItem(inv, "blue_stained_glass_pane", 1, 31, ChatColor.BLUE + "Eldiven",
                             ChatColor.DARK_GRAY + "Yok..");
@@ -3322,7 +3321,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 contains(ChatColor.YELLOW + "Kolye")) {
-            if (!(stats.getKolye(p.getUniqueId()).equals("Yok.."))) {
+            if (!(stats.getKolye(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                 FileConfiguration fc = stats.getStatfile().get(p.getUniqueId());
                 ArrayList<ItemStack> akselist = (ArrayList<ItemStack>) stats.getStatfile().get(p.getUniqueId())
                         .get("Aksesuar." + "Hepsi");
@@ -3334,7 +3333,7 @@ public class GuiHandler {
                     ItemStack item = akselist.get(2);
                     p.getInventory().addItem(item);
                     akselist.set(2, new ItemStack(Material.AIR));
-                    stats.setKolye(p.getUniqueId(), "Yok..");
+                    stats.setKolye(p.getUniqueId(), "<dark_gray>Yok..");
                     stats.getStatfile().put(p.getUniqueId(), fc);
                     itemHandler.createItem(inv, "yellow_stained_glass_pane", 1, 33, ChatColor.YELLOW + "Kolye",
                             ChatColor.DARK_GRAY + "Yok..");
@@ -3394,7 +3393,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 contains(ChatColor.GOLD + "Yüzük")) {
-            if (!(stats.getYuzuk(p.getUniqueId()).equals("Yok.."))) {
+            if (!(stats.getYuzuk(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                 FileConfiguration fc = stats.getStatfile().get(p.getUniqueId());
                 ArrayList<ItemStack> akselist = (ArrayList<ItemStack>) stats.getStatfile().get(p.getUniqueId())
                         .get("Aksesuar." + "Hepsi");
@@ -3406,7 +3405,7 @@ public class GuiHandler {
                     ItemStack item = akselist.get(3);
                     p.getInventory().addItem(item);
                     akselist.set(3, new ItemStack(Material.AIR));
-                    stats.setYuzuk(p.getUniqueId(), "Yok..");
+                    stats.setYuzuk(p.getUniqueId(), "<dark_gray>Yok..");
                     stats.getStatfile().put(p.getUniqueId(), fc);
                     itemHandler.createItem(inv, "orange_stained_glass_pane", 1, 35, ChatColor.GOLD + "Yüzük",
                             ChatColor.DARK_GRAY + "Yok..");
@@ -3940,18 +3939,18 @@ public class GuiHandler {
                     itemarray.add(item);
                 }
                 List<ItemStack> akselist = stats.getHepsi(p.getUniqueId());
-                if (!(stats.getTilsim(p.getUniqueId()).equals("Yok.."))) {
+                if (!(stats.getTilsim(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                     itemarray.add(stats.getHepsi(p.getUniqueId()).get(0));
 
                 }
-                if (!(stats.getEldiven(p.getUniqueId()).equals("Yok.."))) {
+                if (!(stats.getEldiven(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                     itemarray.add(stats.getHepsi(p.getUniqueId()).get(1));
 
                 }
-                if (!(stats.getKolye(p.getUniqueId()).equals("Yok.."))) {
+                if (!(stats.getKolye(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                     itemarray.add(stats.getHepsi(p.getUniqueId()).get(2));
                 }
-                if (!(stats.getYuzuk(p.getUniqueId()).equals("Yok.."))) {
+                if (!(stats.getYuzuk(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                     itemarray.add(stats.getHepsi(p.getUniqueId()).get(3));
                 }
 
@@ -4274,7 +4273,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.copperingot, itemHandler.oakstick, 3, 2,
-                    new ItemStack(Material.WOODEN_SWORD), "<gold><i:false>Bakır Kılıç", 2, 6, 4, 2, 2, false, 2, 10, 6, "Düşük", 5,
+                    new ItemStack(Material.WOODEN_SWORD), "<gold><i:false><reforge> Bakır Kılıç", 2, 6, 4, 2, 2, false, 2, 10, 6, "Düşük", 5,
                     6, 10, 8, 10, "Kılıç", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -4286,7 +4285,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Ağır Bakır Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.copperingot, itemHandler.oakstick, 5, 3,
-                    new ItemStack(Material.DIAMOND_SWORD), "<gold><i:false>Ağır Bakır Kılıç", 2, 8, 4, 2, 0, false, 2, 10, 6, "Orta", 5,
+                    new ItemStack(Material.DIAMOND_SWORD), "<gold><i:false><reforge> Ağır Bakır Kılıç", 2, 8, 4, 2, 0, false, 2, 10, 6, "Orta", 5,
                     6, 10, 8, 10, "Ağır Kılıç", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -4298,7 +4297,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Hançer")) {
             itemHandler.createWeapon(p, itemHandler.copperingot, itemHandler.oakstick, 3, 1,
-                    new ItemStack(Material.SHEARS), "<gold><i:false>Bakır Hançer", 2, 6, 7, 5, 0, false, 2, 10, 5, "Düşük", 5, 6, 10,
+                    new ItemStack(Material.SHEARS), "<gold><i:false><reforge> Bakır Hançer", 2, 6, 7, 5, 0, false, 2, 10, 5, "Düşük", 5, 6, 10,
                     8, 10, "Hançer", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -4310,7 +4309,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Huş Yay")) {
             itemHandler.createWeaponWork(p, itemHandler.birchstick, itemHandler.string, 4, 3,
-                    3, new ItemStack(Material.BOW), "<white><i:false>Huş Yay", 1, 8, 9, 6, 1, false, 4, 0, 3, "Düşük", 0, 6, 8,
+                    3, new ItemStack(Material.BOW), "<white><i:false><reforge> Huş Yay", 1, 8, 9, 6, 1, false, 4, 0, 3, "Düşük", 0, 6, 8,
                     12, 2, "Yay", 250, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -4322,7 +4321,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Meşe Olta")) {
             itemHandler.createWeaponWork(p, itemHandler.oakstick, itemHandler.string, 5, 4,
-                    8, new ItemStack(Material.FISHING_ROD), "<gold><i:false>Meşe Olta", 1, 6, 0, 0, 0, false, 5, 4, 0, "Düşük", 5, 6, 10,
+                    8, new ItemStack(Material.FISHING_ROD), "<gold><i:false><reforge> Meşe Olta", 1, 6, 0, 0, 0, false, 5, 4, 0, "Düşük", 5, 6, 10,
                     10, 4, "Olta", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -4334,7 +4333,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Huş Olta")) {
             itemHandler.createWeaponWork(p, itemHandler.birchstick, itemHandler.string, 5, 4,
-                    8, new ItemStack(Material.FISHING_ROD), "<white<i:false>Huş Olta", 1, 7, 0, 0, 0, false, 5, 4, 0, "Düşük", 5, 6, 12,
+                    8, new ItemStack(Material.FISHING_ROD), "<white<i:false><reforge> Huş Olta", 1, 7, 0, 0, 0, false, 5, 4, 0, "Düşük", 5, 6, 12,
                     16, 4, "Olta", 400, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -4346,7 +4345,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Meşe Yay")) {
             itemHandler.createWeaponWork(p, itemHandler.oakstick, itemHandler.string, 4, 3,
-                    8, new ItemStack(Material.BOW), "<gold><i:false>Meşe Yay", 1, 6, 7, 5, 0, false, 5, 0, 5, "Düşük", 0, 6, 10,
+                    8, new ItemStack(Material.BOW), "<gold><i:false><reforge> Meşe Yay", 1, 6, 7, 5, 0, false, 5, 0, 5, "Düşük", 0, 6, 10,
                     10, 2, "Yay", 200, 1);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -4358,7 +4357,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Yaşlı Meşe Yay")) {
             itemHandler.createWeaponWork(p, itemHandler.oldoakstick, itemHandler.string, 4, 3,
-                    3, new ItemStack(Material.BOW), "<white><i:false>Yaşlı Meşe Yay", 1, 8, 9, 6, 1, false, 4, 0, 3, "Düşük", 0, 6, 8,
+                    3, new ItemStack(Material.BOW), "<white><i:false><reforge> Yaşlı Meşe Yay", 1, 8, 9, 6, 1, false, 4, 0, 3, "Düşük", 0, 6, 8,
                     17, 2, "Yay", 250, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -4370,7 +4369,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Tırpan")) {
             itemHandler.createWeapon(p, itemHandler.copperingot, itemHandler.oakstick, 3, 3,
-                    new ItemStack(Material.WOODEN_HOE), "<gold><i:false>Bakır Tırpan", 2, 4, 7, 5, 0, false, 2, 10, 4, "Orta", 5, 6,
+                    new ItemStack(Material.WOODEN_HOE), "<gold><i:false><reforge> Bakır Tırpan", 2, 4, 7, 5, 0, false, 2, 10, 4, "Orta", 5, 6,
                     10, 8, 10, "Tırpan", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5165,7 +5164,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Balta")) {
             itemHandler.createTool(p, itemHandler.bronzeingot, 3, itemHandler.oakstick, 2,
-                    new ItemStack(Material.GOLDEN_AXE), "<gold><i:false>Bakır Balta", 1, 5, false, 3, 4, 7, 8, 10, "Balta", 200, 2);
+                    new ItemStack(Material.GOLDEN_AXE), "<gold><i:false><reforge> Bakır Balta", 1, 5, false, 3, 4, 7, 8, 10, "Balta", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -5176,7 +5175,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Mızrak")) {
             itemHandler.createWeapon(p, itemHandler.copperingot, itemHandler.oakstick, 3, 2,
-                    new ItemStack(Material.STICK), "<gold><i:false>Bakır Mızrak", 2, 7, 5, 3, 4, false, 1, 14, 7, "Düşük", 6, 6, 10,
+                    new ItemStack(Material.STICK), "<gold><i:false><reforge> Bakır Mızrak", 2, 7, 5, 3, 4, false, 1, 14, 7, "Düşük", 6, 6, 10,
                     8, 10, "Mızrak", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5188,7 +5187,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Topuz")) {
             itemHandler.createWeapon(p, itemHandler.copperingot, itemHandler.oakstick, 3, 3,
-                    new ItemStack(Material.WOODEN_SHOVEL), "<gold><i:false>Bakır Topuz", 2, 7, 5, 3, 4, false, 1, 14, 7, "Düşük", 5, 6, 10,
+                    new ItemStack(Material.WOODEN_SHOVEL), "<gold><i:false><reforge> Bakır Topuz", 2, 7, 5, 3, 4, false, 1, 14, 7, "Düşük", 5, 6, 10,
                     8, 10, "Topuz", 300, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5200,7 +5199,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Kürek")) {
             itemHandler.createTool(p, itemHandler.copperingot, 3, itemHandler.oakstick, 2,
-                    new ItemStack(Material.GOLDEN_SHOVEL), "<gold><i:false>Bakır Kürek", 2, 4, false, 3, 20, 6, 8, 10, "Kürek", 200, 2);
+                    new ItemStack(Material.GOLDEN_SHOVEL), "<gold><i:false><reforge> Bakır Kürek", 2, 4, false, 3, 20, 6, 8, 10, "Kürek", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -5211,7 +5210,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Kazma")) {
             itemHandler.createTool(p, itemHandler.copperingot, 3, itemHandler.oakstick, 3,
-                    new ItemStack(Material.GOLDEN_PICKAXE), "<gold><i:false>Bakır Kazma", 2, 5, false, 3, 20, 6, 8, 10, "Kazma", 200, 2);
+                    new ItemStack(Material.GOLDEN_PICKAXE), "<gold><i:false><reforge> Bakır Kazma", 2, 5, false, 3, 20, 6, 8, 10, "Kazma", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -5222,7 +5221,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Çapa")) {
             itemHandler.createTool(p, itemHandler.copperingot, 3, itemHandler.oakstick, 3,
-                    new ItemStack(Material.GOLDEN_HOE), "<gold><i:false>Bakır Çapa", 2, 5, false, 3, 20, 6, 8, 10, "Çapa", 200, 2);
+                    new ItemStack(Material.GOLDEN_HOE), "<gold><i:false><reforge> Bakır Çapa", 2, 5, false, 3, 20, 6, 8, 10, "Çapa", 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -5233,7 +5232,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Göğüslük")) {
             itemHandler.createArmor(p, "Göğüslük", itemHandler.copperingot, 8,
-                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false>Bakır Göğüslük", 2, 4, 5, 5, 1, 0, 0, 0, 0, 0, 0,
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false><reforge> Bakır Göğüslük", 2, 4, 5, 5, 1, 0, 0, 0, 0, 0, 0,
                     0, 4, 10, 8, 10, 8, 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5245,7 +5244,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "İnek Derisinden Kapüşon")) {
             itemHandler.createArmorWork(p, "Miğfer", itemHandler.cowleather, itemHandler.string, 5, 3,
-                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false>İnek Derisinden Kapüşon", 2, 2, 1, 0, 0, 0, 1, 1, 0, 0, 8,
+                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false><reforge> İnek Derisinden Kapüşon", 2, 2, 1, 0, 0, 0, 1, 1, 0, 0, 8,
                     8, 4, 6, 12, 5, 104, 100, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5257,7 +5256,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "İnek Derisinden Göğüslük")) {
             itemHandler.createArmorWork(p, "Göğüslük", itemHandler.cowleather, itemHandler.string, 8, 6,
-                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false>İnek Derisinden Göğüslük", 2, 4, 3, 0, 0, 0, 2, 3, 0, 0, 12,
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false><reforge> İnek Derisinden Göğüslük", 2, 4, 3, 0, 0, 0, 2, 3, 0, 0, 12,
                     8, 4, 7, 12, 5, 104, 120, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5269,7 +5268,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "İnek Derisinden Pantolon")) {
             itemHandler.createArmorWork(p, "Pantolon", itemHandler.cowleather, itemHandler.string, 7, 5,
-                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false>İnek Derisinden Pantolon", 2, 4, 2, 0, 0, 0, 2, 3, 0, 0, 10,
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false><reforge> İnek Derisinden Pantolon", 2, 4, 2, 0, 0, 0, 2, 3, 0, 0, 10,
                     8, 4, 7, 12, 5, 104, 120, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5281,7 +5280,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "İnek Derisinden Çizmeler")) {
             itemHandler.createArmorWork(p, "Botlar", itemHandler.cowleather, itemHandler.string, 4, 3,
-                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false>İnek Derisinden Çizmeler", 2, 3, 1, 0, 0, 0, 2, 2, 0, 0, 8,
+                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false><reforge> İnek Derisinden Çizmeler", 2, 3, 1, 0, 0, 0, 2, 2, 0, 0, 8,
                     8, 4, 7, 12, 5, 104, 100, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5306,7 +5305,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bizon Derisinden Kapüşon")) {
             itemHandler.createArmorWork(p, "Miğfer", itemHandler.bizoneleather, itemHandler.string, 5, 3,
-                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false>Bizon Derisinden Kapüşon", 2, 2, 2, 0, 0, 1, 1, 3, 0, 0, 11,
+                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false><reforge> Bizon Derisinden Kapüşon", 2, 2, 2, 0, 0, 1, 1, 3, 0, 0, 11,
                     8, 4, 6, 15, 5, 101, 100, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5318,7 +5317,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bizon Derisinden Göğüslük")) {
             itemHandler.createArmorWork(p, "Göğüslük", itemHandler.bizoneleather, itemHandler.string, 8, 6,
-                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false>Bizon Derisinden Göğüslük", 2, 4, 4, 0, 0, 3, 2, 5, 0, 0, 15,
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false><reforge> Bizon Derisinden Göğüslük", 2, 4, 4, 0, 0, 3, 2, 5, 0, 0, 15,
                     8, 4, 7, 16, 5, 101, 120, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5330,7 +5329,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bizon Derisinden Pantolon")) {
             itemHandler.createArmorWork(p, "Pantolon", itemHandler.bizoneleather, itemHandler.string, 7, 5,
-                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false>Bizon Derisinden Pantolon", 2, 4, 3, 0, 0, 2, 2, 5, 0, 0, 13,
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false><reforge> Bizon Derisinden Pantolon", 2, 4, 3, 0, 0, 2, 2, 5, 0, 0, 13,
                     8, 4, 7, 16, 5, 101, 120, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5342,7 +5341,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bizon Derisinden Çizmeler")) {
             itemHandler.createArmorWork(p, "Botlar", itemHandler.bizoneleather, itemHandler.string, 4, 3,
-                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false>Bizon Derisinden Çizmeler", 2, 4, 2, 0, 0, 4, 2, 4, 0, 0, 10,
+                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false><reforge> Bizon Derisinden Çizmeler", 2, 4, 2, 0, 0, 4, 2, 4, 0, 0, 10,
                     8, 4, 7, 16, 5, 101, 100, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5366,7 +5365,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Yaban Domuzu Derisinden Kapüşon")) {
             itemHandler.createArmorWork(p, "Miğfer", itemHandler.pigleather, itemHandler.string, 5, 3,
-                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false>Yaban Domuzu Derisinden Kapüşon", 3, 2, 2, 0, 0, 1, 1, 5, 0, 0, 14,
+                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false><reforge> Yaban Domuzu Derisinden Kapüşon", 3, 2, 2, 0, 0, 1, 1, 5, 0, 0, 14,
                     10, 4, 8, 25, 5, 103, 200, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5378,7 +5377,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Yaban Domuzu Derisinden Göğüslük")) {
             itemHandler.createArmorWork(p, "Göğüslük", itemHandler.pigleather, itemHandler.string, 8, 6,
-                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false>Yaban Domuzu Derisinden Göğüslük", 3, 4, 4, 2, 0, 5, 4, 5, 0, 0, 16,
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false><reforge> Yaban Domuzu Derisinden Göğüslük", 3, 4, 4, 2, 0, 5, 4, 5, 0, 0, 16,
                     10, 4, 8, 25, 5, 103, 220, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5390,7 +5389,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Yaban Domuzu Derisinden Pantolon")) {
             itemHandler.createArmorWork(p, "Pantolon", itemHandler.pigleather, itemHandler.string, 7, 5,
-                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false>Yaban Domuzu Derisinden Pantolon", 3, 4, 3, 1, 0, 2, 4, 6, 0, 0, 15,
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false><reforge> Yaban Domuzu Derisinden Pantolon", 3, 4, 3, 1, 0, 2, 4, 6, 0, 0, 15,
                     10, 4, 8, 25, 5, 103, 220, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5402,7 +5401,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Yaban Domuzu Derisinden Çizmeler")) {
             itemHandler.createArmorWork(p, "Botlar", itemHandler.pigleather, itemHandler.string, 4, 3,
-                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false>Yaban Domuzu Derisinden Çizmeler", 3, 4, 2, 0, 0, 7, 4, 5, 0, 0, 13,
+                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false><reforge> Yaban Domuzu Derisinden Çizmeler", 3, 4, 2, 0, 0, 7, 4, 5, 0, 0, 13,
                     11, 4, 8, 25, 5, 103, 200, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5418,19 +5417,6 @@ public class GuiHandler {
 
         }
 
-
-        if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
-
-                hasDisplayName()
-                && clicked.getItemMeta().
-
-                getDisplayName().
-
-                equalsIgnoreCase(ChatColor.YELLOW + "Kurt Derisinden Kapüşon")) {
-            itemHandler.createArmorWork(p, "Miğfer", itemHandler.wolfleather, itemHandler.string, 5, 3,
-                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false>Yaban Domuzu Derisinden Kapüşon", 3, 2, 2, 0, 0, 1, 1, 5, 0, 0, 14,
-                    10, 4, 8, 25, 5, 103, 200, 6);
-        }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
                 hasDisplayName()
@@ -5440,7 +5426,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Kurt Derisinden Göğüslük")) {
             itemHandler.createArmorWork(p, "Göğüslük", itemHandler.wolfleather, itemHandler.string, 8, 6,
-                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false>Kurt Derisinden Göğüslük", 3, 4, 5, 2, 0, 7, 5, 6, 0, 0, 16,
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false><reforge> Kurt Derisinden Göğüslük", 3, 4, 5, 2, 0, 7, 5, 6, 0, 0, 16,
                     12, 4, 11, 30, 5, 107, 420, 7);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5452,7 +5438,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Kurt Derisinden Pantolon")) {
             itemHandler.createArmorWork(p, "Pantolon", itemHandler.wolfleather, itemHandler.string, 7, 5,
-                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false>Kurt Derisinden Pantolon", 3, 4, 5, 2, 0, 4, 5, 7, 0, 0, 15,
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false><reforge> Kurt Derisinden Pantolon", 3, 4, 5, 2, 0, 4, 5, 7, 0, 0, 15,
                     13, 4, 11, 30, 5, 107, 420, 7);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5464,7 +5450,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Kurt Derisinden Çizmeler")) {
             itemHandler.createArmorWork(p, "Botlar", itemHandler.wolfleather, itemHandler.string, 4, 3,
-                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false>Kurt Derisinden Çizmeler", 3, 4, 4, 0, 0, 9, 5, 7, 0, 0, 13,
+                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false><reforge> Kurt Derisinden Çizmeler", 3, 4, 4, 0, 0, 9, 5, 7, 0, 0, 13,
                     14, 4, 11, 30, 5, 107, 400, 7);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5476,7 +5462,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Yaban Domuzu Derisinden Çanta")) {
             itemHandler.createBackpack(p, itemHandler.wolfleather, 10
-                    , 2, new ItemStack(Material.LEATHER), "<gray><i:false>Kurt Derisinden Çanta", 1, 36, 12, 25, 10, "Çanta", 5);
+                    , 2, new ItemStack(Material.LEATHER), "<gray><i:false><reforge> Kurt Derisinden Çanta", 1, 36, 12, 25, 10, "Çanta", 5);
 
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5488,7 +5474,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Pantolon")) {
             itemHandler.createArmor(p, "Pantolon", itemHandler.copperingot, 7,
-                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false>Bakır Pantolon", 2, 3, 4, 5, 1, 0, 0, 0, 0, 0, 0, 0,
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false><reforge> Bakır Pantolon", 2, 3, 4, 5, 1, 0, 0, 0, 0, 0, 0, 0,
                     4, 10, 8, 10, 8, 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5500,7 +5486,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Miğfer")) {
             itemHandler.createArmor(p, "Miğfer", itemHandler.copperingot, 5,
-                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false>Bakır Miğfer", 2, 2, 4, 5, 1, 0, 0, 0, 0, 0, 0, 0, 4,
+                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false><reforge> Bakır Miğfer", 2, 2, 4, 5, 1, 0, 0, 0, 0, 0, 0, 0, 4,
                     10, 8, 10, 8, 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5512,7 +5498,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bakır Botlar")) {
             itemHandler.createArmor(p, "Botlar", itemHandler.copperingot, 4,
-                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false>Bakır Botlar", 2, 2, 4, 5, 1, 0, 0, 0, 0, 0, 0, 0, 4,
+                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false><reforge> Bakır Botlar", 2, 2, 4, 5, 1, 0, 0, 0, 0, 0, 0, 0, 4,
                     12, 8, 10, 8, 200, 2);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5524,7 +5510,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.bronzeingot, itemHandler.oakstick, 3, 2,
-                    new ItemStack(Material.WOODEN_SWORD), "<gold><i:false>Bronz Kılıç", 2, 6, 4, 3, 2, false, 3, 16, 6, "Düşük", 5,
+                    new ItemStack(Material.WOODEN_SWORD), "<gold><i:false><reforge> Bronz Kılıç", 2, 6, 4, 3, 2, false, 3, 16, 6, "Düşük", 5,
                     6, 12, 12, 10, "Kılıç", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -5536,7 +5522,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Savaş Baltası")) {
             itemHandler.createWeapon(p, itemHandler.bronzeingot, itemHandler.oakstick, 6, 3,
-                    new ItemStack(Material.WOODEN_AXE), "<gold><i:false>Bronz Savaş Baltası", 2, 10, 4, 0, 0, false, 1, 20, 0, "Orta", 5,
+                    new ItemStack(Material.WOODEN_AXE), "<gold><i:false><reforge> Bronz Savaş Baltası", 2, 10, 4, 0, 0, false, 1, 20, 0, "Orta", 5,
                     6, 12, 12, 10, "Savaş Baltası", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6127,7 +6113,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Ağır Bronz Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.bronzeingot, itemHandler.oakstick, 5, 3,
-                    new ItemStack(Material.DIAMOND_SWORD), "<gold><i:false>Ağır Bronz Kılıç", 2, 9, 4, 3, 2, false, 1, 18, 0, "Yüksek", 5,
+                    new ItemStack(Material.DIAMOND_SWORD), "<gold><i:false><reforge> Ağır Bronz Kılıç", 2, 9, 4, 3, 2, false, 1, 18, 0, "Yüksek", 5,
                     6, 12, 12, 10, "Ağır Kılıç", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6139,7 +6125,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Hançer")) {
             itemHandler.createWeapon(p, itemHandler.bronzeingot, itemHandler.oakstick, 3, 1,
-                    new ItemStack(Material.SHEARS), "<gold><i:false>Bronz Hançer", 2, 6, 8, 2, 3, false, 3, 12, 5, "Düşük", 5, 6, 12,
+                    new ItemStack(Material.SHEARS), "<gold><i:false><reforge> Bronz Hançer", 2, 6, 8, 2, 3, false, 3, 12, 5, "Düşük", 5, 6, 12,
                     10, 10, "Hançer", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6151,7 +6137,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Tırpan")) {
             itemHandler.createWeapon(p, itemHandler.bronzeingot, itemHandler.oakstick, 3, 3,
-                    new ItemStack(Material.WOODEN_HOE), "<gold><i:false>Bronz Tırpan", 2, 4, 4, 5, 0, false, 2, 14, 0, "Yüksek", 5, 6,
+                    new ItemStack(Material.WOODEN_HOE), "<gold><i:false><reforge> Bronz Tırpan", 2, 4, 4, 5, 0, false, 2, 14, 0, "Yüksek", 5, 6,
                     12, 12, 10, "Tırpan", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6163,7 +6149,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Balta")) {
             itemHandler.createTool(p, itemHandler.bronzeingot, 3, itemHandler.oakstick, 2,
-                    new ItemStack(Material.GOLDEN_AXE), "<gold><i:false>Bronz Balta", 2, 7, false, 4, 4, 10, 10, 10, "Balta", 400, 4);
+                    new ItemStack(Material.GOLDEN_AXE), "<gold><i:false><reforge> Bronz Balta", 2, 7, false, 4, 4, 10, 10, 10, "Balta", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -6174,7 +6160,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Mızrak")) {
             itemHandler.createWeapon(p, itemHandler.bronzeingot, itemHandler.oakstick, 3, 3,
-                    new ItemStack(Material.STICK), "<gold><i:false>Bronz Mızrak", 2, 11, 3, 2, 4, false, 2, 14, 0, "Düşük", 6, 6, 12,
+                    new ItemStack(Material.STICK), "<gold><i:false><reforge> Bronz Mızrak", 2, 11, 3, 2, 4, false, 2, 14, 0, "Düşük", 6, 6, 12,
                     12, 10, "Mızrak", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6186,7 +6172,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Topuz")) {
             itemHandler.createWeapon(p, itemHandler.bronzeingot, itemHandler.oakstick, 3, 3,
-                    new ItemStack(Material.WOODEN_SHOVEL), "<gold><i:false>Bronz Topuz", 2, 12, 4, 3, 1, false, 2, 17, 0, "Düşük", 5, 6, 12,
+                    new ItemStack(Material.WOODEN_SHOVEL), "<gold><i:false><reforge> Bronz Topuz", 2, 12, 4, 3, 1, false, 2, 17, 0, "Düşük", 5, 6, 12,
                     12, 10, "Topuz", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6198,7 +6184,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Kürek")) {
             itemHandler.createTool(p, itemHandler.bronzeingot, 3, itemHandler.oakstick, 2,
-                    new ItemStack(Material.GOLDEN_SHOVEL), "<gold><i:false>Bronz Kürek", 2, 4, false, 3, 4, 10, 10, 10, "Kürek", 400, 4);
+                    new ItemStack(Material.GOLDEN_SHOVEL), "<gold><i:false><reforge> Bronz Kürek", 2, 4, false, 3, 4, 10, 10, 10, "Kürek", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -6209,7 +6195,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Kazma")) {
             itemHandler.createTool(p, itemHandler.bronzeingot, 3, itemHandler.oakstick, 3,
-                    new ItemStack(Material.GOLDEN_PICKAXE), "<gold><i:false>Bronz Kazma", 2, 5, false, 4, 4, 10, 10, 10, "Kazma", 400, 4);
+                    new ItemStack(Material.GOLDEN_PICKAXE), "<gold><i:false><reforge> Bronz Kazma", 2, 5, false, 4, 4, 10, 10, 10, "Kazma", 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -6220,7 +6206,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Çapa")) {
             itemHandler.createTool(p, itemHandler.bronzeingot, 3, itemHandler.oakstick, 3,
-                    new ItemStack(Material.GOLDEN_HOE), "<gold><i:false>Bronz Çapa", 2, 5, false, 4, 4, 10, 10, 10, "Çapa", 400, 4);
+                    new ItemStack(Material.GOLDEN_HOE), "<gold><i:false><reforge> Bronz Çapa", 2, 5, false, 4, 4, 10, 10, 10, "Çapa", 400, 4);
         }
 
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6232,7 +6218,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Göğüslük")) {
             itemHandler.createArmor(p, "Göğüslük", itemHandler.bronzeingot, 8,
-                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false>Bronz Göğüslük", 2, 5, 5, 7, 0, 0, 1, 0, 0, 0, 0,
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gold><i:false><reforge> Bronz Göğüslük", 2, 5, 5, 7, 0, 0, 1, 0, 0, 0, 0,
                     0, 4, 15, 12, 10, 8, 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6244,7 +6230,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Pantolon")) {
             itemHandler.createArmor(p, "Pantolon", itemHandler.bronzeingot, 7,
-                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false>Bronz Pantolon", 2, 5, 4, 6, 0, 0, 1, 0, 0, 0, 0, 0,
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<gold><i:false><reforge> Bronz Pantolon", 2, 5, 4, 6, 0, 0, 1, 0, 0, 0, 0, 0,
                     4, 15, 10, 10, 8, 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6256,7 +6242,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Miğfer")) {
             itemHandler.createArmor(p, "Miğfer", itemHandler.bronzeingot, 5,
-                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false>Bronz Miğfer", 2, 4, 4, 6, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+                    new ItemStack(Material.LEATHER_HELMET), "<gold><i:false><reforge> Bronz Miğfer", 2, 4, 4, 6, 0, 0, 0, 0, 0, 0, 0, 0, 4,
                     15, 10, 10, 8, 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6268,7 +6254,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Bronz Botlar")) {
             itemHandler.createArmor(p, "Botlar", itemHandler.bronzeingot, 4,
-                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false>Bronz Botlar", 2, 4, 4, 6, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+                    new ItemStack(Material.LEATHER_BOOTS), "<gold><i:false><reforge> Bronz Botlar", 2, 4, 4, 6, 0, 0, 1, 0, 0, 0, 0, 0, 0,
                     15, 10, 10, 8, 400, 4);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6293,7 +6279,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.ironingot, itemHandler.birchstick, 3, 1,
-                    new ItemStack(Material.WOODEN_SWORD), "<gray><i:false>Demir Kılıç", 3, 10, 4, 3, 2, false, 3, 22, 3, "Düşük", 5,
+                    new ItemStack(Material.WOODEN_SWORD), "<gray><i:false><reforge> Demir Kılıç", 3, 10, 4, 3, 2, false, 3, 22, 3, "Düşük", 5,
                     6, 15, 15, 10, "Kılıç", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6305,7 +6291,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Savaş Baltası")) {
             itemHandler.createWeapon(p, itemHandler.ironingot, itemHandler.birchstick, 6, 2,
-                    new ItemStack(Material.WOODEN_AXE), "<gray><i:false>Demir Savaş Baltası", 3, 16, 4, 2, 0, false, 1, 25, 0, "Orta", 5,
+                    new ItemStack(Material.WOODEN_AXE), "<gray><i:false><reforge> Demir Savaş Baltası", 3, 16, 4, 2, 0, false, 1, 25, 0, "Orta", 5,
                     6, 15, 15, 10, "Savaş Baltası", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6317,7 +6303,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Ağır Demir Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.ironingot, itemHandler.birchstick, 5, 1,
-                    new ItemStack(Material.DIAMOND_SWORD), "<gray><i:false>Ağır Demir Kılıç", 2, 12, 5, 4, 2, false, 1, 20, 0, "Yüksek", 5,
+                    new ItemStack(Material.DIAMOND_SWORD), "<gray><i:false><reforge> Ağır Demir Kılıç", 2, 12, 5, 4, 2, false, 1, 20, 0, "Yüksek", 5,
                     6, 15, 15, 10, "Ağır Kılıç", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6329,7 +6315,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Hançer")) {
             itemHandler.createWeapon(p, itemHandler.ironingot, itemHandler.birchstick, 3, 1,
-                    new ItemStack(Material.SHEARS), "<gray><i:false>Demir Hançer", 2, 7, 8, 3, 4, false, 3, 13, 5, "Düşük", 5, 6, 15,
+                    new ItemStack(Material.SHEARS), "<gray><i:false><reforge> Demir Hançer", 2, 7, 8, 3, 4, false, 3, 13, 5, "Düşük", 5, 6, 15,
                     15, 10, "Hançer", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6341,7 +6327,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Tırpan")) {
             itemHandler.createWeapon(p, itemHandler.ironingot, itemHandler.birchstick, 3, 3,
-                    new ItemStack(Material.WOODEN_HOE), "<gray><i:false>Demir Tırpan", 2, 4, 4, 5, 0, false, 2, 14, 0, "Yüksek", 5, 6,
+                    new ItemStack(Material.WOODEN_HOE), "<gray><i:false><reforge> Demir Tırpan", 2, 4, 4, 5, 0, false, 2, 14, 0, "Yüksek", 5, 6,
                     15, 15, 10, "Tırpan", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6353,7 +6339,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Balta")) {
             itemHandler.createTool(p, itemHandler.ironingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_AXE), "<gray><i:false>Demir Balta", 2, 7, false, 5, 4, 15, 15, 10, "Balta", 500, 6);
+                    new ItemStack(Material.GOLDEN_AXE), "<gray><i:false><reforge> Demir Balta", 2, 7, false, 5, 4, 15, 15, 10, "Balta", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -6364,7 +6350,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Mızrak")) {
             itemHandler.createWeapon(p, itemHandler.ironingot, itemHandler.birchstick, 3, 2,
-                    new ItemStack(Material.STICK), "<gray><i:false>Demir Mızrak", 2, 12, 4, 3, 4, false, 2, 18, 0, "Düşük", 6, 6, 15,
+                    new ItemStack(Material.STICK), "<gray><i:false><reforge> Demir Mızrak", 2, 12, 4, 3, 4, false, 2, 18, 0, "Düşük", 6, 6, 15,
                     15, 10, "Mızrak", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6376,7 +6362,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Topuz")) {
             itemHandler.createWeapon(p, itemHandler.ironingot, itemHandler.oakstick, 3, 2,
-                    new ItemStack(Material.WOODEN_SHOVEL), "<gray><i:false>Demir Topuz", 2, 14, 7, 3, 1, false, 2, 19, 0, "Düşük", 5, 6, 15,
+                    new ItemStack(Material.WOODEN_SHOVEL), "<gray><i:false><reforge> Demir Topuz", 2, 14, 7, 3, 1, false, 2, 19, 0, "Düşük", 5, 6, 15,
                     15, 10, "Topuz", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6388,7 +6374,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Kürek")) {
             itemHandler.createTool(p, itemHandler.ironingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_SHOVEL), "<gray><i:false>Demir Kürek", 2, 4, false, 4, 4, 15, 15, 10, "Kürek", 500, 6);
+                    new ItemStack(Material.GOLDEN_SHOVEL), "<gray><i:false><reforge> Demir Kürek", 2, 4, false, 4, 4, 15, 15, 10, "Kürek", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -6399,7 +6385,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Kazma")) {
             itemHandler.createTool(p, itemHandler.ironingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_PICKAXE), "<gray><i:false>Demir Kazma", 2, 5, false, 5, 4, 15, 15, 10, "Kazma", 500, 6);
+                    new ItemStack(Material.GOLDEN_PICKAXE), "<gray><i:false><reforge> Demir Kazma", 2, 5, false, 5, 4, 15, 15, 10, "Kazma", 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -6410,7 +6396,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Çapa")) {
             itemHandler.createTool(p, itemHandler.ironingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_HOE), "<gray><i:false>Demir Çapa", 2, 5, false, 5, 4, 15, 15, 10, "Çapa", 500, 6);
+                    new ItemStack(Material.GOLDEN_HOE), "<gray><i:false><reforge> Demir Çapa", 2, 5, false, 5, 4, 15, 15, 10, "Çapa", 500, 6);
         }
 
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6422,7 +6408,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Göğüslük")) {
             itemHandler.createArmor(p, "Göğüslük", itemHandler.ironingot, 8,
-                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gray><i:false>Demir Göğüslük", 2, 6, 6, 8, 2, 0, 1, 0, 0, 0, 0,
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<gray><i:false><reforge> Demir Göğüslük", 2, 6, 6, 8, 2, 0, 1, 0, 0, 0, 0,
                     0, 4, 20, 15, 10, 2, 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6434,7 +6420,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Pantolon")) {
             itemHandler.createArmor(p, "Pantolon", itemHandler.ironingot, 7,
-                    new ItemStack(Material.LEATHER_LEGGINGS), "<gray><i:false>Demir Pantolon", 2, 6, 4, 8, 2, 0, 1, 0, 0, 0, 0, 0,
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<gray><i:false><reforge> Demir Pantolon", 2, 6, 4, 8, 2, 0, 1, 0, 0, 0, 0, 0,
                     4, 20, 10, 10, 2, 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6446,7 +6432,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Miğfer")) {
             itemHandler.createArmor(p, "Miğfer", itemHandler.ironingot, 5,
-                    new ItemStack(Material.LEATHER_HELMET), "<gray><i:false>Demir Miğfer", 2, 6, 5, 8, 2, 0, 0, 0, 0, 0, 0, 0, 4,
+                    new ItemStack(Material.LEATHER_HELMET), "<gray><i:false><reforge> Demir Miğfer", 2, 6, 5, 8, 2, 0, 0, 0, 0, 0, 0, 0, 4,
                     20, 15, 10, 2, 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6458,7 +6444,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Demir Botlar")) {
             itemHandler.createArmor(p, "Botlar", itemHandler.ironingot, 4,
-                    new ItemStack(Material.LEATHER_BOOTS), "<gray><i:false>Demir Botlar", 2, 6, 5, 8, 2, 0, 1, 0, 0, 0, 0, 0, 0,
+                    new ItemStack(Material.LEATHER_BOOTS), "<gray><i:false><reforge> Demir Botlar", 2, 6, 5, 8, 2, 0, 1, 0, 0, 0, 0, 0, 0,
                     20, 10, 10, 2, 500, 6);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6484,7 +6470,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.goldingot, itemHandler.birchstick, 3, 1,
-                    new ItemStack(Material.WOODEN_SWORD), "<yellow><i:false>Altın Kılıç", 3, 13, 5, 3, 4, false, 3, 24, 3, "Düşük", 5,
+                    new ItemStack(Material.WOODEN_SWORD), "<yellow><i:false><reforge> Altın Kılıç", 3, 13, 5, 3, 4, false, 3, 24, 3, "Düşük", 5,
                     6, 20, 20, 10, "Kılıç", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6496,7 +6482,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Savaş Baltası")) {
             itemHandler.createWeapon(p, itemHandler.goldingot, itemHandler.birchstick, 6, 2,
-                    new ItemStack(Material.WOODEN_AXE), "<yellow><i:false>Altın Savaş Baltası", 3, 18, 5, 3, 0, false, 1, 28, 0, "Orta", 5,
+                    new ItemStack(Material.WOODEN_AXE), "<yellow><i:false><reforge> Altın Savaş Baltası", 3, 18, 5, 3, 0, false, 1, 28, 0, "Orta", 5,
                     6, 20, 20, 10, "Savaş Baltası", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6508,7 +6494,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Ağır Altın Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.goldingot, itemHandler.birchstick, 5, 1,
-                    new ItemStack(Material.DIAMOND_SWORD), "<yellow><i:false>Ağır Altın Kılıç", 2, 17, 7, 6, 2, false, 1, 24, 0, "Yüksek", 5,
+                    new ItemStack(Material.DIAMOND_SWORD), "<yellow><i:false><reforge> Ağır Altın Kılıç", 2, 17, 7, 6, 2, false, 1, 24, 0, "Yüksek", 5,
                     6, 20, 20, 10, "Ağır Kılıç", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6520,7 +6506,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Hançer")) {
             itemHandler.createWeapon(p, itemHandler.goldingot, itemHandler.birchstick, 3, 1,
-                    new ItemStack(Material.SHEARS), "<yellow><i:false>Altın Hançer", 2, 8, 9, 3, 5, false, 3, 15, 5, "Düşük", 5, 6, 20,
+                    new ItemStack(Material.SHEARS), "<yellow><i:false><reforge> Altın Hançer", 2, 8, 9, 3, 5, false, 3, 15, 5, "Düşük", 5, 6, 20,
                     20, 10, "Hançer", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6532,7 +6518,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Tırpan")) {
             itemHandler.createWeapon(p, itemHandler.goldingot, itemHandler.birchstick, 3, 3,
-                    new ItemStack(Material.WOODEN_HOE), "<yellow><i:false>Altın Tırpan", 2, 12, 6, 5, 0, false, 2, 20, 0, "Yüksek", 5, 6,
+                    new ItemStack(Material.WOODEN_HOE), "<yellow><i:false><reforge> Altın Tırpan", 2, 12, 6, 5, 0, false, 2, 20, 0, "Yüksek", 5, 6,
                     20, 20, 10, "Tırpan", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6544,7 +6530,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Balta")) {
             itemHandler.createTool(p, itemHandler.goldingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_AXE), "<yellow><i:false>Altın Balta", 2, 7, false, 6, 4, 20, 20, 10, "Balta", 600, 8);
+                    new ItemStack(Material.GOLDEN_AXE), "<yellow><i:false><reforge> Altın Balta", 2, 7, false, 6, 4, 20, 20, 10, "Balta", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -6555,7 +6541,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Mızrak")) {
             itemHandler.createWeapon(p, itemHandler.goldingot, itemHandler.birchstick, 3, 2,
-                    new ItemStack(Material.STICK), "<yellow><i:false>Altın Mızrak", 2, 15, 6, 3, 4, false, 2, 22, 0, "Düşük", 6, 6, 20,
+                    new ItemStack(Material.STICK), "<yellow><i:false><reforge> Altın Mızrak", 2, 15, 6, 3, 4, false, 2, 22, 0, "Düşük", 6, 6, 20,
                     20, 10, "Mızrak", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6567,7 +6553,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Topuz")) {
             itemHandler.createWeapon(p, itemHandler.goldingot, itemHandler.oakstick, 3, 2,
-                    new ItemStack(Material.WOODEN_SHOVEL), "<yellow><i:false>Altın Topuz", 2, 13, 7, 4, 1, false, 2, 23, 0, "Düşük", 5, 6, 20,
+                    new ItemStack(Material.WOODEN_SHOVEL), "<yellow><i:false><reforge> Altın Topuz", 2, 13, 7, 4, 1, false, 2, 23, 0, "Düşük", 5, 6, 20,
                     20, 10, "Topuz", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6579,7 +6565,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Kürek")) {
             itemHandler.createTool(p, itemHandler.goldingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_SHOVEL), "<yellow><i:false>Altın Kürek", 2, 4, false, 5, 4, 20, 20, 10, "Kürek", 600, 8);
+                    new ItemStack(Material.GOLDEN_SHOVEL), "<yellow><i:false><reforge> Altın Kürek", 2, 4, false, 5, 4, 20, 20, 10, "Kürek", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -6590,7 +6576,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Kazma")) {
             itemHandler.createTool(p, itemHandler.goldingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_PICKAXE), "<yellow><i:false>Altın Kazma", 2, 5, false, 6, 4, 25, 15, 10, "Kazma", 600, 8);
+                    new ItemStack(Material.GOLDEN_PICKAXE), "<yellow><i:false><reforge> Altın Kazma", 2, 5, false, 6, 4, 25, 15, 10, "Kazma", 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -6601,7 +6587,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Çapa")) {
             itemHandler.createTool(p, itemHandler.goldingot, 3, itemHandler.birchstick, 2,
-                    new ItemStack(Material.GOLDEN_HOE), "<yellow><i:false>Altın Çapa", 2, 5, false, 6, 4, 25, 15, 10, "Çapa", 600, 8);
+                    new ItemStack(Material.GOLDEN_HOE), "<yellow><i:false><reforge> Altın Çapa", 2, 5, false, 6, 4, 25, 15, 10, "Çapa", 600, 8);
         }
 
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6613,7 +6599,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Göğüslük")) {
             itemHandler.createArmor(p, "Göğüslük", itemHandler.goldingot, 8,
-                    new ItemStack(Material.LEATHER_CHESTPLATE), "<yellow><i:false>Altın Göğüslük", 2, 7, 6, 9, 3, 1, 1, 0, 0, 0, 0,
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<yellow><i:false><reforge> Altın Göğüslük", 2, 7, 6, 9, 3, 1, 1, 0, 0, 0, 0,
                     0, 4, 25, 20, 10, 9, 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6625,7 +6611,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Pantolon")) {
             itemHandler.createArmor(p, "Pantolon", itemHandler.goldingot, 7,
-                    new ItemStack(Material.LEATHER_LEGGINGS), "<yellow><i:false>Altın Pantolon", 2, 7, 4, 9, 3, 1, 1, 0, 0, 0, 0, 0,
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<yellow><i:false><reforge> Altın Pantolon", 2, 7, 4, 9, 3, 1, 1, 0, 0, 0, 0, 0,
                     4, 25, 20, 10, 9, 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6637,7 +6623,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Miğfer")) {
             itemHandler.createArmor(p, "Miğfer", itemHandler.goldingot, 5,
-                    new ItemStack(Material.LEATHER_HELMET), "<yellow><i:false>Altın Miğfer", 2, 6, 5, 9, 3, 1, 0, 0, 0, 0, 0, 0, 4,
+                    new ItemStack(Material.LEATHER_HELMET), "<yellow><i:false><reforge> Altın Miğfer", 2, 6, 5, 9, 3, 1, 0, 0, 0, 0, 0, 0, 4,
                     25, 20, 10, 9, 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6649,7 +6635,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Altın Botlar")) {
             itemHandler.createArmor(p, "Botlar", itemHandler.goldingot, 4,
-                    new ItemStack(Material.LEATHER_BOOTS), "<yellow><i:false>Altın Botlar", 2, 6, 5, 8, 3, 1, 1, 0, 0, 0, 0, 0, 0,
+                    new ItemStack(Material.LEATHER_BOOTS), "<yellow><i:false><reforge> Altın Botlar", 2, 6, 5, 8, 3, 1, 1, 0, 0, 0, 0, 0, 0,
                     25, 20, 10, 9, 600, 8);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6673,7 +6659,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.obsidianingot, itemHandler.heavystick, 3, 1,
-                    new ItemStack(Material.WOODEN_SWORD), "<dark_purple><i:false>Obsidyen Kılıç", 3, 16, 8, 6, 5, false, 3, 25, 3, "Düşük", 5,
+                    new ItemStack(Material.WOODEN_SWORD), "<dark_purple><i:false><reforge> Obsidyen Kılıç", 3, 16, 8, 6, 5, false, 3, 25, 3, "Düşük", 5,
                     6, 30, 30, 10, "Kılıç", 800, 10);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6685,7 +6671,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Savaş Baltası")) {
             itemHandler.createWeapon(p, itemHandler.obsidianingot, itemHandler.heavystick, 6, 2,
-                    new ItemStack(Material.WOODEN_AXE), "<dark_purple><i:false>Obsidyen Savaş Baltası", 3, 23, 8, 5, 0, false, 1, 32, 0, "Orta", 5,
+                    new ItemStack(Material.WOODEN_AXE), "<dark_purple><i:false><reforge> Obsidyen Savaş Baltası", 3, 23, 8, 5, 0, false, 1, 32, 0, "Orta", 5,
                     6, 30, 30, 10, "Savaş Baltası", 800, 10);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6697,7 +6683,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Ağır Obsidyen Kılıç")) {
             itemHandler.createWeapon(p, itemHandler.obsidianingot, itemHandler.heavystick, 5, 1,
-                    new ItemStack(Material.DIAMOND_SWORD), "<dark_purple><i:false>Ağır Obsidyen Kılıç", 3, 23, 10, 8, 0, false, 1, 29, 0, "Yüksek", 5,
+                    new ItemStack(Material.DIAMOND_SWORD), "<dark_purple><i:false><reforge> Ağır Obsidyen Kılıç", 3, 23, 10, 8, 0, false, 1, 29, 0, "Yüksek", 5,
                     6, 30, 30, 10, "Ağır Kılıç", 800, 10);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6709,7 +6695,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Hançer")) {
             itemHandler.createWeapon(p, itemHandler.obsidianingot, itemHandler.heavystick, 3, 1,
-                    new ItemStack(Material.SHEARS), "<dark_purple><i:false>Obsidyen Hançer", 3, 11, 9, 4, 6, false, 3, 20, 5, "Düşük", 5, 6, 30,
+                    new ItemStack(Material.SHEARS), "<dark_purple><i:false><reforge> Obsidyen Hançer", 3, 11, 9, 4, 6, false, 3, 20, 5, "Düşük", 5, 6, 30,
                     30, 10, "Hançer", 800, 10);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6721,7 +6707,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Tırpan")) {
             itemHandler.createWeapon(p, itemHandler.obsidianingot, itemHandler.heavystick, 3, 3,
-                    new ItemStack(Material.WOODEN_HOE), "<dark_purple><i:false>Obsidyen Tırpan", 2, 17, 10, 7, 0, false, 2, 20, 0, "Yüksek", 5, 6,
+                    new ItemStack(Material.WOODEN_HOE), "<dark_purple><i:false><reforge> Obsidyen Tırpan", 2, 17, 10, 7, 0, false, 2, 20, 0, "Yüksek", 5, 6,
                     30, 30, 10, "Tırpan", 800, 10);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6733,7 +6719,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Balta")) {
             itemHandler.createTool(p, itemHandler.obsidianingot, 3, itemHandler.heavystick, 2,
-                    new ItemStack(Material.GOLDEN_AXE), "<dark_purple><i:false>Obsidyen Balta", 3, 8, false, 7, 4, 30, 30, 10, "Balta", 800, 10);
+                    new ItemStack(Material.GOLDEN_AXE), "<dark_purple><i:false><reforge> Obsidyen Balta", 3, 8, false, 7, 4, 30, 30, 10, "Balta", 800, 10);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -6744,7 +6730,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Mızrak")) {
             itemHandler.createWeapon(p, itemHandler.obsidianingot, itemHandler.heavystick, 3, 2,
-                    new ItemStack(Material.STICK), "<dark_purple><i:false>Obsidyen Mızrak", 3, 17, 20, 6, 7, false, 2, 27, 0, "Düşük", 6, 6, 30,
+                    new ItemStack(Material.STICK), "<dark_purple><i:false><reforge> Obsidyen Mızrak", 3, 17, 20, 6, 7, false, 2, 27, 0, "Düşük", 6, 6, 30,
                     30, 10, "Mızrak", 800, 10);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6756,7 +6742,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Topuz")) {
             itemHandler.createWeapon(p, itemHandler.obsidianingot, itemHandler.heavystick, 3, 2,
-                    new ItemStack(Material.WOODEN_SHOVEL), "<dark_purple><i:false>Obsidyen Topuz", 3, 16, 20, 5, 1, false, 2, 33, 0, "Düşük", 5, 6, 26,
+                    new ItemStack(Material.WOODEN_SHOVEL), "<dark_purple><i:false><reforge> Obsidyen Topuz", 3, 16, 20, 5, 1, false, 2, 33, 0, "Düşük", 5, 6, 26,
                     30, 10, "Topuz", 800, 10);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6768,7 +6754,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Kürek")) {
             itemHandler.createTool(p, itemHandler.obsidianingot, 3, itemHandler.heavystick, 2,
-                    new ItemStack(Material.GOLDEN_SHOVEL), "<dark_purple><i:false>Obsidyen Kürek", 3, 6, false, 7, 4, 20, 20, 10, "Kürek", 800, 10);
+                    new ItemStack(Material.GOLDEN_SHOVEL), "<dark_purple><i:false><reforge> Obsidyen Kürek", 3, 6, false, 7, 4, 20, 20, 10, "Kürek", 800, 10);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -6779,7 +6765,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Kazma")) {
             itemHandler.createTool(p, itemHandler.obsidianingot, 3, itemHandler.heavystick, 2,
-                    new ItemStack(Material.GOLDEN_PICKAXE), "<dark_purple><i:false>Obsidyen Kazma", 3, 6, false, 7, 4, 25, 20, 10, "Kazma", 800, 10);
+                    new ItemStack(Material.GOLDEN_PICKAXE), "<dark_purple><i:false><reforge> Obsidyen Kazma", 3, 6, false, 7, 4, 25, 20, 10, "Kazma", 800, 10);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
 
@@ -6790,7 +6776,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Çapa")) {
             itemHandler.createTool(p, itemHandler.obsidianingot, 3, itemHandler.heavystick, 2,
-                    new ItemStack(Material.GOLDEN_HOE), "<dark_purple><i:false>Obsidyen Çapa", 3, 6, false, 7, 4, 25, 20, 10, "Çapa", 800, 10);
+                    new ItemStack(Material.GOLDEN_HOE), "<dark_purple><i:false><reforge> Obsidyen Çapa", 3, 6, false, 7, 4, 25, 20, 10, "Çapa", 800, 10);
         }
 
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6802,7 +6788,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Göğüslük")) {
             itemHandler.createArmor(p, "Göğüslük", itemHandler.obsidianingot, 8,
-                    new ItemStack(Material.LEATHER_CHESTPLATE), "<dark_purple><i:false>Obsidyen Göğüslük", 3, 7, 10, 12, 6, 0, 3, 0, 5, 0, 0,
+                    new ItemStack(Material.LEATHER_CHESTPLATE), "<dark_purple><i:false><reforge> Obsidyen Göğüslük", 3, 7, 10, 12, 6, 0, 3, 0, 5, 0, 0,
                     0, 4, 33, 34, 10, 7, 800, 10);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6814,7 +6800,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Pantolon")) {
             itemHandler.createArmor(p, "Pantolon", itemHandler.obsidianingot, 7,
-                    new ItemStack(Material.LEATHER_LEGGINGS), "<dark_purple><i:false>Obsidyen Pantolon", 3, 7, 8, 11, 6, 0, 2, 0, 6, 0, 0, 0,
+                    new ItemStack(Material.LEATHER_LEGGINGS), "<dark_purple><i:false><reforge> Obsidyen Pantolon", 3, 7, 8, 11, 6, 0, 2, 0, 6, 0, 0, 0,
                     4, 32, 33, 10, 7, 800, 10);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6826,7 +6812,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Miğfer")) {
             itemHandler.createArmor(p, "Miğfer", itemHandler.obsidianingot, 5,
-                    new ItemStack(Material.LEATHER_HELMET), "<dark_purple><i:false>Obsidyen Miğfer", 3, 7, 6, 10, 6, 0, 2, 0, 4, 0, 0, 0, 4,
+                    new ItemStack(Material.LEATHER_HELMET), "<dark_purple><i:false><reforge> Obsidyen Miğfer", 3, 7, 6, 10, 6, 0, 2, 0, 4, 0, 0, 0, 4,
                     30, 32, 10, 7, 800, 10);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().
@@ -6838,7 +6824,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.YELLOW + "Obsidyen Botlar")) {
             itemHandler.createArmor(p, "Botlar", itemHandler.obsidianingot, 4,
-                    new ItemStack(Material.LEATHER_BOOTS), "<dark_purple><i:false>Obsidyen Botlar", 3, 7, 6, 10, 5, 0, 3, 0, 4, 0, 0, 0, 0,
+                    new ItemStack(Material.LEATHER_BOOTS), "<dark_purple><i:false><reforge> Obsidyen Botlar", 3, 7, 6, 10, 5, 0, 3, 0, 4, 0, 0, 0, 0,
                     30, 32, 10, 7, 800, 10);
         }
         if (clicked != null && clicked.hasItemMeta() && clicked.getItemMeta().

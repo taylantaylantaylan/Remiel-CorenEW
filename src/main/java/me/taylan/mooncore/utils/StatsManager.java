@@ -124,6 +124,7 @@ public class StatsManager {
         fc.set("Stats." + "Doygunluk", 2);
         fc.set("Stats." + "CanYenileme", 5);
         fc.set("Stats." + "İlham", 100);
+        fc.set("Stats." + "Şans", 100);
         fc.set("Stats." + "NP", 0);
         fc.set("Stats." + "AlinanBolge", 0);
         fc.set("Stats." + "harcananNP", 0);
@@ -133,10 +134,10 @@ public class StatsManager {
         fc.set("Storage." + "CookDepo", "yok");
         fc.set("Storage." + "WorkDepo", "yok");
         fc.set("Enchant." + "vayne", "yok");
-        fc.set("Aksesuar." + "KolyeIsim", "Yok..");
-        fc.set("Aksesuar." + "YuzukIsim", "Yok..");
-        fc.set("Aksesuar." + "EldivenIsim", "Yok..");
-        fc.set("Aksesuar." + "TilsimIsim", "Yok..");
+        fc.set("Aksesuar." + "KolyeIsim", "<dark_gray>Yok..");
+        fc.set("Aksesuar." + "YuzukIsim", "<dark_gray>Yok..");
+        fc.set("Aksesuar." + "EldivenIsim", "<dark_gray>Yok..");
+        fc.set("Aksesuar." + "TilsimIsim", "<dark_gray>Yok..");
         fc.set("Meslek." + "job", "Yok..");
         ArrayList<ItemStack> list = new ArrayList<ItemStack>();
         list.add(new ItemStack(Material.AIR));

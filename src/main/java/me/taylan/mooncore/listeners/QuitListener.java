@@ -1,6 +1,7 @@
 package me.taylan.mooncore.listeners;
 
 import me.taylan.mooncore.MoonCore;
+import me.taylan.mooncore.seasons.CustomDateMethods;
 import me.taylan.mooncore.utils.BukkitSerialization;
 import me.taylan.mooncore.utils.StatsManager;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,9 +16,11 @@ import java.io.IOException;
 public class QuitListener implements Listener {
 	private MoonCore plugin;
 	private StatsManager stats;
+	private CustomDateMethods customDateMethods;
 
 	public QuitListener(MoonCore plugin) {
 		this.plugin = plugin;
+		this.customDateMethods = plugin.getCustomDateMethods();
 		this.stats = plugin.getStatsManager();
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
@@ -25,6 +28,7 @@ public class QuitListener implements Listener {
 	@EventHandler
 	public void onplayerquitstat(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
+		customDateMethods.setTab(customDateMethods.getTab()-1);
 		String invToBase64 = BukkitSerialization
 				.itemStackArrayToBase64(JoinListener.getMenu().get(player.getUniqueId()).getContents());
 		String invToBase64furnace = BukkitSerialization

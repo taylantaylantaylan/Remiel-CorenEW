@@ -62,12 +62,12 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 5) {
+                                levels.giveMiningExp(player,event.getBlock());
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
                                 ItemStack silver = itemHandler.silverore;
                                 silver.setAmount(1);
-                                levels.giveMiningExp(player,event.getBlock());
                                 if (player.getInventory().firstEmpty() == -1) {
                                     world.dropItemNaturally(event.getBlock().getLocation(),silver);
 
@@ -92,18 +92,18 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 1) {
+                                levels.giveMiningExp(player,event.getBlock());
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
                                 ItemStack silver = itemHandler.copperore;
                                 silver.setAmount(1);
-                                levels.giveMiningExp(player,event.getBlock());
                                 if (player.getInventory().firstEmpty() == -1) {
                                     world.dropItemNaturally(event.getBlock().getLocation(), silver);
 
                                 } else {
                                     player.getInventory().addItem(silver);
-                                }
+                               }
                                 new BukkitRunnable() {
                                     @Override
                                     public void run() {
@@ -122,14 +122,13 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 3) {
+                                levels.giveOduncuExp(player, event.getBlock());
                                 event.setDropItems(false);
                                 event.setExpToDrop(1);
                                 event.getBlock().setType(Material.BIRCH_PLANKS);
                                 event.setCancelled(true);
                                 ItemStack birchwood = itemHandler.birchwood;
                                 birchwood.setAmount(1);
-
-                                levels.giveOduncuExp(player, event.getBlock());
                                 if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
                                     int logchance = ThreadLocalRandom.current().nextInt(30);
                                     if(logchance<5) {
@@ -377,12 +376,12 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 4) {
+                                levels.giveMiningExp(player,event.getBlock());
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
                                 ItemStack silver6 = itemHandler.goldore;
                                 silver6.setAmount(1);
-                                levels.giveMiningExp(player,event.getBlock());
                                 if (player.getInventory().firstEmpty() == -1) {
                                     world.dropItemNaturally(event.getBlock().getLocation(), silver6);
 
@@ -406,12 +405,12 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 8) {
+                                levels.giveMiningExp(player,event.getBlock());
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.BEDROCK);
                                 event.setCancelled(true);
                                 ItemStack silver7 = itemHandler.adamantiumore;
                                 silver7.setAmount(1);
-                                levels.giveMiningExp(player,event.getBlock());
                                 if (player.getInventory().firstEmpty() == -1) {
                                     world.dropItemNaturally(event.getBlock().getLocation(), silver7);
 
@@ -435,12 +434,12 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 7) {
+                                levels.giveMiningExp(player,event.getBlock());
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.BEDROCK);
                                 event.setCancelled(true);
                                 ItemStack silver12 = itemHandler.crimsonore;
                                 silver12.setAmount(1);
-                                levels.giveMiningExp(player,event.getBlock());
                                 if (player.getInventory().firstEmpty() == -1) {
                                     world.dropItemNaturally(event.getBlock().getLocation(), silver12);
 
@@ -465,12 +464,12 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 2) {
+                                levels.giveMiningExp(player,event.getBlock());
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
                                 ItemStack silver9 = itemHandler.nikelore;
                                 silver9.setAmount(1);
-                                levels.giveMiningExp(player,event.getBlock());
                                 if (player.getInventory().firstEmpty() == -1) {
                                     world.dropItemNaturally(event.getBlock().getLocation(), silver9);
 
@@ -490,12 +489,12 @@ public class BlockRegenListener implements Listener {
                         }
                         break;
                     case COBBLESTONE:
+                        levels.giveMiningExp(player,event.getBlock());
                         event.setDropItems(false);
                         event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                         event.setCancelled(true);
                         ItemStack stone = itemHandler.cobblestone;
                         stone.setAmount(1);
-                        levels.giveMiningExp(player,event.getBlock());
                         if (player.getInventory().firstEmpty() == -1) {
                             world.dropItemNaturally(event.getBlock().getLocation(), stone);
 
@@ -511,12 +510,12 @@ public class BlockRegenListener implements Listener {
                         break;
 
                     case TUFF:
+                        levels.giveMiningExp(player,event.getBlock());
                         event.setDropItems(false);
                         event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                         event.setCancelled(true);
                         ItemStack stone2 = itemHandler.cobblestone;
                         stone2.setAmount(1);
-                        levels.giveMiningExp(player,event.getBlock());
                         if (player.getInventory().firstEmpty() == -1) {
                             world.dropItemNaturally(event.getBlock().getLocation(), stone2);
 
@@ -532,12 +531,12 @@ public class BlockRegenListener implements Listener {
                         break;
 
                     case STONE:
+                        levels.giveMiningExp(player,event.getBlock());
                         event.setDropItems(false);
                         event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                         event.setCancelled(true);
                         ItemStack stone1 = itemHandler.cobblestone;
                         stone1.setAmount(1);
-                        levels.giveMiningExp(player,event.getBlock());
                         if (player.getInventory().firstEmpty() == -1) {
                             world.dropItemNaturally(event.getBlock().getLocation(), stone1);
 
@@ -553,13 +552,13 @@ public class BlockRegenListener implements Listener {
                         break;
 
                     case REDSTONE_ORE:
+                        levels.giveMiningExp(player,event.getBlock());
                         event.setDropItems(false);
                         event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                         event.setCancelled(true);
                         event.setExpToDrop(2);
                         ItemStack stoneRED = itemHandler.redstone;
                         stoneRED.setAmount(1);
-                        levels.giveMiningExp(player,event.getBlock());
                         if (player.getInventory().firstEmpty() == -1) {
                             world.dropItemNaturally(event.getBlock().getLocation(), stoneRED);
 
@@ -578,11 +577,11 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 2) {
+                                levels.giveMiningExp(player,event.getBlock());
                                 event.setDropItems(false);
                                 event.setExpToDrop(1);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
-                                levels.giveMiningExp(player,event.getBlock());
                                 int chanceamount3 = ThreadLocalRandom.current().nextInt(4) + 1;
                                 ItemStack cooal = itemHandler.lapis;
                                 cooal.setAmount(chanceamount3);
@@ -611,11 +610,11 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 5) {
+                                levels.giveMiningExp(player,event.getBlock());
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
                                 ItemStack obsidianore2 = itemHandler.obsidianore;
-                                levels.giveMiningExp(player,event.getBlock());
                                 obsidianore2.setAmount(1);
                                 if (player.getInventory().firstEmpty() == -1) {
                                     world.dropItemNaturally(event.getBlock().getLocation(), obsidianore2);
@@ -719,12 +718,13 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 3) {
+                                levels.giveMiningExp(player,event.getBlock());
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
                                 ItemStack diamond = itemHandler.diamond;
                                 diamond.setAmount(1);
-                                levels.giveMiningExp(player,event.getBlock());
+
                                 if (player.getInventory().firstEmpty() == -1) {
                                     world.dropItemNaturally(event.getBlock().getLocation(), diamond);
 
@@ -748,12 +748,13 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 3) {
+                                levels.giveMiningExp(player,event.getBlock());
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
                                 ItemStack ironore = itemHandler.ironore;
                                 ironore.setAmount(1);
-                                levels.giveMiningExp(player,event.getBlock());
+
                                 if (player.getInventory().firstEmpty() == -1) {
                                     world.dropItemNaturally(event.getBlock().getLocation(), ironore);
 
@@ -777,11 +778,11 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 1) {
+                                levels.giveMiningExp(player,event.getBlock());
                                 event.setDropItems(false);
                                 event.setExpToDrop(1);
                                 event.getBlock().setType(Material.DEAD_BUBBLE_CORAL_BLOCK);
                                 event.setCancelled(true);
-                                levels.giveMiningExp(player,event.getBlock());
                                 int chanceamount3 = ThreadLocalRandom.current().nextInt(1) + 2;
                                 ItemStack cooal = itemHandler.coal;
                                 cooal.setAmount(chanceamount3);
@@ -844,12 +845,25 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 5) {
+                                levels.giveOduncuExp(player, event.getBlock());
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DARK_OAK_PLANKS);
                                 event.setCancelled(true);
                                 ItemStack silver = itemHandler.oldoakwood;
                                 silver.setAmount(1);
-                                levels.giveOduncuExp(player, event.getBlock());
+                                if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
+                                    int logchance = ThreadLocalRandom.current().nextInt(30);
+                                    if(logchance<5) {
+                                        player.sendMessage(Painter.paint("&6Ekstra Odun Düşürdün!"));
+                                        if (player.getInventory().firstEmpty() == -1) {
+                                            world.dropItemNaturally(event.getBlock().getLocation(), silver);
+
+                                        } else {
+                                            player.getInventory().addItem(silver);
+
+                                        }
+                                    }
+                                }
                                 if (player.getInventory().firstEmpty() == -1) {
                                     world.dropItemNaturally(event.getBlock().getLocation(),silver);
 
@@ -875,12 +889,25 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 4) {
+                                levels.giveOduncuExp(player, event.getBlock());
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.SPRUCE_PLANKS);
                                 event.setCancelled(true);
                                 ItemStack silver = itemHandler.sprucewood;
-                                levels.giveOduncuExp(player, event.getBlock());
                                 silver.setAmount(1);
+                                if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
+                                    int logchance = ThreadLocalRandom.current().nextInt(30);
+                                    if(logchance<5) {
+                                        player.sendMessage(Painter.paint("&6Ekstra Odun Düşürdün!"));
+                                        if (player.getInventory().firstEmpty() == -1) {
+                                            world.dropItemNaturally(event.getBlock().getLocation(), silver);
+
+                                        } else {
+                                            player.getInventory().addItem(silver);
+
+                                        }
+                                    }
+                                }
                                 if (player.getInventory().firstEmpty() == -1) {
                                     world.dropItemNaturally(event.getBlock().getLocation(),silver);
 
@@ -905,12 +932,25 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 6) {
+                                levels.giveOduncuExp(player, event.getBlock());
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.ACACIA_PLANKS);
                                 event.setCancelled(true);
                                 ItemStack silver = itemHandler.acaciawood;
-                                levels.giveOduncuExp(player, event.getBlock());
                                 silver.setAmount(1);
+                                if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
+                                    int logchance = ThreadLocalRandom.current().nextInt(30);
+                                    if(logchance<5) {
+                                        player.sendMessage(Painter.paint("&6Ekstra Odun Düşürdün!"));
+                                        if (player.getInventory().firstEmpty() == -1) {
+                                            world.dropItemNaturally(event.getBlock().getLocation(), silver);
+
+                                        } else {
+                                            player.getInventory().addItem(silver);
+
+                                        }
+                                    }
+                                }
                                 if (player.getInventory().firstEmpty() == -1) {
                                     world.dropItemNaturally(event.getBlock().getLocation(),silver);
 
@@ -972,13 +1012,13 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 9) {
+                                levels.giveOduncuExp(player, event.getBlock());
                                 event.setDropItems(false);
                                 event.setExpToDrop(1);
                                 event.getBlock().setType(Material.JUNGLE_PLANKS);
                                 event.setCancelled(true);
                                 ItemStack godwood = itemHandler.godwood;
                                 godwood.setAmount(1);
-                                levels.giveOduncuExp(player, event.getBlock());
                                 if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
                                     int logchance = ThreadLocalRandom.current().nextInt(30);
                                     if(logchance<5) {
@@ -1018,12 +1058,12 @@ public class BlockRegenListener implements Listener {
                             NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                             int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                             if (aletgucu > 8) {
+                                levels.giveOduncuExp(player, event.getBlock());
                                 event.setDropItems(false);
                                 event.getBlock().setType(Material.DARK_OAK_PLANKS);
                                 event.setCancelled(true);
                                 ItemStack darkoakwood = itemHandler.darkoakwood;
                                 darkoakwood.setAmount(1);
-                                levels.giveOduncuExp(player, event.getBlock());
                                 if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
                                     int logchance = ThreadLocalRandom.current().nextInt(30);
                                     if(logchance<5) {
@@ -1064,12 +1104,25 @@ public class BlockRegenListener implements Listener {
                                 NamespacedKey digpower = new NamespacedKey(plugin, "aletGucu");
                                 int aletgucu = item.getItemMeta().getPersistentDataContainer().get(digpower, PersistentDataType.INTEGER);
                                 if (aletgucu > 5) {
+                                    levels.giveOduncuExp(player, event.getBlock());
                                     event.setDropItems(false);
                                     event.getBlock().setType(Material.WARPED_PLANKS);
                                     event.setCancelled(true);
                                     ItemStack heavywood = itemHandler.heavywood;
                                     heavywood.setAmount(1);
-                                    levels.giveOduncuExp(player, event.getBlock());
+                                    if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
+                                        int logchance = ThreadLocalRandom.current().nextInt(30);
+                                        if(logchance<5) {
+                                            player.sendMessage(Painter.paint("&6Ekstra Odun Düşürdün!"));
+                                            if (player.getInventory().firstEmpty() == -1) {
+                                                world.dropItemNaturally(event.getBlock().getLocation(), heavywood);
+
+                                            } else {
+                                                player.getInventory().addItem(heavywood);
+
+                                            }
+                                        }
+                                    }
                                     if (player.getInventory().firstEmpty() == -1) {
                                         world.dropItemNaturally(event.getBlock().getLocation(), heavywood);
 
@@ -1092,12 +1145,12 @@ public class BlockRegenListener implements Listener {
                         }
                         break;
                     case OAK_WOOD:
+                        levels.giveOduncuExp(player, event.getBlock());
                         event.setDropItems(false);
                         event.getBlock().setType(Material.OAK_PLANKS);
                         event.setCancelled(true);
                         ItemStack oakwood = itemHandler.oakwood;
                         oakwood.setAmount(1);
-                        levels.giveOduncuExp(player, event.getBlock());
                         if (statsManager.getMeslek(player.getUniqueId()).equals("Oduncu")) {
                             int logchance = ThreadLocalRandom.current().nextInt(30);
                             if(logchance<5) {

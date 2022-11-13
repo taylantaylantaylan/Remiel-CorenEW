@@ -1,5 +1,7 @@
 package me.taylan.mooncore.level;
 
+import com.keenant.tabbed.Tabbed;
+import com.keenant.tabbed.tablist.TableTabList;
 import com.manya.pdc.DataTypes;
 import eu.endercentral.crazy_advancements.advancement.AdvancementDisplay.AdvancementFrame;
 import eu.endercentral.crazy_advancements.advancement.ToastNotification;
@@ -7,9 +9,10 @@ import fr.mrmicky.fastboard.FastBoard;
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.commands.SeviyeCommand;
 import me.taylan.mooncore.eco.Ekonomi;
+import me.taylan.mooncore.seasons.CustomDateMethods;
 import me.taylan.mooncore.utils.ItemHandler;
 import me.taylan.mooncore.utils.StatsManager;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -31,9 +34,11 @@ public class Levels {
 
     private MoonCore plugin;
     private SeviyeCommand seviyeCommand;
+    private CustomDateMethods customDateMethods;
     private StatsManager stats;
     private Ekonomi ekonomi;
     private ItemHandler itemHandler;
+
     private final PersistentDataType<?, HashMap<String, Integer>> Enchants = DataTypes
             .hashMap(PersistentDataType.STRING, PersistentDataType.INTEGER);
     private BukkitRunnable r;
@@ -45,14 +50,14 @@ public class Levels {
         this.itemHandler = plugin.getItemHandler();
         this.stats = plugin.getStatsManager();
         this.ekonomi = plugin.getEkonomi();
+        this.customDateMethods = plugin.getCustomDateMethods();
 
         r = new BukkitRunnable() {
 
             @Override
             public void run() {
                 for (Player player : plugin.getServer().getOnlinePlayers()) {
-                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                    Date date = new Date(System.currentTimeMillis());
+
                     FastBoard board = new FastBoard(player);
 
                     double para = ekonomi.getBalance(player);
@@ -60,8 +65,9 @@ public class Levels {
 
                     board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "     Remiel", "    ",
                             ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + df.format(para),
-                            "", ChatColor.GRAY + player.getName(), ChatColor.DARK_GRAY + formatter.format(date),
-                            ChatColor.AQUA + "mc.moonnw.xyz"
+                            "", ChatColor.DARK_AQUA +  customDateMethods.getCustomTime().replace('.',':')  +
+                                    "0 " + ChatColor.YELLOW + customDateMethods.getTimeLine(), ChatColor.GRAY + player.getName(),
+                            ChatColor.AQUA + "mc.moonnw.xyz  "
 
                     );
                 }
@@ -80,8 +86,6 @@ public class Levels {
 
         board.updateTitle(ChatColor.AQUA + "Moon Network");
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date(System.currentTimeMillis());
 
         ToastNotification notification = new ToastNotification(Material.SMITHING_TABLE,
                 ChatColor.YELLOW + "El Sanatlarında ustalığın yükseldi!", AdvancementFrame.CHALLENGE);
@@ -100,8 +104,9 @@ public class Levels {
                 ChatColor.GREEN + "EXP " + ChatColor.WHITE + smithExp + ChatColor.GRAY + "/" + ChatColor.WHITE
                         + smithRequiredExp + ChatColor.GRAY + " (" + ChatColor.GREEN + "%" + prog + ChatColor.GRAY
                         + ")",
-                "     ", ChatColor.GRAY + p.getName(), ChatColor.DARK_GRAY + formatter.format(date),
-                ChatColor.AQUA + "mc.moonnw.xyz"
+                "     ",ChatColor.DARK_AQUA + customDateMethods.getCustomTime().replace('.',':') +
+                        "0 " + ChatColor.YELLOW + customDateMethods.getTimeLine(), ChatColor.GRAY + p.getName(),
+                ChatColor.AQUA + "mc.moonnw.xyz  "
 
         );
         if (smithExp >= smithRequiredExp) {
@@ -130,8 +135,6 @@ public class Levels {
 
         board.updateTitle(ChatColor.AQUA + "Moon Network");
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date(System.currentTimeMillis());
 
         ToastNotification notification = new ToastNotification(Material.SMITHING_TABLE,
                 ChatColor.YELLOW + "Demircilikte ustalığın yükseldi!", AdvancementFrame.CHALLENGE);
@@ -153,8 +156,9 @@ public class Levels {
                 ChatColor.GREEN + "EXP " + ChatColor.WHITE + smithExp + ChatColor.GRAY + "/" + ChatColor.WHITE
                         + smithRequiredExp + ChatColor.GRAY + " (" + ChatColor.GREEN + "%" + prog + ChatColor.GRAY
                         + ")",
-                "     ", ChatColor.GRAY + p.getName(), ChatColor.DARK_GRAY + formatter.format(date),
-                ChatColor.AQUA + "mc.moonnw.xyz"
+                "     ",ChatColor.DARK_AQUA + customDateMethods.getCustomTime().replace('.',':')+
+                        "0 " + ChatColor.YELLOW + customDateMethods.getTimeLine(), ChatColor.GRAY + p.getName(),
+                ChatColor.AQUA + "mc.moonnw.xyz  "
 
         );
         if (smithExp >= smithRequiredExp) {
@@ -183,8 +187,6 @@ public class Levels {
 
         board.updateTitle(ChatColor.AQUA + "Moon Network");
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date(System.currentTimeMillis());
 
         ToastNotification notification = new ToastNotification(Material.BREAD,
                 ChatColor.YELLOW + "Aşçılıkta ustalığın yükseldi!", AdvancementFrame.CHALLENGE);
@@ -204,8 +206,9 @@ public class Levels {
                 ChatColor.YELLOW + "Aşçılık " + ChatColor.WHITE + "Ustalık " + cookLevel,
                 ChatColor.GREEN + "EXP " + ChatColor.WHITE + cookExp + ChatColor.GRAY + "/" + ChatColor.WHITE
                         + cookRequiredExp + ChatColor.GRAY + " (" + ChatColor.GREEN + "%" + prog + ChatColor.GRAY + ")",
-                "     ", ChatColor.GRAY + p.getName(), ChatColor.DARK_GRAY + formatter.format(date),
-                ChatColor.AQUA + "mc.moonnw.xyz"
+                "     ",ChatColor.DARK_AQUA + customDateMethods.getCustomTime().replace('.',':')+
+                        "0 " + ChatColor.YELLOW + customDateMethods.getTimeLine(), ChatColor.GRAY + p.getName(),
+                ChatColor.AQUA + "mc.moonnw.xyz  "
 
         );
         if (cookExp >= cookRequiredExp) {
@@ -258,8 +261,7 @@ public class Levels {
         }
 
         int prog = 100 * combatExp / combatRequiredExp;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date(System.currentTimeMillis());
+
 
         double para = ekonomi.getBalance(player);
 
@@ -270,8 +272,9 @@ public class Levels {
                 ChatColor.GREEN + "EXP " + ChatColor.WHITE + combatExp + ChatColor.GRAY + "/" + ChatColor.WHITE
                         + combatRequiredExp + ChatColor.GRAY + " (" + ChatColor.GREEN + "%" + prog + ChatColor.GRAY
                         + ")",
-                "     ", ChatColor.GRAY + player.getName(), ChatColor.DARK_GRAY + formatter.format(date),
-                ChatColor.AQUA + "mc.moonnw.xyz"
+                "     ", ChatColor.DARK_AQUA +customDateMethods.getCustomTime().replace('.',':') +
+                        "0 " + ChatColor.YELLOW + customDateMethods.getTimeLine(), ChatColor.GRAY + player.getName(),
+                ChatColor.AQUA + "mc.moonnw.xyz  "
 
         );
 
@@ -315,7 +318,7 @@ public class Levels {
                     if (container.has(key, Enchants)) {
                         if (container.get(key, Enchants).containsKey("ustalık")) {
                             int level = container.get(key, Enchants).get("ustalık");
-                            stats.setMadencilikExp(player.getUniqueId(), level);
+                            stats.setOdunculukExp(player.getUniqueId(), level);
                         }
                     }
                 }
@@ -323,8 +326,7 @@ public class Levels {
         }
 
         int prog = 100 * odunculukExp / odunculukRequiredExp;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date(System.currentTimeMillis());
+
         double para = ekonomi.getBalance(player);
         board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "         Remiel", " ",
                 ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + df.format(para), "   ",
@@ -333,8 +335,9 @@ public class Levels {
                 ChatColor.GREEN + "EXP " + ChatColor.WHITE + odunculukExp + ChatColor.GRAY + "/" + ChatColor.WHITE
                         + odunculukRequiredExp + ChatColor.GRAY + " (" + ChatColor.GREEN + "%" + prog + ChatColor.GRAY
                         + ")",
-                "     ", ChatColor.GRAY + player.getName(), ChatColor.DARK_GRAY + formatter.format(date),
-                ChatColor.AQUA + "mc.moonnw.xyz"
+                "     ", ChatColor.DARK_AQUA +customDateMethods.getCustomTime().replace('.',':')+
+                        "0 " + ChatColor.YELLOW + customDateMethods.getTimeLine(), ChatColor.GRAY + player.getName(),
+                ChatColor.AQUA + "mc.moonnw.xyz  "
 
         );
         if (odunculukExp >= odunculukRequiredExp) {
@@ -353,6 +356,7 @@ public class Levels {
         }
 
     }
+
     public void giveFarmingExp(Player player, ItemStack item) {
         ToastNotification notification = new ToastNotification(Material.WHEAT,
                 ChatColor.YELLOW + "Çiftçilikte ustalığın yükseldi!", AdvancementFrame.CHALLENGE);
@@ -385,8 +389,7 @@ public class Levels {
         }
 
         int prog = 100 * farmingExp / farmingRequiredExp;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date(System.currentTimeMillis());
+
         double para = ekonomi.getBalance(player);
         board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "         Remiel", " ",
                 ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + df.format(para), "   ",
@@ -395,8 +398,9 @@ public class Levels {
                 ChatColor.GREEN + "EXP " + ChatColor.WHITE + farmingExp + ChatColor.GRAY + "/" + ChatColor.WHITE
                         + farmingRequiredExp + ChatColor.GRAY + " (" + ChatColor.GREEN + "%" + prog + ChatColor.GRAY
                         + ")",
-                "     ", ChatColor.GRAY + player.getName(), ChatColor.DARK_GRAY + formatter.format(date),
-                ChatColor.AQUA + "mc.moonnw.xyz"
+                "     ", ChatColor.DARK_AQUA +customDateMethods.getCustomTime().replace('.',':') +
+                        "0 " + ChatColor.YELLOW + customDateMethods.getTimeLine(), ChatColor.GRAY + player.getName(),
+                ChatColor.AQUA + "mc.moonnw.xyz  "
 
         );
         if (farmingExp >= farmingRequiredExp) {
@@ -413,6 +417,7 @@ public class Levels {
         }
 
     }
+
     public void giveFarmingExp(Player player, Block block) {
         ToastNotification notification = new ToastNotification(Material.WHEAT,
                 ChatColor.YELLOW + "Çiftçilikte ustalığın yükseldi!", AdvancementFrame.CHALLENGE);
@@ -431,8 +436,7 @@ public class Levels {
         }
 
         int prog = 100 * farmingExp / farmingRequiredExp;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date(System.currentTimeMillis());
+
         double para = ekonomi.getBalance(player);
         board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "         Remiel", " ",
                 ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + df.format(para), "   ",
@@ -441,9 +445,9 @@ public class Levels {
                 ChatColor.GREEN + "EXP " + ChatColor.WHITE + farmingExp + ChatColor.GRAY + "/" + ChatColor.WHITE
                         + farmingRequiredExp + ChatColor.GRAY + " (" + ChatColor.GREEN + "%" + prog + ChatColor.GRAY
                         + ")",
-                "     ", ChatColor.GRAY + player.getName(), ChatColor.DARK_GRAY + formatter.format(date),
-                ChatColor.AQUA + "mc.moonnw.xyz"
-
+                "     ",ChatColor.DARK_AQUA + customDateMethods.getCustomTime().replace('.',':') +
+                        "0 " + ChatColor.YELLOW + customDateMethods.getTimeLine(), ChatColor.GRAY + player.getName(),
+                ChatColor.AQUA + "mc.moonnw.xyz  "
         );
         if (farmingExp >= farmingRequiredExp) {
             stats.setDoygunluk(player, player.getUniqueId(), 1);
@@ -472,13 +476,12 @@ public class Levels {
         board.updateTitle(ChatColor.AQUA + "Moon Network");
 
 
-            stats.setEnchExp(uuid, aga*10);
-            stats.setExp(uuid, aga*10 - 5*aga);
+        stats.setEnchExp(uuid, aga * 10);
+        stats.setExp(uuid, aga * 10 - 5 * aga);
 
 
         int prog = 100 * miningExp / miningRequiredExp;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date(System.currentTimeMillis());
+
         double para = ekonomi.getBalance(player);
         board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "        Remiel", " ",
                 ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + df.format(para), "   ",
@@ -487,9 +490,9 @@ public class Levels {
                 ChatColor.GREEN + "EXP " + ChatColor.WHITE + miningExp + ChatColor.GRAY + "/" + ChatColor.WHITE
                         + miningRequiredExp + ChatColor.GRAY + " (" + ChatColor.GREEN + "%" + prog + ChatColor.GRAY
                         + ")",
-                "     ", ChatColor.GRAY + player.getName(), ChatColor.DARK_GRAY + formatter.format(date),
-                ChatColor.AQUA + "mc.moonnw.xyz"
-
+                "     ",ChatColor.DARK_AQUA + customDateMethods.getCustomTime().replace('.',':') +
+                        "0 " + ChatColor.YELLOW + customDateMethods.getTimeLine(), ChatColor.GRAY + player.getName(),
+                ChatColor.AQUA + "mc.moonnw.xyz  "
         );
         if (miningExp >= miningRequiredExp) {
             stats.setİlham(player.getUniqueId(), 1);
@@ -538,10 +541,8 @@ public class Levels {
         }
 
 
-
         int prog = 100 * miningExp / miningRequiredExp;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date(System.currentTimeMillis());
+
         double para = ekonomi.getBalance(player);
         board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "        Remiel", " ",
                 ChatColor.GOLD + "Dinar ⛁" + ChatColor.WHITE + df.format(para), "   ",
@@ -550,8 +551,9 @@ public class Levels {
                 ChatColor.GREEN + "EXP " + ChatColor.WHITE + miningExp + ChatColor.GRAY + "/" + ChatColor.WHITE
                         + miningRequiredExp + ChatColor.GRAY + " (" + ChatColor.GREEN + "%" + prog + ChatColor.GRAY
                         + ")",
-                "     ", ChatColor.GRAY + player.getName(), ChatColor.DARK_GRAY + formatter.format(date),
-                ChatColor.AQUA + "mc.moonnw.xyz"
+                "     ",ChatColor.DARK_AQUA + customDateMethods.getCustomTime().replace('.',':') +
+                        "0 " + ChatColor.YELLOW + customDateMethods.getTimeLine(), ChatColor.GRAY + player.getName(),
+                ChatColor.AQUA + "mc.moonnw.xyz  "
 
         );
         if (miningExp >= miningRequiredExp) {
@@ -587,8 +589,7 @@ public class Levels {
         }
 
         int prog = 100 * alchemyExp / alchemyRequiredExp;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date(System.currentTimeMillis());
+
 
         double para = ekonomi.getBalance(player);
         board.updateLines(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "        Remiel", " ",
@@ -598,8 +599,9 @@ public class Levels {
                 ChatColor.GREEN + "EXP " + ChatColor.WHITE + alchemyExp + ChatColor.GRAY + "/" + ChatColor.WHITE
                         + alchemyRequiredExp + ChatColor.GRAY + " (" + ChatColor.GREEN + "%" + prog + ChatColor.GRAY
                         + ")",
-                "     ", ChatColor.GRAY + player.getName(), ChatColor.DARK_GRAY + formatter.format(date),
-                ChatColor.AQUA + "mc.moonnw.xyz"
+                "     ", ChatColor.DARK_AQUA + customDateMethods.getCustomTime().replace('.',':') +
+                        "0 " + ChatColor.YELLOW + customDateMethods.getTimeLine(), ChatColor.GRAY + player.getName(),
+                ChatColor.AQUA + "mc.moonnw.xyz  "
 
         );
 

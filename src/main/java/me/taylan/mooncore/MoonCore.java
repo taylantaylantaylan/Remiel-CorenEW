@@ -1,5 +1,7 @@
 package me.taylan.mooncore;
 
+import com.keenant.tabbed.Tabbed;
+import me.casperge.realisticseasons.api.SeasonsAPI;
 import me.taylan.mooncore.animations.*;
 import me.taylan.mooncore.commands.*;
 import me.taylan.mooncore.eco.Ekonomi;
@@ -14,6 +16,8 @@ import me.taylan.mooncore.listeners.entitydamage.AttackDamage;
 import me.taylan.mooncore.listeners.entitydamage.AttackSpeed;
 import me.taylan.mooncore.listeners.entitydamage.Dodge;
 import me.taylan.mooncore.listeners.entitydamage.SpawnArmorStand;
+import me.taylan.mooncore.seasons.CustomDate;
+import me.taylan.mooncore.seasons.CustomDateMethods;
 import me.taylan.mooncore.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,6 +29,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +40,12 @@ public class MoonCore extends JavaPlugin {
     private StatsManager statsManager;
     private Enchants enchants;
     private GuiHandler guiHandler;
+
+    public Tabbed getTabbed() {
+        return tabbed;
+    }
+
+    private Tabbed tabbed;
 
     private SeviyeCommand seviyeCommand;
     private ItemHandler itemHandler;
@@ -53,6 +64,12 @@ public class MoonCore extends JavaPlugin {
     private PlayerFishListener playerFishListener;
     private InventoryClickListener inventoryClickListener;
 
+    public CustomDateMethods getCustomDateMethods() {
+        return customDateMethods;
+    }
+
+    private CustomDateMethods customDateMethods;
+
     public RealFurnaceAnim getRealFurnaceAnim() {
         return realFurnaceAnim;
     }
@@ -70,6 +87,7 @@ public class MoonCore extends JavaPlugin {
     }
 
     private ItemDrop itemDrop;
+
     public EnchantConstructor getEnchantConstructor() {
         return enchantConstructor;
     }
@@ -79,7 +97,7 @@ public class MoonCore extends JavaPlugin {
     }
 
     private Ekonomi ekonomi;
-private EnchantConstructor enchantConstructor;
+    private EnchantConstructor enchantConstructor;
     private Configuration configuration;
 
     public Configuration getConfiguration() {
@@ -95,10 +113,12 @@ private EnchantConstructor enchantConstructor;
 
     private Map<Entity, Integer> indicators2 = new HashMap<>();
 
+
     public void onEnable() {
         saveDefaultConfig();
         exp = new ExpList(this);
         exp.expPut();
+        customDateMethods = new CustomDateMethods(this);
         statsManager = new StatsManager(this);
         ekonomi = new Ekonomi(this);
         vaultHook = new VaultHook(this);
@@ -106,10 +126,7 @@ private EnchantConstructor enchantConstructor;
         new EconomyCommand(this);
         seviyeCommand = new SeviyeCommand(this);
         attackListener = new PlayerAttackListener(this);
-
-
-
-
+        tabbed = new Tabbed(this);
         levels = new Levels(this);
         smithAnim = new SmithAnim(this);
         cookAnim = new CookAnim(this);
@@ -128,9 +145,12 @@ private EnchantConstructor enchantConstructor;
         inventoryClickListener = new InventoryClickListener(this);
         enchantListener = new EnchantListener(this);
         deathListener = new PlayerDeathListener(this);
+
         enchantRunnable = new EnchantRunnable(this);
         playerFishListener = new PlayerFishListener(this);
+
         joinListener = new JoinListener(this);
+
 
         File playerData = new File(this.getDataFolder(), "playerdata");
         if (!playerData.exists()) {
@@ -182,6 +202,7 @@ private EnchantConstructor enchantConstructor;
         new BroadcastCommand(this);
         new QuestMapCommand(this);
         new DuraCommand(this);
+
         new EnchantRunnable(this).runTaskTimer(this, 0, 2L);
         if (!statsManager.hasClaimFile()) {
             try {
@@ -236,7 +257,6 @@ private EnchantConstructor enchantConstructor;
 
             }
         }.runTaskTimerAsynchronously(this, 0, 100L);
-
         send("MoonCore Aktif");
     }
 
@@ -245,8 +265,10 @@ private EnchantConstructor enchantConstructor;
     }
 
     public void onDisable() {
-        for(ArmorStand stand:itemDrop.getDropmap().keySet()) {
-            stand.remove();
+        if (itemDrop.getDropmap() != null) {
+            for (ArmorStand stand : itemDrop.getDropmap().keySet()) {
+                stand.remove();
+            }
         }
         Set<Entity> stands = indicators2.keySet();
 
@@ -294,7 +316,7 @@ private EnchantConstructor enchantConstructor;
             File f = new File("plugins/RemielCore/playerdata", name + ".yml");
             FileConfiguration fc = statsManager.getStatfile().get(player.getUniqueId());
             statsManager.setStorage(player.getUniqueId(), invToBase64);
-            statsManager.setRealFurnaceStorage(player.getUniqueId(),invToBase64RealFurnace);
+            statsManager.setRealFurnaceStorage(player.getUniqueId(), invToBase64RealFurnace);
             statsManager.setFurnaceStorage(player.getUniqueId(), invToBase64furnace);
             statsManager.setCookStorage(player.getUniqueId(), invToBase64smoker);
             statsManager.setWorkStorage(player.getUniqueId(), invToBase64work);

@@ -789,7 +789,6 @@ public class PlayerAttackListener implements Listener {
                         if (meta.hasEnchant(Enchantment.ARROW_FIRE)) {
                             arrow.setVisualFire(true);
                             arrow.setFireTicks(-1);
-                            arrow.setBounce(false);
                         }
                         if (meta.hasEnchant(Enchantment.ARROW_DAMAGE)) {
                             arrow.setDamage(6+meta.getEnchantLevel(Enchantment.ARROW_DAMAGE));
