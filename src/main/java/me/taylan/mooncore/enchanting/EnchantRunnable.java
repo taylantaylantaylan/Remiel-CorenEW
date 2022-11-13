@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import com.destroystokyo.paper.MaterialTags;
-import com.keenant.tabbed.Tabbed;
-import com.keenant.tabbed.tablist.TabList;
-import com.keenant.tabbed.tablist.TableTabList;
 import me.taylan.mooncore.commands.SeviyeCommand;
 import me.taylan.mooncore.listeners.InventoryClickListener;
 import org.bukkit.Location;
@@ -42,7 +39,6 @@ public class EnchantRunnable extends BukkitRunnable {
 	private StatsManager stats;
 	private EnchantListener enchantListener;
 	private MoonCore plugin;
-	private Tabbed tabbed;
 	private static HashMap<UUID, Entity> creeper = new HashMap<UUID, Entity>();
 	private SeviyeCommand seviyeCommand;
 	public static HashMap<UUID, Entity> getCreeper() {
@@ -57,7 +53,6 @@ public class EnchantRunnable extends BukkitRunnable {
 		this.enchantListener = plugin.getEnchantListener();
 		this.stats = plugin.getStatsManager();
 		this.seviyeCommand = plugin.getSeviyeCommand();
-		this.tabbed = plugin.getTabbed();
 	}
 
 	@Override

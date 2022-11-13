@@ -22,11 +22,11 @@ import java.util.UUID;
 public class ItemDrop {
     private MoonCore plugin;
 
-
-    private Map<ArmorStand, UUID> dropmap = new HashMap<ArmorStand, UUID>();
     public Map<ArmorStand, UUID> getDropmap() {
         return dropmap;
     }
+
+    private Map<ArmorStand, UUID> dropmap = new HashMap<ArmorStand, UUID>();
 
     public ItemDrop(MoonCore plugin) {
         this.plugin = plugin;

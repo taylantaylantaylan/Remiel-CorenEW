@@ -10,17 +10,12 @@ import org.bukkit.Statistic;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
-public class ItemHandlerCommand implements CommandExecutor, TabCompleter {
+public class ItemHandlerCommand implements CommandExecutor {
 
     private MoonCore plugin;
     private ItemHandler itemHandler;
@@ -29,7 +24,6 @@ public class ItemHandlerCommand implements CommandExecutor, TabCompleter {
         this.plugin = plugin;
         this.itemHandler = plugin.getItemHandler();
         plugin.getCommand("adminitem").setExecutor(this);
-        plugin.getCommand("adminitem").setTabCompleter(this);
     }
 
     @SuppressWarnings("deprecation")
@@ -68,18 +62,5 @@ public class ItemHandlerCommand implements CommandExecutor, TabCompleter {
         }
         return false;
     }
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        final String[] COMMANDS = itemHandler.getItemStackMap().keySet().toArray(new String[0]);
-        List<String> commandlist = new ArrayList<>();
-        for(String string: COMMANDS) {
-            commandlist.add(string);
-        }
-        final List<String> completions = new ArrayList<>();
 
-        StringUtil.copyPartialMatches(args[0], commandlist, completions);
-
-        Collections.sort(completions);
-        return completions;
-    }
 }

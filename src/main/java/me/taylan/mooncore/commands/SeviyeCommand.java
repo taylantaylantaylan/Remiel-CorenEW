@@ -108,7 +108,6 @@ public class SeviyeCommand implements CommandExecutor {
         p.spawnParticle(Particle.SPELL_INSTANT, p.getLocation(), 50, 0.4, 0.3, 0.4, 0);
         p.spawnParticle(Particle.ENCHANTMENT_TABLE, p.getLocation().add(0, 2, 0), 30, 1.2, 0.6, 1.2, 0);
         p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 100, 0.2f);
-        /*
         ArmorStand armorStand = SpawnArmorStand.spawnArmorStand(loc.add(1, 0, 0), "<white>⬆<gold>❤");
         plugin.getIndicators().put(armorStand, 50);
         ArmorStand armorStand2 = SpawnArmorStand.spawnArmorStand(loc2, "<green>⬆<gold>❤");
@@ -129,7 +128,7 @@ public class SeviyeCommand implements CommandExecutor {
         plugin.getIndicators().put(armorStand9, 50);
         ArmorStand armorStand10 = SpawnArmorStand.spawnArmorStand(loc2, "<gray>⬆<dark_aqua>※");
         plugin.getIndicators().put(armorStand10, 50);
-*/
+
         stats.setLevel(p.getUniqueId(), seviye);
         p.sendMessage(Painter.paint("&8-----------------------------------------------------"));
         p.sendMessage(Painter.paint(
