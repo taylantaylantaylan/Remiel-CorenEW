@@ -3,19 +3,18 @@ package me.taylan.mooncore.listeners;
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.utils.ItemHandler;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
-import org.spigotmc.event.player.PlayerSpawnLocationEvent;
+
+import java.util.Objects;
 
 public class PlayerCraftListener implements Listener {
 
-    private MoonCore plugin;
-    private ItemHandler itemHandler;
+private final MoonCore plugin;
+    private final ItemHandler itemHandler;
 
     public PlayerCraftListener(MoonCore plugin) {
         this.plugin = plugin;
@@ -162,7 +161,7 @@ public class PlayerCraftListener implements Listener {
                 event.getInventory().setResult(new ItemStack(Material.AIR));
                 break;
             case WOODEN_SWORD:
-                if (event.getInventory().getResult().hasItemMeta() && event.getInventory().getResult().getItemMeta().getDisplayName().contains("Kemik")) {
+                if (Objects.requireNonNull(event.getInventory().getResult()).hasItemMeta() && event.getInventory().getResult().getItemMeta().getDisplayName().contains("Kemik")) {
                     ItemStack woodensword = itemHandler.bonesword;
                     event.getInventory().setResult(woodensword);
                 } else {
@@ -183,7 +182,7 @@ public class PlayerCraftListener implements Listener {
                 event.getInventory().setResult(woodenaxe);
                 break;
             case WOODEN_HOE:
-                if (event.getInventory().getResult().hasItemMeta() && event.getInventory().getResult().getItemMeta().getDisplayName().contains("Çiftçi")) {
+                if (Objects.requireNonNull(event.getInventory().getResult()).hasItemMeta() && event.getInventory().getResult().getItemMeta().getDisplayName().contains("Çiftçi")) {
                     ItemStack woodenhoe = itemHandler.farmerhoe;
                     event.getInventory().setResult(woodenhoe);
                 } else {
@@ -216,7 +215,7 @@ public class PlayerCraftListener implements Listener {
                 event.getInventory().setResult(new ItemStack(Material.AIR));
                 break;
             case LEATHER_HELMET:
-                if (event.getInventory().getResult().hasItemMeta() && event.getInventory().getResult().getItemMeta().getDisplayName().contains("Kemik")) {
+                if (Objects.requireNonNull(event.getInventory().getResult()).hasItemMeta() && event.getInventory().getResult().getItemMeta().getDisplayName().contains("Kemik")) {
                     ItemStack woodenhoe = itemHandler.bonehelmet;
                     event.getInventory().setResult(woodenhoe);
                 } else if (event.getInventory().getResult().hasItemMeta() && event.getInventory().getResult().getItemMeta().getDisplayName().contains("Kararmış")) {

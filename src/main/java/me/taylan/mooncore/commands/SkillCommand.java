@@ -7,21 +7,24 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class SkillCommand implements CommandExecutor {
 
-	private MoonCore plugin;
-	private GuiHandler guiHandler;
-	private ItemHandler itemHandler;
+private final MoonCore plugin;
+	private final GuiHandler guiHandler;
+private final ItemHandler itemHandler;
 
 	public SkillCommand(MoonCore plugin) {
 		this.plugin = plugin;
 		this.guiHandler = plugin.getGuiHandler();
 		this.itemHandler = plugin.getItemHandler();
-		plugin.getCommand("ustalık").setExecutor(this);
+		Objects.requireNonNull(plugin.getCommand("ustalık")).setExecutor(this);
 	}
 
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
 
 		if (!(sender instanceof Player)) {
 			return true;

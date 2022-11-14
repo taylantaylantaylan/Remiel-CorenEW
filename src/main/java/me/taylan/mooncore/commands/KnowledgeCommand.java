@@ -2,6 +2,7 @@ package me.taylan.mooncore.commands;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -17,22 +18,23 @@ import org.bukkit.persistence.PersistentDataType;
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.utils.ItemHandler;
 import me.taylan.mooncore.utils.Painter;
+import org.jetbrains.annotations.NotNull;
 
 public class KnowledgeCommand implements CommandExecutor {
 
-	private MoonCore plugin;
-	private ItemHandler itemHandler;
+	private final MoonCore plugin;
+private final ItemHandler itemHandler;
 	
 
 	public KnowledgeCommand(MoonCore plugin) {
 		this.plugin = plugin;
 		this.itemHandler = plugin.getItemHandler();
 
-		plugin.getCommand("bookver").setExecutor(this);
+		Objects.requireNonNull(plugin.getCommand("bookver")).setExecutor(this);
 	}
 
 	@SuppressWarnings("deprecation")
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
 				ItemStack star = new ItemStack(Material.KNOWLEDGE_BOOK);

@@ -1,7 +1,7 @@
 package me.taylan.mooncore.listeners.entitydamage;
 
 import java.util.HashMap;
-import java.util.Random;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -21,14 +21,14 @@ import org.bukkit.persistence.PersistentDataType;
 import me.taylan.mooncore.MoonCore;
 
 public class Dodge implements Listener {
-	private MoonCore plugin;
+	private final MoonCore plugin;
 
 	public Dodge(MoonCore plugin) {
 		this.plugin = plugin;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
-	private static HashMap<UUID, String> dodgeMech = new HashMap<UUID, String>();
+	private static final HashMap<UUID, String> dodgeMech = new HashMap<UUID, String>();
 
 	@EventHandler
 	public void dodgeMech(EntityDamageByEntityEvent event) {
@@ -55,7 +55,7 @@ public class Dodge implements Listener {
 			PersistentDataContainer container2 = meta2.getPersistentDataContainer();
 			if ((boot.getItemMeta().getPersistentDataContainer().getKeys()
 					.contains(new NamespacedKey(plugin, "Enchants")))) {
-				if (container2.get(key, PersistentDataType.STRING).contains("dodgerate")) {
+				if (Objects.requireNonNull(container2.get(key, PersistentDataType.STRING)).contains("dodgerate")) {
 					if (attacker instanceof Player) {
 
 						Player attacker2 = (Player) attacker;
@@ -68,8 +68,8 @@ public class Dodge implements Listener {
 							PersistentDataContainer container = meta.getPersistentDataContainer();
 							if ((item.getItemMeta().getPersistentDataContainer().getKeys()
 									.contains(new NamespacedKey(plugin, "Enchants")))) {
-								if (container.get(key, PersistentDataType.STRING).contains("desme")) {
-									String[] parts = container.get(key, PersistentDataType.STRING).split(" ");
+								if (Objects.requireNonNull(container.get(key, PersistentDataType.STRING)).contains("desme")) {
+									String[] parts = Objects.requireNonNull(container.get(key, PersistentDataType.STRING)).split(" ");
 									int level = Integer.parseInt(parts[1]);
 									int chance = ThreadLocalRandom.current().nextInt(20 + level * 2);
 
@@ -78,7 +78,7 @@ public class Dodge implements Listener {
 										dodgeMech.put(defender.getUniqueId(), "dodge");
 									}
 								} else {
-									String[] parts2 = container2.get(key, PersistentDataType.STRING).split(" ");
+									String[] parts2 = Objects.requireNonNull(container2.get(key, PersistentDataType.STRING)).split(" ");
 									int level2 = Integer.parseInt(parts2[1]);
 									int chance = ThreadLocalRandom.current().nextInt(20 - level2 * 2);
 
@@ -92,7 +92,7 @@ public class Dodge implements Listener {
 						}
 
 					} else {
-						String[] parts2 = container2.get(key, PersistentDataType.STRING).split(" ");
+						String[] parts2 = Objects.requireNonNull(container2.get(key, PersistentDataType.STRING)).split(" ");
 						int level2 = Integer.parseInt(parts2[1]);
 						int chance = ThreadLocalRandom.current().nextInt(20 - level2 * 2);
 

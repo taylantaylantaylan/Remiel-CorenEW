@@ -4,9 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,18 +14,21 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.utils.Painter;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class LootCrateCommand implements CommandExecutor {
 
-	private MoonCore plugin;
+	private final MoonCore plugin;
 
 	public LootCrateCommand(MoonCore plugin) {
 		this.plugin = plugin;
-		plugin.getCommand("lootolustur").setExecutor(this);
+		Objects.requireNonNull(plugin.getCommand("lootolustur")).setExecutor(this);
 	}
 
 	@SuppressWarnings("deprecation")
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
 			if (p.hasPermission("mooncore.rename")) {

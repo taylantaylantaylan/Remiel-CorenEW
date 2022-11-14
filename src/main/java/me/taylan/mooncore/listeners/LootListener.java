@@ -18,7 +18,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
@@ -28,18 +27,21 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class LootListener implements Listener {
 
-    private MoonCore plugin;
-    private Loots loots;
-    private HashMap<Inventory, UUID> lootopen = new HashMap<>();
+    private final MoonCore plugin;
+    private final Loots loots;
+    private final HashMap<Inventory, UUID> lootopen = new HashMap<>();
+
 
     public HashMap<Inventory, UUID> getLootopen() {
-        return lootopen;
+       return lootopen;
     }
+
 
     public LootListener(MoonCore plugin) {
         this.plugin = plugin;
@@ -216,51 +218,23 @@ public class LootListener implements Listener {
 
 
                     }
-                }
+              }
             }
-        }
-    }
-
-    public void lootanim2(Location loc1, ItemStack Item) {
-        Location loc = loc1.clone().add(getRandomOffset(), 1, getRandomOffset());
-        World world = Bukkit.getServer().getWorld("world");
-        ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
-        PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SPAWN_ENTITY);
-
-        // Entity ID
-        int random = ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE);
-        packet.getIntegers().write(0, random);
-        // Entity Type
-        packet.getEntityTypeModifier().write(0, EntityType.ARMOR_STAND);
-        // Set optional velocity (/8000)
-        packet.getIntegers().write(1, 0);
-        packet.getIntegers().write(2, 0);
-        packet.getIntegers().write(3, 0);
-        // Set yaw pitch
-        packet.getIntegers().write(4, 0);
-        packet.getIntegers().write(5, 0);
-        // Set object data
-        packet.getIntegers().write(7, 0);
-        // Set location
-        packet.getDoubles().write(0, loc.getX());
-        packet.getDoubles().write(1, loc.getY());
-        packet.getDoubles().write(2, loc.getZ());
-        // Set UUID
-        packet.getUUIDs().write(0, UUID.randomUUID());
+     }
+   }
 
 
-    }
 
     public void lootanim(Location loc1, ItemStack Item) {
         Location loc = loc1.clone().add(getRandomOffset(), 1, getRandomOffset());
         World world = Bukkit.getServer().getWorld("world");
-        ArmorStand armorStand = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
+        ArmorStand armorStand = (ArmorStand) Objects.requireNonNull(world).spawnEntity(loc, EntityType.ARMOR_STAND);
         armorStand.setMarker(true);
         armorStand.setVisible(false);
         armorStand.setGravity(false);
         armorStand.setSmall(true);
         armorStand.setCustomNameVisible(true);
-        armorStand.customName(Component.text(Item.getAmount() + " x").append(Item.getItemMeta().displayName()));
+        armorStand.customName(Component.text(Item.getAmount() + " x").append(Objects.requireNonNull(Item.getItemMeta().displayName())));
         plugin.getIndicators().put(armorStand, 80);
 
 

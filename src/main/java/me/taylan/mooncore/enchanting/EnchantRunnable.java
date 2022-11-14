@@ -1,11 +1,10 @@
 package me.taylan.mooncore.enchanting;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
-import com.destroystokyo.paper.MaterialTags;
 import me.taylan.mooncore.commands.SeviyeCommand;
-import me.taylan.mooncore.listeners.InventoryClickListener;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -23,29 +22,25 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.listeners.EnchantListener;
-import me.taylan.mooncore.utils.Painter;
 import me.taylan.mooncore.utils.StatsManager;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 
 public class EnchantRunnable extends BukkitRunnable {
-	private StatsManager stats;
-	private EnchantListener enchantListener;
-	private MoonCore plugin;
-	private static HashMap<UUID, Entity> creeper = new HashMap<UUID, Entity>();
-	private SeviyeCommand seviyeCommand;
+	private final StatsManager stats;
+	private final EnchantListener enchantListener;
+	private final MoonCore plugin;
+	private static final HashMap<UUID, Entity> creeper = new HashMap<UUID, Entity>();
+	private final SeviyeCommand seviyeCommand;
 	public static HashMap<UUID, Entity> getCreeper() {
 		return creeper;
 	}
 
-	private HashMap<UUID, Long> beklemeCreep = new HashMap<UUID, Long>();
+	private final HashMap<UUID, Long> beklemeCreep = new HashMap<UUID, Long>();
 	private double alpha = 0;
 
 	public EnchantRunnable(MoonCore plugin) {
@@ -126,8 +121,6 @@ public class EnchantRunnable extends BukkitRunnable {
 				if (effect2 == null) {
 					player.addPotionEffect(effect);
 				}
-			} else {
-
 			}
 			if(stats.getCan(player.getUniqueId()) <=0) {
 				stats.setCan1(player.getUniqueId());
@@ -152,26 +145,13 @@ public class EnchantRunnable extends BukkitRunnable {
 			if(stats.getHiz(player.getUniqueId()) >81) {
 				stats.setSpeedCap(player.getUniqueId());
 			}
-			switch (stats.getHiz(player.getUniqueId()))   {
-				case -10:
-					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.05);
-					break;
-				case 0:
-					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
-					break;
-				case 20:
-					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.15);
-					break;
-				case 40:
-					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.2);
-					break;
-				case 60:
-					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.25);
-					break;
-				case 80:
-					player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.30);
-					break;
-
+			switch (stats.getHiz(player.getUniqueId())) {
+				case -10 -> player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.05);
+				case 0 -> player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
+				case 20 -> player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.15);
+				case 40 -> player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.2);
+				case 60 -> player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.25);
+				case 80 -> player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.30);
 			}
 			/*if(stats.getFurnaceAmount(player.getUniqueId()) ==0) {
 				InventoryClickListener.getFurnaceBlock().remove(player.getUniqueId());
@@ -194,8 +174,8 @@ public class EnchantRunnable extends BukkitRunnable {
 					PersistentDataContainer container = meta.getPersistentDataContainer();
 					if (container.has(key, EnchantConstructor.getEnchants())) {
 
-						if (container.get(key, EnchantConstructor.getEnchants()).containsKey("soul")) {
-							int level = container.get(key, EnchantConstructor.getEnchants()).get("soul");
+						if (Objects.requireNonNull(container.get(key, EnchantConstructor.getEnchants())).containsKey("soul")) {
+							int level = Objects.requireNonNull(container.get(key, EnchantConstructor.getEnchants())).get("soul");
 
 							Location loc = player.getLocation();
 							Location secondLocation = loc.clone().add(Math.cos(alpha), 0, Math.sin(alpha));
@@ -258,8 +238,8 @@ public class EnchantRunnable extends BukkitRunnable {
 						PersistentDataContainer container = meta.getPersistentDataContainer();
 						if (container.has(key, EnchantConstructor.getEnchants())) {
 
-							if (container.get(key, EnchantConstructor.getEnchants()).containsKey("yenilen")) {
-								int level = container.get(key, EnchantConstructor.getEnchants()).get("yenilen");
+							if (Objects.requireNonNull(container.get(key, EnchantConstructor.getEnchants())).containsKey("yenilen")) {
+								int level = Objects.requireNonNull(container.get(key, EnchantConstructor.getEnchants())).get("yenilen");
 								if (!(enchantListener.bekleme12.containsKey(player.getUniqueId()))) {
 									PotionEffect effect = new PotionEffect(PotionEffectType.REGENERATION, 60,
 											level - 1);
@@ -285,8 +265,8 @@ public class EnchantRunnable extends BukkitRunnable {
 						PersistentDataContainer container = metaleg.getPersistentDataContainer();
 						if (container.has(key, EnchantConstructor.getEnchants())) {
 
-							if (container.get(key, EnchantConstructor.getEnchants()).containsKey("fireres")) {
-								int level = container.get(key, EnchantConstructor.getEnchants()).get("fireres");
+							if (Objects.requireNonNull(container.get(key, EnchantConstructor.getEnchants())).containsKey("fireres")) {
+								int level = Objects.requireNonNull(container.get(key, EnchantConstructor.getEnchants())).get("fireres");
 								PotionEffect effect = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 30, 1);
 								player.addPotionEffect(effect);
 							}
@@ -305,8 +285,8 @@ public class EnchantRunnable extends BukkitRunnable {
 						PersistentDataContainer container3 = metaleg2.getPersistentDataContainer();
 						if (container3.has(key, EnchantConstructor.getEnchants())) {
 
-							if (container3.get(key, EnchantConstructor.getEnchants()).containsKey("luck")) {
-								int level = container3.get(key, EnchantConstructor.getEnchants()).get("luck");
+							if (Objects.requireNonNull(container3.get(key, EnchantConstructor.getEnchants())).containsKey("luck")) {
+								int level = Objects.requireNonNull(container3.get(key, EnchantConstructor.getEnchants())).get("luck");
 								PotionEffect effect = new PotionEffect(PotionEffectType.LUCK, 30, level - 1);
 								player.addPotionEffect(effect);
 							}

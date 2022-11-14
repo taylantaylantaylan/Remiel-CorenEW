@@ -7,34 +7,38 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class ClaimSetterCommand implements CommandExecutor {
 
-	private MoonCore plugin;
-	private List<Location> loclist = new ArrayList<>();
-	private List<Block> blocklist = new ArrayList<>();
-	private HashMap<Player, List<Location>> binakey = new HashMap<Player, List<Location>>();
-	private HashMap<Player, List<Block>> binakey2 = new HashMap<Player, List<Block>>();
+    private final MoonCore plugin;
+    private List<Location> loclist = new ArrayList<>();
+    private List<Block> blocklist = new ArrayList<>();
 
-	public ClaimSetterCommand(MoonCore plugin) {
-		this.plugin = plugin;
-		plugin.getCommand("claimset").setExecutor(this);
-	}
+    private HashMap<Player, List<Location>> binakey = new HashMap<>();
+    private HashMap<Player, List<Block>> binakey2 = new HashMap<>();
 
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-		if (!(sender instanceof Player)) {
-			return true;
-		}
+    public ClaimSetterCommand(MoonCore plugin) {
+        this.plugin = plugin;
+        Objects.requireNonNull(plugin.getCommand("claimset")).setExecutor(this);
+    }
 
-		Player p = (Player) sender;
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
 
-		if (p.hasPermission("claim")) {
-			p.sendMessage("Bu komut calışmaz.");
+        if (!(sender instanceof Player)) {
+            return true;
+        }
+
+        Player p = (Player) sender;
+
+        if (p.hasPermission("claim")) {
+            p.sendMessage("Bu komut calışmaz.");
 			/*if (args.length == 0) {
 				Chunk chunk = p.getChunk();
 				ChunkSnapshot bina = chunk.getChunkSnapshot();
@@ -76,8 +80,8 @@ public class ClaimSetterCommand implements CommandExecutor {
 				}
 			}*/
 
-		}
-		return false;
-	}
+        }
+        return false;
+    }
 
 }

@@ -9,20 +9,23 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class DuraCommand implements CommandExecutor {
 
-	private MoonCore plugin;
-	private PlayerDeathListener deathListener;
+	private final MoonCore plugin;
+private final PlayerDeathListener deathListener;
 
 	public DuraCommand(MoonCore plugin) {
 		this.plugin = plugin;
 		this.deathListener = plugin.getDeathListener();
-		plugin.getCommand("dura").setExecutor(this);
+		Objects.requireNonNull(plugin.getCommand("dura")).setExecutor(this);
 	}
 
 	@SuppressWarnings("deprecation")
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
 			if (p.hasPermission("mooncore.dura")) {

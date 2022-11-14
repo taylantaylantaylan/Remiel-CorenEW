@@ -20,7 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class MobSpawnListener implements Listener {
 
-	private MoonCore plugin;
+	private final MoonCore plugin;
 
 	public MobSpawnListener(MoonCore plugin) {
 		this.plugin = plugin;

@@ -9,7 +9,6 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -17,16 +16,17 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 public class ItemDrop {
-    private MoonCore plugin;
+    private final MoonCore plugin;
 
     public Map<ArmorStand, UUID> getDropmap() {
         return dropmap;
     }
 
-    private Map<ArmorStand, UUID> dropmap = new HashMap<ArmorStand, UUID>();
+    private final Map<ArmorStand, UUID> dropmap = new HashMap<ArmorStand, UUID>();
 
     public ItemDrop(MoonCore plugin) {
         this.plugin = plugin;
@@ -55,7 +55,7 @@ public class ItemDrop {
                 public void run() {
                     if(armorStand.isDead()) {
                         dropmap.remove(armorStand);
-                        Bukkit.getPlayer(dropmap.get(armorStand)).sendMessage("aga");
+                        Objects.requireNonNull(Bukkit.getPlayer(dropmap.get(armorStand))).sendMessage("aga");
                         this.cancel();
                     }
                     Location location = armorStand.getLocation();
@@ -64,7 +64,7 @@ public class ItemDrop {
                     for (Entity entity : armorStand.getNearbyEntities(0.1, 0.1, 0.1)) {
                         if (entity.getUniqueId().equals(dropmap.get(armorStand))) {
                             Player playerdrop = Bukkit.getPlayer(dropmap.get(armorStand));
-                            if(playerdrop.getInventory().firstEmpty() == -1) {
+                            if(Objects.requireNonNull(playerdrop).getInventory().firstEmpty() == -1) {
                                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
                                         new TextComponent(Painter.paint("&cEnvanterin Dolu!")));
                             } else {
@@ -107,7 +107,7 @@ public class ItemDrop {
                 public void run() {
                     if(armorStand.isDead()) {
                         dropmap.remove(armorStand);
-                        Bukkit.getPlayer(dropmap.get(armorStand)).sendMessage("aga");
+                        Objects.requireNonNull(Bukkit.getPlayer(dropmap.get(armorStand))).sendMessage("aga");
                         this.cancel();
                     }
                     Location location = armorStand.getLocation();
@@ -116,7 +116,7 @@ public class ItemDrop {
                     for (Entity entity : armorStand.getNearbyEntities(0.1, 0.1, 0.1)) {
                         if (entity.getUniqueId().equals(dropmap.get(armorStand))) {
                             Player playerdrop = Bukkit.getPlayer(dropmap.get(armorStand));
-                            if(playerdrop.getInventory().firstEmpty() == -1) {
+                            if(Objects.requireNonNull(playerdrop).getInventory().firstEmpty() == -1) {
                                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
                                         new TextComponent(Painter.paint("&cEnvanterin Dolu!")));
                             } else {

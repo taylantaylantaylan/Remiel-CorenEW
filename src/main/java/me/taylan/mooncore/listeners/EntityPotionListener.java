@@ -17,10 +17,10 @@ import java.util.*;
 
 public class EntityPotionListener implements Listener {
 
-    private MoonCore plugin;
-    private StatsManager manager;
-    private PlayerDeathListener deathListener;
-    private HashMap<UUID, List<PotionEffect>> potionmap = new HashMap<UUID, List<PotionEffect>>();
+private final MoonCore plugin;
+    private final StatsManager manager;
+    private final PlayerDeathListener deathListener;
+    private final HashMap<UUID, List<PotionEffect>> potionmap = new HashMap<UUID, List<PotionEffect>>();
 
     public EntityPotionListener(MoonCore plugin) {
         this.plugin = plugin;
@@ -62,7 +62,7 @@ public class EntityPotionListener implements Listener {
         }
         Player player = (Player) entity;
         if (event.getAction() == Action.ADDED || event.getAction() == Action.CHANGED)
-            if (event.getNewEffect().getType().equals(PotionEffectType.SLOW_FALLING)) {
+            if (Objects.requireNonNull(event.getNewEffect()).getType().equals(PotionEffectType.SLOW_FALLING)) {
                 PotionEffect effect = player.getPotionEffect(PotionEffectType.SLOW_FALLING);
                 if (effect == null) {
                     if (potionmap.containsKey(player.getUniqueId())) {
@@ -101,9 +101,8 @@ public class EntityPotionListener implements Listener {
             if (event.getCause() == Cause.EXPIRATION || event.getCause() == Cause.MILK
                     || event.getCause() == Cause.DEATH) {
                 List<PotionEffect> potmap = potionmap.get(player.getUniqueId());
-                for (Iterator<PotionEffect> iterator = potmap.iterator(); iterator.hasNext(); ) {
-                    PotionEffect effect = iterator.next();
-                    if (event.getOldEffect().getType().equals(PotionEffectType.SLOW_FALLING)
+                for (PotionEffect effect : potmap) {
+                    if (Objects.requireNonNull(event.getOldEffect()).getType().equals(PotionEffectType.SLOW_FALLING)
                             && effect.getType().equals(PotionEffectType.SLOW_FALLING)) {
                         int ampi = effect.getAmplifier() + 1;
                         int gucpot = ampi * 50;

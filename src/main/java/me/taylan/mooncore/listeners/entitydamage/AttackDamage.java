@@ -12,24 +12,18 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
-import org.bukkit.util.Vector;
 
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AttackDamage implements Listener {
-    private static HashMap<UUID, String> crit = new HashMap<UUID, String>();
-    private MoonCore plugin;
-    private StatsManager stats;
+    private static final HashMap<UUID, String> crit = new HashMap<>();
+    private final MoonCore plugin;
+    private final StatsManager stats;
 
     public AttackDamage(MoonCore plugin) {
         this.plugin = plugin;
@@ -66,7 +60,7 @@ public class AttackDamage implements Listener {
             float realDamage = (float) (event.getDamage() * damageReduc);
             event.setDamage(realDamage);
             Team isim = scoreboard.getTeam(player.getName());
-            if (isim.hasEntry(player.getName())) {
+            if (Objects.requireNonNull(isim).hasEntry(player.getName())) {
                 isim.setPrefix(Painter.paint("&7[&fSvy. " + stats.getLevel(player.getUniqueId()) + "&7] &f"));
                 isim.setSuffix(Painter.paint(" &6[" + (int) player.getHealth() + "❤]"));
             } else {
@@ -153,13 +147,11 @@ public class AttackDamage implements Listener {
                 }
             }
 
-        } else if (entity instanceof Arrow) {
+        } else if (entity instanceof Arrow arrow) {
 
-            Arrow arrow = (Arrow) entity;
-            if(!(arrow.getShooter() instanceof Player)) {
+            if(!(arrow.getShooter() instanceof Player player)) {
                 return;
             }
-            Player player = (Player) arrow.getShooter();
 
             NamespacedKey hasar = new NamespacedKey(plugin, "damage");
 
@@ -211,20 +203,22 @@ public class AttackDamage implements Listener {
         }
     }
 
-    public Player getDamager(Entity entity) {
-
-        if (entity instanceof Player) {
-            return (Player) entity;
-        } else if (entity instanceof Projectile) {
-            Projectile proj = (Projectile) entity;
-            ProjectileSource shooter = proj.getShooter();
-            if (shooter instanceof Player) {
-                return (Player) shooter;
-            }
-        } else if (entity instanceof Tameable) {
-            Tameable animal = (Tameable) entity;
-            return Bukkit.getPlayer(animal.getOwner().getUniqueId());
-        }
-        return null;
-    }
+// --Commented out by Inspection START (14.11.2022 02:08):
+//    public Player getDamager(Entity entity) {
+//
+//        if (entity instanceof Player) {
+//            return (Player) entity;
+//        } else if (entity instanceof Projectile) {
+//            Projectile proj = (Projectile) entity;
+//            ProjectileSource shooter = proj.getShooter();
+//            if (shooter instanceof Player) {
+//                return (Player) shooter;
+//            }
+//        } else if (entity instanceof Tameable) {
+//            Tameable animal = (Tameable) entity;
+//            return Bukkit.getPlayer(animal.getOwner().getUniqueId());
+//        }
+//        return null;
+//    }
+// --Commented out by Inspection STOP (14.11.2022 02:08)
 }

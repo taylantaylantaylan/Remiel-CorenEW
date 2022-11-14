@@ -1,6 +1,5 @@
 package me.taylan.mooncore.commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
@@ -17,18 +16,21 @@ import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.listeners.entitydamage.SpawnArmorStand;
 import me.taylan.mooncore.utils.Painter;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class NpcCommand implements CommandExecutor {
 
-	private MoonCore plugin;
+private final MoonCore plugin;
 
 	public NpcCommand(MoonCore plugin) {
 		this.plugin = plugin;
-		plugin.getCommand("npcolustur").setExecutor(this);
+		Objects.requireNonNull(plugin.getCommand("npcolustur")).setExecutor(this);
 	}
 
 	@SuppressWarnings("deprecation")
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
 			if (p.hasPermission("mooncore.npc")) {
@@ -51,8 +53,8 @@ public class NpcCommand implements CommandExecutor {
 					villager.setVillagerType(Villager.Type.valueOf(memleket));
 
 					villager.customName(MiniMessage.builder().build().deserialize(name));
-					villager.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(-1);
-					villager.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(100);
+					Objects.requireNonNull(villager.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).setBaseValue(-1);
+					Objects.requireNonNull(villager.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE)).setBaseValue(100);
 					villager.setCollidable(false);
 					ArmorStand armorStand = SpawnArmorStand.spawnArmorStand(p.getLocation().add(0,1.72,0), rank);
 					

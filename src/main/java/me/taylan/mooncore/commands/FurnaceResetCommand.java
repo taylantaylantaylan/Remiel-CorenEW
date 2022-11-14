@@ -9,22 +9,25 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class FurnaceResetCommand implements CommandExecutor {
 
-    private MoonCore plugin;
-    private StatsManager stats;
-    private JoinListener joinListener;
+private final MoonCore plugin;
+    private final StatsManager stats;
+private final JoinListener joinListener;
 
     public FurnaceResetCommand(MoonCore plugin) {
         this.plugin = plugin;
         this.stats = plugin.getStatsManager();
         this.joinListener = plugin.getJoinListener();
-        plugin.getCommand("furnacereset").setExecutor(this);
+        Objects.requireNonNull(plugin.getCommand("furnacereset")).setExecutor(this);
     }
 
     @SuppressWarnings("deprecation")
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player) {
             if(sender.hasPermission("mooncore.furnacereset")) {
                 Player p = (Player) sender;

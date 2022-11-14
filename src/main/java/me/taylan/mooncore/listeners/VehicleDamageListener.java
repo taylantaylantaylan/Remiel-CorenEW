@@ -14,7 +14,7 @@ import java.util.EnumSet;
 import java.util.Set;
 
 public class VehicleDamageListener implements Listener {
-    private MoonCore plugin;
+private final MoonCore plugin;
 
     public VehicleDamageListener(MoonCore plugin) {
         this.plugin = plugin;
@@ -29,7 +29,7 @@ public class VehicleDamageListener implements Listener {
         if (player.getWorld().getName().equals("world")) {
             if (!(player.isOp())) {
                 final Set<EntityType> SKIPPED_TYPES = EnumSet.of(EntityType.MINECART, EntityType.MINECART_CHEST,
-                        EntityType.MINECART_FURNACE, EntityType.MINECART_FURNACE);
+                        EntityType.MINECART_FURNACE);
                 if (SKIPPED_TYPES.contains(event.getVehicle().getType())) {
                     event.setCancelled(true);
                 }

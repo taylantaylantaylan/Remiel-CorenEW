@@ -21,10 +21,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class EntityDeathListener implements Listener {
 
-    private MoonCore plugin;
-    private ItemHandler itemHandler;
-    private StatsManager stats;
-    private ItemDrop itemDrop;
+    private final MoonCore plugin;
+    private final ItemHandler itemHandler;
+    private final StatsManager stats;
+    private final ItemDrop itemDrop;
 
     public EntityDeathListener(MoonCore plugin) {
         this.plugin = plugin;
@@ -58,9 +58,7 @@ public class EntityDeathListener implements Listener {
             int logchance = ThreadLocalRandom.current().nextInt(30);
             if (logchance < 5) {
                 player.sendMessage(Painter.paint("&6Ekstra Tecrübe Puanı Düşürdün!"));
-                ExperienceOrb armorStand2 = player.getWorld().spawn(player.getLocation(), ExperienceOrb.class, armorStand -> {
-                    armorStand.setExperience(10);
-                });
+                ExperienceOrb armorStand2 = player.getWorld().spawn(player.getLocation(), ExperienceOrb.class, armorStand -> armorStand.setExperience(10));
             }
         }
         if (name.contains("İnek")) {

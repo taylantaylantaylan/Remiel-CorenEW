@@ -21,201 +21,192 @@ import java.util.Set;
 
 public class SpawnArmorStand implements Listener {
 
-	private MoonCore plugin;
-	private PlayerAttackListener attackListener;
-	private DecimalFormat formatter = new DecimalFormat("#");
-	private BukkitRunnable r;
+    private final MoonCore plugin;
+    private final PlayerAttackListener attackListener;
+    private final DecimalFormat formatter = new DecimalFormat("#");
+    private final BukkitRunnable r;
 
-	public SpawnArmorStand(MoonCore plugin) {
+    public SpawnArmorStand(MoonCore plugin) {
 
-		this.plugin = plugin;
-		this.attackListener = plugin.getAttackListener();
-		r = new BukkitRunnable() {
-			Set<Entity> stands = plugin.getIndicators().keySet();
+        this.plugin = plugin;
+        this.attackListener = plugin.getAttackListener();
+        r = new BukkitRunnable() {
+            final Set<Entity> stands = plugin.getIndicators().keySet();
 
-			List<Entity> removal = new ArrayList<>();
+            final List<Entity> removal = new ArrayList<>();
 
-			@Override
-			public void run() {
-				for (Entity stand : stands) {
-					int ticksLeft = plugin.getIndicators().get(stand);
-					if (ticksLeft == 0) {
+            @Override
+            public void run() {
+                for (Entity stand : stands) {
+                    int ticksLeft = plugin.getIndicators().get(stand);
+                    if (ticksLeft == 0) {
 
-						stand.remove();
-						removal.add(stand);
-						continue;
-					}
-					ticksLeft--;
-					plugin.getIndicators().put(stand, ticksLeft);
-				}
-				stands.removeAll(removal);
-			}
-		};
-		r.runTaskTimer(plugin, 0, 20);
-		plugin.getServer().getPluginManager().registerEvents(this, plugin);
-		// asynce
-	}
+                        stand.remove();
+                        removal.add(stand);
+                        continue;
+                    }
+                    ticksLeft--;
+                    plugin.getIndicators().put(stand, ticksLeft);
+                }
+                removal.forEach(stands::remove);
+            }
+        };
+        r.runTaskTimer(plugin, 0, 20);
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        // asynce
+    }
 
-	public double getRandomOffset() {
-		double random = Math.random();
-		if (Math.random() > 0.5)
-			random *= -1;
-		return random;
-	}
+    public double getRandomOffset() {
+        double random = Math.random();
+        if (Math.random() > 0.5)
+            random *= -1;
+        return random;
+    }
 
-	@EventHandler(priority = EventPriority.LOW)
-	public void onEntityDamage(EntityDamageByEntityEvent event) {
+    @EventHandler(priority = EventPriority.LOW)
+    public void onEntityDamage(EntityDamageByEntityEvent event) {
 
-		Entity rawEntity = event.getEntity();
-		if (!(rawEntity instanceof LivingEntity) || rawEntity instanceof Villager) {
-			return;
-		}
+        Entity rawEntity = event.getEntity();
+        if (!(rawEntity instanceof LivingEntity) || rawEntity instanceof Villager) {
+            return;
+        }
 
-		LivingEntity entity = (LivingEntity) rawEntity;
-		Entity damager = event.getDamager();
-		if (!(damager instanceof Player)) {
-			if (damager instanceof Arrow) {
-				if (AttackDamage.getCrit().containsKey(damager.getUniqueId())) {
-					AttackDamage.getCrit().remove(damager.getUniqueId());
-					double damage = event.getFinalDamage(), health = entity.getHealth() + entity.getAbsorptionAmount();
-					health -= damage;
+        LivingEntity entity = (LivingEntity) rawEntity;
+        Entity damager = event.getDamager();
+        if (!(damager instanceof Player)) {
+            if (damager instanceof Arrow) {
+                if (AttackDamage.getCrit().containsKey(damager.getUniqueId())) {
+                    AttackDamage.getCrit().remove(damager.getUniqueId());
+                    double damage = event.getFinalDamage(), health = entity.getHealth() + entity.getAbsorptionAmount();
 
-					Location loc = entity.getLocation().add(getRandomOffset(), 1.5, getRandomOffset());
-					ArmorStand armorStand = spawnArmorStand(loc,
-							"<gradient:yellow:gold>-" + formatter.format(damage) + "🏹");
-					plugin.getIndicators().put(armorStand, 1);
+                    Location loc = entity.getLocation().add(getRandomOffset(), 1.5, getRandomOffset());
+                    ArmorStand armorStand = spawnArmorStand(loc,
+                            "<gradient:yellow:gold>-" + formatter.format(damage) + "🏹");
+                    plugin.getIndicators().put(armorStand, 1);
 
-				} else {
-					double damage = event.getFinalDamage(), health = entity.getHealth() + entity.getAbsorptionAmount();
-					health -= damage;
+                } else {
+                    double damage = event.getFinalDamage(), health = entity.getHealth() + entity.getAbsorptionAmount();
 
-					Location loc = entity.getLocation().add(getRandomOffset(), 1.5, getRandomOffset());
-					ArmorStand armorStand = spawnArmorStand(loc, "<gray>-" + formatter.format(damage) + "🏹");
-					plugin.getIndicators().put(armorStand, 1);
+                    Location loc = entity.getLocation().add(getRandomOffset(), 1.5, getRandomOffset());
+                    ArmorStand armorStand = spawnArmorStand(loc, "<gray>-" + formatter.format(damage) + "🏹");
+                    plugin.getIndicators().put(armorStand, 1);
 
-					if (Dodge.getDodge().containsKey(entity.getUniqueId())) {
-						Dodge.getDodge().remove(entity.getUniqueId());
-						ArmorStand armorStand1 = spawnArmorStand(loc, "<yellow><bold>ISKA");
-						plugin.getIndicators().put(armorStand1, 1);
+                    if (Dodge.getDodge().containsKey(entity.getUniqueId())) {
+                        Dodge.getDodge().remove(entity.getUniqueId());
+                        ArmorStand armorStand1 = spawnArmorStand(loc, "<yellow><bold>ISKA");
+                        plugin.getIndicators().put(armorStand1, 1);
 
-					}
+                    }
 
-				}
-			} else {
+                }
+            } else {
 
-				if (AttackDamage.getCrit().containsKey(damager.getUniqueId())) {
-					AttackDamage.getCrit().remove(damager.getUniqueId());
-					double damage = event.getFinalDamage(), health = entity.getHealth() + entity.getAbsorptionAmount();
-					health -= damage;
+                if (AttackDamage.getCrit().containsKey(damager.getUniqueId())) {
+                    AttackDamage.getCrit().remove(damager.getUniqueId());
+                    double damage = event.getFinalDamage(), health = entity.getHealth() + entity.getAbsorptionAmount();
 
-					Location loc = entity.getLocation().add(getRandomOffset(), 1.5, getRandomOffset());
-					ArmorStand armorStand = spawnArmorStand(loc,
-							"<gradient:yellow:gold>-" + formatter.format(damage) + "🗡");
-					plugin.getIndicators().put(armorStand, 1);
+                    Location loc = entity.getLocation().add(getRandomOffset(), 1.5, getRandomOffset());
+                    ArmorStand armorStand = spawnArmorStand(loc,
+                            "<gradient:yellow:gold>-" + formatter.format(damage) + "🗡");
+                    plugin.getIndicators().put(armorStand, 1);
 
-				} else {
-					double damage = event.getFinalDamage(), health = entity.getHealth() + entity.getAbsorptionAmount();
-					health -= damage;
+                } else {
+                    double damage = event.getFinalDamage(), health = entity.getHealth() + entity.getAbsorptionAmount();
 
-					Location loc = entity.getLocation().add(getRandomOffset(), 1.5, getRandomOffset());
-					ArmorStand armorStand = spawnArmorStand(loc, "<gray>-" + formatter.format(damage) + "🗡");
-					plugin.getIndicators().put(armorStand, 1);
+                    Location loc = entity.getLocation().add(getRandomOffset(), 1.5, getRandomOffset());
+                    ArmorStand armorStand = spawnArmorStand(loc, "<gray>-" + formatter.format(damage) + "🗡");
+                    plugin.getIndicators().put(armorStand, 1);
 
-					if (Dodge.getDodge().containsKey(entity.getUniqueId())) {
-						Dodge.getDodge().remove(entity.getUniqueId());
-						ArmorStand armorStand1 = spawnArmorStand(loc, "<yellow><bold>ISKA");
-						plugin.getIndicators().put(armorStand1, 1);
+                    if (Dodge.getDodge().containsKey(entity.getUniqueId())) {
+                        Dodge.getDodge().remove(entity.getUniqueId());
+                        ArmorStand armorStand1 = spawnArmorStand(loc, "<yellow><bold>ISKA");
+                        plugin.getIndicators().put(armorStand1, 1);
 
-					}
+                    }
 
-				}
-			}
-		} else {
-			Player player = (Player) damager;
-			ItemStack item = player.getInventory().getItemInMainHand();
-			if(MaterialTags.BOWS.isTagged(item)) {
-				return;
-			}
-			if (PlayerAttackListener.getWand().containsKey(player.getUniqueId())) {
-				PlayerAttackListener.getWand().remove(player.getUniqueId());
-				if (!(player.hasCooldown(item.getType())) || item.getType() == Material.BLAZE_ROD) {
-					if (AttackDamage.getCrit().containsKey(damager.getUniqueId())) {
-						AttackDamage.getCrit().remove(damager.getUniqueId());
-						double damage = event.getFinalDamage(),
-								health = entity.getHealth() + entity.getAbsorptionAmount();
-						health -= damage;
+                }
+            }
+        } else {
+            Player player = (Player) damager;
+            ItemStack item = player.getInventory().getItemInMainHand();
+            if (MaterialTags.BOWS.isTagged(item)) {
+                return;
+            }
+            if (PlayerAttackListener.getWand().containsKey(player.getUniqueId())) {
+                PlayerAttackListener.getWand().remove(player.getUniqueId());
+                if (!(player.hasCooldown(item.getType())) || item.getType() == Material.BLAZE_ROD) {
+                    if (AttackDamage.getCrit().containsKey(damager.getUniqueId())) {
+                        AttackDamage.getCrit().remove(damager.getUniqueId());
+                        double damage = event.getFinalDamage(),
+                                health = entity.getHealth() + entity.getAbsorptionAmount();
 
-						Location loc = entity.getLocation().add(getRandomOffset(), 1.5, getRandomOffset());
-						ArmorStand armorStand = spawnArmorStand(loc,
-								"<gradient:aqua:dark_aqua>-" + formatter.format(damage) + "☄");
-						plugin.getIndicators().put(armorStand, 1);
+                        Location loc = entity.getLocation().add(getRandomOffset(), 1.5, getRandomOffset());
+                        ArmorStand armorStand = spawnArmorStand(loc,
+                                "<gradient:aqua:dark_aqua>-" + formatter.format(damage) + "☄");
+                        plugin.getIndicators().put(armorStand, 1);
 
-					} else {
-						double damage = event.getFinalDamage(),
-								health = entity.getHealth() + entity.getAbsorptionAmount();
-						health -= damage;
+                    } else {
+                        double damage = event.getFinalDamage(),
+                                health = entity.getHealth() + entity.getAbsorptionAmount();
 
-						Location loc = entity.getLocation().clone().add(getRandomOffset(), 1.5, getRandomOffset());
-						ArmorStand armorStand = spawnArmorStand(loc, "<gray>-" + formatter.format(damage) + "☄");
-						plugin.getIndicators().put(armorStand, 1);
+                        Location loc = entity.getLocation().clone().add(getRandomOffset(), 1.5, getRandomOffset());
+                        ArmorStand armorStand = spawnArmorStand(loc, "<gray>-" + formatter.format(damage) + "☄");
+                        plugin.getIndicators().put(armorStand, 1);
 
-						if (Dodge.getDodge().containsKey(entity.getUniqueId())) {
-							Dodge.getDodge().remove(entity.getUniqueId());
-							ArmorStand armorStand1 = spawnArmorStand(loc, "<yellow><bold>ISKA");
-							plugin.getIndicators().put(armorStand1, 1);
+                        if (Dodge.getDodge().containsKey(entity.getUniqueId())) {
+                            Dodge.getDodge().remove(entity.getUniqueId());
+                            ArmorStand armorStand1 = spawnArmorStand(loc, "<yellow><bold>ISKA");
+                            plugin.getIndicators().put(armorStand1, 1);
 
-						}
+                        }
 
-					}
-				}
-			} else {
-				if (!(player.hasCooldown(item.getType())) || item.getType() == Material.BLAZE_ROD) {
-					if (AttackDamage.getCrit().containsKey(damager.getUniqueId())) {
-						AttackDamage.getCrit().remove(damager.getUniqueId());
-						double damage = event.getFinalDamage(),
-								health = entity.getHealth() + entity.getAbsorptionAmount();
-						health -= damage;
+                    }
+                }
+            } else {
+                if (!(player.hasCooldown(item.getType())) || item.getType() == Material.BLAZE_ROD) {
+                    if (AttackDamage.getCrit().containsKey(damager.getUniqueId())) {
+                        AttackDamage.getCrit().remove(damager.getUniqueId());
+                        double damage = event.getFinalDamage(),
+                                health = entity.getHealth() + entity.getAbsorptionAmount();
 
-						Location loc = entity.getLocation().add(getRandomOffset(), 1.5, getRandomOffset());
-						ArmorStand armorStand = spawnArmorStand(loc,
-								"<gradient:yellow:gold>-" + formatter.format(damage) + "🗡");
-						plugin.getIndicators().put(armorStand, 1);
+                        Location loc = entity.getLocation().add(getRandomOffset(), 1.5, getRandomOffset());
+                        ArmorStand armorStand = spawnArmorStand(loc,
+                                "<gradient:yellow:gold>-" + formatter.format(damage) + "🗡");
+                        plugin.getIndicators().put(armorStand, 1);
 
-					} else {
-						double damage = event.getFinalDamage(),
-								health = entity.getHealth() + entity.getAbsorptionAmount();
-						health -= damage;
+                    } else {
+                        double damage = event.getFinalDamage(),
+                                health = entity.getHealth() + entity.getAbsorptionAmount();
 
-						Location loc = entity.getLocation().clone().add(getRandomOffset(), 1.5, getRandomOffset());
-						ArmorStand armorStand = spawnArmorStand(loc, "<gray>-" + formatter.format(damage) + "🗡");
-						plugin.getIndicators().put(armorStand, 1);
+                        Location loc = entity.getLocation().clone().add(getRandomOffset(), 1.5, getRandomOffset());
+                        ArmorStand armorStand = spawnArmorStand(loc, "<gray>-" + formatter.format(damage) + "🗡");
+                        plugin.getIndicators().put(armorStand, 1);
 
-						if (Dodge.getDodge().containsKey(entity.getUniqueId())) {
-							Dodge.getDodge().remove(entity.getUniqueId());
-							ArmorStand armorStand1 = spawnArmorStand(loc, "<yellow><bold>ISKA");
-							plugin.getIndicators().put(armorStand1, 1);
+                        if (Dodge.getDodge().containsKey(entity.getUniqueId())) {
+                            Dodge.getDodge().remove(entity.getUniqueId());
+                            ArmorStand armorStand1 = spawnArmorStand(loc, "<yellow><bold>ISKA");
+                            plugin.getIndicators().put(armorStand1, 1);
 
-						}
+                        }
 
-					}
-				}
-			}
-		}
-	}
+                    }
+                }
+            }
+        }
+    }
 
-	public static ArmorStand spawnArmorStand(Location loc, String name) {
-		ArmorStand armorStand1 = loc.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
-			armorStand.setMarker(true);
-			armorStand.setVisible(false);
-			armorStand.setGravity(false);
-			armorStand.setSmall(false);
-			armorStand.setInvulnerable(true);
-			armorStand.setCustomNameVisible(true);
-			armorStand.customName(MiniMessage.miniMessage().deserialize(name));
-			Location rotateloc = new Location(armorStand.getWorld(),armorStand.getLocation().getX(),armorStand.getLocation().getY(),armorStand.getLocation().getZ(),armorStand.getLocation().getYaw(),1);
+    public static ArmorStand spawnArmorStand(Location loc, String name) {
+        return loc.getWorld().spawn(loc, ArmorStand.class, armorStand -> {
+            armorStand.setMarker(true);
+            armorStand.setVisible(false);
+            armorStand.setGravity(false);
+            armorStand.setSmall(false);
+            armorStand.setInvulnerable(true);
+            armorStand.setCustomNameVisible(true);
+            armorStand.customName(MiniMessage.miniMessage().deserialize(name));
+            Location rotateloc = new Location(armorStand.getWorld(), armorStand.getLocation().getX(), armorStand.getLocation().getY(), armorStand.getLocation().getZ(), armorStand.getLocation().getYaw(), 1);
 
-		});
-		return armorStand1;
-	}
+        });
+    }
 
 }

@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 
 public class VaultHook {
-    private MoonCore plugin;
+    private final MoonCore plugin;
 
     private Economy provider;
 

@@ -16,14 +16,19 @@ public class Painter {
 
 		return ChatColor.translateAlternateColorCodes('&', s);
 	}
+
 	@Nullable
 	@Contract("null -> null; !null -> !null")
+
 	public static String splitCapitalize(@Nullable String str) {
 		return splitCapitalize(str,null,'&');
 	}
 
+
 	@Nullable
 	@Contract("null,_ -> null; !null,_ -> !null")
+
+
 	public static String splitCapitalize(@Nullable String str, String splitReg) {
 		return splitCapitalize(str,splitReg,'&');
 	}
@@ -31,6 +36,7 @@ public class Painter {
 	@Nullable
 	@Contract("null,_ -> null; !null,_ -> !null")
 	public static String splitCapitalize(@Nullable String str, @Nullable Character colorCode) {
+
 		return splitCapitalize(str,null,colorCode);
 	}
 

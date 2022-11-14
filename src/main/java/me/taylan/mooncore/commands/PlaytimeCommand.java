@@ -8,18 +8,21 @@ import org.bukkit.entity.Player;
 
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.utils.Painter;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class PlaytimeCommand implements CommandExecutor {
 
-	private MoonCore plugin;
+private final MoonCore plugin;
 	
 	public PlaytimeCommand(MoonCore plugin) {
 		this.plugin = plugin;
-		plugin.getCommand("oynanansure").setExecutor(this);
+		Objects.requireNonNull(plugin.getCommand("oynanansure")).setExecutor(this);
 	}
 
 	@SuppressWarnings("deprecation")
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
 

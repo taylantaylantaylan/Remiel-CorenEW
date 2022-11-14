@@ -19,13 +19,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ScrollListener implements Listener {
 
-    private MoonCore plugin;
-    private Map<UUID,String> scrollmap = new HashMap<>();
+    private final MoonCore plugin;
+    private final Map<UUID,String> scrollmap = new HashMap<>();
 
     public ScrollListener(MoonCore plugin) {
         this.plugin = plugin;
@@ -41,126 +42,123 @@ public class ScrollListener implements Listener {
                 player.getInventory().getItemInMainHand().setType(Material.AIR);
                 scrollmap.put(player.getUniqueId(), "xp");
                 int chancexp = ThreadLocalRandom.current().nextInt(5);
-                switch (chancexp) {
-                    case 0:
-                        // MINING
-                        ExpList.getExpMap().put("DIAMOND_ORE", 6);
-                        ExpList.getExpMap().put("IRON_ORE", 4);
-                        ExpList.getExpMap().put("GOLD_ORE", 5);
-                        ExpList.getExpMap().put("REDSTONE_ORE", 3);
-                        ExpList.getExpMap().put("NETHER_QUARTZ_ORE", 3);
-                        ExpList.getExpMap().put("OBSIDIAN", 4);
-                        ExpList.getExpMap().put("GRANITE", 2);
-                        ExpList.getExpMap().put("COAL_ORE", 3);
-                        ExpList.getExpMap().put("ANCIENT_DEBRIS", 12);
-                        ExpList.getExpMap().put("STONE", 2);
-                        ExpList.getExpMap().put("COBBLESTONE", 2);
-                        ExpList.getExpMap().put("RAW_COPPER_BLOCK", 4);
-                        ExpList.getExpMap().put("RAW_IRON_BLOCK", 6);
-                        ExpList.getExpMap().put("DEEPSLATE_REDSTONE_ORE", 6);
-                        ExpList.getExpMap().put("NETHER_QUARTZ_ORE", 6);
-                        ExpList.getExpMap().put("LAPIS_ORE", 4);
-
-                        for (Player destek : Bukkit.getOnlinePlayers()) {
-                            showMyBossBar(destek);
-                            final Component newText = Component.text("Global Tecrübe Puanı Takviyesi: Madencilik");
-                            activeBar.name(newText);
+                    switch (chancexp) {
+                        case 0 -> {
+                            // MINING
+                            ExpList.getExpMap().put("DIAMOND_ORE", 6);
+                            ExpList.getExpMap().put("IRON_ORE", 4);
+                            ExpList.getExpMap().put("GOLD_ORE", 5);
+                            ExpList.getExpMap().put("REDSTONE_ORE", 3);
+                            ExpList.getExpMap().put("OBSIDIAN", 4);
+                            ExpList.getExpMap().put("GRANITE", 2);
+                            ExpList.getExpMap().put("COAL_ORE", 3);
+                            ExpList.getExpMap().put("ANCIENT_DEBRIS", 12);
+                            ExpList.getExpMap().put("STONE", 2);
+                            ExpList.getExpMap().put("COBBLESTONE", 2);
+                            ExpList.getExpMap().put("RAW_COPPER_BLOCK", 4);
+                            ExpList.getExpMap().put("RAW_IRON_BLOCK", 6);
+                            ExpList.getExpMap().put("DEEPSLATE_REDSTONE_ORE", 6);
+                            ExpList.getExpMap().put("NETHER_QUARTZ_ORE", 6);
+                            ExpList.getExpMap().put("LAPIS_ORE", 4);
+                            for (Player destek : Bukkit.getOnlinePlayers()) {
+                                showMyBossBar(destek);
+                                final Component newText = Component.text("Global Tecrübe Puanı Takviyesi: Madencilik");
+                                activeBar.name(newText);
+                            }
                         }
-                        break;
-                    case 1:
-                        ExpList.getExpMap().put("WITHER_SKELETON", 5);
-                        ExpList.getExpMap().put("SKELETON", 4);
-                        ExpList.getExpMap().put("ZOMBIE", 2);
-                        ExpList.getExpMap().put("GHAST", 10);
-                        ExpList.getExpMap().put("MAGMA_CUBE", 6);
-                        ExpList.getExpMap().put("SLIME", 4);
-                        ExpList.getExpMap().put("BLAZE", 10);
-                        ExpList.getExpMap().put("CREEPER", 10);
-                        ExpList.getExpMap().put("WOLF", 5);
-                        ExpList.getExpMap().put("COW", 3);
-                        ExpList.getExpMap().put("SHEEP", 3);
-                        ExpList.getExpMap().put("ZOGLIN", 5);
-                        ExpList.getExpMap().put("CHICKEN", 3);
-                        ExpList.getExpMap().put("HORSE", 4);
-                        for (Player destek : Bukkit.getOnlinePlayers()) {
-                            showMyBossBar(destek);
-                            final Component newText = Component.text("Global Tecrübe Puanı Takviyesi: Avcılık");
-                            activeBar.name(newText);
+                        case 1 -> {
+                            ExpList.getExpMap().put("WITHER_SKELETON", 5);
+                            ExpList.getExpMap().put("SKELETON", 4);
+                            ExpList.getExpMap().put("ZOMBIE", 2);
+                            ExpList.getExpMap().put("GHAST", 10);
+                            ExpList.getExpMap().put("MAGMA_CUBE", 6);
+                            ExpList.getExpMap().put("SLIME", 4);
+                            ExpList.getExpMap().put("BLAZE", 10);
+                            ExpList.getExpMap().put("CREEPER", 10);
+                            ExpList.getExpMap().put("WOLF", 5);
+                            ExpList.getExpMap().put("COW", 3);
+                            ExpList.getExpMap().put("SHEEP", 3);
+                            ExpList.getExpMap().put("ZOGLIN", 5);
+                            ExpList.getExpMap().put("CHICKEN", 3);
+                            ExpList.getExpMap().put("HORSE", 4);
+                            for (Player destek : Bukkit.getOnlinePlayers()) {
+                                showMyBossBar(destek);
+                                final Component newText = Component.text("Global Tecrübe Puanı Takviyesi: Avcılık");
+                                activeBar.name(newText);
+                            }
                         }
-                        break;
-                    case 2:
-                        ExpList.getExpMap().put("WHEAT", 5);
-                        ExpList.getExpMap().put("PATATOES", 4);
-                        ExpList.getExpMap().put("CARROTS", 4);
-                        ExpList.getExpMap().put("BEETROOTS", 4);
-                        ExpList.getExpMap().put("SUGAR_CANE", 5);
-                        ExpList.getExpMap().put("CACTUS", 5);
-                        ExpList.getExpMap().put("NETHER_WART", 6);
-                        ExpList.getExpMap().put("RED_MUSHROOM", 4);
-                        ExpList.getExpMap().put("BROWN_MUSHROOM", 4);
-                        ExpList.getExpMap().put("PUMPKIN", 6);
-                        ExpList.getExpMap().put("MELON", 5);
-                        for (Player destek : Bukkit.getOnlinePlayers()) {
-                            showMyBossBar(destek);
-                            final Component newText = Component.text("Global Tecrübe Puanı Takviyesi: Çiftçilik");
-                            activeBar.name(newText);
+                        case 2 -> {
+                            ExpList.getExpMap().put("WHEAT", 5);
+                            ExpList.getExpMap().put("PATATOES", 4);
+                            ExpList.getExpMap().put("CARROTS", 4);
+                            ExpList.getExpMap().put("BEETROOTS", 4);
+                            ExpList.getExpMap().put("SUGAR_CANE", 5);
+                            ExpList.getExpMap().put("CACTUS", 5);
+                            ExpList.getExpMap().put("NETHER_WART", 6);
+                            ExpList.getExpMap().put("RED_MUSHROOM", 4);
+                            ExpList.getExpMap().put("BROWN_MUSHROOM", 4);
+                            ExpList.getExpMap().put("PUMPKIN", 6);
+                            ExpList.getExpMap().put("MELON", 5);
+                            for (Player destek : Bukkit.getOnlinePlayers()) {
+                                showMyBossBar(destek);
+                                final Component newText = Component.text("Global Tecrübe Puanı Takviyesi: Çiftçilik");
+                                activeBar.name(newText);
+                            }
                         }
-                        break;
-                    case 3:
-                        ExpList.getExpMap().put("SUGAR", 6);
-                        ExpList.getExpMap().put("NETHER_WART", 5);
-                        ExpList.getExpMap().put("BLAZE_POWDER", 6);
-                        ExpList.getExpMap().put("GOLDEN_CARROT", 5);
-                        ExpList.getExpMap().put("MAGMA_CREAM", 6);
-                        ExpList.getExpMap().put("GLOWSTONE_DUST", 6);
-                        ExpList.getExpMap().put("REDSTONE", 6);
-                        ExpList.getExpMap().put("GUNPOWDER", 6);
-                        ExpList.getExpMap().put("DRAGON_BREATH", 5);
-                        ExpList.getExpMap().put("FERMENTED_SPIDER_EYE", 6);
-                        ExpList.getExpMap().put("SPIDER_EYE", 6);
-                        for (Player destek : Bukkit.getOnlinePlayers()) {
-                            showMyBossBar(destek);
-                            final Component newText = Component.text("Global Tecrübe Puanı Takviyesi: Simyacılık");
-                            activeBar.name(newText);
+                        case 3 -> {
+                            ExpList.getExpMap().put("SUGAR", 6);
+                            ExpList.getExpMap().put("NETHER_WART", 5);
+                            ExpList.getExpMap().put("BLAZE_POWDER", 6);
+                            ExpList.getExpMap().put("GOLDEN_CARROT", 5);
+                            ExpList.getExpMap().put("MAGMA_CREAM", 6);
+                            ExpList.getExpMap().put("GLOWSTONE_DUST", 6);
+                            ExpList.getExpMap().put("REDSTONE", 6);
+                            ExpList.getExpMap().put("GUNPOWDER", 6);
+                            ExpList.getExpMap().put("DRAGON_BREATH", 5);
+                            ExpList.getExpMap().put("FERMENTED_SPIDER_EYE", 6);
+                            ExpList.getExpMap().put("SPIDER_EYE", 6);
+                            for (Player destek : Bukkit.getOnlinePlayers()) {
+                                showMyBossBar(destek);
+                                final Component newText = Component.text("Global Tecrübe Puanı Takviyesi: Simyacılık");
+                                activeBar.name(newText);
+                            }
                         }
-                        break;
-                    case 4:
-                        ExpList.getExpMap().put("BREAD", 7);
-                        ExpList.getExpMap().put("COOKED_BEEF", 12);
-                        ExpList.getExpMap().put("COOKED_MUTTON", 10);
-                        ExpList.getExpMap().put("COOKED_COD", 12);
-                        ExpList.getExpMap().put("COOKED_PORKCHOP", 10);
-                        ExpList.getExpMap().put("BAKED_POTATO", 10);
-                        ExpList.getExpMap().put("COOKED_CHICKEN", 11);
-                        for (Player destek : Bukkit.getOnlinePlayers()) {
-                            showMyBossBar(destek);
-                            final Component newText = Component.text("Global Tecrübe Puanı Takviyesi: Aşçılık");
-                            activeBar.name(newText);
+                        case 4 -> {
+                            ExpList.getExpMap().put("BREAD", 7);
+                            ExpList.getExpMap().put("COOKED_BEEF", 12);
+                            ExpList.getExpMap().put("COOKED_MUTTON", 10);
+                            ExpList.getExpMap().put("COOKED_COD", 12);
+                            ExpList.getExpMap().put("COOKED_PORKCHOP", 10);
+                            ExpList.getExpMap().put("BAKED_POTATO", 10);
+                            ExpList.getExpMap().put("COOKED_CHICKEN", 11);
+                            for (Player destek : Bukkit.getOnlinePlayers()) {
+                                showMyBossBar(destek);
+                                final Component newText = Component.text("Global Tecrübe Puanı Takviyesi: Aşçılık");
+                                activeBar.name(newText);
+                            }
                         }
-                        break;
-                    case 5:
-                        ExpList.getExpMap().put("COD", 6);
-                        ExpList.getExpMap().put("PUFFERFISH", 7);
-                        ExpList.getExpMap().put("SALMON", 8);
-                        ExpList.getExpMap().put("SADDLE", 12);
-                        ExpList.getExpMap().put("ENCHANTED_BOOK", 22);
-                        ExpList.getExpMap().put("LEATHER", 4);
-                        ExpList.getExpMap().put("BOW", 17);
-                        ExpList.getExpMap().put("LILY_PAD", 5);
-                        ExpList.getExpMap().put("TROPICAL_FISH", 6);
-                        ExpList.getExpMap().put("FISHING_ROD", 17);
-                        ExpList.getExpMap().put("NAME_TAG", 4);
-                        ExpList.getExpMap().put("TRIPWIRE_HOOK", 5);
-                        ExpList.getExpMap().put("NAUTILUS_SHELL", 13);
-                        ExpList.getExpMap().put("BONE", 3);
-                        for (Player destek : Bukkit.getOnlinePlayers()) {
-                            showMyBossBar(destek);
-                            final Component newText = Component.text("Global Tecrübe Puanı Takviyesi: Balıkçılık");
-                            activeBar.name(newText);
+                        case 5 -> {
+                            ExpList.getExpMap().put("COD", 6);
+                            ExpList.getExpMap().put("PUFFERFISH", 7);
+                            ExpList.getExpMap().put("SALMON", 8);
+                            ExpList.getExpMap().put("SADDLE", 12);
+                            ExpList.getExpMap().put("ENCHANTED_BOOK", 22);
+                            ExpList.getExpMap().put("LEATHER", 4);
+                            ExpList.getExpMap().put("BOW", 17);
+                            ExpList.getExpMap().put("LILY_PAD", 5);
+                            ExpList.getExpMap().put("TROPICAL_FISH", 6);
+                            ExpList.getExpMap().put("FISHING_ROD", 17);
+                            ExpList.getExpMap().put("NAME_TAG", 4);
+                            ExpList.getExpMap().put("TRIPWIRE_HOOK", 5);
+                            ExpList.getExpMap().put("NAUTILUS_SHELL", 13);
+                            ExpList.getExpMap().put("BONE", 3);
+                            for (Player destek : Bukkit.getOnlinePlayers()) {
+                                showMyBossBar(destek);
+                                final Component newText = Component.text("Global Tecrübe Puanı Takviyesi: Balıkçılık");
+                                activeBar.name(newText);
+                            }
                         }
-                        break;
-
-                }
+                    }
                 new BukkitRunnable() {
 
                     @Override
@@ -175,7 +173,6 @@ public class ScrollListener implements Listener {
                         ExpList.getExpMap().put("IRON_ORE", 3);
                         ExpList.getExpMap().put("GOLD_ORE", 4);
                         ExpList.getExpMap().put("REDSTONE_ORE", 2);
-                        ExpList.getExpMap().put("NETHER_QUARTZ_ORE", 2);
                         ExpList.getExpMap().put("OBSIDIAN", 3);
                         ExpList.getExpMap().put("GRANITE", 1);
                         ExpList.getExpMap().put("COAL_ORE", 2);
@@ -235,7 +232,7 @@ public class ScrollListener implements Listener {
                         ExpList.getExpMap().put("COOKED_CHICKEN", 8);
                         // BREWING
                         ExpList.getExpMap().put("SUGAR", 4);
-                        ExpList.getExpMap().put("NETHER_WART", 3);
+
                         ExpList.getExpMap().put("BLAZE_POWDER", 4);
                         ExpList.getExpMap().put("GOLDEN_CARROT", 4);
                         ExpList.getExpMap().put("MAGMA_CREAM", 4);
@@ -290,7 +287,7 @@ public class ScrollListener implements Listener {
     }
 
     public void hideActiveBossBar(final @NonNull Audience target) {
-        target.hideBossBar(this.activeBar);
+        target.hideBossBar(Objects.requireNonNull(this.activeBar));
         this.activeBar = null;
     }
 

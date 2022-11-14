@@ -21,10 +21,10 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AttackSpeed implements Listener {
-	private HashMap<UUID, Long> atksped = new HashMap<UUID, Long>();
-	private MoonCore plugin;
-	private StatsManager stats;
-	private static int beklemetime = 4;
+	private final HashMap<UUID, Long> atksped = new HashMap<UUID, Long>();
+	private final MoonCore plugin;
+	private final StatsManager stats;
+	private static final int beklemetime = 4;
 
 	public AttackSpeed(MoonCore plugin) {
 		this.plugin = plugin;
@@ -47,9 +47,8 @@ public class AttackSpeed implements Listener {
 			return;
 		}
 		LivingEntity damaged = (LivingEntity) entity2;
-		if (entity instanceof Player) {
+		if (entity instanceof Player player) {
 
-			Player player = (Player) entity;
 			NamespacedKey hasar = new NamespacedKey(plugin, "damage");
 			NamespacedKey guc = new NamespacedKey(plugin, "guc");
 			if (player.getInventory().getItemInMainHand() != null
@@ -102,11 +101,9 @@ public class AttackSpeed implements Listener {
 			} else {
 				return;
 			}
-		} else if (entity instanceof Arrow) {
-			Arrow arrow = (Arrow) entity;
+		} else if (entity instanceof Arrow arrow) {
 			arrow.setCritical(true);
-			if(!(arrow.getShooter() instanceof Player)) return;
-			Player player = (Player) arrow.getShooter();
+			if(!(arrow.getShooter() instanceof Player player)) return;
 			NamespacedKey hasar = new NamespacedKey(plugin, "damage");
 			NamespacedKey guc = new NamespacedKey(plugin, "guc");
 			if (player.getInventory().getItemInMainHand() != null
@@ -162,7 +159,9 @@ public class AttackSpeed implements Listener {
 		}
 	}
 
-	public HashMap<UUID, Long> getAtksped() {
-		return atksped;
-	}
+// --Commented out by Inspection START (14.11.2022 02:08):
+//	public HashMap<UUID, Long> getAtksped() {
+//		return atksped;
+//	}
+// --Commented out by Inspection STOP (14.11.2022 02:08)
 }

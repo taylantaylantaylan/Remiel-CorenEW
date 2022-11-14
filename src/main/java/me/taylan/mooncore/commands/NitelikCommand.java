@@ -7,18 +7,21 @@ import org.bukkit.entity.Player;
 
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.utils.GuiHandler;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class NitelikCommand implements CommandExecutor {
-	private GuiHandler guiHandler;
-	private MoonCore plugin;
+	private final GuiHandler guiHandler;
+private final MoonCore plugin;
 
 	public NitelikCommand(MoonCore plugin) {
 		this.plugin = plugin;
 		this.guiHandler = plugin.getGuiHandler();
-		plugin.getCommand("nitelik").setExecutor(this);
+		Objects.requireNonNull(plugin.getCommand("nitelik")).setExecutor(this);
 	}
 
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
 

@@ -17,7 +17,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class ItemDamageListener implements Listener {
 
-    private MoonCore plugin;
+    private final MoonCore plugin;
 
     public ItemDamageListener(MoonCore plugin) {
         this.plugin = plugin;

@@ -1,7 +1,6 @@
 package me.taylan.mooncore.commands;
 
 import me.taylan.mooncore.MoonCore;
-import me.taylan.mooncore.eco.Ekonomi;
 import me.taylan.mooncore.utils.Painter;
 import me.taylan.mooncore.utils.StatsManager;
 import net.md_5.bungee.api.ChatMessageType;
@@ -15,20 +14,23 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class WarpCommand implements CommandExecutor {
 
-    private MoonCore plugin;
-    private StatsManager stats;
+    private final MoonCore plugin;
+    private final StatsManager stats;
 
     public WarpCommand(MoonCore plugin) {
         this.plugin = plugin;
         this.stats = plugin.getStatsManager();
-        plugin.getCommand("warp").setExecutor(this);
+        Objects.requireNonNull(plugin.getCommand("warp")).setExecutor(this);
     }
 
     @SuppressWarnings("deprecation")
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             if (p.hasPermission("mooncore.warp")) {
@@ -66,7 +68,7 @@ public class WarpCommand implements CommandExecutor {
     public void coneEffect2(final Player player,Location location) {
         new BukkitRunnable() {
             double phi = 0;
-            Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB((int) 239, (int) 239, (int) 13), 1);
+            final Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB((int) 239, (int) 239, (int) 13), 1);
 
             @Override
             public void run() {

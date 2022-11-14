@@ -1,32 +1,31 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package me.taylan.mooncore.level;
 
 import java.util.HashMap;
-
 import me.taylan.mooncore.MoonCore;
 
 public class ExpList {
-	private MoonCore plugin;
+private final MoonCore plugin;
+	private static final HashMap<String, Integer> expMap = new HashMap<>();
 
 	public ExpList(MoonCore plugin) {
 		this.plugin = plugin;
-
 	}
-
-	private static HashMap<String, Integer> expMap = new HashMap<>();
 
 	public static HashMap<String, Integer> getExpMap() {
 		return expMap;
 	}
 
-
 	public void expPut() {
-		// MINING
 		expMap.put("DIAMOND_ORE", 5);
 		expMap.put("IRON_ORE", 3);
 		expMap.put("GOLD_ORE", 4);
 		expMap.put("REDSTONE_ORE", 2);
 		expMap.put("COPPER_ORE", 2);
-		expMap.put("NETHER_QUARTZ_ORE", 2);
 		expMap.put("OBSIDIAN", 3);
 		expMap.put("GRANITE", 1);
 		expMap.put("COAL_ORE", 1);
@@ -39,7 +38,6 @@ public class ExpList {
 		expMap.put("NETHER_QUARTZ_ORE", 5);
 		expMap.put("LAPIS_ORE", 3);
 		expMap.put("CALCITE", 1);
-		// COMBAT
 		expMap.put("WITHER_SKELETON", 3);
 		expMap.put("SKELETON", 2);
 		expMap.put("ZOMBIE", 1);
@@ -54,7 +52,6 @@ public class ExpList {
 		expMap.put("ZOGLIN", 3);
 		expMap.put("CHICKEN", 1);
 		expMap.put("HORSE", 2);
-		// FISHING
 		expMap.put("COD", 4);
 		expMap.put("PUFFERFISH", 5);
 		expMap.put("SALMON", 6);
@@ -69,7 +66,6 @@ public class ExpList {
 		expMap.put("TRIPWIRE_HOOK", 2);
 		expMap.put("NAUTILUS_SHELL", 10);
 		expMap.put("BONE", 1);
-		// FORAGING
 		expMap.put("SPRUCE_WOOD", 4);
 		expMap.put("BIRCH_WOOD", 3);
 		expMap.put("JUNGLE_WOOD", 5);
@@ -78,7 +74,6 @@ public class ExpList {
 		expMap.put("WARPED_HYPHAE", 4);
 		expMap.put("ACACIA_WOOD", 5);
 		expMap.put("OAK_WOOD", 1);
-		//COOKING
 		expMap.put("BREAD", 5);
 		expMap.put("COOKED_BEEF", 10);
 		expMap.put("COOKED_MUTTON", 8);
@@ -86,9 +81,7 @@ public class ExpList {
 		expMap.put("COOKED_PORKCHOP", 8);
 		expMap.put("BAKED_POTATO", 8);
 		expMap.put("COOKED_CHICKEN", 8);
-		// BREWING
 		expMap.put("SUGAR", 4);
-		expMap.put("NETHER_WART", 3);
 		expMap.put("BLAZE_POWDER", 4);
 		expMap.put("GOLDEN_CARROT", 4);
 		expMap.put("MAGMA_CREAM", 4);
@@ -98,8 +91,6 @@ public class ExpList {
 		expMap.put("DRAGON_BREATH", 4);
 		expMap.put("FERMENTED_SPIDER_EYE", 4);
 		expMap.put("SPIDER_EYE", 4);
-
-		// FARMING
 		expMap.put("WHEAT", 3);
 		expMap.put("PATATOES", 2);
 		expMap.put("CARROTS", 2);
@@ -113,5 +104,4 @@ public class ExpList {
 		expMap.put("MELON", 3);
 		expMap.put("APPLE", 3);
 	}
-
 }

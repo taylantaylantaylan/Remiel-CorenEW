@@ -9,7 +9,7 @@ import me.taylan.mooncore.MoonCore;
 
 public class ProjectileHitListener implements Listener {
 
-	private MoonCore plugin;
+ private final MoonCore plugin;
 
 	public ProjectileHitListener(MoonCore plugin) {
 		this.plugin = plugin;

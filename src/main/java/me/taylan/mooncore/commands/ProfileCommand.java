@@ -9,24 +9,26 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ProfileCommand implements CommandExecutor {
 
-	private GuiHandler gui;
-	private MoonCore plugin;
-	private StatsManager stats;
+	private final GuiHandler gui;
+private final MoonCore plugin;
+	private final StatsManager stats;
 
 	public ProfileCommand(MoonCore plugin) {
 		this.plugin = plugin;
 		this.stats = plugin.getStatsManager();
 		this.gui = plugin.getGuiHandler();
-		plugin.getCommand("profil").setExecutor(this);
+		Objects.requireNonNull(plugin.getCommand("profil")).setExecutor(this);
 	}
 
 	@SuppressWarnings("unchecked")
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
 
@@ -65,7 +67,7 @@ public class ProfileCommand implements CommandExecutor {
 					}
 				} else if (args.length > 0) {
 					Player target = Bukkit.getPlayerExact(args[0]);
-					p.openInventory(gui.profil(p, target));
+					p.openInventory(gui.profil(p, Objects.requireNonNull(target)));
 					ArrayList<ItemStack> list = (ArrayList<ItemStack>) stats.getHepsi(target.getUniqueId());
 					if (target.getInventory().getHelmet() != null) {
 						p.getOpenInventory().getTopInventory().setItem(13, target.getInventory().getHelmet());

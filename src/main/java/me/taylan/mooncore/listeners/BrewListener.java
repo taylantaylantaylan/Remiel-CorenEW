@@ -26,9 +26,9 @@ import me.taylan.mooncore.alchemy.BrewingStandData;
 import me.taylan.mooncore.level.Levels;
 
 public class BrewListener implements Listener {
-	private MoonCore plugin;
-	private Levels Levels;
-	private Map<BlockPosition, BrewingStandData> brewingStands;
+	private final MoonCore plugin;
+	private final Levels Levels;
+	private final Map<BlockPosition, BrewingStandData> brewingStands;
 
 	public BrewListener(MoonCore plugin) {
 		this.Levels = plugin.getLevels();

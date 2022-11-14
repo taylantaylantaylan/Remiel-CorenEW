@@ -16,9 +16,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class WorkAnim {
-	private MoonCore plugin;
-	private StatsManager stats;
-	private Levels levels;
+	private final MoonCore plugin;
+	private final StatsManager stats;
+	private final Levels levels;
 
 	public WorkAnim(MoonCore plugin) {
 		this.plugin = plugin;

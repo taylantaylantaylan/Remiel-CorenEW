@@ -15,11 +15,13 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.Objects;
+
 public class ChunkListener implements Listener {
 
-    private MoonCore plugin;
-    private StatsManager statsManager;
-    private GuiHandler guiHandler;
+private final MoonCore plugin;
+    private final StatsManager statsManager;
+    private final GuiHandler guiHandler;
 
     public ChunkListener(MoonCore plugin) {
         this.plugin = plugin;
@@ -40,7 +42,7 @@ public class ChunkListener implements Listener {
 
                         if (!statsManager.getOwner(chunkID).equals(player.getUniqueId())) {
                             if (!player.isOp()) {
-                                player.sendMessage(Painter.paint("&cİnşa etmeye çalıştığın bölge &6" + Bukkit.getPlayer(statsManager.getOwner(chunkID)).getName() + " &cisimli oyuncuya ait!"));
+                                player.sendMessage(Painter.paint("&cİnşa etmeye çalıştığın bölge &6" + Objects.requireNonNull(Bukkit.getPlayer(statsManager.getOwner(chunkID))).getName() + " &cisimli oyuncuya ait!"));
                                 event.setCancelled(true);
                             }
                         } else {
@@ -80,7 +82,7 @@ public class ChunkListener implements Listener {
 
                 if (!statsManager.getOwner(chunkID).equals(player.getUniqueId())) {
                     if (!player.isOp()) {
-                        player.sendMessage(Painter.paint("&cİnşa etmeye çalıştığın bölge &6" + Bukkit.getPlayer(statsManager.getOwner(chunkID)).getName() + " &cisimli oyuncuya ait!"));
+                        player.sendMessage(Painter.paint("&cİnşa etmeye çalıştığın bölge &6" + Objects.requireNonNull(Bukkit.getPlayer(statsManager.getOwner(chunkID))).getName() + " &cisimli oyuncuya ait!"));
                         event.setCancelled(true);
                     }
                 } else {

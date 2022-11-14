@@ -10,7 +10,7 @@ import org.bukkit.util.EulerAngle;
 import me.taylan.mooncore.MoonCore;
 
 public class SwingAnimation extends BukkitRunnable {
-	private MoonCore plugin;
+  private final MoonCore plugin;
 
 	private static final double TOP = 7d / 6 * Math.PI;
 	private static final double BOTTOM = 7d / 4 * Math.PI;
@@ -40,12 +40,8 @@ public class SwingAnimation extends BukkitRunnable {
 	@Override
 	public void run() {
 		switch (motion) {
-		case DOWN:
-			rot += rotChangesPerTick;
-			break;
-		case UP:
-			rot -= rotChangesPerTick;
-			break;
+			case DOWN -> rot += rotChangesPerTick;
+			case UP -> rot -= rotChangesPerTick;
 		}
 		if (rot <= TOP) {
 			motion = Motion.DOWN;

@@ -1,10 +1,7 @@
 package me.taylan.mooncore.utils;
 
-import com.destroystokyo.paper.MaterialTags;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
-import com.sk89q.worldedit.WorldEditException;
-import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
@@ -14,7 +11,6 @@ import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
-import com.sk89q.worldedit.world.World;
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.animations.CookAnim;
 import me.taylan.mooncore.eco.Ekonomi;
@@ -25,39 +21,36 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
 import net.md_5.bungee.api.ChatColor;
-import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.checkerframework.checker.units.qual.A;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
 public class GuiHandler {
-    public MoonCore plugin;
+    public final MoonCore plugin;
 
-    private StatsManager stats;
-    private ItemHandler itemHandler;
-    private EnchantConstructor enchantConstructor;
-    private Enchants Enchants;
-    private CookAnim cookAnim;
-    private Ekonomi ekonomi;
+    private final StatsManager stats;
+    private final ItemHandler itemHandler;
+    private final EnchantConstructor enchantConstructor;
+    private final Enchants Enchants;
+    private final CookAnim cookAnim;
+    private final Ekonomi ekonomi;
 
     public GuiHandler(MoonCore plugin) {
         this.plugin = plugin;
@@ -89,8 +82,10 @@ public class GuiHandler {
     public Inventory inv16;
     public Inventory inv17;
     public Inventory inv18;
+
     public Inventory inv19;
     public Inventory inv22;
+
     public Inventory inv20;
     public Inventory inv23;
     static String name = "none";
@@ -113,11 +108,16 @@ public class GuiHandler {
     public String inventory_name17;
     public String inventory_name22;
     public Inventory inv12;
+
     public Inventory inv24;
     public Inventory inv21;
+
     public Inventory inv25;
+
     public Inventory inv26;
+
     public Inventory inv27;
+
     public Inventory inv28;
     public Inventory inv29;
     public Inventory inv30;
@@ -135,22 +135,24 @@ public class GuiHandler {
     public String inventory_name26;
     public String inventory_name28;
     public String inventory_name27;
-    public int inv_rows12 = 6 * 9;
+    public final int inv_rows12 = 6 * 9;
 
-    public int inv_rows = 6 * 9;
-    public int inv_rows2 = 5 * 9;
-    public int inv_rows3 = 5 * 9;
-    public int inv_rows4 = 5 * 9;
-    public int inv_rows5 = 5 * 9;
-    public int inv_rows6 = 3 * 9;
-    public int inv_rows7 = 6 * 9;
-    public int inv_rows8 = 6 * 9;
-    public int inv_rows9 = 3 * 9;
+    public final int inv_rows = 6 * 9;
+    public final int inv_rows2 = 5 * 9;
+    public final int inv_rows3 = 5 * 9;
+
+    public final int inv_rows4 = 5 * 9;
+    public final int inv_rows5 = 5 * 9;
+
+    public final int inv_rows6 = 3 * 9;
+    public final int inv_rows7 = 6 * 9;
+    public final int inv_rows8 = 6 * 9;
+    public final int inv_rows9 = 3 * 9;
     public int inv_rows14 = 4 * 9;
-    public int inv_rows10 = 6 * 9;
-    public int inv_rows11 = 3 * 9;
-    public static HashMap<UUID, String> zerola = new HashMap<UUID, String>();
-    public static HashMap<UUID, String> job = new HashMap<UUID, String>();
+    public final int inv_rows10 = 6 * 9;
+    public final int inv_rows11 = 3 * 9;
+    public static final HashMap<UUID, String> zerola = new HashMap<UUID, String>();
+    public static final HashMap<UUID, String> job = new HashMap<UUID, String>();
 
     public void initialize() {
         inventory_name = Painter.paint(ChatColor.DARK_GRAY + "Demirci Masası -> Ekipman İşleme");
@@ -1042,48 +1044,46 @@ public class GuiHandler {
     }
 
     public Inventory accessorymenu(Player p) {
-        Inventory toReturn = Bukkit.createInventory(null, inv_rows4, inventory_name16);
-        ArrayList<ItemStack> list = (ArrayList<ItemStack>) stats.getHepsi(p.getUniqueId());
-        itemHandler.createItem(inv16, "white_stained_glass_pane", 1, 1, " ");
-        itemHandler.createItem(inv16, "white_stained_glass_pane", 1, 2, " ");
-        itemHandler.createItem(inv16, "white_stained_glass_pane", 1, 3, " ");
-        itemHandler.createItem(inv16, "white_stained_glass_pane", 1, 4, " ");
-        itemHandler.createItem(inv16, "item_frame", 1, 5, ChatColor.WHITE + "Aksesuarların",
-                ChatColor.GRAY + "Burada aksesuarlarını takıp çıkarabilir",
-                ChatColor.GRAY + "ve aksesuarlarının özelliklerini görebilirsin.");
-        itemHandler.createItem(inv16, "white_stained_glass_pane", 1, 6, " ");
-        itemHandler.createItem(inv16, "white_stained_glass_pane", 1, 7, " ");
-        itemHandler.createItem(inv16, "white_stained_glass_pane", 1, 8, " ");
-        itemHandler.createItem(inv16, "white_stained_glass_pane", 1, 9, " ");
+        Inventory toReturn = Bukkit.createInventory((InventoryHolder) null, this.inv_rows4, this.inventory_name16);
+        ArrayList var10000 = (ArrayList) this.stats.getHepsi(p.getUniqueId());
+        this.itemHandler.createItem(this.inv16, "white_stained_glass_pane", 1, 1, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "white_stained_glass_pane", 1, 2, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "white_stained_glass_pane", 1, 3, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "white_stained_glass_pane", 1, 4, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "item_frame", 1, 5, ChatColor.WHITE + "Aksesuarların", new String[]{ChatColor.GRAY + "Burada aksesuarlarını takıp çıkarabilir", ChatColor.GRAY + "ve aksesuarlarının özelliklerini görebilirsin."});
+        this.itemHandler.createItem(this.inv16, "white_stained_glass_pane", 1, 6, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "white_stained_glass_pane", 1, 7, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "white_stained_glass_pane", 1, 8, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "white_stained_glass_pane", 1, 9, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "black_stained_glass_pane", 1, 10, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "black_stained_glass_pane", 1, 11, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "black_stained_glass_pane", 1, 12, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "black_stained_glass_pane", 1, 13, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "black_stained_glass_pane", 1, 14, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "black_stained_glass_pane", 1, 15, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "black_stained_glass_pane", 1, 16, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "black_stained_glass_pane", 1, 17, " ", new String[0]);
+        this.itemHandler.createItem(this.inv16, "black_stained_glass_pane", 1, 18, " ", new String[0]);
+        if (this.stats.getTilsim(p.getUniqueId()).equals("<dark_gray>Yok..")) {
+            this.itemHandler.createItem(this.inv16, "magenta_stained_glass_pane", 1, 29, ChatColor.LIGHT_PURPLE + "Tılsım/Ok Kılıfı", new String[]{ChatColor.DARK_GRAY + "Yok.."});
+        }
 
-        itemHandler.createItem(inv16, "black_stained_glass_pane", 1, 10, " ");
-        itemHandler.createItem(inv16, "black_stained_glass_pane", 1, 11, " ");
-        itemHandler.createItem(inv16, "black_stained_glass_pane", 1, 12, " ");
-        itemHandler.createItem(inv16, "black_stained_glass_pane", 1, 13, " ");
-        itemHandler.createItem(inv16, "black_stained_glass_pane", 1, 14, " ");
-        itemHandler.createItem(inv16, "black_stained_glass_pane", 1, 15, " ");
-        itemHandler.createItem(inv16, "black_stained_glass_pane", 1, 16, " ");
-        itemHandler.createItem(inv16, "black_stained_glass_pane", 1, 17, " ");
-        itemHandler.createItem(inv16, "black_stained_glass_pane", 1, 18, " ");
-        if ((stats.getTilsim(p.getUniqueId()).equals("Yok.."))) {
-            itemHandler.createItem(inv16, "magenta_stained_glass_pane", 1, 29,
-                    ChatColor.LIGHT_PURPLE + "Tılsım/Ok Kılıfı", ChatColor.DARK_GRAY + "Yok..");
+        if (this.stats.getEldiven(p.getUniqueId()).equals("<dark_gray>Yok..")) {
+            this.itemHandler.createItem(this.inv16, "blue_stained_glass_pane", 1, 31, ChatColor.BLUE + "Eldiven", new String[]{ChatColor.DARK_GRAY + "Yok.."});
         }
-        if ((stats.getEldiven(p.getUniqueId()).equals("Yok.."))) {
-            itemHandler.createItem(inv16, "blue_stained_glass_pane", 1, 31, ChatColor.BLUE + "Eldiven",
-                    ChatColor.DARK_GRAY + "Yok..");
+
+        if (this.stats.getKolye(p.getUniqueId()).equals("<dark_gray>Yok..")) {
+            this.itemHandler.createItem(this.inv16, "yellow_stained_glass_pane", 1, 33, ChatColor.YELLOW + "Kolye", new String[]{ChatColor.DARK_GRAY + "Yok.."});
         }
-        if ((stats.getKolye(p.getUniqueId()).equals("Yok.."))) {
-            itemHandler.createItem(inv16, "yellow_stained_glass_pane", 1, 33, ChatColor.YELLOW + "Kolye",
-                    ChatColor.DARK_GRAY + "Yok..");
+
+        if (this.stats.getYuzuk(p.getUniqueId()).equals("<dark_gray>Yok..")) {
+            this.itemHandler.createItem(this.inv16, "orange_stained_glass_pane", 1, 35, ChatColor.GOLD + "Yüzük", new String[]{ChatColor.DARK_GRAY + "Yok.."});
         }
-        if ((stats.getYuzuk(p.getUniqueId()).equals("Yok.."))) {
-            itemHandler.createItem(inv16, "orange_stained_glass_pane", 1, 35, ChatColor.GOLD + "Yüzük",
-                    ChatColor.DARK_GRAY + "Yok..");
-        }
-        toReturn.setContents(inv16.getContents());
+
+        toReturn.setContents(this.inv16.getContents());
         return toReturn;
     }
+
 
     public Inventory ayarmenu(Player p) {
         Inventory toReturn = Bukkit.createInventory(null, inv_rows4, inventory_name15);
@@ -1389,6 +1389,7 @@ public class GuiHandler {
                 "", ChatColor.GRAY + " Gerekli Malzemeler:",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Gümüş Balığı",
                 ChatColor.GRAY + " -" + ChatColor.WHITE + " 1 Kömür", "",
+
                 ChatColor.GRAY + "Pişirmeye başlamak için ", ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
         itemHandler.createItem(inv3, "cooked_beef", 1, 28, ChatColor.YELLOW + "Pişmiş Antrikot", ChatColor.GREEN + "Ustalık 2",
                 "", ChatColor.GRAY + " Gerekli Malzemeler:",
@@ -1399,6 +1400,7 @@ public class GuiHandler {
         toReturn.setContents(inv3.getContents());
         return toReturn;
     }
+
 
     public Inventory t1Yemek(Player p) {
         int cookLevel = stats.getCookLevel(p.getUniqueId());
@@ -1418,6 +1420,7 @@ public class GuiHandler {
         itemHandler.createItem(inv4, "white_stained_glass_pane", 1, 9, " ");
         itemHandler.createItem(inv4, "black_stained_glass_pane", 1, 10, " ");
         itemHandler.createItem(inv4, "black_stained_glass_pane", 1, 11, " ");
+
         itemHandler.createItem(inv4, "black_stained_glass_pane", 1, 12, " ");
         itemHandler.createItem(inv4, "black_stained_glass_pane", 1, 13, " ");
         itemHandler.createItem(inv4, "black_stained_glass_pane", 1, 14, " ");
@@ -1431,60 +1434,36 @@ public class GuiHandler {
     }
 
     public Inventory bilgikitabı(Player p) {
-        Inventory toReturn = Bukkit.createInventory(null, inv_rows4, inventory_name13);
-
-        itemHandler.createItem(inv13, "white_stained_glass_pane", 1, 1, " ");
-        itemHandler.createItem(inv13, "white_stained_glass_pane", 1, 2, " ");
-        itemHandler.createItem(inv13, "white_stained_glass_pane", 1, 3, " ");
-        itemHandler.createItem(inv13, "white_stained_glass_pane", 1, 4, " ");
-        itemHandler.createItem(inv13, "knowledge_book", 1, 5, ChatColor.AQUA + "El Kitabın",
-                ChatColor.GRAY + "Buradan aksesuar takıp çıkarabilir, bazı ayarları ",
-                ChatColor.GRAY + "düzenleyebilir ve daha bir çok şeyi kontrol edebilirsin.");
-        itemHandler.createItem(inv13, "white_stained_glass_pane", 1, 6, " ");
-        itemHandler.createItem(inv13, "white_stained_glass_pane", 1, 7, " ");
-        itemHandler.createItem(inv13, "white_stained_glass_pane", 1, 8, " ");
-        itemHandler.createItem(inv13, "white_stained_glass_pane", 1, 9, " ");
-        itemHandler.createItem(inv13, "black_stained_glass_pane", 1, 10, " ");
-        itemHandler.createItem(inv13, "black_stained_glass_pane", 1, 11, " ");
-        itemHandler.createItem(inv13, "black_stained_glass_pane", 1, 12, " ");
-        itemHandler.createItem(inv13, "black_stained_glass_pane", 1, 13, " ");
-        itemHandler.createItem(inv13, "black_stained_glass_pane", 1, 14, " ");
-        itemHandler.createItem(inv13, "black_stained_glass_pane", 1, 15, " ");
-        itemHandler.createItem(inv13, "black_stained_glass_pane", 1, 16, " ");
-        itemHandler.createItem(inv13, "black_stained_glass_pane", 1, 17, " ");
-        itemHandler.createItem(inv13, "black_stained_glass_pane", 1, 18, " ");
-        itemHandler.createItem(inv13, "comparator", 1, 29, ChatColor.GRAY + "Ayarlar",
-                ChatColor.WHITE + "Açmak için " + ChatColor.YELLOW + "Sağ Tıkla.");
-        itemHandler.createItem(inv13, "book", 1, 30, ChatColor.YELLOW + "Görev Defteri",
-                ChatColor.WHITE + "Buradan görevlerini takip edebilirsin. ", "",
-                ChatColor.GRAY + "Açmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv13, "experience_bottle", 1, 31, ChatColor.RED + "Niteliklerin",
-                ChatColor.WHITE + "Buradan nitelik puanlarını harcayabilir ",
-                ChatColor.WHITE + "ve gücüne güç katabilirsin!", "",
-                Painter.paint("&7Sahip Olduğun Nitelik Puanı: &c") + stats.getNP(p.getUniqueId()), "",
-                ChatColor.GRAY + "Açmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv13, "crafting_table", 1, 32, ChatColor.YELLOW + "Çalışma Alanı",
-                ChatColor.WHITE + "Buradan eşya üretebilirsin. ", "",
-                ChatColor.GRAY + "Açmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv13, "item_frame", 1, 33, ChatColor.GOLD + "Aksesuarların",
-                ChatColor.WHITE + "Buradan aksesuarlarını ve ekipmanlarını", ChatColor.WHITE + "yönetebilirsin.", "",
-                Painter.paint("&7Aksesuarlar kullanıcısına belirli"),
-                Painter.paint("&7özellikler bahşeden ekipmanlardır."), "", Painter.paint("&fKullanılan Aksesuarlar:"),
-                Painter.paint(" &dTılsım/Ok Kılıfı: &8") + stats.getTilsim(p.getUniqueId()),
-                Painter.paint(" &9Eldiven: &8") + stats.getEldiven(p.getUniqueId()),
-                Painter.paint(" &eKolye: &8") + stats.getKolye(p.getUniqueId()),
-                Painter.paint(" &6Yüzük: &8") + stats.getYuzuk(p.getUniqueId()), "", ChatColor.GRAY
-                        + "Aksesuarlarını çıkarmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv13, "campfire", 1, 34, ChatColor.YELLOW + "Olduğun Bölgeyi Sahiplen",
-                ChatColor.WHITE + "Buradan gerekli malzemeleri vererek", "",
-                ChatColor.GRAY + "olduğun bögleyi sahiplenebilirsin. Açmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-        itemHandler.createItem(inv13, "sunflower", 1, 35, ChatColor.YELLOW + "Rozetlerin",
-                ChatColor.WHITE + "Buradan rozetlerini yönetebilirsin. ", "",
-                ChatColor.GRAY + "Açmak için " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Sağ Tıkla.");
-
-        toReturn.setContents(inv13.getContents());
+        Inventory toReturn = Bukkit.createInventory((InventoryHolder)null, this.inv_rows4, this.inventory_name13);
+        this.itemHandler.createItem(this.inv13, "white_stained_glass_pane", 1, 1, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "white_stained_glass_pane", 1, 2, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "white_stained_glass_pane", 1, 3, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "white_stained_glass_pane", 1, 4, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "knowledge_book", 1, 5, ChatColor.AQUA + "El Kitabın", new String[]{ChatColor.GRAY + "Buradan aksesuar takıp çıkarabilir, bazı ayarları ", ChatColor.GRAY + "düzenleyebilir ve daha bir çok şeyi kontrol edebilirsin."});
+        this.itemHandler.createItem(this.inv13, "white_stained_glass_pane", 1, 6, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "white_stained_glass_pane", 1, 7, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "white_stained_glass_pane", 1, 8, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "white_stained_glass_pane", 1, 9, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "black_stained_glass_pane", 1, 10, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "black_stained_glass_pane", 1, 11, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "black_stained_glass_pane", 1, 12, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "black_stained_glass_pane", 1, 13, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "black_stained_glass_pane", 1, 14, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "black_stained_glass_pane", 1, 15, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "black_stained_glass_pane", 1, 16, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "black_stained_glass_pane", 1, 17, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "black_stained_glass_pane", 1, 18, " ", new String[0]);
+        this.itemHandler.createItem(this.inv13, "comparator", 1, 29, ChatColor.GRAY + "Ayarlar", new String[]{ChatColor.WHITE + "Açmak için " + ChatColor.YELLOW + "Sağ Tıkla."});
+        this.itemHandler.createItem(this.inv13, "book", 1, 30, ChatColor.YELLOW + "Görev Defteri", new String[]{ChatColor.WHITE + "Buradan görevlerini takip edebilirsin. ", "", ChatColor.GRAY + "Açmak için " + ChatColor.YELLOW + ChatColor.BOLD + "Sağ Tıkla."});
+        this.itemHandler.createItem(this.inv13, "experience_bottle", 1, 31, ChatColor.RED + "Niteliklerin", new String[]{ChatColor.WHITE + "Buradan nitelik puanlarını harcayabilir ", ChatColor.WHITE + "ve gücüne güç katabilirsin!", "", Painter.paint("&7Sahip Olduğun Nitelik Puanı: &c") + this.stats.getNP(p.getUniqueId()), "", ChatColor.GRAY + "Açmak için " + ChatColor.YELLOW + ChatColor.BOLD + "Sağ Tıkla."});
+        this.itemHandler.createItem(this.inv13, "crafting_table", 1, 32, ChatColor.YELLOW + "Çalışma Alanı", new String[]{ChatColor.WHITE + "Buradan eşya üretebilirsin. ", "", ChatColor.GRAY + "Açmak için " + ChatColor.YELLOW + ChatColor.BOLD + "Sağ Tıkla."});
+        this.itemHandler.createItem3(this.inv13, "item_frame", 1, 33, ChatColor.GOLD + "Aksesuarların", new Component[]{MiniMessage.miniMessage().deserialize("<white><i:false>Buradan aksesuarlarını ve ekipmanlarını"), MiniMessage.miniMessage().deserialize("<white><i:false>yönetebilirsin."), MiniMessage.miniMessage().deserialize(""), MiniMessage.miniMessage().deserialize("<gray><i:false>Aksesuarlar kullanıcısına belirli"), MiniMessage.miniMessage().deserialize("<gray><i:false>özellikler bahşeden ekipmanlardır."), MiniMessage.miniMessage().deserialize(""), MiniMessage.miniMessage().deserialize("<white><i:false>Kullanılan Aksesuarlar:"), MiniMessage.miniMessage().deserialize(" <light_purple><i:false>Tılsım/Ok Kılıfı: <dark_gray><i:false>").append(MiniMessage.miniMessage().deserialize(this.stats.getTilsim(p.getUniqueId()))), MiniMessage.miniMessage().deserialize(" <blue><i:false>Eldiven: <dark_gray><i:false>").append(MiniMessage.miniMessage().deserialize(this.stats.getEldiven(p.getUniqueId()))), MiniMessage.miniMessage().deserialize(" <yellow><i:false>Kolye: <dark_gray><i:false>").append(MiniMessage.miniMessage().deserialize(this.stats.getKolye(p.getUniqueId()))), MiniMessage.miniMessage().deserialize(" <gold><i:false>Yüzük: <dark_gray><i:false>").append(MiniMessage.miniMessage().deserialize(this.stats.getYuzuk(p.getUniqueId()))), MiniMessage.miniMessage().deserialize(""), MiniMessage.miniMessage().deserialize("<gray><i:false>Aksesuarlarını çıkarmak için <yellow><bold><i:false>Sağ Tıkla.")});
+        this.itemHandler.createItem(this.inv13, "campfire", 1, 34, ChatColor.YELLOW + "Olduğun Bölgeyi Sahiplen", new String[]{ChatColor.WHITE + "Buradan gerekli malzemeleri vererek", "", ChatColor.GRAY + "olduğun bögleyi sahiplenebilirsin. Açmak için " + ChatColor.YELLOW + ChatColor.BOLD + "Sağ Tıkla."});
+        this.itemHandler.createItem(this.inv13, "sunflower", 1, 35, ChatColor.YELLOW + "Rozetlerin", new String[]{ChatColor.WHITE + "Buradan rozetlerini yönetebilirsin. ", "", ChatColor.GRAY + "Açmak için " + ChatColor.YELLOW + ChatColor.BOLD + "Sağ Tıkla."});
+        toReturn.setContents(this.inv13.getContents());
         return toReturn;
     }
+
 
     public Inventory productRealFurnace(Player p) {
         Inventory toReturn = Bukkit.createInventory(null, inv_rows11, inventory_name4);
@@ -1535,7 +1514,7 @@ public class GuiHandler {
         itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 9, " ");
         itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 10, " ");
         itemHandler.createItem(inv26, "black_stained_glass_pane", 1, 11, " ");
-        itemHandler.createItem(inv26, "campfire", 1, 12, "&6Bölge Bilgileri", "&eBölge Sahibi: " + Bukkit.getPlayer(stats.getOwner(chunkID)).getName());
+        itemHandler.createItem(inv26, "campfire", 1, 12, "&6Bölge Bilgileri", "&eBölge Sahibi: " + Objects.requireNonNull(Bukkit.getPlayer(stats.getOwner(chunkID))).getName());
         itemHandler.createItem(inv26, "white_banner", 1, 13, "&cKlan Kur", "&7Buradan klan kurup güclenebilirsin. Klan Kurmak için &e&lSağ Tıkla.");
 
         itemHandler.createItem(inv26, "grass_block", 1, 14, "&aBölgeni Genişlet", "&7Buradan bölgeni genişletebilirsin. Açmak için &e&lSağ Tıkla.");
@@ -2602,6 +2581,7 @@ public class GuiHandler {
         itemHandler.createItem(inv6, "black_stained_glass_pane", 1, 17, " ");
         itemHandler.createItem(inv6, "black_stained_glass_pane", 1, 18, " ");
         itemHandler.createItem(inv6, "black_stained_glass_pane", 1, 19, " ");
+
         itemHandler.createItem(inv6, "black_stained_glass_pane", 1, 20, " ");
         itemHandler.createItem(inv6, "black_stained_glass_pane", 1, 21, " ");
         itemHandler.createItem(inv6, "black_stained_glass_pane", 1, 22, " ");
@@ -2613,6 +2593,7 @@ public class GuiHandler {
         toReturn.setContents(inv6.getContents());
         return toReturn;
     }
+
 
     public Inventory seyehat(Player p) {
         Inventory toReturn = Bukkit.createInventory(null, inv_rows6, inventory_name27);
@@ -2647,6 +2628,7 @@ public class GuiHandler {
         itemHandler.createItem(inv32, "red_stained_glass_pane", 1, 18, " ");
         itemHandler.createItem(inv32, "red_stained_glass_pane", 1, 19, " ");
         itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 20, " ");
+
         itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 21, " ");
         itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 22, " ");
         itemHandler.createItem(inv32, "black_stained_glass_pane", 1, 23, " ");
@@ -3052,7 +3034,7 @@ public class GuiHandler {
                         } else {
                             File myfile = new File(plugin.getDataFolder().getAbsolutePath() + "/house.schem");
                             ClipboardFormat format = ClipboardFormats.findByFile(myfile);
-                            try (ClipboardReader reader = format.getReader(new FileInputStream(myfile))) {
+                            try (ClipboardReader reader = Objects.requireNonNull(format).getReader(new FileInputStream(myfile))) {
                                 Clipboard clipboard = reader.read();
                                 try (EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(new BukkitWorld(p.getWorld()), -1)) {
                                     Operation operation = new ClipboardHolder(clipboard)
@@ -3062,8 +3044,6 @@ public class GuiHandler {
                                             .build();
                                     Operations.complete(operation);
                                 }
-                            } catch (FileNotFoundException e) {
-                                throw new RuntimeException(e);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
@@ -3178,7 +3158,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 contains(ChatColor.LIGHT_PURPLE + "Tılsım")) {
-            if (!(stats.getTilsim(p.getUniqueId()).equals("Yok.."))) {
+            if (!(stats.getTilsim(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                 FileConfiguration fc = stats.getStatfile().get(p.getUniqueId());
                 ArrayList<ItemStack> akselist = (ArrayList<ItemStack>) stats.getStatfile().get(p.getUniqueId())
                         .get("Aksesuar." + "Hepsi");
@@ -3187,10 +3167,10 @@ public class GuiHandler {
                     p.closeInventory();
                     p.sendMessage(Painter.paint("&cEnvanterinde yer yok!"));
                 } else {
-                    ItemStack item = akselist.get(0);
+                    ItemStack item = Objects.requireNonNull(akselist).get(0);
                     p.getInventory().addItem(item);
                     akselist.set(0, new ItemStack(Material.AIR));
-                    stats.setTilsim(p.getUniqueId(), "Yok..");
+                    stats.setTilsim(p.getUniqueId(), "<dark_gray>Yok..");
                     stats.getStatfile().put(p.getUniqueId(), fc);
                     itemHandler.createItem(inv, "magenta_stained_glass_pane", 1, 29,
                             ChatColor.LIGHT_PURPLE + "Tılsım/Ok Kılıfı", ChatColor.DARK_GRAY + "Yok..");
@@ -3250,7 +3230,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 contains(ChatColor.BLUE + "Eldiven")) {
-            if (!(stats.getEldiven(p.getUniqueId()).equals("Yok.."))) {
+            if (!(stats.getEldiven(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                 FileConfiguration fc = stats.getStatfile().get(p.getUniqueId());
                 ArrayList<ItemStack> akselist = (ArrayList<ItemStack>) stats.getStatfile().get(p.getUniqueId())
                         .get("Aksesuar." + "Hepsi");
@@ -3259,10 +3239,10 @@ public class GuiHandler {
                     p.closeInventory();
                     p.sendMessage(Painter.paint("&cEnvanterinde yer yok!"));
                 } else {
-                    ItemStack item = akselist.get(1);
+                    ItemStack item = Objects.requireNonNull(akselist).get(1);
                     p.getInventory().addItem(item);
                     akselist.set(1, new ItemStack(Material.AIR));
-                    stats.setEldiven(p.getUniqueId(), "Yok..");
+                    stats.setEldiven(p.getUniqueId(), "<dark_gray>Yok..");
                     stats.getStatfile().put(p.getUniqueId(), fc);
                     itemHandler.createItem(inv, "blue_stained_glass_pane", 1, 31, ChatColor.BLUE + "Eldiven",
                             ChatColor.DARK_GRAY + "Yok..");
@@ -3322,7 +3302,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 contains(ChatColor.YELLOW + "Kolye")) {
-            if (!(stats.getKolye(p.getUniqueId()).equals("Yok.."))) {
+            if (!(stats.getKolye(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                 FileConfiguration fc = stats.getStatfile().get(p.getUniqueId());
                 ArrayList<ItemStack> akselist = (ArrayList<ItemStack>) stats.getStatfile().get(p.getUniqueId())
                         .get("Aksesuar." + "Hepsi");
@@ -3331,10 +3311,10 @@ public class GuiHandler {
                     p.closeInventory();
                     p.sendMessage(Painter.paint("&cEnvanterinde yer yok!"));
                 } else {
-                    ItemStack item = akselist.get(2);
+                    ItemStack item = Objects.requireNonNull(akselist).get(2);
                     p.getInventory().addItem(item);
                     akselist.set(2, new ItemStack(Material.AIR));
-                    stats.setKolye(p.getUniqueId(), "Yok..");
+                    stats.setKolye(p.getUniqueId(), "<dark_gray>Yok..");
                     stats.getStatfile().put(p.getUniqueId(), fc);
                     itemHandler.createItem(inv, "yellow_stained_glass_pane", 1, 33, ChatColor.YELLOW + "Kolye",
                             ChatColor.DARK_GRAY + "Yok..");
@@ -3394,7 +3374,7 @@ public class GuiHandler {
                 getDisplayName().
 
                 contains(ChatColor.GOLD + "Yüzük")) {
-            if (!(stats.getYuzuk(p.getUniqueId()).equals("Yok.."))) {
+            if (!(stats.getYuzuk(p.getUniqueId()).equals("<dark_gray>Yok.."))) {
                 FileConfiguration fc = stats.getStatfile().get(p.getUniqueId());
                 ArrayList<ItemStack> akselist = (ArrayList<ItemStack>) stats.getStatfile().get(p.getUniqueId())
                         .get("Aksesuar." + "Hepsi");
@@ -3403,10 +3383,10 @@ public class GuiHandler {
                     p.closeInventory();
                     p.sendMessage(Painter.paint("&cEnvanterinde yer yok!"));
                 } else {
-                    ItemStack item = akselist.get(3);
+                    ItemStack item = Objects.requireNonNull(akselist).get(3);
                     p.getInventory().addItem(item);
                     akselist.set(3, new ItemStack(Material.AIR));
-                    stats.setYuzuk(p.getUniqueId(), "Yok..");
+                    stats.setYuzuk(p.getUniqueId(), "<dark_gray>Yok..");
                     stats.getStatfile().put(p.getUniqueId(), fc);
                     itemHandler.createItem(inv, "orange_stained_glass_pane", 1, 35, ChatColor.GOLD + "Yüzük",
                             ChatColor.DARK_GRAY + "Yok..");
@@ -3733,7 +3713,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.GOLD + "Tamir Et")) {
             ItemStack item = inv.getItem(31);
-            String input = String.join(" ", item.getItemMeta().getDisplayName());
+            String input = String.join(" ", Objects.requireNonNull(item).getItemMeta().getDisplayName());
             Matcher matcher = DIGITS_PATTERN.matcher(input);
             NamespacedKey durabi = new NamespacedKey(plugin, "durability");
             if (matcher.find()) {
@@ -3747,7 +3727,7 @@ public class GuiHandler {
                     meta.setDamage(0);
                     item.setItemMeta(meta);
 
-                    for (int i = 0; i < meta.getLore().size(); i++) {
+                    for (int i = 0; i < Objects.requireNonNull(meta.getLore()).size(); i++) {
                         String lValue = meta.getLore().get(i);
                         if (lValue.contains("⦾")) {
                             String input2 = String.join(" ", lValue);
@@ -3783,7 +3763,7 @@ public class GuiHandler {
 
                 equalsIgnoreCase(ChatColor.GOLD + "Hurdaya Çevir")) {
             ItemStack item = inv.getItem(31);
-            String input = String.join(" ", item.getItemMeta().getDisplayName());
+            String input = String.join(" ", Objects.requireNonNull(item).getItemMeta().getDisplayName());
             Matcher matcher = DIGITS_PATTERN.matcher(input);
             if (matcher.find()) {
                 String firstDigits = matcher.group();
@@ -3936,9 +3916,7 @@ public class GuiHandler {
                     statlist.add(0);
                 }
                 List<ItemStack> itemarray = new ArrayList<ItemStack>();
-                for (ItemStack item : p.getInventory().getArmorContents()) {
-                    itemarray.add(item);
-                }
+                itemarray.addAll(Arrays.asList(p.getInventory().getArmorContents()));
                 List<ItemStack> akselist = stats.getHepsi(p.getUniqueId());
                 if (!(stats.getTilsim(p.getUniqueId()).equals("Yok.."))) {
                     itemarray.add(stats.getHepsi(p.getUniqueId()).get(0));
@@ -4385,7 +4363,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.coal;
             ItemStack item2 = itemHandler.pigleather;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "knockback", "&4Büyü ▏ &7Savurma: &f",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "knockback", "&4Büyü ▏ &7Savurma: &f",
                     Enchantment.KNOCKBACK, item1, item2);
 
 
@@ -4402,7 +4380,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.coal;
             ItemStack item2 = itemHandler.pigleather;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "xp", "&4Büyü ▏ &7Tecrübe Desteği: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "xp", "&4Büyü ▏ &7Tecrübe Desteği: &f",
                     item1, item2);
 
 
@@ -4419,7 +4397,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.bone;
             ItemStack item2 = itemHandler.wolfteeth;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "hunerliavci", "&4Büyü ▏ &7Hünerli Avcı: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "hunerliavci", "&4Büyü ▏ &7Hünerli Avcı: &f",
                     item1, item2);
 
 
@@ -4436,7 +4414,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.ash;
             ItemStack item2 = itemHandler.magmaball;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "fireaspect", "&4Büyü ▏ &7Alevden Çehre: &f",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "fireaspect", "&4Büyü ▏ &7Alevden Çehre: &f",
                     Enchantment.FIRE_ASPECT, item1, item2);
 
 
@@ -4453,7 +4431,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.ash;
             ItemStack item2 = itemHandler.magmaball;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "fireaspect", "&4Büyü ▏ &7Alevden Çehre: &f",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "fireaspect", "&4Büyü ▏ &7Alevden Çehre: &f",
                     Enchantment.FIRE_ASPECT, item1, item2);
 
 
@@ -4470,7 +4448,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.magmaball;
             ItemStack item2 = itemHandler.blackbone;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "rage", "&4Büyü ▏ &7Öfke: &f"
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "rage", "&4Büyü ▏ &7Öfke: &f"
                     , item1, item2);
 
 
@@ -4487,7 +4465,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.gianttoe;
             ItemStack item2 = itemHandler.wolfteeth;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "giant2", "&4Büyü ▏ &7İnfaz: &f"
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "giant2", "&4Büyü ▏ &7İnfaz: &f"
                     , item1, item2);
 
 
@@ -4504,7 +4482,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.spidereye;
             ItemStack item2 = itemHandler.string;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "bane", "&4Büyü ▏ &7Eklembacaklılar'ın Kıyameti: &f", "smite", "sharpness",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "bane", "&4Büyü ▏ &7Eklembacaklılar'ın Kıyameti: &f", "smite", "sharpness",
                     Enchantment.DAMAGE_ARTHROPODS, item1, item2);
 
 
@@ -4521,7 +4499,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.blackdust;
             ItemStack item2 = itemHandler.magmaball;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "overload", "&4Büyü ▏ &7Aşırı Yükleme: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "overload", "&4Büyü ▏ &7Aşırı Yükleme: &f",
                     item1, item2);
 
 
@@ -4538,7 +4516,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.glass;
             ItemStack item2 = itemHandler.ironingot;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "keskingorus", "&4Büyü ▏ &7Keskin Görüş: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "keskingorus", "&4Büyü ▏ &7Keskin Görüş: &f",
                     item1, item2);
 
 
@@ -4555,7 +4533,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.fireoz;
             ItemStack item2 = itemHandler.gravel;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "slayer", "&4Büyü ▏ &7Dev Yarma: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "slayer", "&4Büyü ▏ &7Dev Yarma: &f",
                     item1, item2);
 
 
@@ -4572,7 +4550,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.gianteye;
             ItemStack item2 = itemHandler.wolfteeth;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "slayer", "&4Büyü ▏ &7Dev Yarma: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "slayer", "&4Büyü ▏ &7Dev Yarma: &f",
                     item1, item2);
 
 
@@ -4589,7 +4567,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.lightningesans;
             ItemStack item2 = itemHandler.silverfish;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "statik", "&4Büyü ▏ &7Statik Yükleme: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "statik", "&4Büyü ▏ &7Statik Yükleme: &f",
                     item1, item2);
 
 
@@ -4606,7 +4584,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.feather;
             ItemStack item2 = itemHandler.wool;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "featherfall", "&4Büyü ▏ &7Hafif Düşüş: &f",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "featherfall", "&4Büyü ▏ &7Hafif Düşüş: &f",
                     Enchantment.PROTECTION_FALL, item1, item2);
 
 
@@ -4623,7 +4601,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.cactus;
             ItemStack item2 = itemHandler.bronzeingot;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "dikenlitaban", "&4Büyü ▏ &7Dikenli Taban: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "dikenlitaban", "&4Büyü ▏ &7Dikenli Taban: &f",
                     item1, item2);
 
 
@@ -4640,7 +4618,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.feather;
             ItemStack item2 = itemHandler.salt;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "fast", "&4Büyü ▏ &7Sihirli Pabuçlar: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "fast", "&4Büyü ▏ &7Sihirli Pabuçlar: &f",
                     item1, item2);
 
 
@@ -4657,7 +4635,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.iceesans;
             ItemStack item2 = itemHandler.rotten;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "ice", "&4Büyü ▏ &7Mutlak Sıfır: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "ice", "&4Büyü ▏ &7Mutlak Sıfır: &f",
                     item1, item2);
 
 
@@ -4674,7 +4652,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.blackbone;
             ItemStack item2 = itemHandler.rotten;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "revenge", "&4Büyü ▏ &7İntikam: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "revenge", "&4Büyü ▏ &7İntikam: &f",
                     item1, item2);
 
 
@@ -4691,7 +4669,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.shieldfrag;
             ItemStack item2 = itemHandler.ironingot;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "shield", "&4Büyü ▏ &7Karşı Saldırı: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "shield", "&4Büyü ▏ &7Karşı Saldırı: &f",
                     item1, item2);
 
 
@@ -4708,7 +4686,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.spektralore;
             ItemStack item2 = itemHandler.tear;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "soul", "&4Büyü ▏ &7Ruh Koruması: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "soul", "&4Büyü ▏ &7Ruh Koruması: &f",
                     item1, item2);
 
 
@@ -4725,7 +4703,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.spektralore;
             ItemStack item2 = itemHandler.aralit;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "yenilen", "&4Büyü ▏ &7Kutsanmış: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "yenilen", "&4Büyü ▏ &7Kutsanmış: &f",
                     item1, item2);
 
 
@@ -4742,7 +4720,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.glowstone;
             ItemStack item2 = itemHandler.aralit;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "kutsal", "&4Büyü ▏ &7Bağışıklık: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "kutsal", "&4Büyü ▏ &7Bağışıklık: &f",
                     item1, item2);
 
 
@@ -4759,7 +4737,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.magmaball;
             ItemStack item2 = itemHandler.obsidianore;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "fireres", "&4Büyü ▏ &7Obsidyen Kaplama: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "fireres", "&4Büyü ▏ &7Obsidyen Kaplama: &f",
                     item1, item2);
 
 
@@ -4776,7 +4754,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.wool;
             ItemStack item2 = itemHandler.feather;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "dodgerate", "&4Büyü ▏ &7Sıvışma: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "dodgerate", "&4Büyü ▏ &7Sıvışma: &f",
                     item1, item2);
 
 
@@ -4793,7 +4771,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.gianttoe;
             ItemStack item2 = itemHandler.pufferfish;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "barbarian", "&4Büyü ▏ &7Barbar Gücü: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "barbarian", "&4Büyü ▏ &7Barbar Gücü: &f",
                     item1, item2);
 
 
@@ -4810,7 +4788,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.rawsalmon;
             ItemStack item2 = itemHandler.pufferfish;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "waterwork", "&4Büyü ▏ &7Solungaç: &f",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "waterwork", "&4Büyü ▏ &7Solungaç: &f",
                     Enchantment.OXYGEN, item1, item2);
 
 
@@ -4827,7 +4805,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.gunpowder;
             ItemStack item2 = itemHandler.blackdust;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "potansiyel", "&4Büyü ▏ &7Potansiyel: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "potansiyel", "&4Büyü ▏ &7Potansiyel: &f",
                     item1, item2);
 
 
@@ -4844,7 +4822,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.glowstone;
             ItemStack item2 = itemHandler.apple;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "rejuv", "&4Büyü ▏ &7Dinçleştirme: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "rejuv", "&4Büyü ▏ &7Dinçleştirme: &f",
                     item1, item2);
 
 
@@ -4861,7 +4839,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.blackbone;
             ItemStack item2 = itemHandler.feather;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "isabetw", "&4Büyü ▏ &7Tam İsabet: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "isabetw", "&4Büyü ▏ &7Tam İsabet: &f",
                     item1, item2);
 
 
@@ -4878,7 +4856,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.bone;
             ItemStack item2 = itemHandler.arrow;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "power", "&4Büyü ▏ &7Güç: &f",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "power", "&4Büyü ▏ &7Güç: &f",
                     Enchantment.ARROW_DAMAGE, item1, item2);
 
 
@@ -4895,7 +4873,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.fireoz;
             ItemStack item2 = itemHandler.magmaball;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "flame", "&4Büyü ▏ &7Aleve Ver: &f",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "flame", "&4Büyü ▏ &7Aleve Ver: &f",
                     Enchantment.ARROW_FIRE, item1, item2);
 
 
@@ -4912,7 +4890,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.goldingot;
             ItemStack item2 = itemHandler.silveringot;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "servet", "&4Büyü ▏ &7Servet: &f",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "servet", "&4Büyü ▏ &7Servet: &f",
                     Enchantment.LOOT_BONUS_BLOCKS, item1, item2);
 
 
@@ -4929,7 +4907,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.birchwood;
             ItemStack item2 = itemHandler.nikelingot;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "ustalık", "&4Büyü ▏ &7Ustalık Desteği: &f"
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "ustalık", "&4Büyü ▏ &7Ustalık Desteği: &f"
                     , item1, item2);
 
 
@@ -4946,7 +4924,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.coal;
             ItemStack item2 = itemHandler.paper;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "efficiency", "&4Büyü ▏ &7Verimlilik: &f",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "efficiency", "&4Büyü ▏ &7Verimlilik: &f",
                     Enchantment.DIG_SPEED, item1, item2);
 
 
@@ -4963,7 +4941,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.feather;
             ItemStack item2 = itemHandler.wolfleather;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "solen", "&4Büyü ▏ &7Şölen: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "solen", "&4Büyü ▏ &7Şölen: &f",
                     item1, item2);
 
 
@@ -4980,7 +4958,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.rawsalmon;
             ItemStack item2 = itemHandler.tridentfrag;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "impaling", "&4Büyü ▏ &7Şişleme: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "impaling", "&4Büyü ▏ &7Şişleme: &f",
                     item1, item2);
 
 
@@ -4997,7 +4975,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.wawebreakerfish;
             ItemStack item2 = itemHandler.feather;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "loku", "&4Büyü ▏ &7Yıldırım Oku: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "loku", "&4Büyü ▏ &7Yıldırım Oku: &f",
                     item1, item2);
 
 
@@ -5014,7 +4992,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.gianttoe;
             ItemStack item2 = itemHandler.pufferfish;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "growth", "&4Büyü ▏ &7Aşırı Büyüme: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "growth", "&4Büyü ▏ &7Aşırı Büyüme: &f",
                     item1, item2);
 
 
@@ -5032,7 +5010,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.cactus;
             ItemStack item2 = itemHandler.kezicicek;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "thorns", "&4Büyü ▏ &7Dikenler: &f",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "thorns", "&4Büyü ▏ &7Dikenler: &f",
                     Enchantment.THORNS, item1, item2);
 
 
@@ -5049,7 +5027,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.ironingot;
             ItemStack item2 = itemHandler.cowleather;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "prot", "&4Büyü ▏ &7Koruma: &f",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "prot", "&4Büyü ▏ &7Koruma: &f",
                     Enchantment.PROTECTION_ENVIRONMENTAL, item1, item2);
 
 
@@ -5066,7 +5044,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.wool;
             ItemStack item2 = itemHandler.copperingot;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "exploprot", "&4Büyü ▏ &7Patlama Koruması: &f",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "exploprot", "&4Büyü ▏ &7Patlama Koruması: &f",
                     Enchantment.PROTECTION_EXPLOSIONS, item1, item2);
 
 
@@ -5083,7 +5061,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.ilviyanpencesi;
             ItemStack item2 = itemHandler.ironingot;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "sweeep", "&4Büyü ▏ &7Süpürücü Kenar: &f",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "sweeep", "&4Büyü ▏ &7Süpürücü Kenar: &f",
                     Enchantment.SWEEPING_EDGE, item1, item2);
 
 
@@ -5100,7 +5078,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.gravel;
             ItemStack item2 = itemHandler.ironore;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "sharpness", "&4Büyü ▏ &7Keskinlik: &f", "smite", "bane",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "sharpness", "&4Büyü ▏ &7Keskinlik: &f", "smite", "bane",
                     Enchantment.DAMAGE_ALL, item1, item2);
 
 
@@ -5117,7 +5095,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.ilviyanpencesi;
             ItemStack item2 = itemHandler.wolfteeth;
 
-            enchantConstructor.createEnchant(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[2]), "akuapunktur", "&4Büyü ▏ &7Akuapunktur Ustası: &f",
+            enchantConstructor.createEnchant(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[2]), "akuapunktur", "&4Büyü ▏ &7Akuapunktur Ustası: &f",
                     item1, item2);
 
 
@@ -5134,7 +5112,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.blackbone;
             ItemStack item2 = itemHandler.rotten;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "smite", "&4Büyü ▏ &7Darbe: &f", "sharpness", "bane",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "smite", "&4Büyü ▏ &7Darbe: &f", "sharpness", "bane",
                     Enchantment.DAMAGE_UNDEAD, item1, item2);
 
 
@@ -5151,7 +5129,7 @@ public class GuiHandler {
             ItemStack item1 = itemHandler.silverfish;
             ItemStack item2 = itemHandler.nikelingot;
 
-            enchantConstructor.createEnchantVanilla(p.getOpenInventory().getTopInventory().getItem(22), p, Integer.parseInt(chance2[1]), "unbreaking", "&4Büyü ▏ &7Kırılmazlık: &f",
+            enchantConstructor.createEnchantVanilla(Objects.requireNonNull(p.getOpenInventory().getTopInventory().getItem(22)), p, Integer.parseInt(chance2[1]), "unbreaking", "&4Büyü ▏ &7Kırılmazlık: &f",
                     Enchantment.DURABILITY, item1, item2);
 
 
@@ -7415,18 +7393,25 @@ public class GuiHandler {
 
                 getDisplayName().
 
+
                 equalsIgnoreCase(Painter.paint("&c1. Boş Üretim Alanı"))) {
 
+
             p.openInventory(GUI2(p));
+
 
         }
 
 
     }
 
+
     public Inventory getInv() {
         return inv;
+
+
     }
+
 
     public Inventory getInv2() {
         return inv2;
@@ -7444,11 +7429,14 @@ public class GuiHandler {
         return inv5;
     }
 
+
     public Inventory getInv6() {
         return inv6;
     }
 
     public Inventory getInv7() {
+
+
         return inv7;
     }
 

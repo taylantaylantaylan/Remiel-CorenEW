@@ -16,8 +16,8 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class RequirementListener implements Listener {
 
-    private MoonCore main;
-    private StatsManager statsManager;
+    private final MoonCore main;
+    private final StatsManager statsManager;
 
     public RequirementListener(MoonCore main) {
         this.main = main;

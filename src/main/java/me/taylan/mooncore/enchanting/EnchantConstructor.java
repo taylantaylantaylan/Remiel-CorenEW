@@ -2,6 +2,7 @@ package me.taylan.mooncore.enchanting;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import me.taylan.mooncore.level.Levels;
 import org.bukkit.NamespacedKey;
@@ -18,21 +19,22 @@ import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.utils.Painter;
 
 public class EnchantConstructor {
-    private MoonCore plugin;
-    private Levels levels;
+    private final MoonCore plugin;
+    private final Levels levels;
 
     public EnchantConstructor(MoonCore plugin) {
         this.plugin = plugin;
         this.levels = plugin.getLevels();
     }
 
-    private static PersistentDataType<?, HashMap<String, Integer>> Enchants = DataTypes
+    private static final PersistentDataType<?, HashMap<String, Integer>> Enchants = DataTypes
             .hashMap(PersistentDataType.STRING, PersistentDataType.INTEGER);
 
     public static PersistentDataType<?, HashMap<String, Integer>> getEnchants() {
         return Enchants;
     }
 
+ 
     public void createEnchant(ItemStack item, Player p, int chance2, String Enchant,
                               String EnchLore, String noEnch, String noEnch2, String noEnch3, ItemStack item1, ItemStack item2) {
 
@@ -135,6 +137,7 @@ public class EnchantConstructor {
                 item.setItemMeta(item2meta);
                 p.getInventory().addItem(item);
                 p.getOpenInventory().setItem(22, null);
+ 
                 p.playSound(p, Sound.ITEM_TRIDENT_THUNDER, 3, 1.7f);
                 levels.giveEnchantExp(p,chance2);
                 p.closeInventory();
@@ -144,6 +147,7 @@ public class EnchantConstructor {
             }
         }
     }
+
 
 
     public void createEnchant(ItemStack item, Player p, int chance2, String Enchant,
@@ -246,6 +250,7 @@ public class EnchantConstructor {
                 item.setItemMeta(item2meta);
                 p.getInventory().addItem(item);
                 p.getOpenInventory().setItem(22, null);
+
                 p.playSound(p, Sound.ITEM_TRIDENT_THUNDER, 3, 1.7f);
                 levels.giveEnchantExp(p,chance2);
                 p.closeInventory();
@@ -256,6 +261,7 @@ public class EnchantConstructor {
         }
     }
 
+ 
     public void createEnchant(ItemStack item, Player p, int chance2, String Enchant,
                               String EnchLore, String noEnch, ItemStack item1, ItemStack item2) {
 
@@ -369,12 +375,13 @@ public class EnchantConstructor {
         }
     }
 
+
     public void createEnchant(ItemStack item, Player p, int chance2, String Enchant,
                               String EnchLore, ItemStack item1, ItemStack item2) {
 
         NamespacedKey key = new NamespacedKey(plugin, "Enchants");
         if (item.getItemMeta().getPersistentDataContainer().get(key, Enchants) != null
-                && (item.getItemMeta().getPersistentDataContainer().get(key, Enchants).containsKey(Enchant))) {
+                && (Objects.requireNonNull(item.getItemMeta().getPersistentDataContainer().get(key, Enchants)).containsKey(Enchant))) {
             p.sendMessage("olmadı kn");
             p.closeInventory();
         } else {
@@ -392,7 +399,7 @@ public class EnchantConstructor {
                 p.setLevel(p.getLevel() - 5);
                 List<String> itemLore = item.getItemMeta().getLore();
                 ItemMeta item2meta = item.getItemMeta();
-                for (int i = 0; i < itemLore.size(); i++) {
+                for (int i = 0; i < Objects.requireNonNull(itemLore).size(); i++) {
                     String lValue = itemLore.get(i);
                     if (lValue.equals(Painter.paint("&8<Boş Büyü Bölmesi>"))) {
                         itemLore.set(i, Painter.paint(EnchLore + chance2));
@@ -410,7 +417,7 @@ public class EnchantConstructor {
                     item2meta.getPersistentDataContainer().set(key, Enchants, enchs);
                 } else {
                     HashMap<String, Integer> enchs = item2meta.getPersistentDataContainer().get(key, Enchants);
-                    enchs.put(Enchant, chance2);
+                    Objects.requireNonNull(enchs).put(Enchant, chance2);
 
                     item2meta.addEnchant(Enchantment.WATER_WORKER, 1, true);
                     item2meta.getPersistentDataContainer().set(key, Enchants, enchs);
@@ -435,9 +442,9 @@ public class EnchantConstructor {
 
         NamespacedKey key = new NamespacedKey(plugin, "Enchants");
         if (item.getItemMeta().getPersistentDataContainer().get(key, Enchants) != null) {
-            if (item.getItemMeta().getPersistentDataContainer().get(key, Enchants).containsKey(Enchant) || (item
-                    .getItemMeta().getPersistentDataContainer().get(key, Enchants).containsKey(noEnch)
-                    || (item.getItemMeta().getPersistentDataContainer().get(key, Enchants).containsKey(noEnch2)))) {
+            if (Objects.requireNonNull(item.getItemMeta().getPersistentDataContainer().get(key, Enchants)).containsKey(Enchant) || (Objects.requireNonNull(item
+                    .getItemMeta().getPersistentDataContainer().get(key, Enchants)).containsKey(noEnch)
+                    || (Objects.requireNonNull(item.getItemMeta().getPersistentDataContainer().get(key, Enchants)).containsKey(noEnch2)))) {
                 p.sendMessage("olmadı kn");
                 p.closeInventory();
             } else {
@@ -455,7 +462,7 @@ public class EnchantConstructor {
                     p.setLevel(level - plevel);
                     List<String> itemLore = item.getItemMeta().getLore();
                     ItemMeta item2meta = item.getItemMeta();
-                    for (int i = 0; i < itemLore.size(); i++) {
+                    for (int i = 0; i < Objects.requireNonNull(itemLore).size(); i++) {
                         String lValue = itemLore.get(i);
                         if (lValue.equals(Painter.paint("&8<Boş Büyü Bölmesi>"))) {
                             itemLore.set(i, Painter.paint(EnchLore + chance2));
@@ -474,7 +481,7 @@ public class EnchantConstructor {
                         item2meta.getPersistentDataContainer().set(key, Enchants, enchs);
                     } else {
                         HashMap<String, Integer> enchs = item2meta.getPersistentDataContainer().get(key, Enchants);
-                        enchs.put(Enchant, chance2);
+                        Objects.requireNonNull(enchs).put(Enchant, chance2);
 
                         item2meta.addEnchant(vanilla, chance2, true);
                         item2meta.getPersistentDataContainer().set(key, Enchants, enchs);
@@ -506,7 +513,7 @@ public class EnchantConstructor {
                 p.setLevel(level - plevel);
                 List<String> itemLore = item.getItemMeta().getLore();
                 ItemMeta item2meta = item.getItemMeta();
-                for (int i = 0; i < itemLore.size(); i++) {
+                for (int i = 0; i < Objects.requireNonNull(itemLore).size(); i++) {
                     String lValue = itemLore.get(i);
                     if (lValue.equals(Painter.paint("&8<Boş Büyü Bölmesi>"))) {
                         itemLore.set(i, Painter.paint(EnchLore + chance2));
@@ -520,6 +527,7 @@ public class EnchantConstructor {
                     HashMap<String, Integer> enchs = new HashMap<String, Integer>();
                     enchs.put(Enchant, chance2);
 
+ 
                     item2meta.addEnchant(vanilla, chance2, true);
                     item2meta.getPersistentDataContainer().set(key, Enchants, enchs);
                 } else {
@@ -636,6 +644,7 @@ public class EnchantConstructor {
                     HashMap<String, Integer> enchs = new HashMap<String, Integer>();
                     enchs.put(Enchant, chance2);
 
+
                     item2meta.addEnchant(vanilla, chance2, true);
                     item2meta.getPersistentDataContainer().set(key, Enchants, enchs);
                 } else {
@@ -666,7 +675,7 @@ public class EnchantConstructor {
 
         NamespacedKey key = new NamespacedKey(plugin, "Enchants");
         if (item.getItemMeta().getPersistentDataContainer().get(key, Enchants) != null
-                && (item.getItemMeta().getPersistentDataContainer().get(key, Enchants).containsKey(Enchant))) {
+                && (Objects.requireNonNull(item.getItemMeta().getPersistentDataContainer().get(key, Enchants)).containsKey(Enchant))) {
             p.closeInventory();
             p.sendMessage("OLmadı");
         } else {
@@ -683,7 +692,7 @@ public class EnchantConstructor {
                 p.setLevel(level - plevel);
                 List<String> itemLore = item.getItemMeta().getLore();
                 ItemMeta item2meta = item.getItemMeta();
-                for (int i = 0; i < itemLore.size(); i++) {
+                for (int i = 0; i < Objects.requireNonNull(itemLore).size(); i++) {
                     String lValue = itemLore.get(i);
                     if (lValue.equals(Painter.paint("&8<Boş Büyü Bölmesi>"))) {
                         itemLore.set(i, Painter.paint(EnchLore + chance2));
@@ -701,7 +710,7 @@ public class EnchantConstructor {
                     item2meta.getPersistentDataContainer().set(key, Enchants, enchs);
                 } else {
                     HashMap<String, Integer> enchs = item2meta.getPersistentDataContainer().get(key, Enchants);
-                    enchs.put(Enchant, chance2);
+                    Objects.requireNonNull(enchs).put(Enchant, chance2);
 
                     item2meta.addEnchant(vanilla, chance2, true);
                     item2meta.getPersistentDataContainer().set(key, Enchants, enchs);

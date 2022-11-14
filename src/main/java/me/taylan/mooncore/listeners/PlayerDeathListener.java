@@ -15,13 +15,14 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public class PlayerDeathListener implements Listener {
 
-    private MoonCore plugin;
-    private HashMap<UUID, Location> deathmap = new HashMap<UUID, Location>();
-    private StatsManager stats;
+private final MoonCore plugin;
+    private final HashMap<UUID, Location> deathmap = new HashMap<UUID, Location>();
+    private final StatsManager stats;
 
     public PlayerDeathListener(MoonCore plugin) {
         this.plugin = plugin;
@@ -50,7 +51,7 @@ public class PlayerDeathListener implements Listener {
         event.setDeathMessage(Painter.paint("&c☠ &7"+player.getName()+ " öldü."));
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         Team isim = scoreboard.getTeam(player.getName());
-        if (isim.hasEntry(player.getName())) {
+        if (Objects.requireNonNull(isim).hasEntry(player.getName())) {
             isim.setPrefix(Painter.paint("&7[&fSvy. " + stats.getLevel(player.getUniqueId()) + "&7] &f"));
             isim.setSuffix(Painter.paint(" &6[" + (int) player.getHealth() + "❤]"));
         } else {

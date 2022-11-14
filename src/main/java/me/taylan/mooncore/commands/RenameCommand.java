@@ -9,18 +9,21 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import me.taylan.mooncore.MoonCore;
 import me.taylan.mooncore.utils.Painter;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class RenameCommand implements CommandExecutor {
 
-	private MoonCore plugin;
+private final MoonCore plugin;
 
 	public RenameCommand(MoonCore plugin) {
 		this.plugin = plugin;
-		plugin.getCommand("isim").setExecutor(this);
+		Objects.requireNonNull(plugin.getCommand("isim")).setExecutor(this);
 	}
 
 	@SuppressWarnings("deprecation")
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
 			if (p.hasPermission("mooncore.rename")) {

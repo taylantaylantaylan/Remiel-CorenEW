@@ -32,16 +32,17 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PlayerFishListener implements Listener {
     private final MoonCore plugin;
-    private ItemHandler itemHandler;
-    private HashMap<UUID, LivingEntity> fishmap = new HashMap<>();
-    private StatsManager stats;
-    private Ekonomi ekonomi;
-    private DecimalFormat df = new DecimalFormat("#,###.##");
+    private final ItemHandler itemHandler;
+    private final HashMap<UUID, LivingEntity> fishmap = new HashMap<>();
+    private final StatsManager stats;
+    private final Ekonomi ekonomi;
+    private final DecimalFormat df = new DecimalFormat("#,###.##");
 
     public PlayerFishListener(MoonCore plugin) {
         this.plugin = plugin;
@@ -109,7 +110,7 @@ public class PlayerFishListener implements Listener {
                         event.setExpToDrop(7);
                         Item d = (Item) event.getCaught();
 
-                        d.setItemStack(itemHandler.copperore);
+                        Objects.requireNonNull(d).setItemStack(itemHandler.copperore);
                         giveFishingExp(player, itemHandler.copperore);
                     }
                     break;
@@ -118,7 +119,7 @@ public class PlayerFishListener implements Listener {
 
                         event.setExpToDrop(5);
                         Item d = (Item) event.getCaught();
-                        d.setItemStack(itemHandler.woodkutu);
+                        Objects.requireNonNull(d).setItemStack(itemHandler.woodkutu);
                         giveFishingExp(player, d.getItemStack());
                     }
                     break;
@@ -147,7 +148,7 @@ public class PlayerFishListener implements Listener {
 
                         event.setExpToDrop(5);
                         Item d = (Item) event.getCaught();
-                        d.setItemStack(itemHandler.trash);
+                        Objects.requireNonNull(d).setItemStack(itemHandler.trash);
                         giveFishingExp(player, d.getItemStack());
                     }
                     break;
@@ -156,7 +157,7 @@ public class PlayerFishListener implements Listener {
 
                         event.setExpToDrop(5);
                         Item d = (Item) event.getCaught();
-                        d.setItemStack(itemHandler.oakstick);
+                        Objects.requireNonNull(d).setItemStack(itemHandler.oakstick);
                         giveFishingExp(player, d.getItemStack());
                     }
                     break;
@@ -165,7 +166,7 @@ public class PlayerFishListener implements Listener {
 
                         event.setExpToDrop(5);
                         Item d = (Item) event.getCaught();
-                        d.setItemStack(itemHandler.saltstring);
+                        Objects.requireNonNull(d).setItemStack(itemHandler.saltstring);
                         giveFishingExp(player, d.getItemStack());
                     }
                     break;
@@ -174,7 +175,7 @@ public class PlayerFishListener implements Listener {
 
                         event.setExpToDrop(5);
                         Item d = (Item) event.getCaught();
-                        d.setItemStack(itemHandler.string);
+                        Objects.requireNonNull(d).setItemStack(itemHandler.string);
                         giveFishingExp(player, d.getItemStack());
                     }
                     break;
@@ -183,7 +184,7 @@ public class PlayerFishListener implements Listener {
 
                         event.setExpToDrop(5);
                         Item d = (Item) event.getCaught();
-                        d.setItemStack(itemHandler.arrow);
+                        Objects.requireNonNull(d).setItemStack(itemHandler.arrow);
                         giveFishingExp(player, d.getItemStack());
                     }
                     break;
@@ -192,7 +193,7 @@ public class PlayerFishListener implements Listener {
 
                         event.setExpToDrop(5);
                         Item d = (Item) event.getCaught();
-                        d.setItemStack(itemHandler.ironkutu);
+                        Objects.requireNonNull(d).setItemStack(itemHandler.ironkutu);
                         giveFishingExp(player, d.getItemStack());
                     }
                     break;
@@ -201,7 +202,7 @@ public class PlayerFishListener implements Listener {
 
                         event.setExpToDrop(5);
                         Item d = (Item) event.getCaught();
-                        d.setItemStack(itemHandler.experiencebottle);
+                        Objects.requireNonNull(d).setItemStack(itemHandler.experiencebottle);
                         giveFishingExp(player, d.getItemStack());
                     }
                     break;
@@ -273,7 +274,7 @@ public class PlayerFishListener implements Listener {
 
     public Villager spawnFish(Location loc, String name, ItemStack item, final Player catcher, FishHook hook, String url, int exp, double direc) {
         ItemStack fishhead = PlayerHeads.getSkull(url);
-        Villager armorStand2 = loc.getWorld().spawn(loc, Villager.class, armorStand -> {
+        return loc.getWorld().spawn(loc, Villager.class, armorStand -> {
             armorStand.setGravity(true);
             armorStand.setInvisible(true);
             armorStand.setAI(true);
@@ -333,7 +334,6 @@ public class PlayerFishListener implements Listener {
                 }
             }.runTaskTimer(plugin, 0, 20);
         });
-        return armorStand2;
     }
 
     public void giveFishingExp(Player player, ItemStack item) {
@@ -408,40 +408,37 @@ public class PlayerFishListener implements Listener {
             NamespacedKey kutu = new NamespacedKey(plugin, "kutu");
             ItemStack item = player.getInventory().getItemInMainHand();
             ItemStack item2 = player.getInventory().getItemInOffHand();
-            if (item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(kutu) && item.getItemMeta().getPersistentDataContainer().get(kutu, PersistentDataType.STRING).equalsIgnoreCase("tahtakutu")) {
+            if (item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(kutu) && Objects.requireNonNull(item.getItemMeta().getPersistentDataContainer().get(kutu, PersistentDataType.STRING)).equalsIgnoreCase("tahtakutu")) {
                 int CHANCE = ThreadLocalRandom.current().nextInt(3);
                 switch (CHANCE) {
-                    case 0:
+                    case 0 -> {
                         ItemStack box = itemHandler.woodkutu;
                         box.setAmount(1);
                         player.getInventory().removeItem(box);
                         player.sendMessage("Tahta Kutudan Çıkan: " + itemHandler.ironingot.getItemMeta().getDisplayName());
-
                         if (player.getInventory().firstEmpty() == -1) {
                             player.getWorld().dropItemNaturally(player.getLocation(), itemHandler.ironingot);
 
                         } else {
                             player.getInventory().addItem(itemHandler.ironingot);
                         }
-                        break;
-                    case 1:
+                    }
+                    case 1 -> {
                         ItemStack box1 = itemHandler.woodkutu;
                         box1.setAmount(1);
                         player.getInventory().removeItem(box1);
                         player.sendMessage("Tahta Kutudan Çıkan: " + itemHandler.copperingot.getItemMeta().getDisplayName());
-
                         if (player.getInventory().firstEmpty() == -1) {
                             player.getWorld().dropItemNaturally(player.getLocation(), itemHandler.copperingot);
 
                         } else {
                             player.getInventory().addItem(itemHandler.copperingot);
                         }
-                        break;
-                    case 2:
+                    }
+                    case 2 -> {
                         ItemStack box2 = itemHandler.woodkutu;
                         box2.setAmount(1);
                         player.sendMessage("Tahta Kutudan Çıkan: " + itemHandler.trash.getItemMeta().getDisplayName());
-
                         player.getInventory().removeItem(box2);
                         if (player.getInventory().firstEmpty() == -1) {
                             player.getWorld().dropItemNaturally(player.getLocation(), itemHandler.trash);
@@ -449,13 +446,13 @@ public class PlayerFishListener implements Listener {
                         } else {
                             player.getInventory().addItem(itemHandler.trash);
                         }
-                        break;
+                    }
                 }
-            } else if (item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(kutu) && item.getItemMeta().getPersistentDataContainer().get(kutu, PersistentDataType.STRING).equalsIgnoreCase("demirkutu")) {
+            } else if (item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(kutu) && Objects.requireNonNull(item.getItemMeta().getPersistentDataContainer().get(kutu, PersistentDataType.STRING)).equalsIgnoreCase("demirkutu")) {
                 int CHANCE = ThreadLocalRandom.current().nextInt(4);
 
                 switch (CHANCE) {
-                    case 0:
+                    case 0 -> {
                         ItemStack box = itemHandler.ironkutu;
                         box.setAmount(1);
                         player.getInventory().removeItem(box);
@@ -466,8 +463,8 @@ public class PlayerFishListener implements Listener {
                         } else {
                             player.getInventory().addItem(itemHandler.ironingot);
                         }
-                        break;
-                    case 1:
+                    }
+                    case 1 -> {
                         ItemStack box1 = itemHandler.ironkutu;
                         box1.setAmount(1);
                         player.getInventory().removeItem(box1);
@@ -478,8 +475,8 @@ public class PlayerFishListener implements Listener {
                         } else {
                             player.getInventory().addItem(itemHandler.copperingot);
                         }
-                        break;
-                    case 2:
+                    }
+                    case 2 -> {
                         ItemStack box2 = itemHandler.ironkutu;
                         box2.setAmount(1);
                         player.getInventory().removeItem(box2);
@@ -490,27 +487,25 @@ public class PlayerFishListener implements Listener {
                         } else {
                             player.getInventory().addItem(itemHandler.trash);
                         }
-                        break;
-                    case 3:
+                    }
+                    case 3 -> {
                         ItemStack box3 = itemHandler.ironkutu;
                         box3.setAmount(1);
                         player.getInventory().removeItem(box3);
                         player.sendMessage("Demir Kutudan Çıkan: " + itemHandler.silverfish.getItemMeta().getDisplayName());
-
-
                         if (player.getInventory().firstEmpty() == -1) {
                             player.getWorld().dropItemNaturally(player.getLocation(), itemHandler.silverfish);
 
                         } else {
                             player.getInventory().addItem(itemHandler.silverfish);
                         }
-                        break;
+                    }
                 }
-            } else if (item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(kutu) && item.getItemMeta().getPersistentDataContainer().get(kutu, PersistentDataType.STRING).equalsIgnoreCase("magmav")) {
+            } else if (item != null && item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(kutu) && Objects.requireNonNull(item.getItemMeta().getPersistentDataContainer().get(kutu, PersistentDataType.STRING)).equalsIgnoreCase("magmav")) {
                 int CHANCE = ThreadLocalRandom.current().nextInt(5);
 
                 switch (CHANCE) {
-                    case 0:
+                    case 0 -> {
                         ItemStack box = itemHandler.magmaloot;
                         box.setAmount(1);
                         player.getInventory().removeItem(box);
@@ -521,56 +516,50 @@ public class PlayerFishListener implements Listener {
                         } else {
                             player.getInventory().addItem(itemHandler.crimsonore);
                         }
-                        break;
-                    case 1:
+                    }
+                    case 1 -> {
                         ItemStack box1 = itemHandler.magmaloot;
                         box1.setAmount(1);
                         player.getInventory().removeItem(box1);
                         player.sendMessage("Ganimet Çantasından Çıkan: " + itemHandler.kutsalbileklik.getItemMeta().getDisplayName());
-
                         if (player.getInventory().firstEmpty() == -1) {
                             player.getWorld().dropItemNaturally(player.getLocation(), itemHandler.kutsalbileklik);
 
                         } else {
                             player.getInventory().addItem(itemHandler.kutsalbileklik);
                         }
-                        break;
-                    case 2:
+                    }
+                    case 2 -> {
                         ItemStack box5 = itemHandler.magmaloot;
                         box5.setAmount(1);
                         player.getInventory().removeItem(box5);
                         player.sendMessage("Ganimet Çantasından Çıkan: " + Painter.paint("&a100 Tecrübe Puanı"));
-
-                        stats.setExp(player.getUniqueId(),100);
-                        break;
-                    case 3:
+                        stats.setExp(player.getUniqueId(), 100);
+                    }
+                    case 3 -> {
                         ItemStack box3 = itemHandler.magmaloot;
                         box3.setAmount(1);
                         player.getInventory().removeItem(box3);
                         player.sendMessage("Ganimet Çantasından Çıkan: " + itemHandler.magmapickaxe.getItemMeta().getDisplayName());
-
-
                         if (player.getInventory().firstEmpty() == -1) {
                             player.getWorld().dropItemNaturally(player.getLocation(), itemHandler.magmapickaxe);
 
                         } else {
                             player.getInventory().addItem(itemHandler.magmapickaxe);
                         }
-                        break;
-                    case 4:
+                    }
+                    case 4 -> {
                         ItemStack box4 = itemHandler.magmaloot;
                         box4.setAmount(1);
                         player.getInventory().removeItem(box4);
                         player.sendMessage("Ganimet Çantasından Çıkan: " + itemHandler.magmafrag.getItemMeta().getDisplayName());
-
                         if (player.getInventory().firstEmpty() == -1) {
                             player.getWorld().dropItemNaturally(player.getLocation(), itemHandler.magmafrag);
 
                         } else {
                             player.getInventory().addItem(itemHandler.magmafrag);
                         }
-                        break;
-
+                    }
                 }
             }
 

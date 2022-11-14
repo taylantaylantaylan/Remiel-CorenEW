@@ -1,9 +1,7 @@
 package me.taylan.mooncore.listeners;
 
-import com.destroystokyo.paper.MaterialTags;
 import com.manya.pdc.DataTypes;
 import me.taylan.mooncore.MoonCore;
-import me.taylan.mooncore.listeners.entitydamage.SpawnArmorStand;
 import me.taylan.mooncore.utils.Painter;
 import me.taylan.mooncore.utils.StatsManager;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -29,25 +27,24 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
-import javax.swing.*;
 import java.util.*;
 
 public class PlayerAttackListener implements Listener {
-    private PersistentDataType<?, HashMap<String, Integer>> Enchants = DataTypes.hashMap(PersistentDataType.STRING,
+    private final PersistentDataType<?, HashMap<String, Integer>> Enchants = DataTypes.hashMap(PersistentDataType.STRING,
             PersistentDataType.INTEGER);
 
-    private MoonCore plugin;
-    private StatsManager statsManager;
-    private Map<UUID, Boolean> drawing = new HashMap<UUID, Boolean>();
-    private Map<UUID, Integer> hancerstack = new HashMap<UUID, Integer>();
-    private Map<UUID, Integer> tirpanstack = new HashMap<UUID, Integer>();
-    private Map<UUID, Integer> mizrakstack = new HashMap<UUID, Integer>();
-    private Map<UUID, Integer> topuzStack = new HashMap<UUID, Integer>();
-    private Map<UUID, Integer> sword = new HashMap<UUID, Integer>();
-    private Map<UUID, Integer> axeStack = new HashMap<UUID, Integer>();
-    private Map<UUID, Integer> bowStack = new HashMap<UUID, Integer>();
-    private Map<UUID, Integer> bleed = new HashMap<UUID, Integer>();
-    private static Map<UUID, Integer> wand = new HashMap<UUID, Integer>();
+    private final MoonCore plugin;
+    private final StatsManager statsManager;
+    private final Map<UUID, Boolean> drawing = new HashMap<UUID, Boolean>();
+    private final Map<UUID, Integer> hancerstack = new HashMap<UUID, Integer>();
+    private final Map<UUID, Integer> tirpanstack = new HashMap<UUID, Integer>();
+    private final Map<UUID, Integer> mizrakstack = new HashMap<UUID, Integer>();
+    private final Map<UUID, Integer> topuzStack = new HashMap<UUID, Integer>();
+    private final Map<UUID, Integer> sword = new HashMap<UUID, Integer>();
+    private final Map<UUID, Integer> axeStack = new HashMap<UUID, Integer>();
+    private final Map<UUID, Integer> bowStack = new HashMap<UUID, Integer>();
+    private final Map<UUID, Integer> bleed = new HashMap<UUID, Integer>();
+    private static final Map<UUID, Integer> wand = new HashMap<UUID, Integer>();
 
     public static Map<UUID, Integer> getWand() {
         return wand;
@@ -480,12 +477,12 @@ public class PlayerAttackListener implements Listener {
                                             NamespacedKey key = new NamespacedKey(plugin, "Enchants");
                                             if (meta.getPersistentDataContainer() == null)
                                                 return;
-                                            ;
+
                                             PersistentDataContainer container = meta.getPersistentDataContainer();
                                             if (container.has(key, Enchants)) {
 
-                                                if (container.get(key, Enchants).containsKey("akuapunktur")) {
-                                                    int level = container.get(key, Enchants).get("akuapunktur");
+                                                if (Objects.requireNonNull(container.get(key, Enchants)).containsKey("akuapunktur")) {
+                                                    int level = Objects.requireNonNull(container.get(key, Enchants)).get("akuapunktur");
                                                     ldamaged.damage(5+level);
                                                     ldamaged.setNoDamageTicks(0);
                                                     player.playSound(player, Sound.ENTITY_WITHER_SHOOT, 0.1f, 2f);
@@ -670,7 +667,7 @@ public class PlayerAttackListener implements Listener {
                         if (ray == null) {
                             return;
                         }
-                        final RayTraceResult result = player.getWorld().rayTraceBlocks(player.getEyeLocation(), vec, player.getLocation().distance(ray.getHitEntity().getLocation()));
+                        final RayTraceResult result = player.getWorld().rayTraceBlocks(player.getEyeLocation(), vec, player.getLocation().distance(Objects.requireNonNull(ray.getHitEntity()).getLocation()));
 
                         if (result == null && ray.getHitEntity() != null && !SKIPPED_TYPES.contains(ray.getHitEntity().getType())) {
                             if (ray.getHitEntity() instanceof LivingEntity) {
@@ -703,7 +700,7 @@ public class PlayerAttackListener implements Listener {
                             if (item2 != null) {
                                 if (item2 == item) continue;
                                 if (item2 != null && item2.hasItemMeta() && item2.getItemMeta().hasLore()) {
-                                    if (item2.getLore().contains("Kılıç") || item2.getLore().contains("Hançer") || item2.getLore().contains("Balta") || item2.getLore().contains("Yay") || item2.getLore().contains("Arbalet") || item2.getLore().contains("Asa") || item2.getLore().contains("Topuz") || item2.getLore().contains("Kitabı") || item2.getLore().contains("Mızrak") || item2.getLore().contains("Tırpan")) {
+                                    if (Objects.requireNonNull(item2.getLore()).contains("Kılıç") || item2.getLore().contains("Hançer") || item2.getLore().contains("Balta") || item2.getLore().contains("Yay") || item2.getLore().contains("Arbalet") || item2.getLore().contains("Asa") || item2.getLore().contains("Topuz") || item2.getLore().contains("Kitabı") || item2.getLore().contains("Mızrak") || item2.getLore().contains("Tırpan")) {
                                         player.setCooldown(item2.getType(), (int) 999);
                                     }
                                 }
@@ -789,7 +786,7 @@ public class PlayerAttackListener implements Listener {
                         if (meta.hasEnchant(Enchantment.ARROW_FIRE)) {
                             arrow.setVisualFire(true);
                             arrow.setFireTicks(-1);
-                            arrow.setBounce(false);
+
                         }
                         if (meta.hasEnchant(Enchantment.ARROW_DAMAGE)) {
                             arrow.setDamage(6+meta.getEnchantLevel(Enchantment.ARROW_DAMAGE));
@@ -1063,9 +1060,9 @@ public class PlayerAttackListener implements Listener {
         Vector vecOffset = dir.clone().multiply(0.7);
 
         new BukkitRunnable() {
-            int maxBeamLength = 50; // Max beam length
+            final int maxBeamLength = 50; // Max beam length
             int beamLength = 0; // Current beam length
-            ArmorStand armorStand2 = startLoc.getWorld().spawn(startLoc, ArmorStand.class, armorStand -> {
+            final ArmorStand armorStand2 = startLoc.getWorld().spawn(startLoc, ArmorStand.class, armorStand -> {
                 armorStand.setMarker(true);
                 armorStand.setVisible(false);
                 armorStand.setGravity(false);
@@ -1169,7 +1166,7 @@ public class PlayerAttackListener implements Listener {
         Vector vecOffset = dir.clone().multiply(0.7);
 
         new BukkitRunnable() {
-            int maxBeamLength = 30; // Max beam length
+            final int maxBeamLength = 30; // Max beam length
             int beamLength = 0; // Current beam length
 
             // The run() function runs every X number of ticks - see below
@@ -1257,7 +1254,7 @@ public class PlayerAttackListener implements Listener {
         Vector dir = startLoc.getDirection();
 
         new BukkitRunnable() {
-            int maxBeamLength = 30; // Max beam length
+            final int maxBeamLength = 30; // Max beam length
             int beamLength = 0; // Current beam length
             Entity target = null; // This is the target for the beam
             double targetHeight = 0.0; // Height of the target entity. Used for tracking to the exact center.
@@ -1319,7 +1316,7 @@ public class PlayerAttackListener implements Listener {
                     }
 
                     // vecOffset is used to determine where the next particle should appear
-                    Vector vecOffset = null;
+                    Vector vecOffset;
 
                     // Once the beam has traveled 3 blocks, start homing towards the closest entity
                     if (beamLength >= 6) {
